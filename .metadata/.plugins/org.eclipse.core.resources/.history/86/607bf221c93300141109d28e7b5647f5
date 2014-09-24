@@ -1,0 +1,5 @@
+package rcs.suport.util.database;
+
+public class MongoConnection {
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 2 elements to &apos;TCC_Ferramenta_Java/src/rcs.suport.util.database.mongoDB&apos;&#x0A;- Original project: &apos;TCC_Ferramenta_Java&apos;&#x0A;- Destination element: &apos;TCC_Ferramenta_Java/src/rcs.suport.util.database.mongoDB&apos;&#x0A;- Original elements:&#x0A;     rcs.suport.util.database.JadeConnectToMongoTest.java&#x0A;     rcs.suport.util.database.MongoConnection.java&#x0A;- Update references to refactored element" description="Move compilation units" destination="/src&lt;rcs.suport.util.database.mongoDB" element1="/src&lt;rcs.suport.util.database{JadeConnectToMongoTest.java" element2="/src&lt;rcs.suport.util.database{MongoConnection.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1410128411729" units="2" version="1.0"/>
+</session>

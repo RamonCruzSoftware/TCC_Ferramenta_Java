@@ -1,0 +1,9 @@
+package rcs.core.agents;
+
+import jade.core.Agent;
+
+public class Manager  extends Agent{
+	
+
+private void create
+}

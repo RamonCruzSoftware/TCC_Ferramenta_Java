@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;rcs.suport.util.database.jadeConnectToMongoTest&apos; to &apos;JadeConnectToMongoTest&apos;&#x0A;- Original project: &apos;TCC_Ferramenta_Java&apos;&#x0A;- Original element: &apos;rcs.suport.util.database.jadeConnectToMongoTest&apos;&#x0A;- Renamed element: &apos;rcs.suport.util.database.JadeConnectToMongoTest&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;jadeConnectToMongoTest&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;rcs.suport.util.database{jadeConnectToMongoTest.java[jadeConnectToMongoTest" matchStrategy="1" name="JadeConnectToMongoTest" qualified="false" references="true" similarDeclarations="false" stamp="1409784621506" textual="false" version="1.0"/>
+</session>

@@ -1,0 +1,30 @@
+package rcs.core.agents;
+
+import jade.core.Agent;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+
+public class Expert extends Agent {
+	
+	protected void setup()
+	{
+		try{
+			System.out.println("Hi, I'm live , my name is "+this.getLocalName());
+			DFAgentDescription dfd =new DFAgentDescription();
+			dfd.setName(getAID());
+			DFService.register(this, dfd);
+			
+		}
+        catch (Exception e) {
+            System.out.println( "Saw exception in HostAgent: " + e );
+            e.printStackTrace();
+        }
+	}
+	
+	protected void takeDown()
+	{
+		System.out.println("Morri");
+	}
+	
+
+}

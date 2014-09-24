@@ -46,7 +46,7 @@ public class MovingAvarange {
 	public double simpleAvarange()
 	{
 		double result=0;
-		Iterator iterator = values.iterator();
+		Iterator<Double> iterator = values.iterator();
 		while(iterator.hasNext())
 		{
 			result+=Double.parseDouble(""+iterator.next());

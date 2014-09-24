@@ -1,0 +1,30 @@
+package rcs.core.agents;
+
+
+
+import java.awt.Container;
+
+import jade.core.Agent;
+import jade.wrapper.AgentController;
+import jade.wrapper.ControllerException;
+import jade.wrapper.PlatformController;
+
+
+public class Manager  extends Agent{
+	
+
+private void createExpertAgents(double value,String name)
+{
+	PlatformController container=getContainerController();
+	try {
+		AgentController  agentController=container.createNewAgent(name, "rcs.core.agents.Expert", null);
+		agentController.start();
+		
+	} 
+	catch (Exception e) 
+	{
+		e.printStackTrace();
+	}
+	
+}
+}
