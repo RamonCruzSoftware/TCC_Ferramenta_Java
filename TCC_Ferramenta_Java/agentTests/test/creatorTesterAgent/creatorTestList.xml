@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestsList>
+<Test name="Creator Agent test" skip="false">
+	<TestClassName>test.creatorTesterAgent.CreateAgentsBehaviour</TestClassName>
+		<WhatTest>Test the capacity in to create ManagerAgents for each users</WhatTest>
+		<HowWorkTest>I have no Ideia</HowWorkTest>
+		<WhenTestPass>I have no ideia</WhenTestPass>
+	</Test>
+</TestsList>

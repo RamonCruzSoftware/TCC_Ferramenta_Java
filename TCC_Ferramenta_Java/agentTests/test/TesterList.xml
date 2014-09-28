@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TesterList>
+	<Tester name="Agent Creator Test">
+	<ClassName>test.creatorTesterAgent.CreatorTesterAgent</ClassName>
+	<Description>This item includes test related to behaviour agent in to create news Agents</Description>
+	<TestsListRif>test/creatorTesterAgent/creatorTestList.xml</TestsListRif>
+	</Tester>
+</TesterList>
