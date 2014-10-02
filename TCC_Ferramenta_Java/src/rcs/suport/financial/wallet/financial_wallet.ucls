@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="rcs.suport.financial.wallet.Stock" project="TCC_Ferramenta_Java" 
     file="/TCC_Ferramenta_Java/src/rcs/suport/financial/wallet/Stock.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="432" y="179"/>    
+    <position height="-1" width="-1" x="408" y="140"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
