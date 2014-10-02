@@ -26,6 +26,7 @@ public class OrdersCreateDao {
 	
 	public OrdersCreate getNewOrderCreate()
 	{
+		
 		OrdersCreate newOrder=new OrdersCreate();
 		DBObject newOrderData=coll.findOne();
 		
