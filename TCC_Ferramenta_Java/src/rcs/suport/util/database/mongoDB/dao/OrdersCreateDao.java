@@ -32,7 +32,7 @@ public class OrdersCreateDao {
 		if(newOrderData!=null)
 		{
 			newOrder.setUserIndetifier(newOrderData.get("userIdentifier").toString());
-			newOrder.setUserPerfil(newOrderData.get("userPerfil").toString());
+			newOrder.setUserPerfil(Integer.parseInt(newOrderData.get("userPerfil").toString()));
 			newOrder.setUserValue(Double.parseDouble(newOrderData.get("userValue").toString()));
 			
 			coll.remove(newOrderData);

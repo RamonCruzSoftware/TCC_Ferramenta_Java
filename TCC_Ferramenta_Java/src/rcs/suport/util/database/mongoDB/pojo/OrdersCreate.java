@@ -9,7 +9,7 @@ public class OrdersCreate implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String userIndetifier;
-	private String userPerfil;
+	private int userPerfil;
 	private double userValue;
 	
 	
@@ -20,10 +20,10 @@ public class OrdersCreate implements Serializable{
 	public void setUserIndetifier(String userIndetifier) {
 		this.userIndetifier = userIndetifier;
 	}
-	public String getUserPerfil() {
+	public int getUserPerfil() {
 		return userPerfil;
 	}
-	public void setUserPerfil(String userPerfil) {
+	public void setUserPerfil(int userPerfil) {
 		this.userPerfil = userPerfil;
 	}
 	public double getUserValue() {
