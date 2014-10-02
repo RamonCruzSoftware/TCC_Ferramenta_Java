@@ -49,8 +49,7 @@ protected void setup()
 			
 			System.out.println("I'm live... My name is "+this.getLocalName());
 			
-			//creating the experts 
-			
+			//Conversations 
 			addBehaviour(new CyclicBehaviour(manager) {
 				
 				@Override
@@ -61,10 +60,29 @@ protected void setup()
 						ACLMessage message= myAgent.receive();
 						if(message!=null)
 						{
-							user=(OrdersCreate)message.getContentObject();
-							initWork(manager, 1,user.getUserValue(), "Expert_"+user.getUserIndetifier());
-						
+							//Create the Experts 
+							if(message.getConversationId()==ConversationsID.INIT_WORK_EXPERTS)
+							{
+								user=(OrdersCreate)message.getContentObject();
+								initWork(manager, user.getUserPerfil(),user.getUserValue(), "Expert_"+user.getUserIndetifier());
+								System.out.println("Manager Says: It's user's informations \n Name : "+user.getUserIndetifier()
+										+" Profile: "+user.getUserPerfil()+" Value: "+user.getUserValue());
+								
+							}
 							
+							//Reply Ok to create 
+							if(message.getConversationId()==ConversationsID.CREATE_MANAGER)
+							{
+								ACLMessage reply=message.createReply();
+								if(message.getContent().equalsIgnoreCase(ConversationsID.CREATE_MANAGER))
+								{
+									reply.setPerformative(ACLMessage.INFORM);
+									reply.setContent("Ok,I'm OK!");
+									myAgent.send(reply);
+									System.out.println("\nManager say:Creator sayed to me - "+message.getContent());
+								}
+							}
+								
 						}else block();
 						
 					}catch (Exception e)
@@ -75,8 +93,6 @@ protected void setup()
 			});
 			
 			//Test Yellow pages 
-			
-	
 			addBehaviour(new OneShotBehaviour(manager) {
 				String hunterName;
 				@Override
@@ -115,7 +131,7 @@ protected void setup()
 						hunterMessage.addReceiver(new AID(hunterName, AID.ISLOCALNAME));
 						hunterMessage.setLanguage("English");
 						hunterMessage.setOntology("Hello");
-						hunterMessage.setContent("Hello my friend");
+						hunterMessage.setContent("Manager say:Hello my friend");
 						
 						myAgent.send(hunterMessage);
 						
@@ -126,6 +142,10 @@ protected void setup()
 					}
 				}
 			});
+			
+			
+			
+			
 	/*		
 			addBehaviour(new CyclicBehaviour(this) {
 				
@@ -211,44 +231,6 @@ protected void setup()
 		}
 	}
 	
-	
-//Methods for manager the experts team
-private void createExpertAgents(String name,double value,int userPerfil)
-{
-	PlatformController container=getContainerController();
-	AgentController  agentController;
-	int qtdExperts=0;
-	
-	//calculate the numbers of experts agents 
-	switch (userPerfil) {
-	case 0://Corajoso
-		qtdExperts=2;
-	break;
-	case 1://Moderado
-		qtdExperts=3;
-	break;
-	case 2://Conservador
-		qtdExperts=7;
-	break;
-
-	default:
-		break;
-	}
-	
-	try {
-		for(int i=0;i<qtdExperts;i++)
-		{
-			agentController=container.createNewAgent(name+"["+(i+1)+"]", "rcs.core.agents.Expert", null);
-			agentController.start();
-			infoExperts.put(name+"["+(i+1)+"]" , null);
-		}
-	} 
-	catch (Exception e) 
-	{
-		e.printStackTrace();
-	}
-	
-}
 private void dropExpertAgent ()
 {
 	PlatformController container=getContainerController();
@@ -275,9 +257,7 @@ private void initWork(Agent agent,int userPerfil,double userValue,String name)
 	AgentController  agentController;
 	//Contact an hunter 
 	//Yellow pages
-	
-	
-	
+
 	//Create the experts agents
 	try
 	{
@@ -309,7 +289,6 @@ private void initWork(Agent agent,int userPerfil,double userValue,String name)
 				infoExperts.put(name+"["+(i+1)+"]" , null);
 			}
 		}break;
-
 		default:
 		{
 			for(int i=0;i<1;i++)
@@ -325,9 +304,6 @@ private void initWork(Agent agent,int userPerfil,double userValue,String name)
 	{
 		e.printStackTrace();
 	}
-	
-	
-	
 }
 
 
