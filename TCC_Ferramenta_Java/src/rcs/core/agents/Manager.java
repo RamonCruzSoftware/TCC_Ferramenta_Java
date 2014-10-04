@@ -5,6 +5,7 @@ package rcs.core.agents;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.Service;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.DFService;
@@ -24,6 +25,8 @@ import java.util.Map.Entry;
 import java.util.Iterator;
 
 import rcs.suport.financial.wallet.Stock;
+import rcs.suport.financial.wallet.Wallet;
+import rcs.suport.util.database.mongoDB.dao.UserInfoDao;
 import rcs.suport.util.database.mongoDB.pojo.OrdersCreate;
 
 
@@ -34,6 +37,9 @@ private static final long serialVersionUID = 1L;
 private OrdersCreate user;	
 private Map<String,ArrayList<Stock>> infoExperts;
 private Manager manager;
+private UserInfoDao userInfoDao;
+private String userName;
+
 protected void setup()
 	{
 		/*
@@ -64,6 +70,8 @@ protected void setup()
 							if(message.getConversationId()==ConversationsID.INIT_WORK_EXPERTS)
 							{
 								user=(OrdersCreate)message.getContentObject();
+								userName=user.getUserIndetifier();
+								
 								initWork(manager, user.getUserPerfil(),user.getUserValue(), "Expert_"+user.getUserIndetifier());
 								System.out.println("Manager Says: It's user's informations \n Name : "+user.getUserIndetifier()
 										+" Profile: "+user.getUserPerfil()+" Value: "+user.getUserValue());
@@ -81,6 +89,16 @@ protected void setup()
 									myAgent.send(reply);
 									System.out.println("\nManager say:Creator sayed to me - "+message.getContent());
 								}
+							}
+							
+							if(message.getConversationId()==ConversationsID.USER_LOGGED)
+							{
+								userInfoDao= new UserInfoDao();
+								userInfoDao.userLogged();
+								
+								System.out.println("Manager says: Ok, initializing conversation with "+userName);
+								userConversations(userName);
+								
 							}
 								
 						}else block();
@@ -304,6 +322,35 @@ private void initWork(Agent agent,int userPerfil,double userValue,String name)
 	{
 		e.printStackTrace();
 	}
+}
+
+private void userConversations(final String userIdentifier)
+{
+	addBehaviour(new Behaviour() {
+		UserInfoDao userInfoDao=new UserInfoDao();
+		@Override
+		public boolean done() {
+			
+			if(userInfoDao.isUserUnLogged(userIdentifier))
+				return true;
+			else
+			return false;
+			
+		}
+		
+		@Override
+		public void action() 
+		{
+			
+			Wallet walletInfo=new Wallet();
+			walletInfo.setUserID(userIdentifier);
+			walletInfo.setWalletValue(100000.f);
+			
+			userInfoDao.setNewInformationToUser(walletInfo);
+			
+			
+		}
+	});
 }
 
 
