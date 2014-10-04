@@ -15,7 +15,9 @@ import jade.wrapper.PlatformController;
 import java.io.IOException;
 
 import rcs.suport.util.database.mongoDB.dao.OrdersCreateDao;
+import rcs.suport.util.database.mongoDB.dao.UserInfoDao;
 import rcs.suport.util.database.mongoDB.pojo.OrdersCreate;
+import rcs.suport.util.database.mongoDB.pojo.UserInfo;
 
 public class Creator  extends Agent{
 	/**
@@ -24,8 +26,9 @@ public class Creator  extends Agent{
 	private static final long serialVersionUID = 1L;
 	private OrdersCreateDao orderCreateDao;
 	private OrdersCreate newOrderCreate;
-	
-	
+	private UserInfoDao userInfoDao;
+	private String userLogged;
+
 	protected void setup()
 	{
 		orderCreateDao= new OrdersCreateDao();
@@ -39,31 +42,51 @@ public class Creator  extends Agent{
 			
 			System.out.println("I'm live... My name is "+this.getLocalName());
 			
-			
-		//	new JadeConnectToMongoTest(); //Nao lembro o pq dessa linha
 		
 			/**
-			 * This Behaviour will go create a Manager Agent for each users
+			 * Este comportamento fica observando as requesicoes dos usuarios enviados pelo grails
+			 * 
 			 */
 			addBehaviour(new TickerBehaviour(this,10) 
 			{
 				private static final long serialVersionUID = 1L;
-
 				@Override
 				protected void onTick()
 				{
-					
+					userInfoDao=new UserInfoDao();
 					newOrderCreate=orderCreateDao.getNewOrderCreate();
+					userLogged=userInfoDao.userLogged();
 					
 					if(!(newOrderCreate==null))
 					{
 						createManagerForUser("Manager_"+newOrderCreate.getUserIndetifier(), newOrderCreate.getUserPerfil(), newOrderCreate.getUserValue());
-					}	
+					}
+					
+					if(!(userLogged==null))
+					{
+						addBehaviour(new OneShotBehaviour() {
+							
+							private static final long serialVersionUID = 1L;
+							@Override
+							public void action() 
+							{
+								ACLMessage message=new ACLMessage(ACLMessage.INFORM);
+								message.setOntology(ConversationsID.ONTOLOGY_USER_COMUNITATION);
+								message.setLanguage(ConversationsID.LANGUAGE);
+								message.setConversationId(ConversationsID.USER_LOGGED);
+								message.setContent(userLogged);
+								message.addReceiver(new AID("Manager_"+userLogged, AID.ISLOCALNAME));
+								
+								
+								System.out.println("Creator says: User "+userLogged+" is logged" );
+								myAgent.send(message);
+								
+							}
+						});
+					}
 				}
 			});
-			
-			
-			
+		
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -110,10 +133,6 @@ public class Creator  extends Agent{
 			e.printStackTrace();
 		}
 		
-		
-
-			
-			
 			addBehaviour(new Behaviour(this) 
 			{
 				boolean stopBehaviour=false;
