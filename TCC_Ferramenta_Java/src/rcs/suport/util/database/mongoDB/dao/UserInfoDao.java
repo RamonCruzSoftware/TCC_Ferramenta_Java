@@ -12,7 +12,10 @@ import com.mongodb.DBObject;
 
 public class UserInfoDao {
 	
-	private DBCollection coll;
+	private DBCollection collection_userInfo;
+	private DBCollection collection_userLogged;
+	private DBCollection collection_userUnLogged;
+	
 	
 	public  UserInfoDao()
 	{
@@ -20,7 +23,10 @@ public class UserInfoDao {
 		try{
 			MongoConnection connection=MongoConnection.getInstance();
 			DB db=connection.getDB();
-			 this.coll=db.getCollection("userInfo");
+			this.collection_userInfo=db.getCollection("userInfo");
+			this.collection_userLogged=db.getCollection("userLogged");
+			this.collection_userUnLogged=db.getCollection("userUnLogged");
+			
 			
 		}catch (Exception e)
 		{
@@ -32,13 +38,12 @@ public class UserInfoDao {
 	{
 		BasicDBObject keys = new BasicDBObject();
 		 keys.put("x", 1);
-		 
-		 DBCursor cursor = this.coll.find(new BasicDBObject(), keys);
+		 DBCursor cursor = this.collection_userInfo.find(new BasicDBObject(), keys);
 		 
 		 //Apaga informacoes anteriores
 		 while(cursor.hasNext())
 		 {
-			 coll.remove(cursor.next());
+			 collection_userInfo.remove(cursor.next());
 		 }
 		 
 		 BasicDBObject newInformation = new BasicDBObject("userIdentifier", walletInfo.getUserID()).
@@ -46,20 +51,38 @@ public class UserInfoDao {
 		            append("walletPercent", walletInfo.getWallterPercent());
 		 
 		            
-		         coll.insert(newInformation);
+		         collection_userInfo.insert(newInformation);
 		
+	}
+	
+ 
+	public boolean isUserUnLogged(String userName)
+	{
+		boolean result=false;
+		BasicDBObject keys = new BasicDBObject();
+		keys.put("_id", userName);
+		 
+		 DBObject userUnLogged=collection_userUnLogged.findOne(keys);
+		 
+		if(userUnLogged!=null)
+		{
+			result=true;
+			this.collection_userUnLogged.remove(userUnLogged);
+		}
+		
+		return result;
 	}
 	
 	public String userLogged()
 	{
 		String userIdentifier=null;
-		DBObject userLogged=coll.findOne();
+		DBObject userLogged=collection_userLogged.findOne();
 		
 		if(userLogged!=null)
 		{
 			userIdentifier=userLogged.get("userIdentifier").toString();
 			
-			this.coll.remove(userLogged);
+			this.collection_userLogged.remove(userLogged);
 		}
 		
 		return userIdentifier;
