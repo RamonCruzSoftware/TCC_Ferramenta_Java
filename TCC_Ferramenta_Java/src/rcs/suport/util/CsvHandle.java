@@ -5,7 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 
@@ -40,23 +44,22 @@ public class CsvHandle {
 
     public ArrayList<CandleStick> readCsvFile(String csv_file_path, ArrayList<CandleStick> list)
     {
-
-        try {
+    	DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+    	Date date =null;
+    	try {
 
             BufferedReader StrR = new BufferedReader(new FileReader(csv_file_path));
-
             String Str;
             String[] TableLine = null;
 
             while ((Str = StrR.readLine()) != null) {
-
                 // passando como parametro o divisor ",".
                 TableLine = Str.split(",");
+               date = (Date)format.parse(TableLine[0]);
                 list.add(new CandleStick(TableLine[1],
                         TableLine[2], TableLine[3],
                         TableLine[4], TableLine[5],
-                        TableLine[0]));
-
+                        date));
             }
             // Fechamos o buffer
             StrR.close();
@@ -65,7 +68,10 @@ public class CsvHandle {
             e.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
+        }catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return list;
 
     }
