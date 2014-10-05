@@ -1,11 +1,14 @@
 package rcs.suport.financial.partternsCandleStick;
+
+import java.util.Date;
+
 public class CandleStick {
 
     private double open, high, low, close, volume;
-    private String date;
+    private Date date;
 
     public CandleStick(double open, double high, double low, double close, double volume
-            , String date)
+            , Date date)
     {
         this.open = open;
         this.high = high;
@@ -14,9 +17,10 @@ public class CandleStick {
         this.volume = volume;
         this.date = date;
     }
+    
 
     public CandleStick(String open, String high, String low, String close, String volume
-            , String date)
+            , Date date)
     {
         this.date = date;
         this.open = Double.parseDouble(open);
@@ -51,7 +55,7 @@ public class CandleStick {
         return volume;
     }
 
-    public String getDate()
+    public Date getDate()
     {
         return date;
     }
