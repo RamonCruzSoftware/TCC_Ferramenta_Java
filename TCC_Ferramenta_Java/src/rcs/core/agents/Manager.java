@@ -111,7 +111,8 @@ protected void setup()
 			});
 			
 			//Test Yellow pages 
-			addBehaviour(new OneShotBehaviour(manager) {
+			addBehaviour(new OneShotBehaviour(manager)
+			{
 				String hunterName;
 				@Override
 				public void action() {
@@ -249,7 +250,28 @@ protected void setup()
 		}
 	}
 	
-private void dropExpertAgent ()
+	
+private void dropExpertAgent(String expertName)
+{
+	PlatformController container=getContainerController();
+	try
+	{
+		if(!(infoExperts.get(expertName).isEmpty()))
+		{
+			AgentController agentController=container.getAgent(expertName);
+			agentController.kill();
+			
+			//TODO transferir grupo de acoes para outro agente 
+			
+		}
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	
+}
+
+private void dropExpertAgent()
 {
 	PlatformController container=getContainerController();
 	try
