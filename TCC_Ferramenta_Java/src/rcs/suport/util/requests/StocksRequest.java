@@ -7,7 +7,7 @@ import rcs.suport.financial.partternsCandleStick.CandleStick;
 public interface StocksRequest {
 	
 	public CandleStick getCurrentValue(String stockCodeName);
-	public ArrayList<CandleStick> getHistoryValue(String stockCodeName);
+	public ArrayList<CandleStick> getHistoricalValue(String stockCodeName);
 	
 	
 

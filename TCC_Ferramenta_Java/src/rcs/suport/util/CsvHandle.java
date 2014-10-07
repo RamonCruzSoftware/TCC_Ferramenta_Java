@@ -1,6 +1,7 @@
 package rcs.suport.util;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
+import rcs.suport.financial.wallet.Stock;
 
 public class CsvHandle {
 	
@@ -42,6 +44,24 @@ public class CsvHandle {
         }
     }
 
+    public ArrayList<Stock>loadStocksFromCsv(String path)
+    {
+    	ArrayList<Stock>list=new ArrayList<Stock>();
+    	
+    	File file=new File(path);
+    	File files[]=file.listFiles();
+    	
+    	
+    	for(File f : files)
+    	{
+    		File arquivos=f;
+    		System.out.println(f.getName());
+    	}
+    	
+    	return list;
+    	
+    }
+    
     public ArrayList<CandleStick> readCsvFile(String csv_file_path, ArrayList<CandleStick> list)
     {
     	DateFormat format = new SimpleDateFormat("MM/dd/yyyy");

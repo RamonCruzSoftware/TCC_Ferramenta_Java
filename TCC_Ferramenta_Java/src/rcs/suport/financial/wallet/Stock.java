@@ -17,7 +17,12 @@ public class Stock {
 	 private CandleStick currentCandleStick;
 	 private Double currentVolume;
 	 
-	 Stock(){}
+	 public Stock(){}
+	 public Stock(String codeName,String sector)
+	 {
+		 this.codeName=codeName;
+		 this.sector=sector;
+	 }
 
 	public String getCodeName() {
 		return codeName;
