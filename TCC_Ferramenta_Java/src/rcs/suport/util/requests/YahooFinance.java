@@ -19,14 +19,54 @@ import java.util.Date;
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
 
-public class YahooFinance implements StocksRequest {
+public class YahooFinance implements StocksRequest,Runnable {
 
+	 private String mainDirPath;
+	
+	 private String subDirPath_1;
+	 private String subDirPath_2;
+	
+	 private File mkdir;
+	 
+	 private ArrayList<Stock>stockList;
+	 
+	 public YahooFinance(String mainDirPath,String subDirPath_1,String subDirPath_2)
+	 {
+		 this.setMainDirPath(mainDirPath);
+		 this.setSubDirPath_1(subDirPath_1);
+		 
+		 setMkdir(new File(mainDirPath+subDirPath_1));
+		 this.getMkdir().mkdir();
+		 
+		 this.setSubDirPath_2(subDirPath_2);
+		 
+		 setMkdir(new File(mainDirPath+subDirPath_1+subDirPath_2));
+		 this.getMkdir().mkdir();
+		 
+	 }
+	 public YahooFinance(String mainDirPath,String subDirPath_1,String subDirPath_2,ArrayList<Stock>stockList)
+	 {
+		 this.setMainDirPath(mainDirPath);
+		 this.setSubDirPath_1(subDirPath_1);
+		 
+		 setMkdir(new File(mainDirPath+subDirPath_1));
+		 this.getMkdir().mkdir();
+		 
+		 this.setSubDirPath_2(subDirPath_2);
+		 
+		 setMkdir(new File(mainDirPath+subDirPath_1+subDirPath_2));
+		 this.getMkdir().mkdir();
+		 
+	 }
 	 
 	@Override
 	public CandleStick getCurrentValue(String stockCodeName)
 	{
-		 String dirOutputPath="/Users/alissonnunes/Desktop/TCC/Ativos/"+stockCodeName;
+		 String dirOutputPath=this.getMainDirPath()+this.getSubDirPath_1()+this.getSubDirPath_2()+"/"+stockCodeName;
 		 String fileOutputPath=dirOutputPath+"/currentPrice_"+stockCodeName+".csv";
+		 
+		 
+		 
 		 CandleStick candleResult=null;
 		 
 		 try {
@@ -118,7 +158,7 @@ public class YahooFinance implements StocksRequest {
 	{
 	  boolean returnResult=false;	
 	  String urlPath = "http://finance.yahoo.com/d/quotes.csv?s="+stockCodeName+"&f=sd1t1ohgl1v&e=.csv";
-	  String dirOutputPath="/Users/alissonnunes/Desktop/TCC/Ativos/"+stockCodeName;
+	  String dirOutputPath=this.getMainDirPath()+this.getSubDirPath_1()+this.getSubDirPath_2()+"/"+stockCodeName;
 	  String fileOutputPath=dirOutputPath+"/currentPrice_"+stockCodeName+".csv";
 	        
 	        try {
@@ -149,17 +189,17 @@ public class YahooFinance implements StocksRequest {
 	 * @param stockNameCode
 	 * @return
 	 */
-	public boolean storeCsvHistoricalPriceStock(String stockNameCode)
+	public boolean storeCsvHistoricalPriceStock(String stockCodeName)
 	{
 		 boolean returnResult = false;
 		 Calendar currentDate=Calendar.getInstance();
 
-		 String urlPath = "http://real-chart.finance.yahoo.com/table.csv?s="+stockNameCode+
+		 String urlPath = "http://real-chart.finance.yahoo.com/table.csv?s="+stockCodeName+
 				 "&d="+currentDate.get(Calendar.DAY_OF_MONTH)+"&e="+currentDate.get(Calendar.MONTH)+
 				 "&f="+currentDate.get(Calendar.YEAR)+"&g=d&a=0&b=3&c=2000&ignore=.csv";
 
-		 String dirOutputPath="/Users/alissonnunes/Desktop/TCC/Ativos/"+stockNameCode;
-		 String fileOutputPath=dirOutputPath+"/historicalPrice_"+stockNameCode+".csv";
+		 String dirOutputPath=this.getMainDirPath()+this.getSubDirPath_1()+this.getSubDirPath_2()+"/"+stockCodeName;
+		 String fileOutputPath=dirOutputPath+"/historicalPrice_"+stockCodeName+".csv";
 		        
 		        try {
 		    
@@ -233,6 +273,55 @@ public class YahooFinance implements StocksRequest {
 		
 		return list;
 		
+	}
+
+	@Override
+	public void run() {
+		// TODO 
+		/*
+		 * Implementar esse metodo com classe anonima pois 
+		 * o corpo desse metodo ira variar de acordo com a 
+		 * necessidade.
+		 */
+		
+	}
+
+	public String getMainDirPath() {
+		return mainDirPath;
+	}
+
+	public void setMainDirPath(String mainDirPath) {
+		this.mainDirPath = mainDirPath;
+	}
+
+	public String getSubDirPath_1() {
+		return subDirPath_1;
+	}
+
+	public void setSubDirPath_1(String subDirPath_1) {
+		this.subDirPath_1 = subDirPath_1;
+	}
+
+	public String getSubDirPath_2() {
+		return subDirPath_2;
+	}
+
+	public void setSubDirPath_2(String subDirPath_2) {
+		this.subDirPath_2 = subDirPath_2;
+	}
+
+	public File getMkdir() {
+		return mkdir;
+	}
+
+	public void setMkdir(File mkdir) {
+		this.mkdir = mkdir;
+	}
+	public ArrayList<Stock> getStockList() {
+		return stockList;
+	}
+	public void setStockList(ArrayList<Stock> stockList) {
+		this.stockList = stockList;
 	}
 
 }
