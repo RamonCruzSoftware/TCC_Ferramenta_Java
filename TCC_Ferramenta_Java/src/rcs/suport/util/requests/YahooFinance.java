@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
@@ -77,15 +78,16 @@ public class YahooFinance implements StocksRequest,Runnable {
 
 	            while ((Str = StrR.readLine()) != null) {
 	                // passando como parametro o divisor ",".
-	                TableLine = Str.split(",");	            
-	                DateFormat format = new SimpleDateFormat("MM/dd/yyyy");	               
-					Date date = (Date)format.parse("10/10/2014");
-					
+	                TableLine = Str.split(",");	    
+	                
+	                DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);	               
+					Date date = (Date)format.parse(TableLine[1]+" "+TableLine[2]);
 					try{
 	                candleResult= new CandleStick(TableLine[3],
 	                        TableLine[4], TableLine[5],
 	                        TableLine[6], TableLine[7],
 	                        date);
+	                
 					}catch(NumberFormatException e)
 					{
 						System.out.println("Error: "+e);
@@ -98,9 +100,9 @@ public class YahooFinance implements StocksRequest,Runnable {
 	            e.printStackTrace();
 	        } catch (IOException ex) {
 	            ex.printStackTrace();
-	        }catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	        }catch (ParseException e)
+	        {
+	        	e.printStackTrace();
 			}catch(NumberFormatException e)
 			{
 				e.printStackTrace();
@@ -116,6 +118,7 @@ public class YahooFinance implements StocksRequest,Runnable {
 		ArrayList<CandleStick>list=new ArrayList<CandleStick>();
 		String dirOutputPath="/Users/alissonnunes/Desktop/TCC/Ativos/"+stockCodeName;
 		String fileOutputPath=dirOutputPath+"/historicalPrice_"+stockCodeName+".csv";
+		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date date =null;
 
@@ -131,6 +134,7 @@ public class YahooFinance implements StocksRequest,Runnable {
 	           	// passando como parametro o divisor ",".
 		           TableLine = Str.split(",");
 		           	date = (Date)format.parse(TableLine[0]);
+		           	
 	             	list.add(new CandleStick(TableLine[1],TableLine[2],TableLine[3],TableLine[4], TableLine[5],date));
 
 	            }
@@ -160,7 +164,9 @@ public class YahooFinance implements StocksRequest,Runnable {
 	  String urlPath = "http://finance.yahoo.com/d/quotes.csv?s="+stockCodeName+"&f=sd1t1ohgl1v&e=.csv";
 	  String dirOutputPath=this.getMainDirPath()+this.getSubDirPath_1()+this.getSubDirPath_2()+"/"+stockCodeName;
 	  String fileOutputPath=dirOutputPath+"/currentPrice_"+stockCodeName+".csv";
-	        
+	 
+	
+	  
 	        try {
 	    
 	        	URL website=new URL(urlPath);
