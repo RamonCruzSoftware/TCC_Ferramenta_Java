@@ -55,7 +55,6 @@ public class UserInfoDao {
 		
 	}
 	
- 
 	public boolean isUserUnLogged(String userName)
 	{
 		boolean result=false;

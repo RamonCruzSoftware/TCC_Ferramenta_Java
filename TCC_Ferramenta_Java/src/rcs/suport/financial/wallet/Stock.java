@@ -59,9 +59,7 @@ public class Stock {
 
 	public CandleStick getCurrentCandleStick() 
 	{
-		
-		
-		return currentCandleStick;
+		return this.candleSticks.get(this.candleSticks.size()-1);
 	}
 
 	public void setCurrentCandleStick(CandleStick currentCandleStick) {
