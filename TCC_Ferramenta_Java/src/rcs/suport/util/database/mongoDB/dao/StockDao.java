@@ -1,6 +1,15 @@
 package rcs.suport.util.database.mongoDB.dao;
 
+import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.swing.text.html.parser.Entity;
+
+import org.bson.NewBSONDecoder;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
@@ -11,6 +20,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.MongoException;
 
 public class StockDao {
 	
@@ -26,8 +36,6 @@ public class StockDao {
 			DB db=connection.getDB();
 			this.collection_stock=db.getCollection("stocks");
 			
-			
-			
 		}catch (Exception e)
 		{
 			e.printStackTrace();
@@ -35,49 +43,101 @@ public class StockDao {
 	}
 	
 	
-	public void insertCurrentStock(Stock stock)
+	public boolean insertCurrentStock(Stock stock)
 	{
+		
 		BasicDBObject where=new BasicDBObject("_id",stock.getCodeName());
-		DBCursor newStock=collection_stock.find(where);
-		ArrayList<DBObject> list=new ArrayList<DBObject>();
+		DBObject stockStored=null;
+		ArrayList<BasicDBObject> stockValuesToStore=new ArrayList<BasicDBObject>();
+		ArrayList<BasicDBObject> stockValuesStored=new ArrayList<BasicDBObject>();
 		
-		while(newStock.hasNext())
+		DBCursor cursor=collection_stock.find(where);
+		
+		while(cursor.hasNext())
 		{
-			
-			list=(ArrayList<DBObject>) newStock.next().get("values");
-			
+			stockStored=cursor.next();
 			
 		}
+		
+		BasicDBObject updateStock=new BasicDBObject("_id",stock.getCodeName()).append("sector", stock.getSector());
+	
+		stockValuesStored =(ArrayList<BasicDBObject>)stockStored.get("values");
+	
+		System.out.println("Par 1 "+stockValuesStored.get(stockValuesStored.size()-1).get("date").toString().getClass());
+		System.out.println("Par 2 "+stock.getCurrentCandleStick().getDate().toString().getClass());
+		
+		if(stockValuesStored.get(stockValuesStored.size()-1).get("date").toString().
+				equalsIgnoreCase(stock.getCurrentCandleStick().getDate().toString()))
+		{
+			System.out.println(" Passou");
+			return false;
+		}else
+		{
+			for(BasicDBObject c:stockValuesStored)
+			{
 				
-		System.out.println("Tamanho Lista "+list.size());
-		
-		for(DBObject d:list)
-		{
-			System.out.println(d.get("open"));
+				stockValuesToStore.add(c);
+				
+			}
+			stockValuesToStore.add(new BasicDBObject("date",stock.getCurrentCandleStick().getDate()).
+					append("open",stock.getCurrentCandleStick().getOpen()).
+					append("high",stock.getCurrentCandleStick().getHigh()).
+					append("low", stock.getCurrentCandleStick().getLow()).
+					append("close", stock.getCurrentCandleStick().getClose()).
+					append("volume", stock.getCurrentCandleStick().getVolume()));
 			
-		}
+			updateStock.put("values", stockValuesToStore);
+			
+			collection_stock.remove(stockStored);
+			collection_stock.insert(updateStock);
 		
+			return true;
+		}
+	
 	}
-	public void storeHistoricalStockValue(ArrayList<CandleStick> candleSticks,Stock stock)
+	
+	public boolean storeHistoricalStockValue(Stock stock)
 	{
 		BasicDBObject newStock=new BasicDBObject("_id",stock.getCodeName()).append("sector", stock.getSector());
 		
 		BasicDBObject stockValues = new BasicDBObject();
 		ArrayList<BasicDBObject> list=new ArrayList<BasicDBObject>();
 		
-		for(CandleStick c:candleSticks)
+		for(CandleStick c:stock.getCandleSticks())
 		{
 			
 			list.add(new BasicDBObject("date",c.getDate()).append("open",c.getOpen()).append("high",c.getHigh()).append("low", c.getLow()).append("close", c.getClose()).append("volume", c.getVolume()));
 		}
 		
-		
 		newStock.append("values", list);
 		
-		collection_stock.insert(newStock);
-		
-		//Date,Open,High,Low,Close,Volume,Adj Close
+		try
+		{
+			collection_stock.insert(newStock);
+			return true;
+			
+		}catch(MongoException.DuplicateKey e)
+		{
+			return false;
+		}
 		
 	}
+	
+	public void storeHistoricalStockValue_2(ArrayList<CandleStick> candleSticks,Stock stock)
+	{
+		BasicDBObject newStock=new BasicDBObject("_id",stock.getCodeName()).append("sector", stock.getSector());
+		Map<String,BasicDBObject> stockMap=new HashMap<String, BasicDBObject>();
+		
+		for(CandleStick c:candleSticks)
+		{
+			stockMap.put(c.getDate().toString(),new BasicDBObject("date",c.getDate()).append("open",c.getOpen()).append("high",c.getHigh()).append("low", c.getLow()).append("close", c.getClose()).append("volume", c.getVolume()));	
+		}
+	
+		newStock.append("values", stockMap);	
+		collection_stock.insert(newStock);
+	
+		
+	}
+	
 
 }

@@ -1,7 +1,9 @@
 package rcs.suport.financial.wallet;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 
 
@@ -9,13 +11,11 @@ public class Stock {
 
 	 private String codeName;
 	 private String type;
-	 private String companyShortName;
 	 private String sector;
-	 private Map<Date,CandleStick> candleSticks;
-	 private Map<Date, Double> volumes;
+	 private ArrayList<CandleStick> candleSticks;
 	 
 	 private CandleStick currentCandleStick;
-	 private Double currentVolume;
+
 	 
 	 public Stock(){}
 	 public Stock(String codeName,String sector)
@@ -40,13 +40,6 @@ public class Stock {
 		this.type = type;
 	}
 
-	public String getCompanyShortName() {
-		return companyShortName;
-	}
-
-	public void setCompanyShortName(String companyShortName) {
-		this.companyShortName = companyShortName;
-	}
 
 	public String getSector() {
 		return sector;
@@ -56,23 +49,18 @@ public class Stock {
 		this.sector = sector;
 	}
 
-	public Map<Date,CandleStick> getCandleSticks() {
+	public ArrayList<CandleStick> getCandleSticks() {
 		return candleSticks;
 	}
 
-	public void setCandleSticks(Map<Date,CandleStick> candleSticks) {
+	public void setCandleSticks(ArrayList<CandleStick> candleSticks) {
 		this.candleSticks = candleSticks;
 	}
 
-	Map<Date, Double> getVolumes() {
-		return volumes;
-	}
-
-	void setVolumes(Map<Date, Double> volumes) {
-		this.volumes = volumes;
-	}
-
-	public CandleStick getCurrentCandleStick() {
+	public CandleStick getCurrentCandleStick() 
+	{
+		
+		
 		return currentCandleStick;
 	}
 
@@ -80,16 +68,6 @@ public class Stock {
 		this.currentCandleStick = currentCandleStick;
 	}
 
-	public Double getCurrentVolume() {
-		return currentVolume;
-	}
-
-	public void setCurrentVolume(Double currentVolume) {
-		this.currentVolume = currentVolume;
-	}
-	
-	
-	
 	
 	
 }
