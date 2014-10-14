@@ -42,6 +42,11 @@ public class StockDao {
 		}
 	}
 	
+	public boolean insertCaculatedValues()
+	{
+		
+		return false;
+	}
 	
 	public boolean insertCurrentStock(Stock stock)
 	{
@@ -123,21 +128,6 @@ public class StockDao {
 		
 	}
 	
-	public void storeHistoricalStockValue_2(ArrayList<CandleStick> candleSticks,Stock stock)
-	{
-		BasicDBObject newStock=new BasicDBObject("_id",stock.getCodeName()).append("sector", stock.getSector());
-		Map<String,BasicDBObject> stockMap=new HashMap<String, BasicDBObject>();
-		
-		for(CandleStick c:candleSticks)
-		{
-			stockMap.put(c.getDate().toString(),new BasicDBObject("date",c.getDate()).append("open",c.getOpen()).append("high",c.getHigh()).append("low", c.getLow()).append("close", c.getClose()).append("volume", c.getVolume()));	
-		}
-	
-		newStock.append("values", stockMap);	
-		collection_stock.insert(newStock);
-	
-		
-	}
 	
 
 }

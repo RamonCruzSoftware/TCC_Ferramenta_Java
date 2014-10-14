@@ -20,7 +20,7 @@ import java.util.Locale;
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
 
-public class YahooFinance implements StocksRequest,Runnable {
+public class YahooFinance implements Runnable {
 
 	 private String mainDirPath;
 	
@@ -60,7 +60,7 @@ public class YahooFinance implements StocksRequest,Runnable {
 		 
 	 }
 	 
-	@Override
+
 	public CandleStick getCurrentValue(String stockCodeName)
 	{
 		 String dirOutputPath=this.getMainDirPath()+this.getSubDirPath_1()+this.getSubDirPath_2()+"/"+stockCodeName;
@@ -112,11 +112,11 @@ public class YahooFinance implements StocksRequest,Runnable {
 		
 	}
 
-	@Override
+	
 	public ArrayList<CandleStick> getHistoricalValue(String stockCodeName) 
 	{
 		ArrayList<CandleStick>list=new ArrayList<CandleStick>();
-		String dirOutputPath="/Users/alissonnunes/Desktop/TCC/Ativos/"+stockCodeName;
+		String dirOutputPath=this.getMainDirPath()+this.getSubDirPath_1()+this.getSubDirPath_2()+"/"+stockCodeName;
 		String fileOutputPath=dirOutputPath+"/historicalPrice_"+stockCodeName+".csv";
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -141,7 +141,8 @@ public class YahooFinance implements StocksRequest,Runnable {
 	            // Fechamos o buffer
 	            StrR.close();
 
-	        } catch (FileNotFoundException e) {
+	        } catch (FileNotFoundException e) 
+	        {
 	            e.printStackTrace();
 	        } catch (IOException ex) {
 	            ex.printStackTrace();
@@ -150,6 +151,57 @@ public class YahooFinance implements StocksRequest,Runnable {
 				e.printStackTrace();
 			}
 	        return list;
+		
+	}
+	public ArrayList<Stock> loadStocksFromCsv(String stocksCsvfolderPath)
+	{
+		ArrayList<Stock>list=new ArrayList<Stock>();
+		ArrayList<String>sectors=new ArrayList<String>();
+		
+		File file=new File(stocksCsvfolderPath);
+		for(File f:file.listFiles())
+		{
+			sectors.add(f.getName());//Sector Name (csv fileName)
+			
+		}
+		BufferedReader StrR;
+		String Str;
+		String[] TableLine;
+		for(String s:sectors)
+		{
+			 try {
+
+		            StrR = new BufferedReader(new FileReader(stocksCsvfolderPath+"/"+s));
+		            TableLine = null;
+		            Str=null;
+
+		            while ((Str = StrR.readLine()) != null)
+		            {
+		                // passando como parametro o divisor ",".
+		                TableLine = Str.split(",");	            
+		                list.add(new Stock(TableLine[0]+".SA",s.substring(0, (s.length()-4))));
+		                
+		            }
+		            // Fechamos o buffer
+		            StrR.close();
+
+		        } catch (FileNotFoundException e) {
+		            e.printStackTrace();
+		        } catch (IOException ex) {
+		            ex.printStackTrace();
+		        
+		        }
+			 }
+		
+//	FeedBack	
+//		System.out.println("foram encontrados  "+sectors.size()+ " Setores e "+list.size()+" Ações");
+//		System.out.println("Carregados os seguintes Stocks");
+//		for(Stock s:list)
+//		{
+//			System.out.println(s.getCodeName());
+//		}
+		
+		return list;
 		
 	}
 	
@@ -228,58 +280,7 @@ public class YahooFinance implements StocksRequest,Runnable {
 		return returnResult;
 	}
 
-	public ArrayList<Stock> loadStocksFromCsv(String path)
-	{
-		ArrayList<Stock>list=new ArrayList<Stock>();
-		ArrayList<String>sectors=new ArrayList<String>();
-		
-		
-		File file=new File(path);
-		for(File f:file.listFiles())
-		{
-			sectors.add(f.getName());//Sector Name (csv fileName)
-			
-		}
-		BufferedReader StrR;
-		String Str;
-		String[] TableLine;
-		for(String s:sectors)
-		{
-			 try {
-
-		            StrR = new BufferedReader(new FileReader(path+"/"+s));
-		            TableLine = null;
-		            Str=null;
-
-		            while ((Str = StrR.readLine()) != null)
-		            {
-		                // passando como parametro o divisor ",".
-		                TableLine = Str.split(",");	            
-		                list.add(new Stock(TableLine[0]+".SA",s.substring(0, (s.length()-4))));
-		                
-		            }
-		            // Fechamos o buffer
-		            StrR.close();
-
-		        } catch (FileNotFoundException e) {
-		            e.printStackTrace();
-		        } catch (IOException ex) {
-		            ex.printStackTrace();
-		        
-		        }
-			 }
-		
-//	FeedBack	
-//		System.out.println("foram encontrados  "+sectors.size()+ " Setores e "+list.size()+" Ações");
-//		System.out.println("Carregados os seguintes Stocks");
-//		for(Stock s:list)
-//		{
-//			System.out.println(s.getCodeName());
-//		}
-		
-		return list;
-		
-	}
+	
 
 	@Override
 	public void run() {

@@ -15,7 +15,8 @@ public class Stock {
 	 private ArrayList<CandleStick> candleSticks;
 	 
 	 private CandleStick currentCandleStick;
-
+	 
+	
 	 
 	 public Stock(){}
 	 public Stock(String codeName,String sector)
