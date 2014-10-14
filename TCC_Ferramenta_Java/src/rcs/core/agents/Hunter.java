@@ -19,13 +19,15 @@ import rcs.suport.util.requests.YahooFinance;
 
 public class Hunter extends Agent {
 	
-	/*Dir 1: "/Users/alissonnunes/Desktop"
-		 *Sub dir 1: "/Ramon"
-		 *Sub dir 2 "/Cruz"*/
+	
 	
 	private static final long serialVersionUID = 1L;
 	private Hunter hunter;
 	private boolean conversations=false;
+	
+	private ArrayList<Stock> stockList=null;
+	private StockDao stockDao=null;
+	
 	private String dir_1="/Users/alissonnunes/Desktop";
 	private String subDir_1="/TCC2";
 	private String subDir_2="/Ativos";
@@ -37,6 +39,8 @@ public class Hunter extends Agent {
 		{
 			hunter=this;
 			conversations=true;
+			stockDao = new StockDao();
+			
 			
 			//create the agent description of ifself
 			DFAgentDescription dfd=new DFAgentDescription();
@@ -379,16 +383,27 @@ private void initWork()
 {
 	addBehaviour(new OneShotBehaviour(hunter)
 	{
+		
+		
 		@Override
 		public void action() {
 		
 			try
 			{
+				
 				File file=new File(hunter.dir_1+hunter.subDir_1+hunter.subDir_2);
 				if(file.listFiles().length>2)
 					System.out.println("Alguem ja baixou os arquivos CSV.. nao precisa baixar");
 				
 				
+				hunter.stockList=hunter.stockDao.getAllStocks();
+				System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
+				System.out.println("Sao esses ...");
+				for(Stock s:hunter.stockList)
+				{
+					System.out.println("\t"+s.getCodeName() +" do setor: "+s.getSector());
+				}
+
 			}catch(Exception e)
 			{
 				System.out.println("Ainda nao baixaram os arquivos CSV, vou fazer isso.");
@@ -402,7 +417,8 @@ private void initWork()
 private  void loadDataBase()
 {
 	YahooFinance yahooFinance=new YahooFinance(this.dir_1, this.subDir_1, this.subDir_2);
-	StockDao stockDao= new StockDao();
+	
+	this.stockList=new ArrayList<Stock>();
 	
 	int count=0;
 	
@@ -410,16 +426,19 @@ private  void loadDataBase()
 	{
 		s.setCandleSticks(yahooFinance.getHistoricalValue(s.getCodeName()));
 		System.out.println(s.getCodeName()+ " Carregado com "+s.getCandleSticks().size()+ " Valores");
+		
 		if(s.getCandleSticks().size()>0)
 			{
-				stockDao.storeHistoricalStockValue(s);
+				this.stockDao.storeHistoricalStockValue(s);
 				count++;
+				this.stockList.add(s);
+				
 			}
-		
 	}
 	System.out.println(count+ " Acoes persistidas com sucesso !");
-	
+	System.out.println("Tem em memoria "+this.stockList.size()+ " acoes");
 	
 }
+
 
 }

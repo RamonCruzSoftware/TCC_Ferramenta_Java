@@ -88,32 +88,10 @@ public class MainClass
 		 
 	*/
 		
-		loadDataBase();
-		 
+		
 	 }
 	 
 	 
 	 
-	 private static void loadDataBase()
-	 {
-	 	YahooFinance yahooFinance=new YahooFinance(MainClass.dir_1, MainClass.subDir_1, MainClass.subDir_2);
-	 	StockDao stockDao= new StockDao();
-	 	
-	 	int count=0;
-	 	
-	 	for(Stock s: yahooFinance.loadStocksFromCsv(MainClass.sectorsCsvFilePath))
-	 	{
-	 		s.setCandleSticks(yahooFinance.getHistoricalValue(s.getCodeName()));
-	 		System.out.println(s.getCodeName()+ " Carregado com "+s.getCandleSticks().size()+ " Valores");
-	 		if(s.getCandleSticks().size()>0)
-	 			{
-	 				stockDao.storeHistoricalStockValue(s);
-	 				count++;
-	 			}
-	 		
-	 	}
-	 	System.out.println(count+ " Acoes carregadas com sucesso!");
-	 	
-	 	
-	 }
+	
 }

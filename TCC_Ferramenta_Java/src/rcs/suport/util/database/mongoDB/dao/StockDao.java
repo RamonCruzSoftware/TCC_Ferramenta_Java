@@ -67,15 +67,15 @@ public class StockDao {
 		BasicDBObject updateStock=new BasicDBObject("_id",stock.getCodeName()).append("sector", stock.getSector());
 	
 		stockValuesStored =(ArrayList<BasicDBObject>)stockStored.get("values");
-	
-		System.out.println("Par 1 "+stockValuesStored.get(stockValuesStored.size()-1).get("date").toString().getClass());
-		System.out.println("Par 2 "+stock.getCurrentCandleStick().getDate().toString().getClass());
 		
+		
+		//Verifico se a candle ja existe persistida no banco de dados 
 		if(stockValuesStored.get(stockValuesStored.size()-1).get("date").toString().
 				equalsIgnoreCase(stock.getCurrentCandleStick().getDate().toString()))
 		{
-			System.out.println(" Passou");
+			
 			return false;
+		
 		}else
 		{
 			for(BasicDBObject c:stockValuesStored)
@@ -125,6 +125,51 @@ public class StockDao {
 		{
 			return false;
 		}
+		
+	}
+	
+	public ArrayList<Stock> getAllStocks()
+	{
+		
+		DBCursor cursor= collection_stock.find();
+		
+		DBObject mongo_stock=null;
+		ArrayList<BasicDBObject> mongo_candleList=null;
+		
+		
+		ArrayList<Stock> stockList= new ArrayList<Stock>();
+		
+		
+		Stock stock=null;
+		
+		
+		while(cursor.hasNext())
+		{
+			
+			mongo_stock=cursor.next();
+			mongo_candleList=(ArrayList<BasicDBObject>) mongo_stock.get("values");
+			stock=new Stock(mongo_stock.get("_id").toString(), mongo_stock.get("sector").toString());
+			
+			
+			//Pega todo historico existente no banco de dados
+			ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
+			for(BasicDBObject c:mongo_candleList)
+			{
+				
+				candleList.add(new CandleStick(
+												c.getDouble("open"), 
+												c.getDouble("high"), c.getDouble("low"),
+												c.getDouble("close"), c.getInt("volume"), 
+												c.getDate("date"))
+											);
+			}
+			
+			stock.setCandleSticks(candleList);
+			stockList.add(stock);
+			
+		}
+		
+		return stockList;
 		
 	}
 	
