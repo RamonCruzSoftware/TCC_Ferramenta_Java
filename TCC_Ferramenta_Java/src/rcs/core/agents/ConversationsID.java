@@ -18,5 +18,8 @@ public class ConversationsID {
 	
 	public static final String USER_LOGGED="user logged";
 	
+	public static final String REQUEST_CURRENT_STOCK_VALUE="Current Stock value";
+	
+	
 
 }
