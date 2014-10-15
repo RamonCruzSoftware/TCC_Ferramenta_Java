@@ -18,8 +18,6 @@ public class StockDao {
 	private DBCollection collection_stock_values;
 	private DBCollection collection_stock;
 	
-	
-	
 	public StockDao()
 	{
 		super();
