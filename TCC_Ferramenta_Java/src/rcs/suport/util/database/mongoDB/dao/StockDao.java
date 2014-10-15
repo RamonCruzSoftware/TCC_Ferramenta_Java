@@ -1,15 +1,6 @@
 package rcs.suport.util.database.mongoDB.dao;
 
-import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.swing.text.html.parser.Entity;
-
-import org.bson.NewBSONDecoder;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
@@ -24,7 +15,9 @@ import com.mongodb.MongoException;
 
 public class StockDao {
 	
+	private DBCollection collection_stock_values;
 	private DBCollection collection_stock;
+	
 	
 	
 	public StockDao()
@@ -34,7 +27,8 @@ public class StockDao {
 		{
 			MongoConnection connection=MongoConnection.getInstance();
 			DB db=connection.getDB();
-			this.collection_stock=db.getCollection("stocks");
+			this.collection_stock_values=db.getCollection("stocks");
+		//	this.collection_stock=db.getCollection("stocks");
 			
 		}catch (Exception e)
 		{
@@ -42,10 +36,51 @@ public class StockDao {
 		}
 	}
 	
-	public boolean insertCaculatedValues()
+	
+	
+	
+	public void updateStock(Stock stock)
 	{
 		
-		return false;
+		BasicDBObject where=new BasicDBObject("_id",stock.getCodeName());
+		DBObject stockStored=null;
+		ArrayList<BasicDBObject> candleSticksList=new ArrayList<BasicDBObject>();
+		
+		
+		DBCursor cursor=collection_stock_values.find(where);
+		
+		
+		while(cursor.hasNext())
+		{
+			stockStored=cursor.next();
+			
+		}
+		//Convertendo informacoes 
+		for(CandleStick c:stock.getCandleSticks())
+		{
+			candleSticksList.add(new BasicDBObject("date",stock.getCurrentCandleStick().getDate()).
+							append("open",stock.getCurrentCandleStick().getOpen()).
+							append("high",stock.getCurrentCandleStick().getHigh()).
+							append("low", stock.getCurrentCandleStick().getLow()).
+							append("close", stock.getCurrentCandleStick().getClose()).
+							append("volume", stock.getCurrentCandleStick().getVolume()));
+		}		
+		
+		BasicDBObject updateStock=new BasicDBObject("_id",stock.getCodeName())
+										.append("sector", stock.getSector())
+										.append("avarangeReturn_15", stock.getAvarangeReturn_15())
+										.append("standardDeviation_15", stock.getStandardDeviation_15())
+										.append("variance_15", stock.getVariance_15())
+										.append("varianceCoefficient_15", stock.getVarianceCoefficient_15())
+										.append("avarangeReturn_30", stock.getAvarangeReturn_30())
+										.append("standardDeviation_30", stock.getStandardDeviation_30())
+										.append("variance_30", stock.getVariance_30())
+										.append("varianceCoefficient_30", stock.getVarianceCoefficient_30())
+										.append("values", candleSticksList);						
+						
+			collection_stock_values.remove(stockStored);
+			collection_stock_values.insert(updateStock);
+		
 	}
 	
 	public boolean insertCurrentStock(Stock stock)
@@ -56,7 +91,7 @@ public class StockDao {
 		ArrayList<BasicDBObject> stockValuesToStore=new ArrayList<BasicDBObject>();
 		ArrayList<BasicDBObject> stockValuesStored=new ArrayList<BasicDBObject>();
 		
-		DBCursor cursor=collection_stock.find(where);
+		DBCursor cursor=collection_stock_values.find(where);
 		
 		while(cursor.hasNext())
 		{
@@ -64,10 +99,19 @@ public class StockDao {
 			
 		}
 		
-		BasicDBObject updateStock=new BasicDBObject("_id",stock.getCodeName()).append("sector", stock.getSector());
+		BasicDBObject updateStock=new BasicDBObject("_id",stock.getCodeName())
+													.append("sector", stock.getSector())
+													.append("avarangeReturn_15", stock.getAvarangeReturn_15())
+													.append("standardDeviation_15", stock.getStandardDeviation_15())
+													.append("variance_15", stock.getVariance_15())
+													.append("varianceCoefficient_15", stock.getVarianceCoefficient_15())
+													.append("avarangeReturn_30", stock.getAvarangeReturn_30())
+													.append("standardDeviation_30", stock.getStandardDeviation_30())
+													.append("variance_30", stock.getVariance_30())
+													.append("varianceCoefficient_30", stock.getVarianceCoefficient_30());
+													
 	
 		stockValuesStored =(ArrayList<BasicDBObject>)stockStored.get("values");
-		
 		
 		//Verifico se a candle ja existe persistida no banco de dados 
 		if(stockValuesStored.get(stockValuesStored.size()-1).get("date").toString().
@@ -93,8 +137,8 @@ public class StockDao {
 			
 			updateStock.put("values", stockValuesToStore);
 			
-			collection_stock.remove(stockStored);
-			collection_stock.insert(updateStock);
+			collection_stock_values.remove(stockStored);
+			collection_stock_values.insert(updateStock);
 		
 			return true;
 		}
@@ -118,7 +162,7 @@ public class StockDao {
 		
 		try
 		{
-			collection_stock.insert(newStock);
+			collection_stock_values.insert(newStock);
 			return true;
 			
 		}catch(MongoException.DuplicateKey e)
@@ -131,7 +175,7 @@ public class StockDao {
 	public ArrayList<Stock> getAllStocks()
 	{
 		
-		DBCursor cursor= collection_stock.find();
+		DBCursor cursor= collection_stock_values.find();
 		
 		DBObject mongo_stock=null;
 		ArrayList<BasicDBObject> mongo_candleList=null;

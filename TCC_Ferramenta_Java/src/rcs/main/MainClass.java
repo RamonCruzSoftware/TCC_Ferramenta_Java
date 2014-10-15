@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
 
+import rcs.core.agents.Hunter;
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
 import rcs.suport.util.CsvHandle;

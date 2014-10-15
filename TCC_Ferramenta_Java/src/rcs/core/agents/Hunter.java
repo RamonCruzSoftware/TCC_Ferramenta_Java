@@ -9,10 +9,13 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import rcs.main.MainClass;
+import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
+import rcs.suport.statistical.Statistical;
 import rcs.suport.util.database.mongoDB.dao.StockDao;
 import rcs.suport.util.requests.YahooFinance;
 
@@ -27,6 +30,8 @@ public class Hunter extends Agent {
 	
 	private ArrayList<Stock> stockList=null;
 	private StockDao stockDao=null;
+	private Statistical statistical=null;
+	
 	
 	private String dir_1="/Users/alissonnunes/Desktop";
 	private String subDir_1="/TCC2";
@@ -40,7 +45,7 @@ public class Hunter extends Agent {
 			hunter=this;
 			conversations=true;
 			stockDao = new StockDao();
-			
+			statistical=new Statistical();
 			
 			//create the agent description of ifself
 			DFAgentDescription dfd=new DFAgentDescription();
@@ -398,17 +403,21 @@ private void initWork()
 				
 				hunter.stockList=hunter.stockDao.getAllStocks();
 				System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
-				System.out.println("Sao esses ...");
-				for(Stock s:hunter.stockList)
-				{
-					System.out.println("\t"+s.getCodeName() +" do setor: "+s.getSector());
-				}
+				System.out.println("Vou calcular os valores estatisticos para catalogar");
+				
+				calculateStatistical();
+				
 
 			}catch(Exception e)
 			{
+				e.printStackTrace();
 				System.out.println("Ainda nao baixaram os arquivos CSV, vou fazer isso.");
 				hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1,hunter.subDir_2, hunter.sectorsCsvFilePath);
+
+				
 			}
+			
+			
 			
 				
 		}
@@ -437,6 +446,36 @@ private  void loadDataBase()
 	}
 	System.out.println(count+ " Acoes persistidas com sucesso !");
 	System.out.println("Tem em memoria "+this.stockList.size()+ " acoes");
+	
+	System.out.println("Vou calcular os valores estatisticos para catalogar");
+	calculateStatistical();
+	
+}
+
+private void calculateStatistical()
+{
+	
+	for(Stock s:this.stockList)
+	{
+		System.out.println("Calculando valores estatiscos para "+s.getCodeName());
+		
+		s.setAvarangeReturn_15(this.statistical.averangeReturn_15(s.getCandleSticks()));
+		s.setAvarangeReturn_30(this.statistical.averangeReturn_30(s.getCandleSticks()));
+		
+		s.setStandardDeviation_15(this.statistical.calculeStandardDeviation_15(s.getCandleSticks()));
+		s.setStandardDeviation_30(this.statistical.calculeStandardDeviation_30(s.getCandleSticks()));
+		
+		s.setVariance_15(this.statistical.calculeVariance_15(s.getCandleSticks()));
+		s.setVariance_30(this.statistical.calculeVariance_30(s.getCandleSticks()));
+		
+		s.setVarianceCoefficient_15(this.statistical.calculeVariance_15(s.getCandleSticks()));
+		s.setVarianceCoefficient_30(this.statistical.calculeVariance_30(s.getCandleSticks()));
+		
+		this.hunter.stockDao.updateStock(s);
+	}
+	
+	
+	System.out.println(" Calculos concluidos! ");
 	
 }
 
