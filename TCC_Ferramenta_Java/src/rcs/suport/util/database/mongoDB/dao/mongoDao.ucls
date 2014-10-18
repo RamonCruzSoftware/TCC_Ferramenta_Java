@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.5" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="rcs.suport.util.database.mongoDB.dao.UserInfoDao" project="TCC_Ferramenta_Java" 
+    file="/TCC_Ferramenta_Java/src/rcs/suport/util/database/mongoDB/dao/UserInfoDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="188" width="245" x="123" y="105"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="rcs.suport.util.database.mongoDB.dao.OrdersCreateDao" 
+    project="TCC_Ferramenta_Java" 
+    file="/TCC_Ferramenta_Java/src/rcs/suport/util/database/mongoDB/dao/OrdersCreateDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="116" width="221" x="408" y="105"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="rcs.suport.util.database.mongoDB.dao.StockDao" project="TCC_Ferramenta_Java" 
+    file="/TCC_Ferramenta_Java/src/rcs/suport/util/database/mongoDB/dao/StockDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="188" width="252" x="669" y="105"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

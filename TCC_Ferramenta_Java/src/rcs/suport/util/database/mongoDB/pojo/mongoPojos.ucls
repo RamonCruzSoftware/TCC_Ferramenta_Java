@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.5" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="rcs.suport.util.database.mongoDB.pojo.UserInfo" project="TCC_Ferramenta_Java" 
+    file="/TCC_Ferramenta_Java/src/rcs/suport/util/database/mongoDB/pojo/UserInfo.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="260" width="190" x="142" y="116"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="rcs.suport.util.database.mongoDB.pojo.OrdersCreate" project="TCC_Ferramenta_Java" 
+    file="/TCC_Ferramenta_Java/src/rcs/suport/util/database/mongoDB/pojo/OrdersCreate.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="260" width="190" x="372" y="116"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

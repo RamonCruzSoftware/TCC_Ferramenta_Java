@@ -87,8 +87,6 @@ public class Hunter extends Agent {
 		}
 	}
 	
-	
-
 
 private void communication(Agent agent)
 {
@@ -397,24 +395,31 @@ private void initWork()
 			{
 				
 				File file=new File(hunter.dir_1+hunter.subDir_1+hunter.subDir_2);
-				if(file.listFiles().length>2)
-					System.out.println("Alguem ja baixou os arquivos CSV.. nao precisa baixar");
 				
+				System.out.println(" is Directory :"+file.isDirectory());
 				
-				hunter.stockList=hunter.stockDao.getAllStocks();
-				System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
-				System.out.println("Vou calcular os valores estatisticos para catalogar");
-				
-				calculateStatistical();
-				
+				if(file.isDirectory())
+				{
+					if(file.listFiles().length>2)
+						System.out.println("Alguem ja baixou os arquivos CSV.. nao precisa baixar");
+					
+					
+					hunter.stockList=hunter.stockDao.getAllStocksPrices();
+					System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
+					System.out.println("Vou calcular os valores estatisticos para catalogar");
+					calculateStatistical();
+				}else 
+				{
+					System.out.println("Ainda nao baixaram os arquivos CSV, vou fazer isso.");
+					hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1,hunter.subDir_2, hunter.sectorsCsvFilePath);
+				}
+					
+								
 
 			}catch(Exception e)
 			{
 				e.printStackTrace();
-				System.out.println("Ainda nao baixaram os arquivos CSV, vou fazer isso.");
-				hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1,hunter.subDir_2, hunter.sectorsCsvFilePath);
-
-				
+			
 			}
 			
 			
@@ -429,7 +434,9 @@ private  void loadDataBase()
 	
 	this.stockList=new ArrayList<Stock>();
 	
-	int count=0;
+	int countStocks=0;
+	int countCandleSticks=0;
+	
 	
 	for(Stock s: yahooFinance.loadStocksFromCsv(this.sectorsCsvFilePath))
 	{
@@ -439,15 +446,19 @@ private  void loadDataBase()
 		if(s.getCandleSticks().size()>0)
 			{
 				this.stockDao.storeHistoricalStockValue(s);
-				count++;
+				
+				countCandleSticks+=s.getCandleSticks().size();
+				countStocks++;
 				this.stockList.add(s);
 				
 			}
 	}
-	System.out.println(count+ " Acoes persistidas com sucesso !");
+	System.out.println(countStocks+ " Acoes persistidas com sucesso !");
 	System.out.println("Tem em memoria "+this.stockList.size()+ " acoes");
+	System.out.println("O total de CandleSticks eh "+countCandleSticks);
 	
 	System.out.println("Vou calcular os valores estatisticos para catalogar");
+	
 	calculateStatistical();
 	
 }
@@ -477,6 +488,15 @@ private void calculateStatistical()
 	
 	System.out.println(" Calculos concluidos! ");
 	
+}
+private void stocksSorted(double lowerLimit,double upperLimit)
+{
+	System.out.println("Stock Sorted by Standard Deviation 30 "+this.stockDao.getStockOrderByStandardDeviation_30(lowerLimit,upperLimit).size());
+	for(Stock s:this.stockDao.getStockOrderByStandardDeviation_30(lowerLimit,upperLimit))
+	{
+		System.out.println(s.getCodeName());
+		System.out.println("Standard Deviation 30: "+s.getStandardDeviation_30());
+	}
 }
 
 
