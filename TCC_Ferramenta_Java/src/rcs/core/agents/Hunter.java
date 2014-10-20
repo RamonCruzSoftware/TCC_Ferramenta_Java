@@ -12,17 +12,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import com.mongodb.util.MyAsserts.MyAssert;
+
 import rcs.main.MainClass;
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
 import rcs.suport.statistical.Statistical;
+import rcs.suport.util.InfoConversations;
 import rcs.suport.util.database.mongoDB.dao.StockDao;
 import rcs.suport.util.requests.YahooFinance;
 
 
 public class Hunter extends Agent {
-	
-	
 	
 	private static final long serialVersionUID = 1L;
 	private Hunter hunter;
@@ -54,7 +55,7 @@ public class Hunter extends Agent {
 			//Create an service in yellow pages
 			ServiceDescription service=new ServiceDescription();
 			service.setType("StockHunter");
-			service.setName("StockHunter");
+			service.setName("Hunter");
 			
 			
 			dfd.addServices(service);
@@ -93,6 +94,7 @@ private void communication(Agent agent)
 	addBehaviour(new CyclicBehaviour(agent) {
 		
 		private static final long serialVersionUID = 1L;
+		private InfoConversations info;
 
 		@Override
 		public void action() 
@@ -102,6 +104,30 @@ private void communication(Agent agent)
 				ACLMessage messages= myAgent.receive();
 				if(messages!=null &&conversations)
 				{
+					if(messages.getConversationId()==ConversationsID.STOCKS_SUGGESTIONS)
+					{
+						info=(InfoConversations)messages.getContentObject();
+						
+						switch (info.getUserProfile()) {
+						case 0://corajoso
+							info.setStockList(hunter.stockDao.getStockOrderByStandardDeviation_30(15, 30));
+							break;
+						case 1://moderado
+							info.setStockList(hunter.stockDao.getStockOrderByStandardDeviation_30(5	, 10));
+							break;
+						case 2://conservador
+							
+							info.setStockList(hunter.stockDao.getStockOrderByStandardDeviation_30(0	, 6));
+							break;
+
+						default:
+							break;
+						}
+						
+						ACLMessage reply=messages.createReply();
+						reply.setContentObject(info);
+						myAgent.send(reply);
+					}
 					System.out.println(messages.getContent());
 				}else block();
 				
@@ -402,8 +428,6 @@ private void initWork()
 				{
 					if(file.listFiles().length>2)
 						System.out.println("Alguem ja baixou os arquivos CSV.. nao precisa baixar");
-					
-					
 					hunter.stockList=hunter.stockDao.getAllStocksPrices();
 					System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
 					System.out.println("Vou calcular os valores estatisticos para catalogar");
@@ -411,6 +435,7 @@ private void initWork()
 				}else 
 				{
 					System.out.println("Ainda nao baixaram os arquivos CSV, vou fazer isso.");
+					hunter.conversations=false;
 					hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1,hunter.subDir_2, hunter.sectorsCsvFilePath);
 				}
 					
@@ -465,7 +490,7 @@ private  void loadDataBase()
 
 private void calculateStatistical()
 {
-	
+	this.conversations=false;
 	for(Stock s:this.stockList)
 	{
 		System.out.println("Calculando valores estatiscos para "+s.getCodeName());
@@ -485,12 +510,13 @@ private void calculateStatistical()
 		this.hunter.stockDao.updateStock(s);
 	}
 	
-	
+	this.conversations=true;
 	System.out.println(" Calculos concluidos! ");
 	
 }
 private void stocksSorted(double lowerLimit,double upperLimit)
 {
+	
 	System.out.println("Stock Sorted by Standard Deviation 30 "+this.stockDao.getStockOrderByStandardDeviation_30(lowerLimit,upperLimit).size());
 	for(Stock s:this.stockDao.getStockOrderByStandardDeviation_30(lowerLimit,upperLimit))
 	{

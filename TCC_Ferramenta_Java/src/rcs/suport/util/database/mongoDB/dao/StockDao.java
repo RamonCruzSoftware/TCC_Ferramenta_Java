@@ -299,7 +299,7 @@ public class StockDao {
 		{
 			
 			mongo_stock=cursor.next();
-			stock=new Stock(mongo_stock.get("_id").toString(), mongo_stock.get("sector").toString());
+			stock=new Stock(mongo_stock.get("_id").toString(), null);
 			
 			stock.setAvarangeReturn_15(Double.parseDouble( mongo_stock.get("avarangeReturn_15").toString()));
 			stock.setAvarangeReturn_30(Double.parseDouble( mongo_stock.get("avarangeReturn_30").toString()));
@@ -332,7 +332,7 @@ public class StockDao {
 		{
 			
 			mongo_stock=cursor.next();
-			stock=new Stock(mongo_stock.get("_id").toString(), mongo_stock.get("sector").toString());
+			stock=new Stock(mongo_stock.get("_id").toString(), null);
 			
 			stock.setAvarangeReturn_15(Double.parseDouble( mongo_stock.get("avarangeReturn_15").toString()));
 			stock.setAvarangeReturn_30(Double.parseDouble( mongo_stock.get("avarangeReturn_30").toString()));

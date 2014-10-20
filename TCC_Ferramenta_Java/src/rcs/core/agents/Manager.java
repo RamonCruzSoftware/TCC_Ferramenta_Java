@@ -26,6 +26,7 @@ import java.util.Iterator;
 
 import rcs.suport.financial.wallet.Stock;
 import rcs.suport.financial.wallet.Wallet;
+import rcs.suport.util.InfoConversations;
 import rcs.suport.util.database.mongoDB.dao.UserInfoDao;
 import rcs.suport.util.database.mongoDB.pojo.OrdersCreate;
 
@@ -39,6 +40,7 @@ private Map<String,ArrayList<Stock>> infoExperts;
 private Manager manager;
 private UserInfoDao userInfoDao;
 private String userName;
+private InfoConversations info;
 
 protected void setup()
 	{
@@ -110,57 +112,8 @@ protected void setup()
 				}
 			});
 			
-			//Test Yellow pages 
-			addBehaviour(new OneShotBehaviour(manager)
-			{
-				String hunterName;
-				@Override
-				public void action() {
-							
-					try
-					{
-						DFAgentDescription dfd= new DFAgentDescription();
-						
-						//Service 
-						ServiceDescription service= new ServiceDescription();
-						service.setType("Hunt");
-						service.setName("Hunting");
-						
-						dfd.addServices(service);
-						
-						//request service on yellow pages 
-						DFAgentDescription[] result = DFService.search(manager, dfd);
-						
-						for(int i=0; i< result.length;i++)
-						{
-							String out =result[i].getName().getLocalName()+" Prove";
-							
-							Iterator<ServiceDescription> iter=result[i].getAllServices(); 
-							while(iter.hasNext())
-							{
-								ServiceDescription sd=(ServiceDescription)iter.next();
-								out+=" "+sd.getName();
-							}
-							System.out.println(out);
-							
-							hunterName=result[i].getName().getLocalName();
-						}
-						
-						ACLMessage hunterMessage=new ACLMessage(ACLMessage.INFORM);
-						hunterMessage.addReceiver(new AID(hunterName, AID.ISLOCALNAME));
-						hunterMessage.setLanguage("English");
-						hunterMessage.setOntology("Hello");
-						hunterMessage.setContent("Manager say:Hello my friend");
-						
-						myAgent.send(hunterMessage);
-						
-						
-					}catch(Exception e)
-					{
-						e.printStackTrace();
-					}
-				}
-			});
+		
+			
 			
 			
 			
@@ -289,61 +242,148 @@ private void dropExpertAgent()
 	}
 }
 
-private void initWork(Agent agent,int userPerfil,double userValue,String name)
+private void initWork(Agent agent,int userProfile,double userValue,String userIdentifier)
 {
-	Map<String,Stock> stocks;
-	ArrayList<Stock> listStocks;
-	PlatformController container=getContainerController();
-	AgentController  agentController;
+	
+	
+	manager.info=new InfoConversations(userIdentifier,userProfile);
+	
 	//Contact an hunter 
 	//Yellow pages
+	addBehaviour(new OneShotBehaviour(manager)
+	{
+		
+		private static final long serialVersionUID = 1L;
+		String hunterName;
+		@Override
+		public void action() {
+					
+			try
+			{
+				DFAgentDescription dfd= new DFAgentDescription();
+				
+				//Service 
+				ServiceDescription service= new ServiceDescription();
+				service.setType("StockHunter");
+				service.setName("Hunter");
+				
+				dfd.addServices(service);
+				
+				//request service on yellow pages 
+				DFAgentDescription[] result = DFService.search(manager, dfd);
+				
+				if(result !=null) hunterName=result[0].getName().getLocalName();
+				
+				ACLMessage hunterMessage=new ACLMessage(ACLMessage.INFORM);
+				hunterMessage.addReceiver(new AID(hunterName, AID.ISLOCALNAME));
+				hunterMessage.setLanguage("English");
+				hunterMessage.setOntology("stocks");
+				hunterMessage.setConversationId(ConversationsID.STOCKS_SUGGESTIONS);
+				hunterMessage.setContentObject(manager.info);
+				
+				myAgent.send(hunterMessage);
+				
+				//Init conversations 
+				manager.AgentsConversations();
+				
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+	});
+	
+	
 
+}
+private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock> listStocks)
+{
+	PlatformController container=getContainerController();
+	AgentController  agentController;
+	
 	//Create the experts agents
+
 	try
 	{
-		switch (userPerfil) {
+		switch (userProfile) {
 		case 0://Corajoso
 		{
 			for(int i=0;i<2;i++)
 			{
-				agentController=container.createNewAgent(name+"["+(i+1)+"]", "rcs.core.agents.Expert", null);
+				agentController=container.createNewAgent(userIdentifier+"["+(i+1)+"]", "rcs.core.agents.Expert", null);
 				agentController.start();
-				infoExperts.put(name+"["+(i+1)+"]" , null);
+				infoExperts.put(userIdentifier+"["+(i+1)+"]" , null);
 			}
 		}break;
 		case 1://Moderado
 		{
 			for(int i=0;i<3;i++)
 			{
-				agentController=container.createNewAgent(name+"["+(i+1)+"]", "rcs.core.agents.Expert", null);
+				agentController=container.createNewAgent(userIdentifier+"["+(i+1)+"]", "rcs.core.agents.Expert", null);
 				agentController.start();
-				infoExperts.put(name+"["+(i+1)+"]" , null);
+				infoExperts.put(userIdentifier+"["+(i+1)+"]" , null);
 			}
 		}break;
 		case 2://Conservador
 		{
 			for(int i=0;i<7;i++)
 			{
-				agentController=container.createNewAgent(name+"["+(i+1)+"]", "rcs.core.agents.Expert", null);
+				agentController=container.createNewAgent(userIdentifier+"["+(i+1)+"]", "rcs.core.agents.Expert", null);
 				agentController.start();
-				infoExperts.put(name+"["+(i+1)+"]" , null);
+				infoExperts.put(userIdentifier+"["+(i+1)+"]" , null);
 			}
 		}break;
 		default:
 		{
 			for(int i=0;i<1;i++)
 			{
-				agentController=container.createNewAgent(name+"["+(i+1)+"]", "rcs.core.agents.Expert", null);
+				agentController=container.createNewAgent(userIdentifier+"["+(i+1)+"]", "rcs.core.agents.Expert", null);
 				agentController.start();
-				infoExperts.put(name+"["+(i+1)+"]" , null);
+				infoExperts.put(userIdentifier+"["+(i+1)+"]" , null);
 			}
 		}
 			break;
 		}
+		
+		//Divisao das acoes entre os especialistas 
+		
+		
 	}catch(Exception e)
 	{
 		e.printStackTrace();
 	}
+	
+	
+}
+private void AgentsConversations()
+{
+	addBehaviour(new CyclicBehaviour() {
+		
+		@Override
+		public void action() 
+		{
+			try {
+					ACLMessage message= myAgent.receive();
+					if(message!=null)
+					{
+						if(message.getConversationId()==ConversationsID.STOCKS_SUGGESTIONS)
+						{
+							
+								manager.info=(InfoConversations) message.getContentObject();
+								System.out.println("Hunter recomendou "+manager.info.getStockList().size()+" Acoes");
+		
+							
+						}
+					}
+			
+			} catch (UnreadableException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+	});
 }
 
 private void userConversations(final String userIdentifier)

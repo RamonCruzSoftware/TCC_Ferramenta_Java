@@ -1,9 +1,10 @@
 package rcs.suport.financial.wallet;
 
 
+import jade.util.leap.Serializable;
 import java.util.ArrayList;
 
-public class Wallet 
+public class Wallet implements Serializable
 {
 	
 	private String userID;

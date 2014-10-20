@@ -1,13 +1,13 @@
 package rcs.suport.financial.wallet;
 
+import jade.util.leap.Serializable;
+
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 
 
-public class Stock {
+public class Stock implements Serializable {
 
 	 private String codeName;
 	 private String type;
