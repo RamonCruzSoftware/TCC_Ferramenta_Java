@@ -155,6 +155,7 @@ public class Creator  extends Agent{
 					
 					System.out.println("Creater says for "+nameAgentManager+": "+message.getContent());
 					myAgent.send(message);
+					
 					//Listener messages 
 					try
 					{
@@ -163,7 +164,7 @@ public class Creator  extends Agent{
 						{
 							if(message.getConversationId()==ConversationsID.CREATE_MANAGER)
 							{
-								System.out.println("Manager replies: "+message.getContent());
+								
 								stopBehaviour=true;
 							}
 						}else block();
@@ -176,7 +177,8 @@ public class Creator  extends Agent{
 				}
 			});
 			
-			addBehaviour(new OneShotBehaviour() {
+			addBehaviour(new OneShotBehaviour() 
+			{
 				
 				private static final long serialVersionUID = 1L;
 
@@ -188,7 +190,7 @@ public class Creator  extends Agent{
 						message.addReceiver(new AID(nameAgentManager,AID.ISLOCALNAME));
 						message.setLanguage(ConversationsID.LANGUAGE);
 						message.setOntology(ConversationsID.ONTOLOGY_CREATION);
-						message.setConversationId(ConversationsID.INIT_WORK_EXPERTS);
+						message.setConversationId(ConversationsID.CREATE_EXPERTS);
 						message.setContentObject(newOrderCreate);
 						myAgent.send(message);
 					

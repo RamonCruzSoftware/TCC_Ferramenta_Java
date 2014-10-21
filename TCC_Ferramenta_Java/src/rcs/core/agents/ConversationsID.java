@@ -13,7 +13,8 @@ public class ConversationsID {
 	//Ids
 	public static final String CREATE_MANAGER="Are you Ok?";
 	public static final String REQUEST_VALUES_EXPERTS="Stokes values, please.";
-	public static final String INIT_WORK_EXPERTS="init work";
+	public static final String INIT_WORK="init work";
+	public static final String CREATE_EXPERTS="Create experts";
 	
 	
 	public static final String USER_LOGGED="user logged";

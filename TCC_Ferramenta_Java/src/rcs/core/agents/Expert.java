@@ -2,6 +2,7 @@ package rcs.core.agents;
 
 import java.util.ArrayList;
 
+import rcs.suport.financial.wallet.Stock;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
@@ -12,40 +13,46 @@ import jade.lang.acl.UnreadableException;
 
 
 public class Expert extends Agent {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 1L;
+	private Agent expert;
 	protected void setup()
 	{
 		try{
+			expert=this;
 			
 			DFAgentDescription dfd =new DFAgentDescription();
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
 			
-			System.out.println("Hi, I'm live , my name is "+this.getLocalName());
+			System.out.println("Hi, I'm live , my name is {"+this.getLocalName()+"}");
 			
-			
-			//testando recebimento de ArrayList como paramentro 
-			  
-			addBehaviour(new CyclicBehaviour(this) {
+			//Conversations
+			addBehaviour(new CyclicBehaviour() 
+			{
 				@Override
 				public void action() {
 				
 					ACLMessage msg = myAgent.receive();
+					
 					if(msg!=null)
 					{
 						try {
-							ArrayList<String> arrayList;
-							arrayList=(ArrayList<String>)msg.getContentObject();
-							System.out.println("Manager sendMe:");
-							for(String info : arrayList)
+							if(msg.getConversationId()==ConversationsID.INIT_WORK)
 							{
-								System.out.println(info);
+								ArrayList<Stock> stockList;
+								stockList=(ArrayList<Stock>)msg.getContentObject();
+								
+								System.out.println("Expert :"+expert.getLocalName()+" Manager sendMe these Stocks:"+stockList);
+//								for(Stock s:stockList)
+//								{
+//									System.out.println(s.getCodeName());
+//								}
+								
 							}
+							
+								
+								
 						} catch (UnreadableException e) {
 						
 							e.printStackTrace();
@@ -54,6 +61,8 @@ public class Expert extends Agent {
 					
 				}
 			});
+			  
+		
 		}
         catch (Exception e) {
             System.out.println( "Saw exception in HostAgent: " + e );
@@ -78,6 +87,8 @@ public class Expert extends Agent {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 
 }
