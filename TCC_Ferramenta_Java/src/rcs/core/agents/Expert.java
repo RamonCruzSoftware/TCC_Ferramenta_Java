@@ -25,7 +25,7 @@ public class Expert extends Agent {
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
 			
-			System.out.println("Hi, I'm live , my name is {"+this.getLocalName()+"}");
+			System.out.println("Hi, I'm live , my name is "+this.getLocalName());
 			
 			//Conversations
 			addBehaviour(new CyclicBehaviour() 
@@ -43,11 +43,15 @@ public class Expert extends Agent {
 								ArrayList<Stock> stockList;
 								stockList=(ArrayList<Stock>)msg.getContentObject();
 								
-								System.out.println("Expert :"+expert.getLocalName()+" Manager sendMe these Stocks:"+stockList);
-//								for(Stock s:stockList)
-//								{
-//									System.out.println(s.getCodeName());
-//								}
+								
+								if(stockList!=null)
+								{
+									System.out.println("Expert :"+expert.getLocalName()+" Manager sendMe these Stocks:");
+									for(Stock s:stockList)
+									{
+										System.out.println(s.getCodeName());
+									}
+								}
 								
 							}
 							
