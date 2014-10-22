@@ -3,6 +3,7 @@ package rcs.core.agents;
 import java.util.ArrayList;
 
 import rcs.suport.financial.wallet.Stock;
+import rcs.suport.util.database.mongoDB.dao.StockDao;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
@@ -15,12 +16,17 @@ import jade.lang.acl.UnreadableException;
 public class Expert extends Agent {
 
 	private static final long serialVersionUID = 1L;
-	private Agent expert;
+	private Expert expert;
+	private ArrayList<Stock> stockList;
+	private StockDao stockDao;
+	
 	protected void setup()
 	{
 		try{
 			expert=this;
+			stockDao=new StockDao();
 			
+		
 			DFAgentDescription dfd =new DFAgentDescription();
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
@@ -28,7 +34,7 @@ public class Expert extends Agent {
 			System.out.println("Hi, I'm live , my name is "+this.getLocalName());
 			
 			//Conversations
-			addBehaviour(new CyclicBehaviour() 
+			addBehaviour(new CyclicBehaviour(expert) 
 			{
 				@Override
 				public void action() {
@@ -38,22 +44,27 @@ public class Expert extends Agent {
 					if(msg!=null)
 					{
 						try {
-							if(msg.getConversationId()==ConversationsID.INIT_WORK)
-							{
-								ArrayList<Stock> stockList;
-								stockList=(ArrayList<Stock>)msg.getContentObject();
-								
-								
-								if(stockList!=null)
+								if(msg.getConversationId()==ConversationsID.INIT_WORK)
 								{
-									System.out.println("Expert :"+expert.getLocalName()+" Manager sendMe these Stocks:");
-									for(Stock s:stockList)
+									
+									expert.stockList=(ArrayList<Stock>)msg.getContentObject();
+									
+									
+									if(stockList!=null)
 									{
-										System.out.println(s.getCodeName());
+										System.out.println("Expert :"+expert.getLocalName()+" Manager sendMe these Stocks:");
+										for(Stock s:stockList)
+										{
+											System.out.println(s.getCodeName());
+										}
 									}
+									
 								}
-								
-							}
+								if(msg.getConversationId()==ConversationsID.USER_LOGGED)
+								{
+									
+									
+								}
 							
 								
 								

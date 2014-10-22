@@ -28,11 +28,13 @@ import java.util.Map.Entry;
 import java.util.Iterator;
 import java.util.concurrent.Delayed;
 
+import com.mongodb.MongoException;
 import com.mongodb.util.MyAsserts.MyAssert;
 
 import rcs.suport.financial.wallet.Stock;
 import rcs.suport.financial.wallet.Wallet;
 import rcs.suport.util.InfoConversations;
+import rcs.suport.util.database.mongoDB.dao.StockDao;
 import rcs.suport.util.database.mongoDB.dao.UserInfoDao;
 import rcs.suport.util.database.mongoDB.pojo.OrdersCreate;
 
@@ -45,8 +47,10 @@ private OrdersCreate user;
 private Map<String,ArrayList<Stock>> infoExperts;
 private Manager manager;
 private UserInfoDao userInfoDao;
+private StockDao stockDao;
 private String userName;
 private InfoConversations info;
+
 
 protected void setup()
 	{
@@ -55,6 +59,8 @@ protected void setup()
 		 */
 		
 		manager=this;
+		stockDao=new StockDao();
+		
 		try{
 			//create the agent description of ifself
 			DFAgentDescription dfd=new DFAgentDescription();
@@ -63,20 +69,14 @@ protected void setup()
 			
 			System.out.println("I'm live... My name is "+this.getLocalName());
 			
-			//Conversations 
-			//agentsConversations();
-			
 			addBehaviour(new CyclicBehaviour(manager) 
 			{
-				
 				@Override
 				public void action() 
 				{
 					ACLMessage message=myAgent.receive();
 					if(message!=null)
 					{
-					
-					
 						try {
 						//Create the Experts 
 							if(message.getConversationId()==ConversationsID.CREATE_EXPERTS)
@@ -87,8 +87,7 @@ protected void setup()
 								user=(OrdersCreate)message.getContentObject();
 								
 								userName=user.getUserIndetifier();
-								
-								
+													
 								System.out.println("Manager Says: It's user's informations \n Name : "+user.getUserIndetifier()
 										+" Profile: "+user.getUserPerfil()+" Value: "+user.getUserValue());
 								manager.info=new InfoConversations(user.getUserIndetifier(), user.getUserPerfil());
@@ -178,9 +177,27 @@ protected void setup()
 								
 								
 							}
+							if(message.getConversationId()==ConversationsID.USER_LOGGED)
+							{
+								try
+								{
+									long id=0;
+									for(Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
+									{
+										for(Stock stk:s.getValue())
+										{
+											manager.stockDao.insertStocksSuggestion(stk,id);
+											id++;
+										}
+									}
+								}catch(MongoException e)
+								{
+									e.printStackTrace();
+								}
+								
+							}
 							
-							
-							
+	
 						} catch (UnreadableException e) 
 						{
 							
@@ -442,14 +459,11 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 		}
 		}
 		
-	
-	
-
-	
 }
 private void userConversations(final String userIdentifier)
 {
-	addBehaviour(new Behaviour() {
+	addBehaviour(new Behaviour() 
+	{
 		UserInfoDao userInfoDao=new UserInfoDao();
 		@Override
 		public boolean done() {

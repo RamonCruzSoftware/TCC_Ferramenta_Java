@@ -86,5 +86,7 @@ public class UserInfoDao {
 		
 		return userIdentifier;
 	}
+	
+	
 
 }

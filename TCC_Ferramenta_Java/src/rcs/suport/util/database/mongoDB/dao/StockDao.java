@@ -16,7 +16,9 @@ import com.mongodb.MongoException;
 public class StockDao {
 	
 	private DBCollection collection_stock_prices;
-	private DBCollection collection_stock;
+	private DBCollection collection_stocks;
+	private DBCollection collection_userStockSugestions;
+	
 	
 	public StockDao()
 	{
@@ -26,7 +28,9 @@ public class StockDao {
 			MongoConnection connection=MongoConnection.getInstance();
 			DB db=connection.getDB();
 			this.collection_stock_prices=db.getCollection("stocks_prices");
-			this.collection_stock=db.getCollection("stocks");
+			this.collection_stocks=db.getCollection("stocks");
+			this.collection_userStockSugestions=db.getCollection("stock");
+			
 			
 		}catch (Exception e)
 		{
@@ -34,16 +38,45 @@ public class StockDao {
 		}
 	}
 	
+	public void insertStocksSuggestion(Stock stock,long id)
+	{
+		//colocar criteria 
+		
+		BasicDBObject where = new BasicDBObject();
+		BasicDBObject suggestion= new BasicDBObject("_id",id)
+										.append("codeName",stock.getCodeName())
+										.append("avarangeReturn_15", stock.getAvarangeReturn_15())
+										.append("avarangeReturn_30", stock.getAvarangeReturn_30())
+										.append("standardDeviation_15", stock.getStandardDeviation_15())
+										.append("standardDeviation_30", stock.getStandardDeviation_30())
+										.append("varianceCoeffientt_15", stock.getVarianceCoefficient_15())
+										.append("varianceCoeffientt_30", stock.getVarianceCoefficient_30())
+										.append("variance_15", stock.getVariance_15())
+										.append("variance_30", stock.getVariance_30())
+										.append("version", 0);
+	
+		try
+		{
+			collection_userStockSugestions.insert(suggestion);
+			
+		}catch (MongoException e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
 	public void updateStock(Stock stock)
 	{	
 		BasicDBObject where=new BasicDBObject("_id",stock.getCodeName());
 		DBObject stockValues=null;
 		DBObject stocks=null;
-		
+			
 		
 		ArrayList<BasicDBObject> candleSticksList=new ArrayList<BasicDBObject>();
 		
-		DBCursor cursorStock=collection_stock.find(where);
+		DBCursor cursorStock=collection_stocks.find(where);
 		DBCursor cursorStockPrices=collection_stock_prices.find(where);
 		
 		while(cursorStock.hasNext())
@@ -81,10 +114,10 @@ public class StockDao {
 										.append("variance_30", stock.getVariance_30())
 										.append("varianceCoefficient_30", stock.getVarianceCoefficient_30());						
 						
-			collection_stock.remove(stocks);
+			collection_stocks.remove(stocks);
 			collection_stock_prices.remove(stockValues);
 			
-			collection_stock.insert(updateStock);
+			collection_stocks.insert(updateStock);
 			collection_stock_prices.insert(updateStockPrices);
 			
 			
@@ -106,7 +139,7 @@ public class StockDao {
 		ArrayList<BasicDBObject> stockPricesStoredList=new ArrayList<BasicDBObject>();
 		
 		
-		DBCursor cursorStock=collection_stock.find(where);
+		DBCursor cursorStock=collection_stocks.find(where);
 		DBCursor cursorStockPrices=collection_stock_prices.find(where);
 		
 		while(cursorStock.hasNext())
@@ -161,8 +194,8 @@ public class StockDao {
 			stockPricesToStore = new BasicDBObject("_id",stock.getCodeName()).
 					append("values", stockPricesToStoreList);
 			
-			collection_stock.remove(stockStored);
-			collection_stock.insert(stockToStore);
+			collection_stocks.remove(stockStored);
+			collection_stocks.insert(stockToStore);
 			
 			collection_stock_prices.remove(stockStoredPrices);
 			collection_stock_prices.insert(stockPricesToStore);
@@ -190,7 +223,7 @@ public class StockDao {
 		try
 		{
 			collection_stock_prices.insert(stockPrices);
-			collection_stock.insert(newStock);
+			collection_stocks.insert(newStock);
 			
 			return true;
 			
@@ -208,7 +241,7 @@ public class StockDao {
 	public ArrayList<Stock> getAllStocks()
 	{
 		
-		DBCursor cursor= collection_stock.find();
+		DBCursor cursor= collection_stocks.find();
 		
 		DBObject mongo_stock=null;
 		ArrayList<Stock> stockList= new ArrayList<Stock>();
@@ -289,7 +322,7 @@ public class StockDao {
 		BasicDBObject find_1=new BasicDBObject("$gt",lowerLimit).append("$lt", upperLimit);
 		BasicDBObject find_2=new BasicDBObject("standardDeviation_30", find_1);
 		
-		DBCursor cursor= collection_stock.find(find_2).sort(sort);
+		DBCursor cursor= collection_stocks.find(find_2).sort(sort);
 		
 		DBObject mongo_stock=null;
 		ArrayList<Stock> stockList= new ArrayList<Stock>();
@@ -322,7 +355,7 @@ public class StockDao {
 	public ArrayList<Stock> getStockOrderByStandardDeviation_15()
 	{
 		BasicDBObject sort=new BasicDBObject("standardDeviation_15",1);
-		DBCursor cursor= collection_stock.find().sort(sort);
+		DBCursor cursor= collection_stocks.find().sort(sort);
 		
 		DBObject mongo_stock=null;
 		ArrayList<Stock> stockList= new ArrayList<Stock>();
