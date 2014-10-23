@@ -38,30 +38,36 @@ public class StockDao {
 		}
 	}
 	
-	public void insertStocksSuggestion(Stock stock,long id)
+	public boolean insertStocksSuggestion(Stock stock,long id,String userIdentifier)
 	{
 		//colocar criteria 
-		
-		BasicDBObject where = new BasicDBObject();
-		BasicDBObject suggestion= new BasicDBObject("_id",id)
-										.append("codeName",stock.getCodeName())
-										.append("avarangeReturn_15", stock.getAvarangeReturn_15())
-										.append("avarangeReturn_30", stock.getAvarangeReturn_30())
-										.append("standardDeviation_15", stock.getStandardDeviation_15())
-										.append("standardDeviation_30", stock.getStandardDeviation_30())
-										.append("varianceCoeffientt_15", stock.getVarianceCoefficient_15())
-										.append("varianceCoeffientt_30", stock.getVarianceCoefficient_30())
-										.append("variance_15", stock.getVariance_15())
-										.append("variance_30", stock.getVariance_30())
-										.append("version", 0);
-	
 		try
 		{
-			collection_userStockSugestions.insert(suggestion);
+			BasicDBObject where = new BasicDBObject("codeName",stock.getCodeName()).append("userId", userIdentifier);
+			DBCursor cursor=collection_userStockSugestions.find(where);
 			
-		}catch (MongoException e)
+			if(cursor.count()==0)
+			{
+				BasicDBObject suggestion= new BasicDBObject("_id",id)
+				.append("codeName",stock.getCodeName())
+				.append("avarangeReturn_15", stock.getAvarangeReturn_15())
+				.append("avarangeReturn_30", stock.getAvarangeReturn_30())
+				.append("standardDeviation_15", stock.getStandardDeviation_15())
+				.append("standardDeviation_30", stock.getStandardDeviation_30())
+				.append("varianceCoeffientt_15", stock.getVarianceCoefficient_15())
+				.append("varianceCoeffientt_30", stock.getVarianceCoefficient_30())
+				.append("variance_15", stock.getVariance_15())
+				.append("variance_30", stock.getVariance_30())
+				.append("userId",userIdentifier)
+				.append("version", 0);
+				
+				collection_userStockSugestions.insert(suggestion);
+				return true;
+			}else return false;
+			
+		}catch (MongoException.DuplicateKey e)
 		{
-			e.printStackTrace();
+			return false;
 		}
 		
 		

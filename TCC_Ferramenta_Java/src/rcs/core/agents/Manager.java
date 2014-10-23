@@ -146,7 +146,7 @@ protected void setup()
 								System.out.println("Suggetions: "+inf.getStockList().size()+ " Acoes");
 								manager.createExperts(inf.getUserProfile(), inf.getUserName(), inf.getStockList());
 								
-								addBehaviour(new WakerBehaviour(myAgent, 3000) 
+								addBehaviour(new WakerBehaviour(myAgent, 1000) 
 								{
 									protected void onWake()
 									{
@@ -186,7 +186,7 @@ protected void setup()
 									{
 										for(Stock stk:s.getValue())
 										{
-											manager.stockDao.insertStocksSuggestion(stk,id);
+											manager.stockDao.insertStocksSuggestion(stk,id,manager.userName);
 											id++;
 										}
 									}
@@ -459,35 +459,6 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 		}
 		}
 		
-}
-private void userConversations(final String userIdentifier)
-{
-	addBehaviour(new Behaviour() 
-	{
-		UserInfoDao userInfoDao=new UserInfoDao();
-		@Override
-		public boolean done() {
-			
-			if(userInfoDao.isUserUnLogged(userIdentifier))
-				return true;
-			else
-			return false;
-			
-		}
-		
-		@Override
-		public void action() 
-		{
-			
-			Wallet walletInfo=new Wallet();
-			walletInfo.setUserID(userIdentifier);
-			walletInfo.setWalletValue(100000.f);
-			
-			userInfoDao.setNewInformationToUser(walletInfo);
-			
-			
-		}
-	});
 }
 
 
