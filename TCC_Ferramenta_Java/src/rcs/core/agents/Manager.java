@@ -181,13 +181,13 @@ protected void setup()
 							{
 								try
 								{
-									long id=0;
+									
 									for(Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
 									{
 										for(Stock stk:s.getValue())
 										{
-											manager.stockDao.insertStocksSuggestion(stk,id,manager.userName);
-											id++;
+											manager.stockDao.insertStocksSuggestion(stk,manager.userName);
+											
 										}
 									}
 								}catch(MongoException e)

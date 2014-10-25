@@ -38,17 +38,18 @@ public class StockDao {
 		}
 	}
 	
-	public boolean insertStocksSuggestion(Stock stock,long id,String userIdentifier)
+	public boolean insertStocksSuggestion(Stock stock,String userIdentifier)
 	{
 		//colocar criteria 
 		try
 		{
 			BasicDBObject where = new BasicDBObject("codeName",stock.getCodeName()).append("userId", userIdentifier);
 			DBCursor cursor=collection_userStockSugestions.find(where);
-			
+
 			if(cursor.count()==0)
 			{
-				BasicDBObject suggestion= new BasicDBObject("_id",id)
+			
+				BasicDBObject suggestion= new BasicDBObject()
 				.append("codeName",stock.getCodeName())
 				.append("avarangeReturn_15", stock.getAvarangeReturn_15())
 				.append("avarangeReturn_30", stock.getAvarangeReturn_30())

@@ -10,7 +10,6 @@ import rcs.suport.financial.partternsCandleStick.CandleStick;
 public class Stock implements Serializable {
 
 	 private String codeName;
-	 private String type;
 	 private String sector;
 	 private ArrayList<CandleStick> candleSticks;
 	 
@@ -40,13 +39,6 @@ public class Stock implements Serializable {
 		this.codeName = codeName;
 	}
 
-	 public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 
 	public String getSector() {
