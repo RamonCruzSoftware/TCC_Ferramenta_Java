@@ -1,6 +1,7 @@
 package rcs.core.agents;
 
-public class ConversationsID {
+public class ConversationsID 
+{
 	
 	//Ontologies 
 	public static final String ONTOLOGY_CREATION="creation";
@@ -22,6 +23,16 @@ public class ConversationsID {
 	public static final String REQUEST_CURRENT_STOCK_VALUE="Current Stock value";
 	
 	public static final String STOCKS_SUGGESTIONS="Stocks Suggestions, please.";
+	
+	public static final String EXPERT_STRATEGY_MME_13_21="MME_13_21";
+	public static final String EXPERT_STRATEGY_MMS_13_21="MMS_13_21";
+	public static final String EXPERT_STRATEGY_MMS_21_34="MMS_21_34";
+	public static final String EXPERT_STRATEGY_MME_21_34="MME_21_34";
+	
+	public static final String EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF="DARK_BULLISH";
+	public static final String EXPERT_STRATEGY_BEARISH_ENGULFING_BULLSH_ENGULF="BEARISH_ENGULF";
+	
+	
 	
 	
 	

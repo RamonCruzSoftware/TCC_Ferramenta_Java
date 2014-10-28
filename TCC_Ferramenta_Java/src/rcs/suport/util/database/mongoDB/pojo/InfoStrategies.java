@@ -2,14 +2,15 @@ package rcs.suport.util.database.mongoDB.pojo;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 
-public class InfoEstrategies {
+public class InfoStrategies {
 	
+	private String userIdentifier;
+	private String stockCodeName;
 	private String strategyName;
 	private String periodicity;
 	private CandleStick buyed;
 	private CandleStick selled;
 	private double profit;
-	
 	
 	
 	public String getStrategyName() {
@@ -41,6 +42,18 @@ public class InfoEstrategies {
 	}
 	public void setProfit(double profit) {
 		this.profit = profit;
+	}
+	public String getStockCodeName() {
+		return stockCodeName;
+	}
+	public void setStockCodeName(String stockCodeName) {
+		this.stockCodeName = stockCodeName;
+	}
+	public String getUserIdentifier() {
+		return userIdentifier;
+	}
+	public void setUserIdentifier(String userIdentifier) {
+		this.userIdentifier = userIdentifier;
 	}
 
 }

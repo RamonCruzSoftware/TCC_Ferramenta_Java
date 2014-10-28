@@ -31,6 +31,19 @@ public class Stock implements Serializable {
 		 this.sector=sector;
 	 }
 
+	 
+	 public boolean addCurrentCandleStick(CandleStick candleStick)
+	 {
+		 if(this.candleSticks.get(this.candleSticks.size()-1).getDate().getTime()
+				 ==candleStick.getDate().getTime())
+		 {
+			 return false;
+		 }else 
+		 {
+			 this.candleSticks.add(candleStick);
+		 }
+		 return false;
+	 }
 	public String getCodeName() {
 		return codeName;
 	}
@@ -53,7 +66,9 @@ public class Stock implements Serializable {
 		return candleSticks;
 	}
 
-	public void setCandleSticks(ArrayList<CandleStick> candleSticks) {
+	public void setCandleSticks(ArrayList<CandleStick> candleSticks) 
+	{	
+		
 		this.candleSticks = candleSticks;
 	}
 

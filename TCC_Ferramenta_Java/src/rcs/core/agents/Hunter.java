@@ -3,6 +3,8 @@ package rcs.core.agents;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.TickerBehaviour;
+import jade.core.behaviours.WakerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -10,7 +12,11 @@ import jade.lang.acl.ACLMessage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import com.mongodb.util.MyAsserts.MyAssert;
 
@@ -70,6 +76,7 @@ public class Hunter extends Agent {
 		{
 			e.printStackTrace();
 		}
+	
 		
 	}
 	protected void takeDown()
@@ -91,7 +98,8 @@ public class Hunter extends Agent {
 
 private void communication(Agent agent)
 {
-	addBehaviour(new CyclicBehaviour(agent) {
+	addBehaviour(new CyclicBehaviour(agent)
+	{
 		
 		private static final long serialVersionUID = 1L;
 		private InfoConversations info;
@@ -141,6 +149,210 @@ private void communication(Agent agent)
 		}
 	});
 }
+private void downloadCurrentCsvFiles(String dir_1,String subdir_1,String subdir_2,String sectorsPath)
+{
+	 YahooFinance yahoo=new YahooFinance(dir_1,subdir_1,subdir_2);
+		
+	 final long ti=System.currentTimeMillis(); 
+	 System.out.println("Iniciando contagem de tempo ");
+	 
+	 //Criando a lista a ser de acoes para baixar a cotacao 
+	 final ArrayList<Stock> stockList = yahoo.loadStocksFromCsv(sectorsPath);
+	 
+	 /*
+		 * A ultima thread vai mudar o atributo conversation para true
+		 * para isso eh preciso ter um boolean para cada thread, para indicar 
+		 * que ela terminou de fazer o download. 
+		 * 
+		 */
+		
+		 final boolean thread_finish[]={false,false,false};
+		 //Thread 1
+		 final int id1=1;
+		 
+		 Runnable y1=new YahooFinance(dir_1,subdir_1,subdir_2,stockList)
+		 {
+			
+			 public void run()
+			 { 
+				 while (true)
+				 {
+					 String codeName=null;
+					 synchronized (stockList) 
+					 { 
+						if(stockList.size()!=0)
+						{
+							codeName=stockList.get(0).getCodeName();
+							stockList.remove(0);
+							
+						}else 
+						{
+							try {
+								System.out.println("Thread "+id1+": Concluido!");
+								
+								long t=System.currentTimeMillis();
+								System.out.println("\t\t\tTempo total :"+(t-ti));
+								
+								//verifica se eh  a ultima a terminar o  servico
+								thread_finish[0]=true;
+								if(thread_finish[1]&&thread_finish[2])
+								{
+									conversations=true;
+									System.out.println("Download concluido");
+									updateDataBase();
+								
+								}
+								
+								stockList.wait();
+								
+							} catch (InterruptedException e) 
+							{
+								
+								e.printStackTrace();
+							}
+						}
+						
+					 }
+					 
+					 if(codeName!=null)
+					 {
+						System.out.println("Baixando dados de : "+codeName); 
+						System.out.println(codeName+"_current :"+storeCsvCurrentPriceStock(codeName));
+						System.out.print("\n");
+					 }
+					 
+				 }
+				
+			 }
+		 };
+		 //Thread 2
+		 final int id2=2;
+		 Runnable y2=new YahooFinance(dir_1,subdir_1,subdir_2,stockList)
+		 {
+			
+			 public void run()
+			 {
+				while(true)
+				{
+					 String codeName=null;
+					 synchronized (stockList) 
+					 { 
+						if(stockList.size()!=0)
+						{
+							codeName=stockList.get(0).getCodeName();
+							stockList.remove(0);
+						}else 
+						{
+							try {
+								System.out.println("Thread "+id2+": Concluido!");
+								
+								long t=System.currentTimeMillis();
+								System.out.println("\t\t\tTempo total :"+(t-ti));
+								
+								//verifica se eh  a ultima a terminar o  servico
+								thread_finish[1]=true;
+								if(thread_finish[0]&&thread_finish[2])
+								{
+									conversations=true;
+									System.out.println("Download concluido");
+									updateDataBase();
+								}
+								
+								stockList.wait();
+								
+							} catch (InterruptedException e) {
+								
+								//e.printStackTrace();
+							}
+						}
+						
+					 }
+					 
+					 if(codeName!=null)
+					 {
+						 System.out.println("Baixando dados de : "+codeName); 
+						
+							System.out.println(codeName+"_current :"+storeCsvCurrentPriceStock(codeName));
+							System.out.print("\n");
+					 }
+					 
+				 }
+				
+			 }
+		 };
+		 
+		 //Thread 3
+		 
+		 final int id3=3;
+		 Runnable y3=new YahooFinance(dir_1,subdir_1,subdir_2,stockList)
+		 {
+			
+			 public void run()
+			 {
+				 while (true)
+				 {
+					 String codeName=null;
+					 synchronized (stockList) 
+					 { 
+						if(stockList.size()!=0)
+						{
+						
+							codeName=stockList.get(0).getCodeName();
+							stockList.remove(0);
+							
+							
+						}else 
+						{
+							try {
+								System.out.println("Thread "+id3+": Concluido!");
+								
+								long t=System.currentTimeMillis();
+								System.out.println("\t\t\tTempo total :"+(t-ti));
+								
+								//verifica se eh  a ultima a terminar o  servico
+								thread_finish[2]=true;
+								if(thread_finish[1]&&thread_finish[0])
+								{
+									conversations=true;
+									System.out.println("Download concluido");
+									updateDataBase();
+								}
+								
+								stockList.wait();
+								
+							} catch (InterruptedException e) {
+								
+								//e.printStackTrace();
+							}
+						}
+						
+					 }
+					 
+					 if(codeName!=null)
+					 {
+						 System.out.println("Baixando dados de : "+codeName); 
+							
+							System.out.println(codeName+"_current :"+storeCsvCurrentPriceStock(codeName));
+							System.out.print("\n");
+					 }
+					 
+				 }
+				
+			 }
+		 };
+		 
+		 
+		 Thread t1=new Thread(y1); 
+		 Thread t2=new Thread(y2);
+		 Thread t3=new Thread(y3);
+		 
+		 t1.start();
+		 t2.start();
+		 t3.start();
+		 
+	 
+}
+
 /*
  *Dir 1: "/Users/alissonnunes/Desktop"
  *Sub dir 1: "/Ramon"
@@ -181,6 +393,7 @@ private void downloadCsvFiles(String dir_1,String subdir_1,String subdir_2,Strin
 				 { 
 					if(stockList.size()!=0)
 					{
+						
 						codeName=stockList.get(0).getCodeName();
 						stockList.remove(0);
 						
@@ -239,6 +452,10 @@ private void downloadCsvFiles(String dir_1,String subdir_1,String subdir_2,Strin
 				 { 
 					if(stockList.size()!=0)
 					{
+						System.out.println("Baixando dados de : "+stockList.get(0).getCodeName()); 
+						System.out.println(storeCsvCurrentPriceStock(codeName));
+						System.out.print("\n");
+						
 						codeName=stockList.get(0).getCodeName();
 						stockList.remove(0);
 							
@@ -297,6 +514,10 @@ private void downloadCsvFiles(String dir_1,String subdir_1,String subdir_2,Strin
 				 { 
 					if(stockList.size()!=0)
 					{
+						System.out.println("Baixando dados de : "+stockList.get(0).getCodeName()); 
+						System.out.println(storeCsvCurrentPriceStock(codeName));
+						System.out.print("\n");
+						
 						codeName=stockList.get(0).getCodeName();
 						stockList.remove(0);
 						
@@ -413,7 +634,6 @@ private void initWork()
 	addBehaviour(new OneShotBehaviour(hunter)
 	{
 		
-		
 		@Override
 		public void action() {
 		
@@ -431,7 +651,8 @@ private void initWork()
 					hunter.stockList=hunter.stockDao.getAllStocksPrices();
 					System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
 					System.out.println("Vou calcular os valores estatisticos para catalogar");
-					calculateStatistical();
+					hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
+					
 				}else 
 				{
 					System.out.println("Ainda nao baixaram os arquivos CSV, vou fazer isso.");
@@ -446,12 +667,76 @@ private void initWork()
 				e.printStackTrace();
 			
 			}
-			
-			
-			
-				
+	
 		}
 	});
+	
+	DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);
+	final Date date = new Date();
+	date.setMinutes(date.getMinutes()+15);
+	final long dailyInterval=1000*60*60*24;
+
+	addBehaviour(new WakerBehaviour(hunter, date) 
+	{
+
+		protected void onWake()
+		{
+			System.out.println("Dados serao atualizado no proximo dia "+date.getDate());
+			addBehaviour(new TickerBehaviour(hunter, dailyInterval) 
+			{
+				
+				@Override
+				protected void onTick() 
+				{
+					hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
+				}
+			});
+		}
+	});
+}
+private void updateDataBase()
+{
+	YahooFinance yahooFinance=new YahooFinance(this.dir_1, this.subDir_1, this.subDir_2);
+
+		try
+		{
+			System.out.println("updateDataBase()  stocks:");
+			
+			
+			ArrayList<Stock> stockTemp=this.stockList;
+			for(int i=1;i<stockTemp.size();i++)
+			{
+				try
+				{
+					System.out.println(stockTemp.get(i).getCodeName() +" has "+stockTemp.get(i).getCandleSticks().size()+ " values");
+					System.out.println(stockTemp.get(i).getCodeName()+ " Atualizado :"+stockTemp.get(i).addCurrentCandleStick(
+																					yahooFinance.getCurrentValue(stockTemp.get(i).getCodeName())
+																					)
+																					);
+					
+					if(stockTemp.get(i).getCandleSticks().size()>0)
+						{
+							System.out.println(stockTemp.get(i).getCodeName()+" DB Atuazado? "+ this.stockDao.insertCurrentStock(stockTemp.get(i))); 
+							
+						}
+					
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+			}
+			
+			
+			System.out.println("Vou atualizar os valores estatisticos para catalogar");
+			
+			calculateStatistical();
+			
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	
 }
 private  void loadDataBase()
 {
@@ -524,6 +809,8 @@ private void stocksSorted(double lowerLimit,double upperLimit)
 		System.out.println("Standard Deviation 30: "+s.getStandardDeviation_30());
 	}
 }
+
+
 
 
 }

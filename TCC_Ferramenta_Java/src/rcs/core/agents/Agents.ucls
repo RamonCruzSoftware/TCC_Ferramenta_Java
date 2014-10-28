@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="rcs.core.agents.Hunter" project="TCC_Ferramenta_Java" 
     file="/TCC_Ferramenta_Java/src/rcs/core/agents/Hunter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="835" y="169"/>    
+    <position height="-1" width="-1" x="870" y="173"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="rcs.core.agents.Expert" project="TCC_Ferramenta_Java" 
     file="/TCC_Ferramenta_Java/src/rcs/core/agents/Expert.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="498" y="410"/>    
+    <position height="-1" width="-1" x="515" y="492"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -41,7 +41,7 @@
     project="TCC_Ferramenta_Java" 
     file="/TCC_Ferramenta_Java/src/rcs/suport/util/database/mongoDB/dao/OrdersCreateDao.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="222" y="309"/>    
+    <position height="-1" width="-1" x="182" y="308"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

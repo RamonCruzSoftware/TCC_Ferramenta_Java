@@ -6,10 +6,10 @@ import java.util.Iterator;
 public class MovingAvarange {
 
 
-	private ArrayList <Double>values;
+	private double value;
+	private ArrayList<Double>values;
 	private double currentPrice,lastMME;
 	private int period;
-	
 	
 	/**
 	 * For to calculate the Simple MovingAvarange 
@@ -17,13 +17,12 @@ public class MovingAvarange {
 	 * @param values
 	 * @param period
 	 */
-	public MovingAvarange(ArrayList<Double>values,int period)
+	public MovingAvarange(double value,int period)
 	{
-		//TODO
-		//criar um lançamento de excessao aqui 
-
-		this.values=values;
+		this.value=value;
 		this.period=period;
+		this.values= new ArrayList<Double>();
+		
 		
 	}
 	/**
@@ -46,12 +45,14 @@ public class MovingAvarange {
 	public double simpleAvarange()
 	{
 		double result=0;
-		Iterator<Double> iterator = values.iterator();
-		while(iterator.hasNext())
+		
+		if(this.values.size()>0 && this.values.size()>=this.period)
 		{
-			result+=Double.parseDouble(""+iterator.next());
+			for(int i=(this.values.size()-1);i>(this.values.size()-1-this.period);i--)
+			{
+				result+=this.values.get(i);
+			}
 		}
-
 		return (result/period);
 	}
 	public double exponencialAvarange()
@@ -63,17 +64,16 @@ public class MovingAvarange {
 	}
 	/**
 	 * 
-	 * @param values 
+	 * @param value 
 	 * insert an list of values always
 	 * that you want to calculate a new value of 
 	 * moving avarange
 	 */
-	public void setValues(ArrayList<Double>values)
+	public void addValue(double value)
 	{
-		this.values=values;
-	
-		
+		this.values.add(value);
 	}
+	
 	/**
 	 * For to recalcute the Exponencial value 
 	 * inform the new values in paramters 

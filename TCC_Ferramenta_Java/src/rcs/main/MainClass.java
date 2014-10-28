@@ -1,23 +1,16 @@
 package rcs.main;
 
-import java.io.File;
-import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import rcs.core.agents.Hunter;
 import rcs.suport.financial.partternsCandleStick.CandleStick;
-import rcs.suport.financial.wallet.Stock;
-import rcs.suport.util.CsvHandle;
-import rcs.suport.util.database.mongoDB.dao.StockDao;
+import rcs.suport.financial.strategy.MovingAvarangeSimpleStrategy;
+import rcs.suport.financial.strategy.Strategy;
 import rcs.suport.util.requests.YahooFinance;
 
 public class MainClass 
@@ -92,18 +85,10 @@ public class MainClass
 		 
 	*/
 		
-		 Map<String , ArrayList<String>> map=new HashMap<String, ArrayList<String>>();
-		 
-		 map.put("Ramon", new ArrayList<String>());
-		 map.put("RamonC", new ArrayList<String>());
-		 map.put("RamonCS", new ArrayList<String>());
-		 System.out.println(map);
-		 for(Entry<String, ArrayList<String>>s:map.entrySet())
-		 {
-			 System.out.println(s.getKey());
-			 System.out.println(s.getValue().size());
-		 }
-		 
+		
+		
+		
+		
 		
 	 }
 	 

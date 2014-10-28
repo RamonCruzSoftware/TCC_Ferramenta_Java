@@ -323,6 +323,112 @@ public class StockDao {
 		return stockPricesList;
 	}
 	
+	public ArrayList<CandleStick> getStockPrices_last10(String codeName)
+	{
+		BasicDBObject where = new BasicDBObject("_id",codeName);
+		DBCursor cursor= collection_stock_prices.find(where);
+		
+		DBObject mongo_stock=null;
+		ArrayList<BasicDBObject> mongo_candleList=null;
+		ArrayList<Stock> stockPricesList= new ArrayList<Stock>();
+		
+		
+		while(cursor.hasNext())
+		{
+			mongo_stock=cursor.next();
+			
+		}
+			mongo_candleList=(ArrayList<BasicDBObject>) mongo_stock.get("values");
+			
+			//Pega todo historico existente no banco de dados
+			ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
+			
+			for(int i=(mongo_candleList.size()-10);i<(mongo_candleList.size());i++)
+			{
+				
+				candleList.add(new CandleStick(
+												mongo_candleList.get(i).getDouble("open"), 
+												mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
+												mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
+												mongo_candleList.get(i).getDate("date"))
+											);
+			}
+			
+			
+	
+		return candleList;
+	}
+	public ArrayList<CandleStick> getStockPrices_last30(String codeName)
+	{
+		BasicDBObject where = new BasicDBObject("_id",codeName);
+		DBCursor cursor= collection_stock_prices.find(where);
+		
+		DBObject mongo_stock=null;
+		ArrayList<BasicDBObject> mongo_candleList=null;
+		ArrayList<Stock> stockPricesList= new ArrayList<Stock>();
+		
+		
+		while(cursor.hasNext())
+		{
+			mongo_stock=cursor.next();
+			
+		}
+			mongo_candleList=(ArrayList<BasicDBObject>) mongo_stock.get("values");
+			
+			//Pega todo historico existente no banco de dados
+			ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
+			
+			for(int i=(mongo_candleList.size()-30);i<(mongo_candleList.size());i++)
+			{
+				
+				candleList.add(new CandleStick(
+												mongo_candleList.get(i).getDouble("open"), 
+												mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
+												mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
+												mongo_candleList.get(i).getDate("date"))
+											);
+			}
+			
+			
+	
+		return candleList;
+	}
+	public ArrayList<CandleStick> getStockPrices_last40(String codeName)
+	{
+		BasicDBObject where = new BasicDBObject("_id",codeName);
+		DBCursor cursor= collection_stock_prices.find(where);
+		
+		DBObject mongo_stock=null;
+		ArrayList<BasicDBObject> mongo_candleList=null;
+		ArrayList<Stock> stockPricesList= new ArrayList<Stock>();
+		
+		
+		while(cursor.hasNext())
+		{
+			mongo_stock=cursor.next();
+			
+		}
+			mongo_candleList=(ArrayList<BasicDBObject>) mongo_stock.get("values");
+			
+			//Pega todo historico existente no banco de dados
+			ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
+			
+			for(int i=(mongo_candleList.size()-40);i<(mongo_candleList.size());i++)
+			{
+				
+				candleList.add(new CandleStick(
+												mongo_candleList.get(i).getDouble("open"), 
+												mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
+												mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
+												mongo_candleList.get(i).getDate("date"))
+											);
+			}
+			
+			
+	
+		return candleList;
+	}
+	
 	public ArrayList<Stock> getStockOrderByStandardDeviation_30(double lowerLimit,double upperLimit)
 	{
 		BasicDBObject sort=new BasicDBObject("standardDeviation_30",1);

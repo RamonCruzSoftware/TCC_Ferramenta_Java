@@ -66,8 +66,6 @@ public class YahooFinance implements Runnable {
 		 String dirOutputPath=this.getMainDirPath()+this.getSubDirPath_1()+this.getSubDirPath_2()+"/"+stockCodeName;
 		 String fileOutputPath=dirOutputPath+"/currentPrice_"+stockCodeName+".csv";
 		 
-		 
-		 
 		 CandleStick candleResult=null;
 		 
 		 try {
@@ -76,17 +74,22 @@ public class YahooFinance implements Runnable {
 	            String Str;
 	            String[] TableLine = null;
 
-	            while ((Str = StrR.readLine()) != null) {
+	            while ((Str = StrR.readLine()) != null) 
+	            {
 	                // passando como parametro o divisor ",".
 	                TableLine = Str.split(",");	    
 	                
 	                DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);	               
-					Date date = (Date)format.parse(TableLine[1]+" "+TableLine[2]);
-					try{
-	                candleResult= new CandleStick(TableLine[3],
-	                        TableLine[4], TableLine[5],
-	                        TableLine[6], TableLine[7],
-	                        date);
+					Date date = (Date)format.parse(TableLine[1].substring(1, TableLine[1].length()-1)
+													+" "+
+													TableLine[2].substring(1, TableLine[2].length()-1));
+					
+				try{
+						
+						candleResult= new CandleStick(TableLine[3],
+											TableLine[4], TableLine[5],
+											TableLine[6], TableLine[7],
+											date);
 	                
 					}catch(NumberFormatException e)
 					{
@@ -96,13 +99,16 @@ public class YahooFinance implements Runnable {
 	            // Fechamos o buffer
 	            StrR.close();
 
-	        } catch (FileNotFoundException e) {
+	        } catch (FileNotFoundException e) 
+	        {
 	            e.printStackTrace();
-	        } catch (IOException ex) {
+	        } catch (IOException ex)
+	        {
 	            ex.printStackTrace();
 	        }catch (ParseException e)
 	        {
 	        	e.printStackTrace();
+	        	
 			}catch(NumberFormatException e)
 			{
 				e.printStackTrace();
@@ -225,7 +231,9 @@ public class YahooFinance implements Runnable {
 	        	File dir=new File(dirOutputPath);  
 	        	dir.mkdir();
 	        	
-	        	ReadableByteChannel rbc=Channels.newChannel(website.openStream());      	
+	        	ReadableByteChannel rbc=Channels.newChannel(website.openStream());  
+	        	
+	      	
 	        	FileOutputStream fosFileOutputStream= new FileOutputStream(fileOutputPath);
 	       
 	        	fosFileOutputStream.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);

@@ -6,15 +6,18 @@ import rcs.suport.financial.partternsCandleStick.CandleStick;
 
 public class ManagedStock {
 	
+	  private String userIdentifier;
 	  private String codeName;
 	  private String sector;
 	  private ArrayList<CandleStick> candleSticks;
 	 
-	  private CandleStick Buyed;  
+	  private CandleStick Buyed; 
+	  private CandleStick selled;
 	  private double profitPercent;
 	  private double profitValue;
 	  
-	public String getCodeName() {
+	public String getCodeName()
+	{
 		return codeName;
 	}
 	public void setCodeName(String codeName) {
@@ -49,6 +52,18 @@ public class ManagedStock {
 	}
 	public void setProfitValue(double profitValue) {
 		this.profitValue = profitValue;
+	}
+	public CandleStick getSelled() {
+		return selled;
+	}
+	public void setSelled(CandleStick selled) {
+		this.selled = selled;
+	}
+	public String getUserIdentifier() {
+		return userIdentifier;
+	}
+	public void setUserIdentifier(String userIdentifier) {
+		this.userIdentifier = userIdentifier;
 	}
 
 	  
