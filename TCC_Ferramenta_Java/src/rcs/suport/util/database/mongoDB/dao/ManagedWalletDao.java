@@ -35,17 +35,17 @@ public class ManagedWalletDao
 		{
 			stocksList= new ArrayList<BasicDBObject>();
 			
-			for(Stock s:info.getStocksList())
-			{
-				stocksList.add(new BasicDBObject("codeName",s.getCodeName()).append("sector", s.getSector()));
-				
-			}
+//			for(Stock s:info.getStocksList())
+//			{
+//				stocksList.add(new BasicDBObject("codeName",s.getCodeName()).append("sector", s.getSector()));
+//				
+//			}
 			manageWallet= new BasicDBObject("userId",info.getUserID())
 											.append("walletProfitePercent", info.getWalletProfitPercent())
 											.append("walletProfitValue", info.getWalletProfitValue())
 											.append("walletRisck", info.getWalletRisck())
-											.append("walletValue", info.getWalletValue())
-											.append("stocksList",stocksList);
+											.append("walletValue", info.getWalletValue());
+											//.append("stocksList",stocksList);
 			
 			this.collection_managedWallet.insert(manageWallet);
 			

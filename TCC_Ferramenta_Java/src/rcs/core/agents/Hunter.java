@@ -114,18 +114,62 @@ private void communication(Agent agent)
 				{
 					if(messages.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
 					{
+						ArrayList<Stock> stocksuggestion=null;
+						int lowerLimit=0;
+						int upperLimit=0;
+
 						info=(InfoConversations)messages.getContentObject();
 						
 						switch (info.getUserProfile()) {
 						case 0://corajoso
-							info.setStockList(hunter.stockDao.getStockOrderByStandardDeviation_30(15, 30));
-							break;
-						case 1://moderado
-							info.setStockList(hunter.stockDao.getStockOrderByStandardDeviation_30(5	, 10));
-							break;
-						case 2://conservador
+						{
+							lowerLimit=15;
+							upperLimit=30;
 							
-							info.setStockList(hunter.stockDao.getStockOrderByStandardDeviation_30(0	, 6));
+							do
+							{
+								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+								if(lowerLimit>0)lowerLimit--;
+								
+								upperLimit++;
+								
+							}while(stocksuggestion.size()<9);
+							
+							info.setStockList(stocksuggestion);
+							break;
+						}
+						case 1://moderado
+						{
+							lowerLimit=5;
+							upperLimit=10;
+							do
+							{
+								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+								if(lowerLimit>0)lowerLimit--;
+								
+								upperLimit++;
+								
+							}while(stocksuggestion.size()==0);
+							
+							info.setStockList(stocksuggestion);
+						}
+							
+							break;
+						case 2://conservador	
+						{
+							if(lowerLimit>0)lowerLimit--;
+							
+							upperLimit=6;
+							do
+							{
+								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+								
+								upperLimit++;
+								
+							}while(stocksuggestion.size()==0);
+							
+							info.setStockList(stocksuggestion);
+						}
 							break;
 
 						default:
@@ -136,7 +180,7 @@ private void communication(Agent agent)
 						reply.setContentObject(info);
 						myAgent.send(reply);
 					}
-					System.out.println(messages.getContent());
+					
 				}else block();
 				
 			}catch(Exception e)

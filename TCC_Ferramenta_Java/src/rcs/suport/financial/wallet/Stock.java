@@ -62,7 +62,8 @@ public class Stock implements Serializable {
 		this.sector = sector;
 	}
 
-	public ArrayList<CandleStick> getCandleSticks() {
+	public ArrayList<CandleStick> getCandleSticks()
+	{
 		return candleSticks;
 	}
 

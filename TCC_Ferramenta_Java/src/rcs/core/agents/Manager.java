@@ -143,10 +143,12 @@ protected void setup()
 							
 							if(message.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
 							{
-							InfoConversations inf= (InfoConversations) message.getContentObject();
+								InfoConversations inf= (InfoConversations) message.getContentObject();
 								
 							//TODO apagar print
 								System.out.println("Suggetions: "+inf.getStockList().size()+ " Acoes");
+								//colocar aqui tratamento de aceite de acoes 
+								
 								manager.createExperts(inf.getUserProfile(), inf.getUserName(), inf.getStockList());
 								
 								//Iniciando atividade delegando aos experts tutela de acoes 
@@ -572,9 +574,7 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 		}
 			
 		}
-		
-	
-	
+
 }
 //Metodos de gerenciamento da carteira 
 
@@ -616,8 +616,6 @@ private class WalletManager
 			 this.managedWallet.setWalletValue(userValue);
 			 //Money qtd for Expert
 			 this.quota=this.managedWallet.getWalletValue()/this.infoExperts.size();
-			 
-			 this.managedWallet=new ManagedWallet();
 			 this.managedWallet.setUserID(userName);
 			 
 			 this.managedWalletDao.insertManagedWalletInfo(this.managedWallet);
@@ -689,7 +687,7 @@ private class WalletManager
 			 
 		 return false;
 	 }
-	/// public ArrayList<String>
+	
 	 
 	 
 }

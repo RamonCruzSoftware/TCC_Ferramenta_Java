@@ -78,6 +78,8 @@ public class Expert extends Agent {
 			stocksMap = new HashMap<Stock, Strategy>();
 			ordensToBuyOrSell=new HashMap<Stock, String>();
 			
+			stockManager = new StockManager();
+			
 			
 		    
 			DFAgentDescription dfd =new DFAgentDescription();
@@ -243,9 +245,15 @@ public class Expert extends Agent {
 									
 									for(Stock s: expert.orderToApproveBuy)
 									{
+										
+										
 										if(s!=null)
 										{
 											int qtd=(int)(expert.quota/s.getCurrentCandleStick().getClose());
+											System.out.println(getLocalName()+" comprando "+s.getCodeName());
+											System.out.println(getLocalName()+" preco unitario R$: "+s.getCurrentCandleStick());
+											System.out.println(getLocalName()+" Quantidade a comprar "+qtd);
+											
 											if(qtd>0 )
 											{
 												expert.stockManager.orderBuy(s,qtd);
