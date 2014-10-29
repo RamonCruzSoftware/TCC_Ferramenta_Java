@@ -112,7 +112,7 @@ private void communication(Agent agent)
 				ACLMessage messages= myAgent.receive();
 				if(messages!=null &&conversations)
 				{
-					if(messages.getConversationId()==ConversationsID.STOCKS_SUGGESTIONS)
+					if(messages.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
 					{
 						info=(InfoConversations)messages.getContentObject();
 						

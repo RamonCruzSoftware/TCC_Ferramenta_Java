@@ -249,7 +249,7 @@ public class Creator  extends Agent{
 		
 	}
 	
-	public void droManagerForUser(String userIdentifier)
+	public void dropManagerForUser(String userIdentifier)
 	{
 		
 	}

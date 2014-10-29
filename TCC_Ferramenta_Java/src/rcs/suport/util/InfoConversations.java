@@ -1,7 +1,10 @@
 package rcs.suport.util;
 
 import jade.util.leap.Serializable;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import rcs.suport.financial.wallet.Stock;
 
@@ -11,9 +14,15 @@ public class InfoConversations implements Serializable{
 	 private String userName;
 	 private int userProfile;
 	 private ArrayList<Stock> stockList;
+	 
+	 
+	 //Para uso dos experts e manages 
+	 
+	
 	
 	public InfoConversations()
 	{	
+		
 		
 	}
 	
@@ -46,6 +55,8 @@ public class InfoConversations implements Serializable{
 	public void setStockList(ArrayList<Stock> stockList) {
 		this.stockList = stockList;
 	}
+
+	
 	
 	
 

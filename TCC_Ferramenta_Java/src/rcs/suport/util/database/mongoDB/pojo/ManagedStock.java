@@ -10,6 +10,7 @@ public class ManagedStock {
 	  private String codeName;
 	  private String sector;
 	  private ArrayList<CandleStick> candleSticks;
+	  private int qtdStocksBought;
 	 
 	  private CandleStick Buyed; 
 	  private CandleStick selled;
@@ -65,6 +66,13 @@ public class ManagedStock {
 	public void setUserIdentifier(String userIdentifier) {
 		this.userIdentifier = userIdentifier;
 	}
+	public int getQtdStocksBought() {
+		return qtdStocksBought;
+	}
+	public void setQtdStocksBought(int qtdStocksBought) {
+		this.qtdStocksBought = qtdStocksBought;
+	}
+	
 
 	  
 	 

@@ -121,7 +121,8 @@ public class ManagedStockDao {
 										   .append("profitValue", mStock.getProfitValue())
 										   .append("candleSticks", candlesticks)
 										   .append("buyed", mStock.getBuyed())
-										   .append("selled", mStock.getSelled());
+										   .append("selled", mStock.getSelled())
+										   .append("qtdStocksBought", mStock.getQtdStocksBought());
 			
 			
 			this.collection_managedStock.insert(managedStock);
@@ -199,7 +200,8 @@ public class ManagedStockDao {
 												.append("profitPercent", mStock.getProfitPercent())
 												.append("candleSticks", candlestickToStore)
 												.append("buylled", buylledToStore)
-												.append("selled", selledToStore);
+												.append("selled", selledToStore)
+												.append("qtdStocksBought", mStock.getQtdStocksBought());
 			
 			this.collection_managedStock.remove(managedStockStored);
 			this.collection_managedStock.insert(managedStockToStore);
@@ -246,49 +248,147 @@ public class ManagedStockDao {
 			{
 				managedStockStored=(BasicDBObject)cursor.next();
 			}
-			
-			selledStored=(BasicDBObject)managedStockStored.get("selled");
-			buyedStored=(BasicDBObject)managedStockStored.get("buyed");
-			candleSticksStored=(ArrayList<BasicDBObject>)managedStockStored.get("candleSticks");
-			
-			if(candleSticksStored.size()>0)
+			if(managedStockStored!=null)
 			{
-				candlesticks=new ArrayList<CandleStick>();
-				for(BasicDBObject b:candleSticksStored)
+				selledStored=(BasicDBObject)managedStockStored.get("selled");
+				buyedStored=(BasicDBObject)managedStockStored.get("buyed");
+				candleSticksStored=(ArrayList<BasicDBObject>)managedStockStored.get("candleSticks");
+				
+				if(candleSticksStored.size()>0)
 				{
-					candlesticks.add(new CandleStick(b.getDouble("open"), 
-										b.getDouble("high"),
-										b.getDouble("low"),
-										b.getDouble("close"),
-										b.getDouble("volume"), 
-										b.getDate("date")));
+					candlesticks=new ArrayList<CandleStick>();
+					for(BasicDBObject b:candleSticksStored)
+					{
+						candlesticks.add(new CandleStick(b.getDouble("open"), 
+											b.getDouble("high"),
+											b.getDouble("low"),
+											b.getDouble("close"),
+											b.getDouble("volume"), 
+											b.getDate("date")));
+					}
+					
 				}
+				buyed=new CandleStick(buyedStored.getDouble("open"), buyedStored.getDouble("high"),
+										 buyedStored.getDouble("low"), 
+										 buyedStored.getDouble("close"), 
+										 buyedStored.getDouble("volume"), 
+										 buyedStored.getDate("date"));
+				
+				selled= new CandleStick(selledStored.getDouble("open"),
+						selledStored.getDouble("high"),
+						selledStored.getDouble("low"), 
+						selledStored.getDouble("close"), 
+						selledStored.getDouble("volume"), 
+						selledStored.getDate("date"));
+				
+				result= new ManagedStock();
+				
+				result.setUserIdentifier(managedStockStored.getString(userIdentifier));
+				result.setCodeName(managedStockStored.getString("codeName"));
+				result.setSector(managedStockStored.getString("sector"));
+				result.setProfitPercent(managedStockStored.getDouble("profitPercent"));
+				result.setProfitValue(managedStockStored.getDouble("profitValue"));
+				result.setQtdStocksBought(managedStockStored.getInt("qtdStocksBought"));
+				result.setBuyed(buyed);
+				result.setSelled(selled);
+				result.setCandleSticks(candlesticks);
+			}
+			
+			
+			
+		}catch (Exception e)
+		
+		{
+			e.printStackTrace();
+			return null;
+			
+		}
+		
+		
+		
+		return result;
+	}
+	
+	public ArrayList<ManagedStock> getManagedStock(String userIdentifier)
+	{
+		ManagedStock managedStock=null;
+		
+		ArrayList<ManagedStock> result;
+		
+		BasicDBObject where =null;
+		BasicDBObject managedStockStored=null;
+		ArrayList<BasicDBObject>candleSticksStored=null;
+		BasicDBObject selledStored=null;
+		BasicDBObject buyedStored=null;
+		
+		DBCursor cursor=null;
+		
+		CandleStick buyed=null;
+		CandleStick selled=null;
+		ArrayList<CandleStick> candlesticks=null;
+		
+		try
+		{
+			where = new BasicDBObject("userIdentifier",userIdentifier);
+									
+			result= new ArrayList<ManagedStock>();
+			
+			cursor=this.collection_managedStock.find(where);
+			
+			while(cursor.hasNext())
+			{
+				managedStockStored=(BasicDBObject)cursor.next();
+			
+			if(managedStockStored!=null)
+			{
+				selledStored=(BasicDBObject)managedStockStored.get("selled");
+				buyedStored=(BasicDBObject)managedStockStored.get("buyed");
+				candleSticksStored=(ArrayList<BasicDBObject>)managedStockStored.get("candleSticks");
+				
+				if(candleSticksStored.size()>0)
+				{
+					candlesticks=new ArrayList<CandleStick>();
+					for(BasicDBObject b:candleSticksStored)
+					{
+						candlesticks.add(new CandleStick(b.getDouble("open"), 
+											b.getDouble("high"),
+											b.getDouble("low"),
+											b.getDouble("close"),
+											b.getDouble("volume"), 
+											b.getDate("date")));
+					}
+					
+				}
+				buyed=new CandleStick(buyedStored.getDouble("open"), buyedStored.getDouble("high"),
+										 buyedStored.getDouble("low"), 
+										 buyedStored.getDouble("close"), 
+										 buyedStored.getDouble("volume"), 
+										 buyedStored.getDate("date"));
+				
+				selled= new CandleStick(selledStored.getDouble("open"),
+						selledStored.getDouble("high"),
+						selledStored.getDouble("low"), 
+						selledStored.getDouble("close"), 
+						selledStored.getDouble("volume"), 
+						selledStored.getDate("date"));
+				
+				managedStock= new ManagedStock();
+				
+				managedStock.setUserIdentifier(managedStockStored.getString(userIdentifier));
+				
+				managedStock.setSector(managedStockStored.getString("sector"));
+				managedStock.setProfitPercent(managedStockStored.getDouble("profitPercent"));
+				managedStock.setProfitValue(managedStockStored.getDouble("profitValue"));
+				managedStock.setQtdStocksBought(managedStockStored.getInt("qtdStocksBought"));
+				managedStock.setBuyed(buyed);
+				managedStock.setSelled(selled);
+				managedStock.setCandleSticks(candlesticks);
+				
+				result.add(managedStock);
 				
 			}
-			buyed=new CandleStick(buyedStored.getDouble("open"), buyedStored.getDouble("high"),
-									 buyedStored.getDouble("low"), 
-									 buyedStored.getDouble("close"), 
-									 buyedStored.getDouble("volume"), 
-									 buyedStored.getDate("date"));
 			
-			selled= new CandleStick(selledStored.getDouble("open"),
-					selledStored.getDouble("high"),
-					selledStored.getDouble("low"), 
-					selledStored.getDouble("close"), 
-					selledStored.getDouble("volume"), 
-					selledStored.getDate("date"));
-			
-			result= new ManagedStock();
-			
-			result.setUserIdentifier(managedStockStored.getString(userIdentifier));
-			result.setCodeName(managedStockStored.getString(stockCodeName));
-			result.setSector(managedStockStored.getString("sector"));
-			result.setProfitPercent(managedStockStored.getDouble("profitPercent"));
-			result.setProfitValue(managedStockStored.getDouble("profitValue"));
-			result.setBuyed(buyed);
-			result.setSelled(selled);
-			result.setCandleSticks(candlesticks);
-			
+			}//fim while
 			
 		}catch (Exception e)
 		

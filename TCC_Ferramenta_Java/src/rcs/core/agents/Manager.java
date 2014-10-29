@@ -4,13 +4,10 @@ package rcs.core.agents;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.Service;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.WakerBehaviour;
 import jade.domain.DFService;
-import jade.domain.df;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
@@ -25,17 +22,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Iterator;
-import java.util.concurrent.Delayed;
 
 import com.mongodb.MongoException;
-import com.mongodb.util.MyAsserts.MyAssert;
 
 import rcs.suport.financial.wallet.Stock;
 import rcs.suport.financial.wallet.Wallet;
 import rcs.suport.util.InfoConversations;
+import rcs.suport.util.database.mongoDB.dao.ManagedStockDao;
+import rcs.suport.util.database.mongoDB.dao.ManagedWalletDao;
 import rcs.suport.util.database.mongoDB.dao.StockDao;
 import rcs.suport.util.database.mongoDB.dao.UserInfoDao;
+import rcs.suport.util.database.mongoDB.pojo.ManagedStock;
+import rcs.suport.util.database.mongoDB.pojo.ManagedWallet;
 import rcs.suport.util.database.mongoDB.pojo.OrdersCreate;
 
 
@@ -51,16 +49,19 @@ private UserInfoDao userInfoDao;
 private StockDao stockDao;
 private String userName;
 private InfoConversations info;
-
+private WalletManager walletManager;
 
 protected void setup()
-	{
+{
 		/*
 		 * Create the hashMap with informations : FullName and an list of Stock Names
 		 */
 		
 		manager=this;
-		stockDao=new StockDao();
+		
+		 walletManager= new WalletManager();
+		 
+		
 		
 		try{
 			//create the agent description of ifself
@@ -101,7 +102,7 @@ protected void setup()
 									
 									private static final long serialVersionUID = 1L;
 									String hunterName;
-									@Override
+									
 									public void action() {
 												
 										try
@@ -124,7 +125,7 @@ protected void setup()
 											hunterMessage.addReceiver(new AID(hunterName, AID.ISLOCALNAME));
 											hunterMessage.setLanguage("English");
 											hunterMessage.setOntology("stocks");
-											hunterMessage.setConversationId(ConversationsID.STOCKS_SUGGESTIONS);
+											hunterMessage.setConversationId(ConversationsID.STOCKS_HUNTER_SUGGESTIONS);
 											hunterMessage.setContentObject(manager.info);
 											
 											myAgent.send(hunterMessage);
@@ -139,7 +140,8 @@ protected void setup()
 								});
 								
 							}
-							if(message.getConversationId()==ConversationsID.STOCKS_SUGGESTIONS)
+							
+							if(message.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
 							{
 							InfoConversations inf= (InfoConversations) message.getContentObject();
 								
@@ -147,11 +149,12 @@ protected void setup()
 								System.out.println("Suggetions: "+inf.getStockList().size()+ " Acoes");
 								manager.createExperts(inf.getUserProfile(), inf.getUserName(), inf.getStockList());
 								
-								addBehaviour(new WakerBehaviour(myAgent, 1000) 
+								//Iniciando atividade delegando aos experts tutela de acoes 
+								addBehaviour(new WakerBehaviour(myAgent, 100) 
 								{
 									protected void onWake()
 									{
-										System.out.println("Hora de acordar");
+										
 										System.out.println("Enviando mensagem para ..");
 										System.out.println(manager.infoExperts);
 										for( Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
@@ -173,10 +176,15 @@ protected void setup()
 											e.printStackTrace();
 										}
 										}
+										//Faz reparticao de dinheiro 
+										manager.walletManager= new WalletManager(manager.infoExperts,manager.user.getUserValue());
+										
+		
 									}
 								});
 								
-								addBehaviour(new WakerBehaviour(myAgent, 2000) 
+								//enviando Estrategias para agentes experts 
+								addBehaviour(new WakerBehaviour(myAgent, 200) 
 								{
 
 									private static final long serialVersionUID = 1L;
@@ -202,6 +210,59 @@ protected void setup()
 									
 								});
 								
+								//Envia nome do usuario
+								addBehaviour(new WakerBehaviour(manager, 300) 
+								{
+									/**
+									 * 
+									 */
+									private static final long serialVersionUID = 1L;
+
+									protected void onWake()
+									{
+										for(Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
+										{
+											try 
+											{
+												ACLMessage message=new ACLMessage(ACLMessage.INFORM);
+												message.setLanguage("English");
+												message.setConversationId(ConversationsID.EXPERT_USER_NAME);
+												message.addReceiver(new AID(s.getKey(),AID.ISLOCALNAME));
+												
+												message.setContentObject(manager.user);
+												
+											} catch (IOException e) {
+												
+												e.printStackTrace();
+											}
+											
+											
+										}
+										
+									}
+								});
+								
+								
+							}
+							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_BUY)
+							{
+								
+								System.out.println(message.getSender().getLocalName()+ " pediu dinheiro para comprar..");
+								
+								ACLMessage reply=message.createReply();
+								String stringValue=""+manager.walletManager.approveOrderBuy(message.getSender().getLocalName());
+								reply.setContent(stringValue);
+								myAgent.send(reply);
+													
+								
+							}
+							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_SELL)
+							{
+								System.out.println(getLocalName()+": "+ message.getSender().getLocalName()+ " vendeu acoes e lucrou.. .");
+								
+								double profitValue= Double.parseDouble((String)message.getContent());
+								
+									System.out.println(profitValue);
 								
 							}
 							if(message.getConversationId()==ConversationsID.USER_LOGGED)
@@ -225,19 +286,16 @@ protected void setup()
 							}
 							
 	
-						} catch (UnreadableException e) 
+						} catch(UnreadableException e1) 
 						{
 							
-							e.printStackTrace();
+							e1.printStackTrace();
 						}
 					
 					
 					}else block();
 				}
 			});
-			
-			
-
 		
 		}catch (Exception e)
 		{
@@ -245,6 +303,7 @@ protected void setup()
 		}
 	}
 	
+
 	protected void takeDown()
 	{
 		System.out.println(this.getLocalName()+" says: Bye");
@@ -263,7 +322,7 @@ protected void setup()
 			e.printStackTrace();
 		}
 	}
-	
+
 	
 private void dropExpertAgent(String expertName)
 {
@@ -511,9 +570,127 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 				
 					e.printStackTrace();
 		}
+			
 		}
 		
+	
+	
+}
+//Metodos de gerenciamento da carteira 
+
+private ArrayList<String> approveOrder(ArrayList<String> orders)
+{
+	
+	return null;
 }
 
-
+private class WalletManager
+{
+	 ManagedStockDao managedStockDao;
+	 
+	
+	 ManagedWallet managedWallet;
+	 ManagedWalletDao managedWalletDao;
+	 StockDao stockDao;
+	 double quota;
+	 
+	 Map<String,Double> expertsQuota;
+	 Map<String,ArrayList<Stock>> infoExperts;
+	 
+	 public WalletManager()
+	 {
+		 
+	 }
+	 
+	 public WalletManager(Map<String,ArrayList<Stock>> infoExperts,double userValue)
+	 {
+		 
+		 this.managedWallet= new ManagedWallet();
+		 this.stockDao= new StockDao();
+		 this.managedWalletDao= new ManagedWalletDao();
+		 this.infoExperts=infoExperts;
+		 this.expertsQuota=new HashMap<String, Double>();
+		 
+		 try
+		 {
+			 this.managedWallet.setWalletValue(userValue);
+			 //Money qtd for Expert
+			 this.quota=this.managedWallet.getWalletValue()/this.infoExperts.size();
+			 
+			 this.managedWallet=new ManagedWallet();
+			 this.managedWallet.setUserID(userName);
+			 
+			 this.managedWalletDao.insertManagedWalletInfo(this.managedWallet);
+			 
+		 }catch(Exception e)
+		 {
+			e.printStackTrace(); 
+		 } 
+		 
+		 //Criando map para controlar quantidade de dinheiro por agente 
+		 for(Entry<String, ArrayList<Stock>>e:this.infoExperts.entrySet())
+		 {
+			 this.expertsQuota.put(e.getKey(), this.quota);
+			 System.out.println(getLocalName()+" valor disponivel para "+e.getKey()+ " R$:"+this.quota);
+		 }
+		 
+		 
+	 }
+	 
+	 public double approveOrderBuy(String expertName)
+	 {
+		 double quota=0;
+		 try
+		 {
+			 quota=this.expertsQuota.get(expertName);
+			 this.expertsQuota.remove(expertName);
+			 this.expertsQuota.put(expertName, 0.0);
+			 			 
+		 }catch(Exception e)
+		 {
+			 e.printStackTrace();
+		 }
+		 
+		 return quota;
+	 }
+	 public void approveOrderSell(String expertName, double returnValue)
+	 {
+		 try
+		 {
+			 this.expertsQuota.remove(expertName);
+			 this.expertsQuota.put(expertName, returnValue); 
+			 
+		 }catch (Exception e)
+		 {
+			 e.printStackTrace();
+		 }
+		 
+	 }
+	 public boolean refreshWalletManager ()
+	 {
+		 ArrayList<ManagedStock> managedStockStored = this.managedStockDao.getManagedStock(userName);
+		 ArrayList<Stock> stockList = new ArrayList<Stock>();
+		 ManagedWallet  refresh= new ManagedWallet();
+		 
+		 if(managedStockStored!=null && managedStockStored.size()>1)
+		 {
+			 
+			 for(ManagedStock ms: managedStockStored)
+			 {
+				 stockList.add(new Stock(ms.getCodeName(), ms.getSector()));
+			 }
+			 refresh.setStocksList(stockList);
+			 refresh.setUserID(userName);
+			 
+			 return managedWalletDao.updateManagedWallet(refresh);
+			  
+			 
+		 }else
+			 
+		 return false;
+	 }
+	/// public ArrayList<String>
+	 
+	 
+}
 }

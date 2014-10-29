@@ -22,7 +22,8 @@ public class ConversationsID
 	
 	public static final String REQUEST_CURRENT_STOCK_VALUE="Current Stock value";
 	
-	public static final String STOCKS_SUGGESTIONS="Stocks Suggestions, please.";
+	public static final String STOCKS_HUNTER_SUGGESTIONS="Stocks Suggestions, please.";
+	public static final String STOCKS_EXPERTS_SUGGESTIONS="Stocks Suggestions, please.";
 	
 	public static final String EXPERT_STRATEGY_MME_13_21="MME_13_21";
 	public static final String EXPERT_STRATEGY_MMS_13_21="MMS_13_21";
@@ -32,7 +33,10 @@ public class ConversationsID
 	public static final String EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF="DARK_BULLISH";
 	public static final String EXPERT_STRATEGY_BEARISH_ENGULFING_BULLSH_ENGULF="BEARISH_ENGULF";
 	
+	public static final String 	EXPERT_ORDER_BUY="Order buy";
+	public static final String 	EXPERT_ORDER_SELL="Order sell";
 	
+	public static final String EXPERT_USER_NAME="User name";
 	
 	
 	
