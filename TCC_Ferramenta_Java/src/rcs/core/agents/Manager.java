@@ -23,10 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.mongodb.MongoException;
-
 import rcs.suport.financial.wallet.Stock;
-import rcs.suport.financial.wallet.Wallet;
+import rcs.suport.statistical.Statistical;
 import rcs.suport.util.InfoConversations;
 import rcs.suport.util.database.mongoDB.dao.ManagedStockDao;
 import rcs.suport.util.database.mongoDB.dao.ManagedWalletDao;
@@ -35,6 +33,8 @@ import rcs.suport.util.database.mongoDB.dao.UserInfoDao;
 import rcs.suport.util.database.mongoDB.pojo.ManagedStock;
 import rcs.suport.util.database.mongoDB.pojo.ManagedWallet;
 import rcs.suport.util.database.mongoDB.pojo.OrdersCreate;
+
+import com.mongodb.MongoException;
 
 
 
@@ -687,6 +687,16 @@ private class WalletManager
 			 
 		 return false;
 	 }
+	 public boolean  analyzeStockSuggestions(ArrayList<Stock> stockList)
+	 {
+		 Statistical statistical= new Statistical();
+		 
+		 
+		
+		 return false;
+	 }
+	 
+	 
 	
 	 
 	 

@@ -62,6 +62,106 @@ public class Statistical {
 		
 		return avarange;
 	}
+	public double calculeCorrelationCoefficient(double[] x,double []y)
+	{
+		double correlationCoefficient=0;
+		double avgX=calculeAvarange(x);
+		double avgY=calculeAvarange(y);
+		
+		double sum1=0;
+		double sum2=0;
+		double sum3=0;
+		
+		
+		if(x.length==y.length)
+		{
+			for(int i=0; i<x.length;i++)
+			{
+				sum1+=(x[i]-avgX)*(y[i]-avgY);
+				sum2+=Math.pow((x[i]-avgX),2);
+				sum3+=Math.pow((y[i]-avgY),2);
+			}
+			
+			correlationCoefficient=sum1/Math.sqrt(sum2*sum3);
+			
+		}
+				
+		return correlationCoefficient;
+	}
+	public double calculeCorrelationCoefficient_15(ArrayList<CandleStick>x,ArrayList<CandleStick>y)
+	{
+		double correlationCoefficient=0;
+		double avgX=calculeAvarange_15(x);
+		double avgY=calculeAvarange_15(y);
+		
+		double sum1=0;
+		double sum2=0;
+		double sum3=0;
+		
+		
+		if(x.size()==y.size() && x.size()>=15)
+		{
+			for(int i=0; i<15; i++)
+			{
+				sum1+=(x.get(i).getClose()-avgX)*(y.get(i).getClose()-avgY);
+				sum2+=Math.pow((x.get(i).getClose()-avgX),2);
+				sum3+=Math.pow((y.get(i).getClose()-avgY),2);
+			}
+			
+			correlationCoefficient=sum1/Math.sqrt(sum2*sum3);
+			
+		}else
+			if(x.size()==y.size())
+			{
+				for(int i=0; i<x.size();i++)
+				{
+					sum1+=(x.get(i).getClose()-avgX)*(y.get(i).getClose()-avgY);
+					sum2+=Math.pow((x.get(i).getClose()-avgX),2);
+					sum3+=Math.pow((y.get(i).getClose()-avgY),2);
+				}
+				
+				correlationCoefficient=sum1/Math.sqrt(sum2*sum3);
+			}
+				
+		return correlationCoefficient;
+	}
+	public double calculeCorrelationCoefficient_30(ArrayList<CandleStick>x,ArrayList<CandleStick>y)
+	{
+		double correlationCoefficient=0;
+		double avgX=calculeAvarange_30(x);
+		double avgY=calculeAvarange_30(y);
+		
+		double sum1=0;
+		double sum2=0;
+		double sum3=0;
+		
+		
+		if(x.size()==y.size() && x.size()>=30)
+		{
+			for(int i=0; i<30; i++)
+			{
+				sum1+=(x.get(i).getClose()-avgX)*(y.get(i).getClose()-avgY);
+				sum2+=Math.pow((x.get(i).getClose()-avgX),2);
+				sum3+=Math.pow((y.get(i).getClose()-avgY),2);
+			}
+			
+			correlationCoefficient=sum1/Math.sqrt(sum2*sum3);
+			
+		}else
+			if(x.size()==y.size())
+			{
+				for(int i=0; i<x.size();i++)
+				{
+					sum1+=(x.get(i).getClose()-avgX)*(y.get(i).getClose()-avgY);
+					sum2+=Math.pow((x.get(i).getClose()-avgX),2);
+					sum3+=Math.pow((y.get(i).getClose()-avgY),2);
+				}
+				
+				correlationCoefficient=sum1/Math.sqrt(sum2*sum3);
+			}
+				
+		return correlationCoefficient;
+	}
 	
 	public double calculeVariance(double[] values)
 	{

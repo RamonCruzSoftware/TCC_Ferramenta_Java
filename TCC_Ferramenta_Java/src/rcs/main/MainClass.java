@@ -1,17 +1,9 @@
 package rcs.main;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.ArrayList;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
-import rcs.suport.financial.strategy.MovingAvarangeSimpleStrategy;
-import rcs.suport.financial.strategy.Strategy;
-import rcs.suport.util.requests.YahooFinance;
+import rcs.suport.statistical.Statistical;
 
 public class MainClass 
 {
@@ -88,8 +80,44 @@ public class MainClass
 		
 		
 		
+		Statistical statistical= new Statistical();
+		ArrayList<CandleStick>x=new ArrayList<CandleStick>();
+		ArrayList<CandleStick>y=new ArrayList<CandleStick>();
+		
+		x.add(new CandleStick(0, 0, 0, 10, 0, null));
+		x.add(new CandleStick(0, 0, 0, 11, 0, null));
+		x.add(new CandleStick(0, 0, 0, 12, 0, null));
+		x.add(new CandleStick(0, 0, 0, 11, 0, null));
+		x.add(new CandleStick(0, 0, 0, 13, 0, null));
+		x.add(new CandleStick(0, 0, 0, 13, 0, null));
+		x.add(new CandleStick(0, 0, 0, 14, 0, null));
+		x.add(new CandleStick(0, 0, 0, 12.2, 0, null));
+		x.add(new CandleStick(0, 0, 0, 15.5, 0, null));
+		x.add(new CandleStick(0, 0, 0, 17.6, 0, null));
+		x.add(new CandleStick(0, 0, 0, 18.5, 0, null));
+		x.add(new CandleStick(0, 0, 0, 19.8, 0, null));
+		x.add(new CandleStick(0, 0, 0, 29.0, 0, null));
+		x.add(new CandleStick(0, 0, 0, 30.3, 0, null));
+		x.add(new CandleStick(0, 0, 0, 25, 0, null));
 		
 		
+		y.add(new CandleStick(0, 0, 0, 14, 0, null));
+		y.add(new CandleStick(0, 0, 0, 23, 0, null));
+		y.add(new CandleStick(0, 0, 0, 55, 0, null));
+		y.add(new CandleStick(0, 0, 0, 6, 0, null));
+		y.add(new CandleStick(0, 0, 0, 3, 0, null));
+		y.add(new CandleStick(0, 0, 0, 23, 0, null));
+		y.add(new CandleStick(0, 0, 0, 11, 0, null));
+		y.add(new CandleStick(0, 0, 0, 14.2, 0, null));
+		y.add(new CandleStick(0, 0, 0, 16.5, 0, null));
+		y.add(new CandleStick(0, 0, 0, 18.6, 0, null));
+		y.add(new CandleStick(0, 0, 0, 11.5, 0, null));
+		y.add(new CandleStick(0, 0, 0, 1.8, 0, null));
+		y.add(new CandleStick(0, 0, 0, 9.0, 0, null));
+		y.add(new CandleStick(0, 0, 0, 36.3, 0, null));
+		y.add(new CandleStick(0, 0, 0, 24, 0, null));
+		
+		System.out.println(statistical.calculeCorrelationCoefficient_15(x, y));
 		
 	 }
 	 
