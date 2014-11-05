@@ -378,16 +378,32 @@ public class StockDao {
 			//Pega todo historico existente no banco de dados
 			ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
 			
-			for(int i=(mongo_candleList.size()-30);i<(mongo_candleList.size());i++)
+			if(candleList.size()>=30)
 			{
-				
-				candleList.add(new CandleStick(
-												mongo_candleList.get(i).getDouble("open"), 
-												mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
-												mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
-												mongo_candleList.get(i).getDate("date"))
-											);
+				for(int i=(mongo_candleList.size()-30);i<(mongo_candleList.size());i++)
+				{
+					
+					candleList.add(new CandleStick(
+													mongo_candleList.get(i).getDouble("open"), 
+													mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
+													mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
+													mongo_candleList.get(i).getDate("date"))
+												);
+				}
+			}else
+			{
+				for(int i=0;i<(mongo_candleList.size());i++)
+				{
+					
+					candleList.add(new CandleStick(
+													mongo_candleList.get(i).getDouble("open"), 
+													mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
+													mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
+													mongo_candleList.get(i).getDate("date"))
+												);
+				}
 			}
+			
 			
 			
 	

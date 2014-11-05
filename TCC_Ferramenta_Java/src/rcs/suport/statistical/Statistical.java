@@ -21,21 +21,28 @@ public class Statistical {
 	{
 		double avarange=0;
 		
-		if(candlesticks.size()>=30)
+		try
 		{
-			for(int i=0;i<30;i++)
+			if(candlesticks.size()>=30)
 			{
-				avarange+=candlesticks.get(i).getClose()/30;
+				for(int i=0;i<30;i++)
+				{
+					avarange+=candlesticks.get(i).getClose()/30;
+				}
+				
+			}else
+			{
+				for(int i=0;i<candlesticks.size();i++)
+				{
+					avarange+=candlesticks.get(i).getClose()/candlesticks.size();
+				}
+				
 			}
-			
-		}else
+		}catch(Exception e)
 		{
-			for(int i=0;i<candlesticks.size();i++)
-			{
-				avarange+=candlesticks.get(i).getClose()/candlesticks.size();
-			}
-			
+			e.printStackTrace();
 		}
+		
 		
 		
 		return avarange;
@@ -43,22 +50,28 @@ public class Statistical {
 	public double calculeAvarange_15(ArrayList<CandleStick> candlesticks)
 	{
 		double avarange=0;
-		
-		if(candlesticks.size()>=15)
+		try
 		{
-			for(int i=0;i<15;i++)
+			if(candlesticks.size()>=15)
 			{
-				avarange+=candlesticks.get(i).getClose()/15;
-				
+				for(int i=0;i<15;i++)
+				{
+					avarange+=candlesticks.get(i).getClose()/15;
+					
+				}
+			}else
+			{
+				for(int i=0;i<candlesticks.size();i++)
+				{
+					avarange+=candlesticks.get(i).getClose()/candlesticks.size();
+					
+				}
 			}
-		}else
+		}catch (Exception e)
 		{
-			for(int i=0;i<candlesticks.size();i++)
-			{
-				avarange+=candlesticks.get(i).getClose()/candlesticks.size();
-				
-			}
+			e.printStackTrace();
 		}
+		
 		
 		return avarange;
 	}
@@ -99,7 +112,7 @@ public class Statistical {
 		double sum3=0;
 		
 		
-		if(x.size()==y.size() && x.size()>=15)
+		if(y.size()>=15 && x.size()>=15)
 		{
 			for(int i=0; i<15; i++)
 			{

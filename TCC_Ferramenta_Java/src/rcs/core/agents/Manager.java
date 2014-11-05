@@ -144,11 +144,13 @@ protected void setup()
 							if(message.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
 							{
 								InfoConversations inf= (InfoConversations) message.getContentObject();
-								
+								WalletManager m=new WalletManager();
 							//TODO apagar print
 								System.out.println("Suggetions: "+inf.getStockList().size()+ " Acoes");
 								//colocar aqui tratamento de aceite de acoes 
+							//	System.out.println("Carreira aprovada? "+m.analyzeStockSuggestions(inf.getStockList(), 2));
 								
+								//Descomentar isso
 								manager.createExperts(inf.getUserProfile(), inf.getUserName(), inf.getStockList());
 								
 								//Iniciando atividade delegando aos experts tutela de acoes 
@@ -599,7 +601,7 @@ private class WalletManager
 	 
 	 public WalletManager()
 	 {
-		 
+		 this.stockDao= new StockDao();
 	 }
 	 
 	 public WalletManager(Map<String,ArrayList<Stock>> infoExperts,double userValue)
@@ -687,13 +689,57 @@ private class WalletManager
 			 
 		 return false;
 	 }
-	 public boolean  analyzeStockSuggestions(ArrayList<Stock> stockList)
+	 public  boolean  analyzeStockSuggestions(ArrayList<Stock> stockList, int correlLimit)
 	 {
+		 int count=0;
+		 boolean result=false;
 		 Statistical statistical= new Statistical();
+		 ArrayList<Stock>stockList_temp=new ArrayList<Stock>();
+		try
+		{
+			for(Stock s: stockList)
+			{
+				s.setCandleSticks(this.stockDao.getStockPrices_last30(s.getCodeName()));
+				stockList_temp.add(s);
+			}
+			
+			for(int i=0;i<stockList_temp.size();i++)
+			 {
+				
+				//Buscando as candlesticks 
+				// stockList.get(i).setCandleSticks(this.stockDao.getStockPrices_last30(stockList.get(i).getCodeName()));
+				 
+				 for(int j=i;j<stockList_temp.size();j++)
+				 {
+					
+					double correl=statistical.calculeCorrelationCoefficient_15(stockList_temp.get(i).getCandleSticks(), stockList_temp.get(j).getCandleSticks());
+					
+					 System.out.println(i+" com "+j);
+					 System.out.println(stockList_temp.get(i).getCodeName()+" com "+stockList_temp.get(j).getCodeName());
+					System.out.println("Correl "+correl);
+					
+					if(correl>0 && i!=j)
+					{
+						 
+						count++;
+					}
+				 }
+			 }
+			 System.out.println(" count:"+count);
+			if(count<=correlLimit) 
+				 result= true;
+			 else  result= false;
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		 
 		 
-		
-		 return false;
+		 
+		 
+		return result;
+		 
 	 }
 	 
 	 

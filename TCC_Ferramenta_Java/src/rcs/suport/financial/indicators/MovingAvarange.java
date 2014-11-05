@@ -34,6 +34,7 @@ public class MovingAvarange {
 	 * @param currentPrice
 	 * @param period
 	 */
+	
 	public MovingAvarange(double lastMME,double currentPrice, int period)
 	{
 		this.lastMME=lastMME;
@@ -58,8 +59,8 @@ public class MovingAvarange {
 	public double exponencialAvarange()
 	{
 		double K,result;
-		K=(1+period);
-		result=(currentPrice-lastMME)*(2/K)+lastMME;
+		K=(1+this.period);
+		result=(this.currentPrice-lastMME)*(2/K)+this.lastMME;
 		return result;
 	}
 	/**

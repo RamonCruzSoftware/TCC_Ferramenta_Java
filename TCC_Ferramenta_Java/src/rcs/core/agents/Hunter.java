@@ -695,7 +695,9 @@ private void initWork()
 					hunter.stockList=hunter.stockDao.getAllStocksPrices();
 					System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
 					System.out.println("Vou calcular os valores estatisticos para catalogar");
-					hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
+					
+					//Descomentar isso 
+					//hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
 					
 				}else 
 				{

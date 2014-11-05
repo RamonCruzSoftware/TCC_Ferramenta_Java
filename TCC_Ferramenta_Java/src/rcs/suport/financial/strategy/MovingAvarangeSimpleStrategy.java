@@ -31,8 +31,6 @@ public class MovingAvarangeSimpleStrategy implements Strategy
 		
 		try
 		{
-			
-			
 			if(mmsAValues.size()>=5 && mmsBValues.size()>=5)
 			{
 				index_1=mmsAValues.size()-1;
@@ -88,9 +86,7 @@ public class MovingAvarangeSimpleStrategy implements Strategy
 		
 		this.mmsAValues.add(this.movingAvangeA.simpleAvarange());
 		this.mmsBValues.add(this.movingAvangeB.simpleAvarange());
-		
-		
-		
+	
 	}
 
 	public MovingAvarange getMovingAvangeA() {
