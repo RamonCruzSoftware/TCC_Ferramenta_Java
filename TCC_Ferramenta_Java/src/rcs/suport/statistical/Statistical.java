@@ -215,7 +215,7 @@ public class Statistical
 	}
 	public double calculeVariance_15(ArrayList<CandleStick>candleSticks)
 	{
-		double variance=0;
+		double variance=0.0f;
 		double avarange=calculeAvarange_15(candleSticks);
 		
 		if(candleSticks.size()>=15)
@@ -261,7 +261,9 @@ public class Statistical
 	{
 
 		double averangeReturn=0;
+		
 		for(int i=0;i<(values.length-1);i++)
+			
 		averangeReturn+=Math.log(values[i]/values[i+1])/(values.length-1);
 	
 		return averangeReturn;
@@ -271,7 +273,7 @@ public class Statistical
 	{
 		double avarangeReturn=0;
 		
-		if(candlesticks.size()>=30)
+		if(candlesticks.size()>=31)
 		{
 			for(int i=0;i<30;i++)
 			{
@@ -318,13 +320,13 @@ public class Statistical
 	public double varianceCoefficient_30(ArrayList<CandleStick>candlesticks)
 	{
 		
-		return calculeAvarange_30(candlesticks)/calculeAvarange_30(candlesticks);
+		return calculeStandardDeviation_30(candlesticks)/calculeAvarange_30(candlesticks);
 	}
 	
 	public double varianceCoefficient_15(ArrayList<CandleStick>candlesticks)
 	{
 		
-		return calculeAvarange_15(candlesticks)/calculeAvarange_15(candlesticks);
+		return calculeStandardDeviation_15(candlesticks)/calculeAvarange_15(candlesticks);
 	}
 	
 }
