@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 
-public class Statistical {
+public class Statistical 
+{
+	
 
 	public double calculeAvarange(double[] values)
 	{
@@ -245,13 +247,13 @@ public class Statistical {
 	public double calculeStandardDeviation_30(ArrayList<CandleStick> candlesticks)
 	{
 		
-		return Math.sqrt(calculeAvarange_30(candlesticks));
+		return Math.sqrt(calculeVariance_30(candlesticks));
 	}
 	
 	public double calculeStandardDeviation_15(ArrayList<CandleStick> candlesticks)
 	{
 		
-		return Math.sqrt(calculeAvarange_15(candlesticks));
+		return Math.sqrt(calculeVariance_15(candlesticks));
 	}
 	
 	
