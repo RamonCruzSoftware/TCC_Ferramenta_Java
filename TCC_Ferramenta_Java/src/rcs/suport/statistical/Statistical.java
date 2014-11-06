@@ -183,10 +183,10 @@ public class Statistical {
 		
 		for(int i = 0; i < values.length; i++)
 		{
-			variance += Math.pow((values[i] - avarange), 2)/(values.length);
+			variance += Math.pow((values[i] - avarange), 2);
 		}
 		
-		return variance;
+		return variance/(values.length);
 		
 	}
 	public double calculeVariance_30(ArrayList<CandleStick> candlesticks)

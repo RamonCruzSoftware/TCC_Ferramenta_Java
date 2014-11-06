@@ -17,11 +17,12 @@ public class MovingAvarange {
 	 * @param values
 	 * @param period
 	 */
-	public MovingAvarange(double value,int period)
+	public MovingAvarange(int period)
 	{
-		this.value=value;
-		this.period=period;
+		
+		this.setPeriod(period);
 		this.values= new ArrayList<Double>();
+
 		
 		
 	}
@@ -39,7 +40,7 @@ public class MovingAvarange {
 	{
 		this.lastMME=lastMME;
 		this.currentPrice=currentPrice;
-		this.period=period;
+		this.setPeriod(period);
 		
 	}
 
@@ -47,19 +48,19 @@ public class MovingAvarange {
 	{
 		double result=0;
 		
-		if(this.values.size()>0 && this.values.size()>=this.period)
+		if(this.values.size()>0 && this.values.size()>=this.getPeriod())
 		{
-			for(int i=(this.values.size()-1);i>(this.values.size()-1-this.period);i--)
+			for(int i=(this.values.size()-1);i>(this.values.size()-1-this.getPeriod());i--)
 			{
 				result+=this.values.get(i);
 			}
 		}
-		return (result/period);
+		return (result/getPeriod());
 	}
 	public double exponencialAvarange()
 	{
 		double K,result;
-		K=(1+this.period);
+		K=(1+this.getPeriod());
 		result=(this.currentPrice-lastMME)*(2/K)+this.lastMME;
 		return result;
 	}
@@ -86,6 +87,12 @@ public class MovingAvarange {
 		this.lastMME=lastMME;
 		this.currentPrice=currentPrice;
 		
+	}
+	public int getPeriod() {
+		return period;
+	}
+	public void setPeriod(int period) {
+		this.period = period;
 	}
 	
 }

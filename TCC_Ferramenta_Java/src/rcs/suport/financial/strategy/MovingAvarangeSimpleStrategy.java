@@ -16,8 +16,8 @@ public class MovingAvarangeSimpleStrategy implements Strategy
 	
 	public MovingAvarangeSimpleStrategy(int periodA,int periodB)
 	{
-		this.setMovingAvangeA(new MovingAvarange(0, periodA));
-		this.setMovingAvangeB(new MovingAvarange(0, periodB));
+		this.setMovingAvangeA(new MovingAvarange( periodA));
+		this.setMovingAvangeB(new MovingAvarange( periodB));
 		
 		this.setMmsAValues(new ArrayList<Double>());
 		this.setMmsBValues(new ArrayList<Double>());
