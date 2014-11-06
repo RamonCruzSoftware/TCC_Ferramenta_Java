@@ -209,32 +209,103 @@ public class StatisticalTest {
 	}
 
 	@Test
-	public void testCalculeVariance_30() {
+	public void testCalculeVariance_30() 
+	{
+		statistical= new Statistical();
+		
+		ArrayList<CandleStick>candleListA= new ArrayList<CandleStick>();
+		ArrayList<CandleStick>candleListB=new ArrayList<CandleStick>();
+		
+		for(int i= 1; i<31;i++)
+		{
+			candleListA.add(new CandleStick(10, 10, 10, i, 10, null));
+			candleListB.add(new CandleStick(10, 10, 10, 1, 10, null));
+		}
+		
+		Assert.assertEquals(0, statistical.calculeVariance_30(candleListB),0.2);
+		Assert.assertEquals(74.91, statistical.calculeVariance_30(candleListA),0.2);
+		
+		
 		
 	}
 
 	@Test
 	public void testCalculeVariance_15() {
 		
+		statistical= new Statistical();
+		
+		ArrayList<CandleStick>candleListA= new ArrayList<CandleStick>();
+		ArrayList<CandleStick>candleListB=new ArrayList<CandleStick>();
+		
+		for(int i= 1; i<16;i++)
+		{
+			candleListA.add(new CandleStick(10, 10, 10, i, 10, null));
+			candleListB.add(new CandleStick(10, 10, 10, 1, 10, null));
+		}
+		
+		Assert.assertEquals(0, statistical.calculeVariance_15(candleListB),0.2);
+		Assert.assertEquals(18.6, statistical.calculeVariance_15(candleListA),0.1);
+		
 	}
 
 	@Test
-	public void testCalculeStandardDeviation() {
+	public void testCalculeStandardDeviation() 
+	{
+		
+		statistical= new Statistical();
+		double x[]={1,1,1,1,1,1,1,1};
+		
+		Assert.assertEquals(0, statistical.calculeStandardDeviation(x),0.3);
+		
+		double x2[]={1,2,3,4,5,6,7,8,9};
+		
+		Assert.assertEquals(2.581, statistical.calculeStandardDeviation(x2),0.3);
+		
 		
 	}
 
 	@Test
 	public void testCalculeStandardDeviation_30() {
 		
+		statistical= new Statistical();
+		
+		ArrayList<CandleStick>candleListA= new ArrayList<CandleStick>();
+		ArrayList<CandleStick>candleListB=new ArrayList<CandleStick>();
+		
+		for(int i= 1; i<31;i++)
+		{
+			candleListA.add(new CandleStick(10, 10, 10, i, 10, null));
+			candleListB.add(new CandleStick(10, 10, 10, 1, 10, null));
+		}
+		
+		Assert.assertEquals(0, statistical.calculeStandardDeviation_30(candleListB),0);
+		Assert.assertEquals(8.65, statistical.calculeStandardDeviation_30(candleListA),0.2);
 	}
 
 	@Test
 	public void testCalculeStandardDeviation_15() {
 		
+		statistical= new Statistical();
+		
+		ArrayList<CandleStick>candleListA= new ArrayList<CandleStick>();
+		ArrayList<CandleStick>candleListB=new ArrayList<CandleStick>();
+		
+		for(int i= 1; i<16;i++)
+		{
+			candleListA.add(new CandleStick(10, 10, 10, i, 10, null));
+			candleListB.add(new CandleStick(10, 10, 10, 1, 10, null));
+		}
+		
+		Assert.assertEquals(0, statistical.calculeStandardDeviation_15(candleListB),0.0);
+		Assert.assertEquals(4.32, statistical.calculeStandardDeviation_15(candleListA),0.2);
+		
+		
 	}
 
 	@Test
 	public void testAverangeReturn() {
+		
+		
 		
 	}
 
