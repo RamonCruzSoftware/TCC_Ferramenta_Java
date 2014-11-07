@@ -7,6 +7,10 @@ import rcs.suport.financial.partternsCandleStick.CandleStick;
 public class Statistical 
 {
 	
+	public Statistical()
+	{
+		
+	}
 
 	public double calculeAvarange(double[] values)
 	{

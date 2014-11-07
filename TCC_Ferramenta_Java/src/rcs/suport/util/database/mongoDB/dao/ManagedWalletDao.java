@@ -19,9 +19,9 @@ public class ManagedWalletDao
 	
 	public ManagedWalletDao()
 	{
-		this.connection=MongoConnection.getInstance();
-		this.db=connection.getDB();
-		this.collection_managedWallet=db.getCollection("managedWallet");
+		this.setConnection(MongoConnection.getInstance());
+		this.setDb(getConnection().getDB());
+		this.setCollection_managedWallet(getDb().getCollection("managedWallet"));
 		
 	}
 	
@@ -35,19 +35,23 @@ public class ManagedWalletDao
 		{
 			stocksList= new ArrayList<BasicDBObject>();
 			
-//			for(Stock s:info.getStocksList())
-//			{
-//				stocksList.add(new BasicDBObject("codeName",s.getCodeName()).append("sector", s.getSector()));
-//				
-//			}
+			if(info.getStocksList()!=null)
+			{
+				for(Stock s:info.getStocksList())
+				{
+					stocksList.add(new BasicDBObject("codeName",s.getCodeName()).append("sector", s.getSector()));
+					
+				}
+			}
+			
 			manageWallet= new BasicDBObject("userId",info.getUserID())
-											.append("walletProfitePercent", info.getWalletProfitPercent())
+											.append("walletProfitPercent", info.getWalletProfitPercent())
 											.append("walletProfitValue", info.getWalletProfitValue())
 											.append("walletRisck", info.getWalletRisck())
-											.append("walletValue", info.getWalletValue());
-											//.append("stocksList",stocksList);
+											.append("walletValue", info.getWalletValue())
+											.append("stocksList",stocksList);
 			
-			this.collection_managedWallet.insert(manageWallet);
+			this.getCollection_managedWallet().insert(manageWallet);
 			
 		}catch(Exception e)
 		{
@@ -71,28 +75,32 @@ public class ManagedWalletDao
 		try
 		{
 			where=new BasicDBObject("userId",info.getUserID());
-			cursor=this.collection_managedWallet.find(where);
+			cursor=this.getCollection_managedWallet().find(where);
 			
 			while(cursor.hasNext())
 			{
 				manageWalletStored=(BasicDBObject)cursor.next();
 			}
 			
-			stockListToStore= new ArrayList<BasicDBObject>();
-			for(Stock s:info.getStocksList())
+			if(info.getStocksList()!=null)
 			{
-				stockListToStore.add(new BasicDBObject("codeName",s.getCodeName()).append("sector", s.getSector()));
+				stockListToStore= new ArrayList<BasicDBObject>();
+				for(Stock s:info.getStocksList())
+				{
+					stockListToStore.add(new BasicDBObject("codeName",s.getCodeName()).append("sector", s.getSector()));
+				}
 			}
 			
+			
 			manageWalletToStore = new BasicDBObject("userId",info.getUserID())
-										.append("walletProfitePercent", info.getWalletProfitPercent())
+										.append("walletProfitPercent", info.getWalletProfitPercent())
 										.append("walletProfitValue", info.getWalletProfitValue())
 										.append("walletRisck", info.getWalletRisck())
 										.append("walletValue", info.getWalletValue())
 										.append("stocksList",stockListToStore);
 			
-			this.collection_managedWallet.remove(manageWalletStored);
-			this.collection_managedWallet.insert(manageWalletToStore);
+			this.getCollection_managedWallet().remove(manageWalletStored);
+			this.getCollection_managedWallet().insert(manageWalletToStore);
 			
 			
 			
@@ -117,27 +125,39 @@ public class ManagedWalletDao
 		try
 		{
 			where=new BasicDBObject("userId",userIdentifier);
-			cursor= this.collection_managedWallet.find(where);
+			cursor= this.getCollection_managedWallet().find(where);
 			
 			while(cursor.hasNext())
 			{
 				managedWalletStored=(BasicDBObject)cursor.next();
 			}
 			stocksListStored=(ArrayList<BasicDBObject>)managedWalletStored.get("stocksList");
-			stockList=new ArrayList<Stock>();
 			
-			for(BasicDBObject b: stocksListStored)
+			
+			if(managedWalletStored!=null )
 			{
-				stockList.add(new Stock(b.getString("codeName"), b.getString("sector")));
+				
+				if(stocksListStored!=null && stocksListStored.size()>0)
+				{
+					stockList=new ArrayList<Stock>();
+					for(BasicDBObject b: stocksListStored)
+					{
+						stockList.add(new Stock(b.getString("codeName"), b.getString("sector")));
+					}
+				}
+				
+				result= new ManagedWallet();
+				result.setUserID(managedWalletStored.getString("userId"));
+				result.setWalletValue(managedWalletStored.getDouble("walletValue"));
+				result.setWalletRisck(managedWalletStored.getDouble("walletRisck"));
+				result.setWalletProfitValue(managedWalletStored.getDouble("walletProfitValue"));
+				result.setWalletProfitPercent(managedWalletStored.getDouble("walletProfitPercent"));
+				result.setStocksList(stockList);
 			}
 			
-			result= new ManagedWallet();
-			result.setUserID(managedWalletStored.getString("userId"));
-			result.setWalletValue(managedWalletStored.getDouble("walletValue"));
-			result.setWalletRisck(managedWalletStored.getDouble("walletRisck"));
-			result.setWalletProfitValue(managedWalletStored.getDouble("walletProfitValue"));
-			result.setWalletProfitPercent(managedWalletStored.getDouble("walletProfitPercent"));
-			result.setStocksList(stockList);
+			
+			
+			
 			
 			
 		}catch (Exception e)
@@ -147,6 +167,61 @@ public class ManagedWalletDao
 		}
 		
 		return result;
+	}
+	
+	public boolean dropManagedWallet(ManagedWallet mWallet)
+	{ 
+		boolean result= false;
+		
+		BasicDBObject where=null;
+		BasicDBObject managedWalletStored =null;
+		DBCursor cursor=null;
+		
+		try
+		{
+			where=new BasicDBObject("userId",mWallet.getUserID());
+			cursor= this.getCollection_managedWallet().find(where);
+			
+			while(cursor.hasNext())
+			{
+				managedWalletStored=(BasicDBObject)cursor.next();
+				getCollection_managedWallet().remove(managedWalletStored);
+				result=true;
+			}
+		
+			
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+			result=false;
+		}
+		
+		return result;
+		
+	}
+
+	public DBCollection getCollection_managedWallet() {
+		return collection_managedWallet;
+	}
+
+	public void setCollection_managedWallet(DBCollection collection_managedWallet) {
+		this.collection_managedWallet = collection_managedWallet;
+	}
+
+	public MongoConnection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(MongoConnection connection) {
+		this.connection = connection;
+	}
+
+	public DB getDb() {
+		return db;
+	}
+
+	public void setDb(DB db) {
+		this.db = db;
 	}
 		
 }

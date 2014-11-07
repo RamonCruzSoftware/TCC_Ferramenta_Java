@@ -7,6 +7,7 @@ import java.util.Date;
 
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
@@ -16,7 +17,18 @@ import rcs.suport.financial.wallet.Stock;
 public class StatisticalTest {
 	
 	private Statistical statistical;
-
+	
+	@Before
+	public void setUp()
+	{
+		
+	}
+	
+	@Test
+	public void testStatistical()
+	{
+		Assert.assertEquals(Statistical.class, new Statistical().getClass());
+	}
 	@Test
 	public void testCalculeAvarange()
 	{

@@ -17,13 +17,8 @@ public class InfoConversations implements Serializable{
 	 
 	 
 	 //Para uso dos experts e manages 
-	 
-	
-	
-	public InfoConversations()
-	{	
-		
-		
+	 InfoConversations()
+	{		
 	}
 	
 	public InfoConversations(String userName,int userProfile)

@@ -14,6 +14,12 @@ import rcs.suport.financial.wallet.StockTest;
 import rcs.suport.financial.wallet.WalletTest;
 import rcs.suport.statistical.MatrixTest;
 import rcs.suport.statistical.Statistical;
+import rcs.suport.util.InfoConversations;
+import rcs.suport.util.database.mongoDB.MongoConnetionTest;
+import rcs.suport.util.database.mongoDB.dao.InfoStrategiesDaoTest;
+import rcs.suport.util.database.mongoDB.dao.ManagedStockDaoTest;
+import rcs.suport.util.database.mongoDB.dao.ManagedWalletDaoTest;
+import rcs.suport.util.database.mongoDB.dao.OrdersCreateDaoTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
@@ -27,11 +33,18 @@ import rcs.suport.statistical.Statistical;
 	StockTest.class,
 	WalletTest.class,
 	MatrixTest.class,
-	Statistical.class
+	Statistical.class,
+	InfoConversations.class,
+	MongoConnetionTest.class,
+	InfoStrategiesDaoTest.class,
+	ManagedStockDaoTest.class,
+	ManagedWalletDaoTest.class,
+	OrdersCreateDaoTest.class
 	}
 		)
 
 public class TestSuite {
+	
 	
 	
 

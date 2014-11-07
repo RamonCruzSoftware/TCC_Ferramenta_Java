@@ -13,6 +13,11 @@ public class ManagedWallet {
 	 private double walletProfitValue;
 	
 	 private ArrayList<Stock> stocksList;
+	 
+	 public ManagedWallet()
+	 {
+		 stocksList=null;
+	 }
 
 
 	public String getUserID() {

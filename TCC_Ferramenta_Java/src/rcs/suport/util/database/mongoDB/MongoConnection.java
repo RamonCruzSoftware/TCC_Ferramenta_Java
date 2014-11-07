@@ -5,9 +5,9 @@ import com.mongodb.DB;
 import com.mongodb.MongoClient;
 public class MongoConnection {
 	
-	private static final String HOST="localhost";
-	private static final int PORT= 27017;
-	private static final String DB_NAME="TCCGrails_2_4_3";
+	private static  String HOST="localhost";
+	private static  int PORT= 27017;
+	private static  String DB_NAME="TCCGrails_2_4_3";
 	
 	private static MongoConnection uniqInstance;
 	private MongoClient mongo;
@@ -50,5 +50,23 @@ public class MongoConnection {
 		}
 		return db;
 	}
-
+	public static String getHOST() {
+		return HOST;
+	}
+	public static void setHOST(String hOST) {
+		HOST = hOST;
+	}
+	public static int getPORT() {
+		return PORT;
+	}
+	public static void setPORT(int pORT) {
+		PORT = pORT;
+	}
+	public static String getDB_NAME() {
+		return DB_NAME;
+	}
+	public static void setDB_NAME(String dB_NAME) {
+		DB_NAME = dB_NAME;
+	}
+	
 }

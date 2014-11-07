@@ -13,14 +13,17 @@ import com.mongodb.MongoException;
 public class InfoStrategiesDao {
 	
 	private DBCollection collection_infoStrategies;
+	private MongoConnection connection;
+	private DB db;
 	
 	public InfoStrategiesDao()
 	{
 		try
 		{
-			MongoConnection connection= MongoConnection.getInstance();
-			DB db= connection.getDB();
-			this.collection_infoStrategies=db.getCollection("infoStrategies");
+			 this.setConnection(MongoConnection.getInstance());
+			 this.setDb(this.getConnection().getDB());
+
+			this.setCollection_infoStrategies(getDb().getCollection("infoStrategies"));
 			
 		}catch (Exception e)
 		{
@@ -45,7 +48,7 @@ public class InfoStrategiesDao {
 													.append("periodicity", info.getPeriodicity())
 													.append("buyed", buyed);
 		
-		this.collection_infoStrategies.insert(insertInfo);
+		this.getCollection_infoStrategies().insert(insertInfo);
 		
 		
 		try
@@ -78,7 +81,7 @@ public class InfoStrategiesDao {
 		
 		try
 		{
-			cursor=this.collection_infoStrategies.find(where);
+			cursor=this.getCollection_infoStrategies().find(where);
 			while(cursor.hasNext())
 			{
 				infoStrategyStored=(BasicDBObject) cursor.next();
@@ -99,8 +102,8 @@ public class InfoStrategiesDao {
 											.append("selled",selled)
 											.append("profit", info.getProfit());
 			
-			this.collection_infoStrategies.remove(infoStrategyStored);
-			this.collection_infoStrategies.insert(infoStrategyToStore);
+			this.getCollection_infoStrategies().remove(infoStrategyStored);
+			this.getCollection_infoStrategies().insert(infoStrategyToStore);
 			
 			
 		}catch(Exception e)
@@ -132,7 +135,7 @@ public class InfoStrategiesDao {
 							.append("stockCodeName",info.getStockCodeName())
 							.append("periodicity", info.getPeriodicity());
 
-			cursor=this.collection_infoStrategies.find(where);
+			cursor=this.getCollection_infoStrategies().find(where);
 			
 			while(cursor.hasNext())
 			{
@@ -141,20 +144,28 @@ public class InfoStrategiesDao {
 			buyedStored=(BasicDBObject)infoStored.get("buyed");
 			selledStored=(BasicDBObject)infoStored.get("selled");
 			
-			buyed=new CandleStick(buyedStored.getDouble("open"), 
-								  buyedStored.getDouble("high"),
-								  buyedStored.getDouble("low"), 
-								  buyedStored.getDouble("close"),
-								  buyedStored.getDouble("volume"),
-								  buyedStored.getDate("date"));
+			if(buyedStored!=null)
+			{
+				buyed=new CandleStick(buyedStored.getDouble("open"), 
+						  buyedStored.getDouble("high"),
+						  buyedStored.getDouble("low"), 
+						  buyedStored.getDouble("close"),
+						  buyedStored.getDouble("volume"),
+						  buyedStored.getDate("date"));
+			}
 			
-			selled=new CandleStick(selledStored.getDouble("open"), 
-								selledStored.getDouble("high"),
-								selledStored.getDouble("low"), 
-								selledStored.getDouble("close"),
-								selledStored.getDouble("volume"),
-								selledStored.getDate("date"));
 			
+			if(selledStored!=null)
+			{
+				selled=new CandleStick(selledStored.getDouble("open"), 
+						selledStored.getDouble("high"),
+						selledStored.getDouble("low"), 
+						selledStored.getDouble("close"),
+						selledStored.getDouble("volume"),
+						selledStored.getDate("date"));
+
+			}
+						
 			result = new InfoStrategies();
 			result.setUserIdentifier(infoStored.getString("userIdentifier"));
 			result.setStrategyName(infoStored.get("strategyName").toString());
@@ -172,6 +183,72 @@ public class InfoStrategiesDao {
 		}
 		
 		return result;
+	}
+	
+	public boolean dropInfoStrategy(InfoStrategies info)
+	{
+		boolean result=false;
+		BasicDBObject where=null;
+		BasicDBObject infoStored=null;
+	
+		DBCursor cursor=null;
+	
+	
+		try
+		{
+			where=new BasicDBObject("userIdentifier",info.getUserIdentifier())
+							.append("strategyName",info.getStrategyName())
+							.append("stockCodeName",info.getStockCodeName())
+							.append("periodicity", info.getPeriodicity());
+
+			cursor=this.getCollection_infoStrategies().find(where);
+			
+			while(cursor.hasNext())
+			{
+				infoStored=(BasicDBObject)cursor.next();
+				if(infoStored!=null)
+				{
+					collection_infoStrategies.remove(infoStored);
+					result= true;
+				}else result= false;
+			
+			}
+			
+			
+			
+			
+		}catch (Exception e )
+		{
+			e.printStackTrace();
+			result= false;
+		}
+		
+		return result;
+		
+	}
+
+	public DBCollection getCollection_infoStrategies() {
+		return collection_infoStrategies;
+	}
+
+	public void setCollection_infoStrategies(DBCollection collection_infoStrategies) {
+		this.collection_infoStrategies = collection_infoStrategies;
+	}
+
+	public MongoConnection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(MongoConnection connection) {
+		this.connection = connection;
+	}
+
+	public DB getDb() {
+		return db;
+	}
+
+	public void setDb(DB db) {
+		this.db = db;
 	}
 
 }
