@@ -127,6 +127,7 @@ private void communication(Agent agent)
 							upperLimit=30;
 							
 							do
+								
 							{
 								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
 								if(lowerLimit>0)lowerLimit--;
@@ -210,6 +211,7 @@ private void downloadCurrentCsvFiles(String dir_1,String subdir_1,String subdir_
 		 * 
 		 */
 		
+	 
 		 final boolean thread_finish[]={false,false,false};
 		 //Thread 1
 		 final int id1=1;

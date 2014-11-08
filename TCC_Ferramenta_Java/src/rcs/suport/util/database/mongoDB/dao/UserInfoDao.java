@@ -23,9 +23,9 @@ public class UserInfoDao {
 		try{
 			MongoConnection connection=MongoConnection.getInstance();
 			DB db=connection.getDB();
-			this.collection_userInfo=db.getCollection("userInfo");
-			this.collection_userLogged=db.getCollection("userLogged");
-			this.collection_userUnLogged=db.getCollection("userUnLogged");
+			this.setCollection_userInfo(db.getCollection("userInfo"));
+			this.setCollection_userLogged(db.getCollection("userLogged"));
+			this.setCollection_userUnLogged(db.getCollection("userUnLogged"));
 			
 			
 		}catch (Exception e)
@@ -34,25 +34,21 @@ public class UserInfoDao {
 		}
 	}
 	
-	public void setNewInformationToUser(Wallet walletInfo)
+	
+	
+	public boolean insertUserUnLogged(String userName)
 	{
-		BasicDBObject keys = new BasicDBObject();
-		 keys.put("x", 1);
-		 DBCursor cursor = this.collection_userInfo.find(new BasicDBObject(), keys);
-		 
-		 //Apaga informacoes anteriores
-		 while(cursor.hasNext())
-		 {
-			 collection_userInfo.remove(cursor.next());
-		 }
-		 
-		 BasicDBObject newInformation = new BasicDBObject("userIdentifier", walletInfo.getUserID()).
-		            append("walletValue", walletInfo.getWalletValue()).
-		            append("walletPercent", walletInfo.getWallterPercent());
-		 
-		            
-		         collection_userInfo.insert(newInformation);
-		
+		try
+		{
+			BasicDBObject user= new BasicDBObject("_id",userName);
+			collection_userUnLogged.insert(user);
+			
+			return true;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public boolean isUserUnLogged(String userName)
@@ -61,30 +57,74 @@ public class UserInfoDao {
 		BasicDBObject keys = new BasicDBObject();
 		keys.put("_id", userName);
 		 
-		 DBObject userUnLogged=collection_userUnLogged.findOne(keys);
+		 DBObject userUnLogged=getCollection_userUnLogged().findOne(keys);
 		 
 		if(userUnLogged!=null)
 		{
 			result=true;
-			this.collection_userUnLogged.remove(userUnLogged);
+			this.getCollection_userUnLogged().remove(userUnLogged);
 		}
 		
 		return result;
 	}
 	
+	
+	public boolean insertUserLogged(String userName)
+	{
+		try
+		{
+			BasicDBObject user= new BasicDBObject("userIdentifier",userName);
+			collection_userLogged.insert(user);
+			
+			return true;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
 	public String userLogged()
 	{
 		String userIdentifier=null;
-		DBObject userLogged=collection_userLogged.findOne();
+		DBObject userLogged=getCollection_userLogged().findOne();
 		
 		if(userLogged!=null)
 		{
+			//TODO mudar esse campo para _id
 			userIdentifier=userLogged.get("userIdentifier").toString();
 			
-			this.collection_userLogged.remove(userLogged);
+			this.getCollection_userLogged().remove(userLogged);
 		}
 		
 		return userIdentifier;
+	}
+	
+	
+
+	public DBCollection getCollection_userInfo() {
+		return collection_userInfo;
+	}
+
+	public void setCollection_userInfo(DBCollection collection_userInfo) {
+		this.collection_userInfo = collection_userInfo;
+	}
+
+	public DBCollection getCollection_userLogged() {
+		return collection_userLogged;
+	}
+
+	public void setCollection_userLogged(DBCollection collection_userLogged) {
+		this.collection_userLogged = collection_userLogged;
+	}
+
+	public DBCollection getCollection_userUnLogged() {
+		return collection_userUnLogged;
+	}
+
+	public void setCollection_userUnLogged(DBCollection collection_userUnLogged) {
+		this.collection_userUnLogged = collection_userUnLogged;
 	}
 	
 	

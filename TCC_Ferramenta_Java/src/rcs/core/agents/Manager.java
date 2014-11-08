@@ -95,6 +95,7 @@ protected void setup()
 								manager.info=new InfoConversations(user.getUserIndetifier(), user.getUserPerfil());
 								
 								
+								
 								//Contact an hunter 
 								//Yellow pages
 								addBehaviour(new OneShotBehaviour(manager)

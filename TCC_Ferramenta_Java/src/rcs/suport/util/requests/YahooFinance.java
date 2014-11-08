@@ -29,6 +29,7 @@ public class YahooFinance implements Runnable {
 	
 	 private File mkdir;
 	 
+	 
 	 private ArrayList<Stock>stockList;
 	 
 	 public YahooFinance(String mainDirPath,String subDirPath_1,String subDirPath_2)
@@ -244,6 +245,7 @@ public class YahooFinance implements Runnable {
 	        	
 	        }catch(IOException e){   
 	                 e.printStackTrace();
+	                 returnResult=false;
 	        } 
 	         
 		return returnResult;
@@ -299,6 +301,34 @@ public class YahooFinance implements Runnable {
 		 * necessidade.
 		 */
 		
+	}
+	
+	public boolean dropMainFolder()
+	{
+		File mainPath = new File(mainDirPath+subDirPath_1);
+		return deleteDirectory(mainPath);
+	}
+	
+	private  boolean deleteDirectory(File directory) 
+	{
+	    if(directory.exists())
+	    {
+	        File[] files = directory.listFiles();
+	        if(null!=files)
+	        {
+	            for(int i=0; i<files.length; i++) 
+	            {
+	                if(files[i].isDirectory()) 
+	                {
+	                    deleteDirectory(files[i]);
+	                }
+	                else {
+	                    files[i].delete();
+	                }
+	            }
+	        }
+	    }
+	    return(directory.delete());
 	}
 
 	public String getMainDirPath() {

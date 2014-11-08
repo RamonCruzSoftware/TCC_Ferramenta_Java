@@ -20,6 +20,15 @@ import rcs.suport.util.database.mongoDB.dao.InfoStrategiesDaoTest;
 import rcs.suport.util.database.mongoDB.dao.ManagedStockDaoTest;
 import rcs.suport.util.database.mongoDB.dao.ManagedWalletDaoTest;
 import rcs.suport.util.database.mongoDB.dao.OrdersCreateDaoTest;
+import rcs.suport.util.database.mongoDB.dao.StockDaoTest;
+import rcs.suport.util.database.mongoDB.dao.UserInfoDaoTest;
+import rcs.suport.util.database.mongoDB.pojo.InfoStrategies;
+import rcs.suport.util.database.mongoDB.pojo.InfoStrategiesTest;
+import rcs.suport.util.database.mongoDB.pojo.ManagedStockTest;
+import rcs.suport.util.database.mongoDB.pojo.ManagedWalletTest;
+import rcs.suport.util.database.mongoDB.pojo.OrdersCreateTest;
+import rcs.suport.util.database.mongoDB.pojo.UserInfoTest;
+import rcs.suport.util.requests.YahooFinanceTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
@@ -39,7 +48,15 @@ import rcs.suport.util.database.mongoDB.dao.OrdersCreateDaoTest;
 	InfoStrategiesDaoTest.class,
 	ManagedStockDaoTest.class,
 	ManagedWalletDaoTest.class,
-	OrdersCreateDaoTest.class
+	OrdersCreateDaoTest.class,
+	StockDaoTest.class,
+	UserInfoDaoTest.class,
+	InfoStrategiesTest.class,
+	ManagedStockTest.class,
+	ManagedWalletTest.class,
+	OrdersCreateTest.class,
+	UserInfoTest.class,
+	YahooFinanceTest.class
 	}
 		)
 
