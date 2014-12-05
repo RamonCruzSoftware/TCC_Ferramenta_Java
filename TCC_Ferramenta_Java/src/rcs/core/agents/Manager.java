@@ -29,7 +29,6 @@ import rcs.suport.util.InfoConversations;
 import rcs.suport.util.database.mongoDB.dao.ManagedStockDao;
 import rcs.suport.util.database.mongoDB.dao.ManagedWalletDao;
 import rcs.suport.util.database.mongoDB.dao.StockDao;
-import rcs.suport.util.database.mongoDB.dao.UserInfoDao;
 import rcs.suport.util.database.mongoDB.pojo.ManagedStock;
 import rcs.suport.util.database.mongoDB.pojo.ManagedWallet;
 import rcs.suport.util.database.mongoDB.pojo.OrdersCreate;
@@ -45,7 +44,6 @@ private OrdersCreate user;
 private Map<String,ArrayList<Stock>> infoExperts;
 private Map <String,String> strategyExperts;
 private Manager manager;
-private UserInfoDao userInfoDao;
 private StockDao stockDao;
 private String userName;
 private InfoConversations info;
@@ -57,9 +55,8 @@ protected void setup()
 		 * Create the hashMap with informations : FullName and an list of Stock Names
 		 */
 		
-		manager=this;
-		
-		 walletManager= new WalletManager();
+	 manager=this;	
+	 walletManager= new WalletManager();
 		 
 		
 		
@@ -73,6 +70,9 @@ protected void setup()
 			
 			addBehaviour(new CyclicBehaviour(manager) 
 			{
+				
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void action() 
 				{
@@ -92,6 +92,7 @@ protected void setup()
 													
 								System.out.println("Manager Says: It's user's informations \n Name : "+user.getUserIndetifier()
 										+" Profile: "+user.getUserPerfil()+" Value: "+user.getUserValue());
+								
 								manager.info=new InfoConversations(user.getUserIndetifier(), user.getUserPerfil());
 								
 								
@@ -124,8 +125,6 @@ protected void setup()
 											
 											ACLMessage hunterMessage=new ACLMessage(ACLMessage.INFORM);
 											hunterMessage.addReceiver(new AID(hunterName, AID.ISLOCALNAME));
-											hunterMessage.setLanguage("English");
-											hunterMessage.setOntology("stocks");
 											hunterMessage.setConversationId(ConversationsID.STOCKS_HUNTER_SUGGESTIONS);
 											hunterMessage.setContentObject(manager.info);
 											
@@ -145,7 +144,7 @@ protected void setup()
 							if(message.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
 							{
 								InfoConversations inf= (InfoConversations) message.getContentObject();
-								WalletManager m=new WalletManager();
+							
 							//TODO apagar print
 								System.out.println("Suggetions: "+inf.getStockList().size()+ " Acoes");
 								//colocar aqui tratamento de aceite de acoes 
@@ -157,6 +156,9 @@ protected void setup()
 								//Iniciando atividade delegando aos experts tutela de acoes 
 								addBehaviour(new WakerBehaviour(myAgent, 100) 
 								{
+									
+									private static final long serialVersionUID = 1L;
+
 									protected void onWake()
 									{
 										
@@ -249,6 +251,7 @@ protected void setup()
 								
 								
 							}
+							
 							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_BUY)
 							{
 								
@@ -261,6 +264,7 @@ protected void setup()
 													
 								
 							}
+							
 							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_SELL)
 							{
 								System.out.println(getLocalName()+": "+ message.getSender().getLocalName()+ " vendeu acoes e lucrou.. .");
@@ -270,6 +274,7 @@ protected void setup()
 									System.out.println(profitValue);
 								
 							}
+							
 							if(message.getConversationId()==ConversationsID.USER_LOGGED)
 							{
 								try
@@ -308,7 +313,156 @@ protected void setup()
 		}
 	}
 	
-
+private class WalletManager
+{
+	 ManagedStockDao managedStockDao;
+	 
+	
+	 ManagedWallet managedWallet;
+	 ManagedWalletDao managedWalletDao;
+	 StockDao stockDao;
+	 double quota;
+	 
+	 Map<String,Double> expertsQuota;
+	 Map<String,ArrayList<Stock>> infoExperts;
+	 
+	 public WalletManager()
+	 {
+		 this.stockDao= new StockDao();
+	 }
+	 
+	 public WalletManager(Map<String,ArrayList<Stock>> infoExperts,double userValue)
+	 {
+		 
+		 this.managedWallet= new ManagedWallet();
+		 this.stockDao= new StockDao();
+		 this.managedWalletDao= new ManagedWalletDao();
+		 this.infoExperts=infoExperts;
+		 this.expertsQuota=new HashMap<String, Double>();
+		 
+		 try
+		 {
+			 this.managedWallet.setWalletValue(userValue);
+			 //Money qtd for Expert
+			 this.quota=this.managedWallet.getWalletValue()/this.infoExperts.size();
+			 this.managedWallet.setUserID(userName);
+			 
+			 this.managedWalletDao.insertManagedWalletInfo(this.managedWallet);
+			 
+		 }catch(Exception e)
+		 {
+			e.printStackTrace(); 
+		 } 
+		 
+		 //Criando map para controlar quantidade de dinheiro por agente 
+		 for(Entry<String, ArrayList<Stock>>e:this.infoExperts.entrySet())
+		 {
+			 this.expertsQuota.put(e.getKey(), this.quota);
+			 System.out.println(getLocalName()+" valor disponivel para "+e.getKey()+ " R$:"+this.quota);
+		 }
+		 
+		 
+	 }
+	 
+	 public double approveOrderBuy(String expertName)
+	 {
+		 double quota=0;
+		 try
+		 {
+			 quota=this.expertsQuota.get(expertName);
+			 this.expertsQuota.remove(expertName);
+			 this.expertsQuota.put(expertName, 0.0);
+			 			 
+		 }catch(Exception e)
+		 {
+			 e.printStackTrace();
+		 }
+		 
+		 return quota;
+	 }
+	
+	 public boolean refreshWalletManager ()
+	 {
+		 ArrayList<ManagedStock> managedStockStored = this.managedStockDao.getManagedStock(userName);
+		 ArrayList<Stock> stockList = new ArrayList<Stock>();
+		 ManagedWallet  refresh= new ManagedWallet();
+		 
+		 if(managedStockStored!=null && managedStockStored.size()>1)
+		 {
+			 
+			 for(ManagedStock ms: managedStockStored)
+			 {
+				 stockList.add(new Stock(ms.getCodeName(), ms.getSector()));
+			 }
+			 refresh.setStocksList(stockList);
+			 refresh.setUserID(userName);
+			 
+			 return managedWalletDao.updateManagedWallet(refresh);
+			  
+			 
+		 }else
+			 
+		 return false;
+	 }
+	 
+	 public  boolean  analyzeStockSuggestions(ArrayList<Stock> stockList, int correlLimit)
+	 {
+		 int count=0;
+		 boolean result=false;
+		 Statistical statistical= new Statistical();
+		 ArrayList<Stock>stockList_temp=new ArrayList<Stock>();
+		try
+		{
+			for(Stock s: stockList)
+			{
+				s.setCandleSticks(this.stockDao.getStockPrices_last30(s.getCodeName()));
+				stockList_temp.add(s);
+			}
+			
+			for(int i=0;i<stockList_temp.size();i++)
+			 {
+				
+				//Buscando as candlesticks 
+				// stockList.get(i).setCandleSticks(this.stockDao.getStockPrices_last30(stockList.get(i).getCodeName()));
+				 
+				 for(int j=i;j<stockList_temp.size();j++)
+				 {
+					
+					double correl=statistical.calculeCorrelationCoefficient_15(stockList_temp.get(i).getCandleSticks(), stockList_temp.get(j).getCandleSticks());
+					
+					 System.out.println(i+" com "+j);
+					 System.out.println(stockList_temp.get(i).getCodeName()+" com "+stockList_temp.get(j).getCodeName());
+					System.out.println("Correl "+correl);
+					
+					if(correl>0 && i!=j)
+					{
+						 
+						count++;
+					}
+				 }
+			 }
+			 System.out.println(" count:"+count);
+			if(count<=correlLimit) 
+				 result= true;
+			 else  result= false;
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		 
+		 
+		 
+		 
+		return result;
+		 
+	 }
+	 
+	 
+	
+	 
+	 
+}
 	protected void takeDown()
 	{
 		System.out.println(this.getLocalName()+" says: Bye");
@@ -328,26 +482,6 @@ protected void setup()
 		}
 	}
 
-	
-private void dropExpertAgent(String expertName)
-{
-	PlatformController container=getContainerController();
-	try
-	{
-		if(!(infoExperts.get(expertName).isEmpty()))
-		{
-			AgentController agentController=container.getAgent(expertName);
-			agentController.kill();
-			
-			//TODO transferir grupo de acoes para outro agente 
-			
-		}
-	}catch(Exception e)
-	{
-		e.printStackTrace();
-	}
-	
-}
 
 private void dropExpertAgent()
 {
@@ -587,165 +721,5 @@ private ArrayList<String> approveOrder(ArrayList<String> orders)
 	return null;
 }
 
-private class WalletManager
-{
-	 ManagedStockDao managedStockDao;
-	 
-	
-	 ManagedWallet managedWallet;
-	 ManagedWalletDao managedWalletDao;
-	 StockDao stockDao;
-	 double quota;
-	 
-	 Map<String,Double> expertsQuota;
-	 Map<String,ArrayList<Stock>> infoExperts;
-	 
-	 public WalletManager()
-	 {
-		 this.stockDao= new StockDao();
-	 }
-	 
-	 public WalletManager(Map<String,ArrayList<Stock>> infoExperts,double userValue)
-	 {
-		 
-		 this.managedWallet= new ManagedWallet();
-		 this.stockDao= new StockDao();
-		 this.managedWalletDao= new ManagedWalletDao();
-		 this.infoExperts=infoExperts;
-		 this.expertsQuota=new HashMap<String, Double>();
-		 
-		 try
-		 {
-			 this.managedWallet.setWalletValue(userValue);
-			 //Money qtd for Expert
-			 this.quota=this.managedWallet.getWalletValue()/this.infoExperts.size();
-			 this.managedWallet.setUserID(userName);
-			 
-			 this.managedWalletDao.insertManagedWalletInfo(this.managedWallet);
-			 
-		 }catch(Exception e)
-		 {
-			e.printStackTrace(); 
-		 } 
-		 
-		 //Criando map para controlar quantidade de dinheiro por agente 
-		 for(Entry<String, ArrayList<Stock>>e:this.infoExperts.entrySet())
-		 {
-			 this.expertsQuota.put(e.getKey(), this.quota);
-			 System.out.println(getLocalName()+" valor disponivel para "+e.getKey()+ " R$:"+this.quota);
-		 }
-		 
-		 
-	 }
-	 
-	 public double approveOrderBuy(String expertName)
-	 {
-		 double quota=0;
-		 try
-		 {
-			 quota=this.expertsQuota.get(expertName);
-			 this.expertsQuota.remove(expertName);
-			 this.expertsQuota.put(expertName, 0.0);
-			 			 
-		 }catch(Exception e)
-		 {
-			 e.printStackTrace();
-		 }
-		 
-		 return quota;
-	 }
-	 public void approveOrderSell(String expertName, double returnValue)
-	 {
-		 try
-		 {
-			 this.expertsQuota.remove(expertName);
-			 this.expertsQuota.put(expertName, returnValue); 
-			 
-		 }catch (Exception e)
-		 {
-			 e.printStackTrace();
-		 }
-		 
-	 }
-	 public boolean refreshWalletManager ()
-	 {
-		 ArrayList<ManagedStock> managedStockStored = this.managedStockDao.getManagedStock(userName);
-		 ArrayList<Stock> stockList = new ArrayList<Stock>();
-		 ManagedWallet  refresh= new ManagedWallet();
-		 
-		 if(managedStockStored!=null && managedStockStored.size()>1)
-		 {
-			 
-			 for(ManagedStock ms: managedStockStored)
-			 {
-				 stockList.add(new Stock(ms.getCodeName(), ms.getSector()));
-			 }
-			 refresh.setStocksList(stockList);
-			 refresh.setUserID(userName);
-			 
-			 return managedWalletDao.updateManagedWallet(refresh);
-			  
-			 
-		 }else
-			 
-		 return false;
-	 }
-	 public  boolean  analyzeStockSuggestions(ArrayList<Stock> stockList, int correlLimit)
-	 {
-		 int count=0;
-		 boolean result=false;
-		 Statistical statistical= new Statistical();
-		 ArrayList<Stock>stockList_temp=new ArrayList<Stock>();
-		try
-		{
-			for(Stock s: stockList)
-			{
-				s.setCandleSticks(this.stockDao.getStockPrices_last30(s.getCodeName()));
-				stockList_temp.add(s);
-			}
-			
-			for(int i=0;i<stockList_temp.size();i++)
-			 {
-				
-				//Buscando as candlesticks 
-				// stockList.get(i).setCandleSticks(this.stockDao.getStockPrices_last30(stockList.get(i).getCodeName()));
-				 
-				 for(int j=i;j<stockList_temp.size();j++)
-				 {
-					
-					double correl=statistical.calculeCorrelationCoefficient_15(stockList_temp.get(i).getCandleSticks(), stockList_temp.get(j).getCandleSticks());
-					
-					 System.out.println(i+" com "+j);
-					 System.out.println(stockList_temp.get(i).getCodeName()+" com "+stockList_temp.get(j).getCodeName());
-					System.out.println("Correl "+correl);
-					
-					if(correl>0 && i!=j)
-					{
-						 
-						count++;
-					}
-				 }
-			 }
-			 System.out.println(" count:"+count);
-			if(count<=correlLimit) 
-				 result= true;
-			 else  result= false;
-			
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		 
-		 
-		 
-		 
-		return result;
-		 
-	 }
-	 
-	 
-	
-	 
-	 
-}
+
 }
