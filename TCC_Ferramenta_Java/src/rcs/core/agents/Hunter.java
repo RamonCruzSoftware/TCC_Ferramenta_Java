@@ -1,8 +1,10 @@
 package rcs.core.agents;
 
 import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.SequentialBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.core.behaviours.WakerBehaviour;
 import jade.domain.DFService;
@@ -11,17 +13,12 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import com.mongodb.util.MyAsserts.MyAssert;
-
-import rcs.main.MainClass;
-import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
 import rcs.suport.statistical.Statistical;
 import rcs.suport.util.InfoConversations;
@@ -43,7 +40,7 @@ public class Hunter extends Agent {
 	private String dir_1="/Users/alissonnunes/Desktop";
 	private String subDir_1="/TCC2";
 	private String subDir_2="/Ativos";
-	private String sectorsCsvFilePath="/Users/alissonnunes/Desktop/Setores";
+	private String sectorsCsvFilePath="/Users/alissonnunes/Dropbox/UnB/TCC/workspace/java/Setores";
 	
 	protected void setup()
 	{
@@ -53,11 +50,13 @@ public class Hunter extends Agent {
 			conversations=true;
 			stockDao = new StockDao();
 			statistical=new Statistical();
+	
 			
 			//create the agent description of ifself
 			DFAgentDescription dfd=new DFAgentDescription();
 			dfd.setName(getAID());
 			
+	
 			//Create an service in yellow pages
 			ServiceDescription service=new ServiceDescription();
 			service.setType("StockHunter");
@@ -69,8 +68,11 @@ public class Hunter extends Agent {
 			
 			System.out.println("I'm live... My name is "+this.getLocalName());
 			
-			initWork();
-			communication(hunter);
+			//initWork();
+			//communication(hunter);
+			addBehaviour(new InitWork(hunter));
+			addBehaviour(new Communication(hunter));
+			
 			
 		}catch(Exception e)
 		{
@@ -94,106 +96,312 @@ public class Hunter extends Agent {
 			e.printStackTrace();
 		}
 	}
-	
-
-private void communication(Agent agent)
-{
-	addBehaviour(new CyclicBehaviour(agent)
+	private class InitWork extends SequentialBehaviour
 	{
-		
+
 		private static final long serialVersionUID = 1L;
-		private InfoConversations info;
-
-		@Override
-		public void action() 
+		private DateFormat format ;
+		private final Date date ;
+		private final long dailyInterval;
+		
+		@SuppressWarnings("deprecation")
+		public InitWork(Agent agent)
 		{
-			try
+			this.addSubBehaviour(new OneShotBehaviour(agent)
 			{
-				ACLMessage messages= myAgent.receive();
-				if(messages!=null &&conversations)
-				{
-					if(messages.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
-					{
-						ArrayList<Stock> stocksuggestion=null;
-						int lowerLimit=0;
-						int upperLimit=0;
-
-						info=(InfoConversations)messages.getContentObject();
-						
-						switch (info.getUserProfile()) {
-						case 0://corajoso
-						{
-							lowerLimit=15;
-							upperLimit=30;
-							
-							do
-								
-							{
-								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
-								if(lowerLimit>0)lowerLimit--;
-								
-								upperLimit++;
-								
-							}while(stocksuggestion.size()<9);
-							
-							info.setStockList(stocksuggestion);
-							break;
-						}
-						case 1://moderado
-						{
-							lowerLimit=5;
-							upperLimit=10;
-							do
-							{
-								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
-								if(lowerLimit>0)lowerLimit--;
-								
-								upperLimit++;
-								
-							}while(stocksuggestion.size()==0);
-							
-							info.setStockList(stocksuggestion);
-						}
-							
-							break;
-						case 2://conservador	
-						{
-							if(lowerLimit>0)lowerLimit--;
-							
-							upperLimit=6;
-							do
-							{
-								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
-								
-								upperLimit++;
-								
-							}while(stocksuggestion.size()==0);
-							
-							info.setStockList(stocksuggestion);
-						}
-							break;
-
-						default:
-							break;
-						}
-						
-						ACLMessage reply=messages.createReply();
-						reply.setContentObject(info);
-						myAgent.send(reply);
-					}
-					
-				}else block();
 				
-			}catch(Exception e)
+				
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void action() 
+				{
+					
+					try
+					{
+						
+						File file=new File(hunter.dir_1+hunter.subDir_1+hunter.subDir_2);
+						
+						System.out.println(" is Directory :"+file.isDirectory());
+						
+						if(file.isDirectory())
+						{
+							if(file.listFiles().length>2)
+								System.out.println("Alguem ja baixou os arquivos CSV.. nao precisa baixar");
+							hunter.stockList=hunter.stockDao.getAllStocksPrices();
+							System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
+							System.out.println("Vou calcular os valores estatisticos para catalogar");
+							
+							//Descomentar isso 
+							hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
+							
+						}else 
+						{
+							System.out.println("Ainda nao baixaram os arquivos CSV, vou fazer isso.");
+							hunter.conversations=false;
+							hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1,hunter.subDir_2, hunter.sectorsCsvFilePath);
+						}
+							
+										
+
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+					
+					}
+				}
+			});
+			
+			this.format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);
+			this.date = new Date();
+			this.date.setMinutes(date.getMinutes()+15);
+			this.dailyInterval=1000*60*60*24;
+	 
+			this.addSubBehaviour(new WakerBehaviour(agent,date)
 			{
-				e.printStackTrace();
+
+				private static final long serialVersionUID = 1L;
+				
+				protected void onWake()
+				{
+					System.out.println("Dados serao atualizado no proximo dia "+date.getDate());
+					addBehaviour(new TickerBehaviour(hunter, dailyInterval) 
+					{
+						
+						@Override
+						protected void onTick() 
+						{
+							hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
+						}
+					});
+				}
+				
+			});
+		}
+		
+		
+	}
+
+private class Communication extends CyclicBehaviour
+{
+	private static final long serialVersionUID = 1L;
+	private InfoConversations info;
+
+	public Communication(Agent agent)
+	{
+		super(agent);
+	}
+
+	@Override
+	public void action() 
+	{
+		try
+		{
+			ACLMessage messages= myAgent.receive();
+			ACLMessage reply=null;
+			
+			if(messages!=null &&!conversations)
+			{
+				reply=messages.createReply();
+				reply.setPerformative(ACLMessage.REFUSE);
+				myAgent.send(reply);
+				
 			}
 			
+			if(messages!=null &&conversations)
+			{
+				if(messages.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
+				{
+					ArrayList<Stock> stocksuggestion=null;
+					int lowerLimit=0;
+					int upperLimit=0;
+
+					info=(InfoConversations)messages.getContentObject();
+					
+					switch (info.getUserProfile()) 
+					{
+					case 0://corajoso
+					{
+						lowerLimit=15;
+						upperLimit=30;
+						
+						do
+							
+						{
+							
+							stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+							if(lowerLimit>0)lowerLimit--;
+							
+							upperLimit++;
+							
+						}while(stocksuggestion.size()<9);
+						
+						info.setStockList(stocksuggestion);
+						break;
+					}
+					
+					case 1://moderado
+					{
+						lowerLimit=5;
+						upperLimit=10;
+						do
+						{
+							stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+							if(lowerLimit>0)lowerLimit--;
+							
+							upperLimit++;
+							
+						}while(stocksuggestion.size()==0);
+						
+						info.setStockList(stocksuggestion);
+					}
+						
+						break;
+					case 2://conservador	
+					{
+						if(lowerLimit>0)lowerLimit--;
+						
+						upperLimit=6;
+						do
+						{
+							stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+							
+							upperLimit++;
+							
+						}while(stocksuggestion.size()==0);
+						
+						info.setStockList(stocksuggestion);
+					}
+						break;
+
+					default:
+						break;
+					}
+					
+					reply=messages.createReply();
+					reply.setContentObject(info);
+					myAgent.send(reply);
+				}
+				
+			}else block();
 			
-			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
 		}
-	});
+		
+	}
 }
+//private void communication(Agent agent)
+//{
+//	addBehaviour(new CyclicBehaviour(agent)
+//	{
+//		
+//		private static final long serialVersionUID = 1L;
+//		private InfoConversations info;
+//
+//		@Override
+//		public void action() 
+//		{
+//			try
+//			{
+//				ACLMessage messages= myAgent.receive();
+//				ACLMessage reply=null;
+//				
+//				if(messages!=null &&!conversations)
+//				{
+//					reply=messages.createReply();
+//					reply.setPerformative(ACLMessage.REFUSE);
+//					myAgent.send(reply);
+//					
+//				}
+//				
+//				if(messages!=null &&conversations)
+//				{
+//					if(messages.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
+//					{
+//						ArrayList<Stock> stocksuggestion=null;
+//						int lowerLimit=0;
+//						int upperLimit=0;
+//
+//						info=(InfoConversations)messages.getContentObject();
+//						
+//						switch (info.getUserProfile()) 
+//						{
+//						case 0://corajoso
+//						{
+//							lowerLimit=15;
+//							upperLimit=30;
+//							
+//							do
+//								
+//							{
+//								
+//								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+//								if(lowerLimit>0)lowerLimit--;
+//								
+//								upperLimit++;
+//								
+//							}while(stocksuggestion.size()<9);
+//							
+//							info.setStockList(stocksuggestion);
+//							break;
+//						}
+//						
+//						case 1://moderado
+//						{
+//							lowerLimit=5;
+//							upperLimit=10;
+//							do
+//							{
+//								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+//								if(lowerLimit>0)lowerLimit--;
+//								
+//								upperLimit++;
+//								
+//							}while(stocksuggestion.size()==0);
+//							
+//							info.setStockList(stocksuggestion);
+//						}
+//							
+//							break;
+//						case 2://conservador	
+//						{
+//							if(lowerLimit>0)lowerLimit--;
+//							
+//							upperLimit=6;
+//							do
+//							{
+//								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+//								
+//								upperLimit++;
+//								
+//							}while(stocksuggestion.size()==0);
+//							
+//							info.setStockList(stocksuggestion);
+//						}
+//							break;
+//
+//						default:
+//							break;
+//						}
+//						
+//						reply=messages.createReply();
+//						reply.setContentObject(info);
+//						myAgent.send(reply);
+//					}
+//					
+//				}else block();
+//				
+//			}catch(Exception e)
+//			{
+//				e.printStackTrace();
+//			}
+//	
+//		}
+//	});
+//}
+
 private void downloadCurrentCsvFiles(String dir_1,String subdir_1,String subdir_2,String sectorsPath)
 {
 	 YahooFinance yahoo=new YahooFinance(dir_1,subdir_1,subdir_2);
@@ -244,8 +452,8 @@ private void downloadCurrentCsvFiles(String dir_1,String subdir_1,String subdir_
 								if(thread_finish[1]&&thread_finish[2])
 								{
 									conversations=true;
-									System.out.println("Download concluido");
-									updateDataBase();
+									System.out.println("Thread 1:Download(Current) concluido");
+									hunter.updateDataBase();
 								
 								}
 								
@@ -300,8 +508,8 @@ private void downloadCurrentCsvFiles(String dir_1,String subdir_1,String subdir_
 								if(thread_finish[0]&&thread_finish[2])
 								{
 									conversations=true;
-									System.out.println("Download concluido");
-									updateDataBase();
+									System.out.println("Thread 2:Download(Current) concluido");
+									hunter.updateDataBase();
 								}
 								
 								stockList.wait();
@@ -360,8 +568,8 @@ private void downloadCurrentCsvFiles(String dir_1,String subdir_1,String subdir_
 								if(thread_finish[1]&&thread_finish[0])
 								{
 									conversations=true;
-									System.out.println("Download concluido");
-									updateDataBase();
+									System.out.println("Thread 3:Download(Current) concluido");
+									hunter.updateDataBase();
 								}
 								
 								stockList.wait();
@@ -453,11 +661,12 @@ private void downloadCsvFiles(String dir_1,String subdir_1,String subdir_2,Strin
 							
 							//verifica se eh  a ultima a terminar o  servico
 							thread_finish[0]=true;
+							
 							if(thread_finish[1]&&thread_finish[2])
 							{
 								conversations=true;
-								System.out.println("Download concluido");
-								loadDataBase();
+								System.out.println("Thread 1:Download concluido");
+								hunter.loadDataBase();
 							
 							}
 							
@@ -518,8 +727,8 @@ private void downloadCsvFiles(String dir_1,String subdir_1,String subdir_2,Strin
 							if(thread_finish[0]&&thread_finish[2])
 							{
 								conversations=true;
-								System.out.println("Download concluido");
-								loadDataBase();
+								System.out.println("Thread 2:Download concluido");
+								hunter.loadDataBase();
 							}
 							
 							stockList.wait();
@@ -591,8 +800,8 @@ private void downloadCsvFiles(String dir_1,String subdir_1,String subdir_2,Strin
 							if(thread_finish[1]&&thread_finish[0])
 							{
 								conversations=true;
-								System.out.println("Download concluido");
-								loadDataBase();
+								System.out.println("Thread 3:Download concluido");
+								hunter.loadDataBase();
 							}
 							
 							stockList.wait();
@@ -631,117 +840,29 @@ private void downloadCsvFiles(String dir_1,String subdir_1,String subdir_2,Strin
 
 //Esse metodo ainda nao funciona bem
 //ele encontra as pastas vazias mas nao as apaga
-private  void deleteEmptyFolders(String foldersMainPath)
+
+private void dropEmptyFolders(File directory)
 {
-	File folders=new File(foldersMainPath);
-	StringBuilder deletedFolders=new StringBuilder();
 	
-	deletedFolders.append("Pastas deletadas por estarem vazias");
-	deletedFolders.append("\n\n");
-	
-	ArrayList<File> emptyFolder=new ArrayList<File>();
-	
-	
-	for(File f:folders.listFiles())
+	if(directory.exists())
 	{
-	
-		try{
-			if(f.isDirectory() && f.listFiles().length==1)
-	 		{
-	 			for(File sf:f.listFiles())
-	 			{
-	 				if(sf.getName().equalsIgnoreCase(".DS_Store"))
-	 				{
-	 					deletedFolders.append("\t"+f.getName());
-	 		 			deletedFolders.append("\n");
-	 		 			emptyFolder.add(f);
-	 		 			System.out.println("Deleted? "+f.delete());
-	 		 			
-	 				}
-	 			}
-	 			
-	 		}
-	 		
-		}catch(Exception e)
+		File[] files=directory.listFiles();
+		if(files!=null)
 		{
-			e.printStackTrace();
-		}
-		
-	}
-	
-
-	
-	System.out.println(deletedFolders);
-	
-		
-}
-private void initWork()
-{
-	addBehaviour(new OneShotBehaviour(hunter)
-	{
-		
-		@Override
-		public void action() {
-		
-			try
+			for(int i=0;i<files.length;i++)
 			{
-				
-				File file=new File(hunter.dir_1+hunter.subDir_1+hunter.subDir_2);
-				
-				System.out.println(" is Directory :"+file.isDirectory());
-				
-				if(file.isDirectory())
+				if(files[i].isDirectory()&& files[i].listFiles()==null)
 				{
-					if(file.listFiles().length>2)
-						System.out.println("Alguem ja baixou os arquivos CSV.. nao precisa baixar");
-					hunter.stockList=hunter.stockDao.getAllStocksPrices();
-					System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
-					System.out.println("Vou calcular os valores estatisticos para catalogar");
-					
-					//Descomentar isso 
-					//hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
-					
-				}else 
-				{
-					System.out.println("Ainda nao baixaram os arquivos CSV, vou fazer isso.");
-					hunter.conversations=false;
-					hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1,hunter.subDir_2, hunter.sectorsCsvFilePath);
+					files[i].delete();
 				}
-					
-								
-
-			}catch(Exception e)
-			{
-				e.printStackTrace();
-			
 			}
-	
 		}
-	});
 	
-	DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);
-	final Date date = new Date();
-	date.setMinutes(date.getMinutes()+15);
-	final long dailyInterval=1000*60*60*24;
-
-	addBehaviour(new WakerBehaviour(hunter, date) 
-	{
-
-		protected void onWake()
-		{
-			System.out.println("Dados serao atualizado no proximo dia "+date.getDate());
-			addBehaviour(new TickerBehaviour(hunter, dailyInterval) 
-			{
-				
-				@Override
-				protected void onTick() 
-				{
-					hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
-				}
-			});
-		}
-	});
+	}
 }
+
+
+
 private void updateDataBase()
 {
 	YahooFinance yahooFinance=new YahooFinance(this.dir_1, this.subDir_1, this.subDir_2);
@@ -778,7 +899,7 @@ private void updateDataBase()
 			
 			System.out.println("Vou atualizar os valores estatisticos para catalogar");
 			
-			calculateStatistical();
+			hunter.calculateStatistical();
 			
 		}catch (Exception e)
 		{
@@ -817,7 +938,7 @@ private  void loadDataBase()
 	
 	System.out.println("Vou calcular os valores estatisticos para catalogar");
 	
-	calculateStatistical();
+	hunter.calculateStatistical();
 	
 }
 

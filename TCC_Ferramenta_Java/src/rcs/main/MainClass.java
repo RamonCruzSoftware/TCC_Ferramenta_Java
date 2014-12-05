@@ -11,10 +11,13 @@ public class MainClass
 	 static String subDir_1="/TCC2";
 	 static String subDir_2="/Ativos";
 	 static String sectorsCsvFilePath="/Users/alissonnunes/Desktop/Setores";
-
+	 
 	 public static void main(String[] args)  
 	 {
 	
+		 
+		 
+		 
 	/*	 
 		//Persisitencia 
 		 StockDao stockDao=new StockDao();
