@@ -82,7 +82,7 @@ public class MainClass
 		
 		
 		
-		
+	/*	
 		Statistical statistical= new Statistical();
 		ArrayList<CandleStick>x=new ArrayList<CandleStick>();
 		ArrayList<CandleStick>y=new ArrayList<CandleStick>();
@@ -122,9 +122,11 @@ public class MainClass
 		
 		System.out.println(statistical.calculeCorrelationCoefficient_15(x, y));
 		
+
+	 */
+		 
+		
 	 }
-	 
-	 
 	 
 	
 }
