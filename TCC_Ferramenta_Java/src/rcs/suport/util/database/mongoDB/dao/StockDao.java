@@ -543,7 +543,7 @@ public ArrayList<Stock> getAllStocksPrices()
 												);
 				}
 			}
-			cursor.close();
+		
 			
 	}catch(Error error)
 	{

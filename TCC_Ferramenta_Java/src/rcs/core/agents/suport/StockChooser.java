@@ -1,6 +1,7 @@
 package rcs.core.agents.suport;
 
 import java.util.ArrayList;
+import java.util.Currency;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
@@ -43,6 +44,7 @@ public class StockChooser
 			//Getting the candleSticks of each stock
 			for(Stock s:this.getStockList())
 			{
+				
 				if(s.getCandleSticks()==null)s.setCandleSticks(this.getStockDao().getStockPrices_last30(s.getCodeName()));
 		
 				//TODO apagar prints 
@@ -50,6 +52,7 @@ public class StockChooser
 				System.out.println("Add Stock :"+s.getCodeName());
 				
 				this.getStockListTemp_a().add(s);
+				
 			}
 			
 			//Setting the correlaction criteria by user profile 
@@ -190,67 +193,7 @@ public ArrayList<ArrayList<Stock>> analyzeStockList()
 			}
 			
 		}
-//		
-//		for(int i=0;i<this.getStockListTemp_a().size();i++)
-//		{
-//			correl_temp=0;
-//			System.out.println("===Iniciar analise==");
-//			System.out.println("Analisando  ["+this.getStockListTemp_a().get(i).getCodeName()+"]");
-//			System.out.println(" Com "+this.getStockListTemp_a().get(i).getCandleSticks().size()+" candles");
-//			
-//			for(int j=0;j<this.getApprovedStockList().size();j++)
-//			{
-//				correl_temp= statistical.calculeCorrelationCoefficient_30(this.getStockListTemp_a().get(i).getCandleSticks(),this.getApprovedStockList().get(j).getCandleSticks());
-//				
-//				if(correl_temp>0)positiveCorrelation=true;
-//				
-//				
-//				//TODO
-//				System.out.println(getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+"\n");
-//				System.out.println("Correl: "+correl_temp+" ["+poisitiveCorrelationTolerance+"]"+"\n");
-//				System.out.println(getApprovedStockList().get(j)+" tem "+getApprovedStockList().get(j).getCandleSticks().size()+" Candles");
-//				
-//			}
-//			if(positiveCorrelation)
-//			{
-//				//TODO
-//				System.out.println("Teste de tolerancia");
-//				
-//				if(limitCorrelactionCount<this.getPoisitiveCorrelationTolerance())
-//				{
-//					//TODO
-//					System.out.println("Na tolerancia");
-//					
-//					this.getApprovedStockList().add(this.getStockListTemp_a().get(i));
-//					positiveCorrelation=false;
-//					
-//				}else
-//				{
-//					//TODO
-//					System.out.println("Fora tolerancia");
-//					this.getRefuseStockList().add(this.getStockListTemp_a().get(i));
-//					positiveCorrelation=false;
-//					
-//				}
-//				System.out.println("=====Analisado====");
-//				//System.out.println("=="+getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+ "Analisadas==");
-//				
-//				
-//			}else
-//			{
-//				this.getApprovedStockList().add(this.getStockListTemp_a().get(i));
-//				
-//				//TODO
-//				System.out.println(getStockListTemp_a().get(i).getCodeName()+" Aprovada");
-//			//	System.out.println("=="+getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+ "Analisadas==");
-//				System.out.println("=====Analisado====");
-//				
-//				
-//			}
-//		
-//			//}//Fim for 2
-//	
-//		}//Fim for 1
+
 		
 		System.out.println("Stocks aprovados "+getApprovedStockList().size());
 		System.out.println("Stocks recusados "+getRefuseStockList().size());

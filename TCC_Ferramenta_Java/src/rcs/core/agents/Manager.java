@@ -166,13 +166,21 @@ protected void setup()
 								System.out.println("=====================");
 								
 								
-								walletManagerAuxiliary= new WalletManagerAuxiliary(manager.stockListManaged,manager.user.getUserValue(),inf.getUserProfile());
-								//TODO apagar print
-								System.out.println("Suggetions: "+inf.getStockList().size()+ " Acoes");
-								System.out.println("Lower Percent: "+inf.getLowerPercent());
-								System.out.println("Upper Percent: "+inf.getUpperPercent());
+								try
+								{
+									walletManagerAuxiliary= new WalletManagerAuxiliary(manager.stockListManaged,manager.user.getUserValue(),inf.getUserProfile());
+									//TODO apagar print
+									System.out.println("Suggetions: "+inf.getStockList().size()+ " Acoes");
+									System.out.println("Lower Percent: "+inf.getLowerPercent());
+									System.out.println("Upper Percent: "+inf.getUpperPercent());
+									
+									System.out.println("Approved Number :"+manager.walletManagerAuxiliary.analyzeStocksSuggestionsList().size());
+									
+								}catch(Exception e)
+								{
+									e.printStackTrace();
+								}
 								
-								System.out.println("Approved Number :"+manager.walletManagerAuxiliary.analyzeStocksSuggestionsList().size());
 								
 								
 							}
