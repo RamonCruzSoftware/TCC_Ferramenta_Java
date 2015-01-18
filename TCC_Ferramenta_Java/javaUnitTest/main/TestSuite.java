@@ -14,7 +14,9 @@ import rcs.suport.financial.wallet.StockTest;
 import rcs.suport.financial.wallet.WalletTest;
 import rcs.suport.statistical.MatrixTest;
 import rcs.suport.statistical.Statistical;
+import rcs.suport.statistical.StatisticalTest;
 import rcs.suport.util.InfoConversations;
+import rcs.suport.util.InfoConversationsTest;
 import rcs.suport.util.database.mongoDB.MongoConnetionTest;
 import rcs.suport.util.database.mongoDB.dao.InfoStrategiesDaoTest;
 import rcs.suport.util.database.mongoDB.dao.ManagedStockDaoTest;
@@ -42,8 +44,8 @@ import rcs.suport.util.requests.YahooFinanceTest;
 	StockTest.class,
 	WalletTest.class,
 	MatrixTest.class,
-	Statistical.class,
-	InfoConversations.class,
+	StatisticalTest.class,
+	InfoConversationsTest.class,
 	MongoConnetionTest.class,
 	InfoStrategiesDaoTest.class,
 	ManagedStockDaoTest.class,

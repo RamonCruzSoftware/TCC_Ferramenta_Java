@@ -126,10 +126,20 @@ public class Hunter extends Agent {
 						
 						if(file.isDirectory())
 						{
-							if(file.listFiles().length>2)
-								System.out.println("Alguem ja baixou os arquivos CSV.. nao precisa baixar");
+							if(file.listFiles().length>2) System.out.println("Alguem ja baixou os arquivos CSV.. nao precisa baixar");
+							
 							hunter.stockList=hunter.stockDao.getAllStocksPrices();
-							System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
+							if(hunter.stockList.size()==0)
+							{
+								hunter.loadDataBase();
+								hunter.stockList=hunter.stockDao.getAllStocksPrices();
+								System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
+								
+							}else
+							{
+								System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
+							}
+							
 							System.out.println("Vou calcular os valores estatisticos para catalogar");
 							
 							//Descomentar isso 
@@ -210,78 +220,246 @@ private class Communication extends CyclicBehaviour
 			
 			if(messages!=null &&conversations)
 			{
-				if(messages.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
+				switch (messages.getPerformative())
+				{
+				case ACLMessage.CFP:
+				{
+					if(messages.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
+					{
+						
+						ArrayList<Stock> stocksuggestion=null;
+						ArrayList<Stock> stockSuggestions_aux=null;
+						int lowerLimit=0;
+						int upperLimit=0;
+						int stockLimit=0;
+
+						info=(InfoConversations)messages.getContentObject();
+						
+						stocksuggestion=new ArrayList<Stock>();
+						
+						switch (info.getUserProfile()) 
+						{
+						case 0://corajoso
+						{
+							lowerLimit=15;
+							upperLimit=30;
+							stockLimit=8;
+							
+							
+							do
+								
+							{
+								
+								stockSuggestions_aux=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+								if(lowerLimit>0)lowerLimit--;
+								upperLimit++;
+								info.setLowerPercent(lowerLimit);
+								info.setUpperPercent(upperLimit);
+								
+//								if(stockSuggestions_aux.size()>stockLimit)
+//								{
+//									for(int i=0;i<stockLimit;i++)
+//									{
+//										stocksuggestion.add(stockSuggestions_aux.get(i));
+//									}
+//								}else
+//								{
+//									stocksuggestion=stockSuggestions_aux;
+//								}
+								
+								stocksuggestion=stockSuggestions_aux;
+								
+								
+								
+							}while(stocksuggestion.size()<9);
+							
+							info.setStockList(stocksuggestion);
+							
+							break;
+						}
+						
+						case 1://moderado
+						{
+							lowerLimit=5;
+							upperLimit=10;
+							stockLimit=13;
+							do
+							{
+								stockSuggestions_aux=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+								if(lowerLimit>0)lowerLimit--;
+								
+								upperLimit++;
+								info.setLowerPercent(lowerLimit);
+								info.setUpperPercent(upperLimit);
+
+//								if(stockSuggestions_aux.size()>stockLimit)
+//								{
+//									for(int i=0;i<stockLimit;i++)
+//									{
+//										stocksuggestion.add(stockSuggestions_aux.get(i));
+//									}
+//								}else
+//								{
+//									stocksuggestion=stockSuggestions_aux;
+//								}
+								stocksuggestion=stockSuggestions_aux;
+								
+							}while(stocksuggestion.size()==0);
+							
+							info.setStockList(stocksuggestion);
+						}
+							
+							break;
+						case 2://conservador	
+						{
+							if(lowerLimit>0)lowerLimit--;
+							
+							upperLimit=6;
+							stockLimit=30;
+							do
+							{
+								stockSuggestions_aux=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+								
+								upperLimit++;
+								info.setLowerPercent(lowerLimit);
+								info.setUpperPercent(upperLimit);
+								
+//								if(stockSuggestions_aux.size()>stockLimit)
+//								{
+//									for(int i=0;i<stockLimit;i++)
+//									{
+//										stocksuggestion.add(stockSuggestions_aux.get(i));
+//									}
+//								}else
+//								{
+//									stocksuggestion=stockSuggestions_aux;
+//								}
+								stocksuggestion=stockSuggestions_aux;
+								
+
+							}while(stocksuggestion.size()==0);
+							
+							info.setStockList(stocksuggestion);
+						}
+							break;
+						
+
+						default:
+							break;
+						}
+						
+						
+						reply=messages.createReply();
+						reply.setPerformative(ACLMessage.PROPOSE);
+						reply.setContentObject(info);
+						
+						myAgent.send(reply);
+					}
+				}break;
+				case ACLMessage.INFORM:
+				{
+					
+				}break;
+				case ACLMessage.REJECT_PROPOSAL:
 				{
 					ArrayList<Stock> stocksuggestion=null;
 					int lowerLimit=0;
 					int upperLimit=0;
-
-					info=(InfoConversations)messages.getContentObject();
 					
-					switch (info.getUserProfile()) 
+					if(messages.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
 					{
-					case 0://corajoso
-					{
-						lowerLimit=15;
-						upperLimit=30;
-						
-						do
-							
+						switch (info.getUserProfile()) 
 						{
+						case 0://corajoso
+						{
+							lowerLimit=info.getLowerPercent();
+							upperLimit=info.getUpperPercent();
+							int countLoop=0;
 							
-							stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+							do
+								
+							{
+								
+								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+								if(lowerLimit>0)lowerLimit--;
+								upperLimit++;
+								info.setLowerPercent(lowerLimit);
+								info.setUpperPercent(upperLimit);
+								countLoop++;
+								if(countLoop==20)break;
+								
+							}while(stocksuggestion.size()<9);
+							
+							info.setStockList(stocksuggestion);
+							
+							break;
+						}
+						
+						case 1://moderado
+						{
+							lowerLimit=info.getLowerPercent();
+							upperLimit=info.getUpperPercent();
+							int countLoop=0;
+							do
+							{
+								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+								if(lowerLimit>0)lowerLimit--;
+								
+								upperLimit++;
+								info.setLowerPercent(lowerLimit);
+								info.setUpperPercent(upperLimit);
+								countLoop++;
+								if(countLoop==20)break;
+
+
+							}while(stocksuggestion.size()==0);
+							
+							info.setStockList(stocksuggestion);
+						}
+							
+							break;
+						case 2://conservador	
+						{
 							if(lowerLimit>0)lowerLimit--;
 							
-							upperLimit++;
-							
-						}while(stocksuggestion.size()<9);
-						
-						info.setStockList(stocksuggestion);
-						break;
-					}
-					
-					case 1://moderado
-					{
-						lowerLimit=5;
-						upperLimit=10;
-						do
-						{
-							stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
-							if(lowerLimit>0)lowerLimit--;
-							
-							upperLimit++;
-							
-						}while(stocksuggestion.size()==0);
-						
-						info.setStockList(stocksuggestion);
-					}
-						
-						break;
-					case 2://conservador	
-					{
-						if(lowerLimit>0)lowerLimit--;
-						
-						upperLimit=6;
-						do
-						{
-							stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
-							
-							upperLimit++;
-							
-						}while(stocksuggestion.size()==0);
-						
-						info.setStockList(stocksuggestion);
-					}
-						break;
+							upperLimit=info.getUpperPercent();
+							int countLoop=0;
+							do
+							{
+								stocksuggestion=hunter.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit);
+								
+								upperLimit++;
+								info.setLowerPercent(lowerLimit);
+								info.setUpperPercent(upperLimit);
+								
+								countLoop++;
+								if(countLoop==20)break;
+								
 
-					default:
-						break;
+							}while(stocksuggestion.size()==0);
+							
+							info.setStockList(stocksuggestion);
+						}
+							break;
+						
+
+						default:
+							break;
+						}
+						
+						reply=messages.createReply();
+						reply.setContentObject(info);
+						myAgent.send(reply);
 					}
+
 					
-					reply=messages.createReply();
-					reply.setContentObject(info);
-					myAgent.send(reply);
+					
+				}break;
+
+				default:
+					break;
 				}
+				
 				
 			}else block();
 			

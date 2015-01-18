@@ -154,29 +154,38 @@ public class Statistical
 		double sum2=0;
 		double sum3=0;
 		
-		
-		if(x.size()==y.size() && x.size()>=30)
+		System.out.println("Iniciando calculo na Statistical");
+		System.out.println("x "+x.size());
+		System.out.println("y "+y.size());
+		if(y.size()>=30 && x.size()>=30)
 		{
 			for(int i=0; i<30; i++)
 			{
 				sum1+=(x.get(i).getClose()-avgX)*(y.get(i).getClose()-avgY);
 				sum2+=Math.pow((x.get(i).getClose()-avgX),2);
 				sum3+=Math.pow((y.get(i).getClose()-avgY),2);
+				
+				
 			}
 			
 			correlationCoefficient=sum1/Math.sqrt(sum2*sum3);
 			
+			
 		}else
-			if(x.size()==y.size())
+			if(x.size()<=y.size())
 			{
 				for(int i=0; i<x.size();i++)
 				{
 					sum1+=(x.get(i).getClose()-avgX)*(y.get(i).getClose()-avgY);
 					sum2+=Math.pow((x.get(i).getClose()-avgX),2);
 					sum3+=Math.pow((y.get(i).getClose()-avgY),2);
+					
+					
 				}
 				
 				correlationCoefficient=sum1/Math.sqrt(sum2*sum3);
+				
+				
 			}
 				
 		return correlationCoefficient;

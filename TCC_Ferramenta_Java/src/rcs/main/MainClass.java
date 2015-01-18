@@ -1,9 +1,8 @@
 package rcs.main;
 
-import java.util.ArrayList;
-
-import rcs.suport.financial.partternsCandleStick.CandleStick;
+import rcs.suport.financial.wallet.Stock;
 import rcs.suport.statistical.Statistical;
+import rcs.suport.util.database.mongoDB.dao.StockDao;
 
 public class MainClass 
 {
@@ -124,6 +123,23 @@ public class MainClass
 		
 
 	 */
+		 
+		 StockDao stockDao= new StockDao();
+		 Statistical statistical= new Statistical();
+		 
+		 Stock stk1,stk2;
+		 stk1= stockDao.getStock("GEPA4.SA");
+		 stk2= stockDao.getStock("BMKS3.SA");
+		 
+		 
+		 
+		 stk1.setCandleSticks(stockDao.getStockPrices_last30("GEPA4.SA"));
+		 stk2.setCandleSticks(stockDao.getStockPrices_last30("BMKS3.SA"));
+		 
+		 System.out.println("GEPA4 tem "+stk1.getCandleSticks().size());
+		 System.out.println("BMKS3 tem "+stk2.getCandleSticks().size());
+		 
+		 System.out.println("correl "+statistical.calculeCorrelationCoefficient_30(stk1.getCandleSticks(), stk2.getCandleSticks()));
 		 
 		
 	 }

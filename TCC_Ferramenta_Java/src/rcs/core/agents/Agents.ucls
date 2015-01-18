@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="rcs.core.agents.Creator" project="TCC_Ferramenta_Java" 
     file="/TCC_Ferramenta_Java/src/rcs/core/agents/Creator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="221" y="84"/>    
+    <position height="-1" width="-1" x="182" y="80"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="rcs.core.agents.Manager" project="TCC_Ferramenta_Java" 
     file="/TCC_Ferramenta_Java/src/rcs/core/agents/Manager.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="530" y="118"/>    
+    <position height="-1" width="-1" x="485" y="130"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="rcs.core.agents.Expert" project="TCC_Ferramenta_Java" 
     file="/TCC_Ferramenta_Java/src/rcs/core/agents/Expert.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="527" y="585"/>    
+    <position height="-1" width="-1" x="999" y="690"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,10 +48,45 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="6">    
+  <class id="6" language="java" name="rcs.core.agents.suport.WalletManagerAuxiliary" project="TCC_Ferramenta_Java" 
+    file="/TCC_Ferramenta_Java/src/rcs/core/agents/suport/WalletManagerAuxiliary.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="494" y="784"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="rcs.core.agents.suport.StockChooser" project="TCC_Ferramenta_Java" 
+    file="/TCC_Ferramenta_Java/src/rcs/core/agents/suport/StockChooser.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="503" y="1464"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="8">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="9" name="walletManagerAuxiliary"/>      
+      <multiplicity id="10" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="11">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="12" name="stkChooser"/>      
+      <multiplicity id="13" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="14">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="7" name="orderCreateDao"/>      
-      <multiplicity id="8" minimum="0" maximum="1"/>    
+      <attribute id="15" name="orderCreateDao"/>      
+      <multiplicity id="16" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

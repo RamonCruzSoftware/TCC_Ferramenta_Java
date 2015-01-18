@@ -108,6 +108,7 @@ public class Creator  extends Agent{
 						ACLMessage message=new ACLMessage(ACLMessage.INFORM);
 						message.setOntology(ConversationsID.ONTOLOGY_USER_COMUNITATION);
 						message.setLanguage(ConversationsID.LANGUAGE);
+						message.setPerformative(ACLMessage.INFORM);
 						message.setConversationId(ConversationsID.USER_LOGGED);
 						message.setContent(userLogged);
 						message.addReceiver(new AID("Manager_"+userLogged, AID.ISLOCALNAME));
@@ -135,7 +136,13 @@ public class Creator  extends Agent{
 			PlatformController container=getContainerController();
 			try 
 			{
-				AgentController  agentController=container.createNewAgent(nameAgentManager, "rcs.core.agents.Manager", null);
+				//Xmx128m
+				Object [] argument;
+				argument= new Object[1];
+				argument[0]="Xmx512m";
+				
+				AgentController  agentController=container.createNewAgent(nameAgentManager, "rcs.core.agents.Manager",argument);
+				
 				agentController.start();
 				
 			} 

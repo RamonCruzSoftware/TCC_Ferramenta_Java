@@ -502,7 +502,7 @@ public ArrayList<Stock> getAllStocksPrices()
 			mongo_stock=cursor.next();
 			
 		}
-			mongo_candleList=(ArrayList<BasicDBObject>) mongo_stock.get("values");
+		mongo_candleList=(ArrayList<BasicDBObject>) mongo_stock.get("values");
 			
 			//Pega todo historico existente no banco de dados
 			ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
@@ -533,8 +533,8 @@ public ArrayList<Stock> getAllStocksPrices()
 				}
 			}
 			
-			
-			
+
+		
 	
 		return candleList;
 	}

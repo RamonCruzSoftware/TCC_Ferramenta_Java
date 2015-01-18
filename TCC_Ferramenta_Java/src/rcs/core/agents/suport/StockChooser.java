@@ -2,6 +2,7 @@ package rcs.core.agents.suport;
 
 import java.util.ArrayList;
 
+import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
 import rcs.suport.statistical.Statistical;
 import rcs.suport.util.database.mongoDB.dao.StockDao;
@@ -23,7 +24,7 @@ public class StockChooser
 	
 	private StockChooser(){}
 	
-public StockChooser(ArrayList<Stock>stockList,int userProfile)
+	public StockChooser(ArrayList<Stock>stockList,int userProfile)
 {
 		this.setStockList(stockList);
 		this.setUserProfile(userProfile);
@@ -44,6 +45,10 @@ public StockChooser(ArrayList<Stock>stockList,int userProfile)
 			{
 				if(s.getCandleSticks()==null)s.setCandleSticks(this.getStockDao().getStockPrices_last30(s.getCodeName()));
 		
+				//TODO apagar prints 
+				System.out.println("==Construtor==");
+				System.out.println("Add Stock :"+s.getCodeName());
+				
 				this.getStockListTemp_a().add(s);
 			}
 			
@@ -66,6 +71,8 @@ public StockChooser(ArrayList<Stock>stockList,int userProfile)
 				this.setPoisitiveCorrelationTolerance(1);
 				break;
 			}
+			System.out.println("Perfil "+getPoisitiveCorrelationTolerance());
+			System.out.println("==Fim Construtor==");
 			
 		}
 		
@@ -73,17 +80,40 @@ public StockChooser(ArrayList<Stock>stockList,int userProfile)
 	
 public boolean analyzeStock(Stock stockToAnalyze)
 {
+	
 		boolean result=false;
 		double correl=0;
 		Statistical statistical= new Statistical();
 		
-		if(this.getStockList().size()==0)
+		if(this.getApprovedStockList().size()>0)
 		{
-			for(int i=0;i<this.getStockList().size();i++)
+			for(int i=0;i<this.getApprovedStockList().size();i++)
 			{
 				correl=statistical.calculeCorrelationCoefficient_30(stockToAnalyze.getCandleSticks(), this.getApprovedStockList().get(i).getCandleSticks());
-				if(correl<0)result=true;
-				else result=false;
+				if(correl<0){result=true;}
+				else {result=false;}
+				
+				/*
+				System.out.println("===========================================================");
+				System.out.println("Value to analyze:"+stockToAnalyze.getCandleSticks().size());
+				System.out.println("\n\n");
+				for(CandleStick value :stockToAnalyze.getCandleSticks() )
+				{
+					System.out.println(" Value="+value.getClose());
+				}
+				System.out.println("\n\n");
+				System.out.println("Value in approved List:"+this.getApprovedStockList().get(i).getCandleSticks().size());
+				
+				for(CandleStick value :this.getApprovedStockList().get(i).getCandleSticks() )
+				{
+					System.out.println(" Value="+value.getClose());
+				}
+				System.out.println("\n\n");
+				System.out.println("correl:"+correl);
+				System.out.println("result:"+result);
+				System.out.println("===========================================================");
+				
+				*/
 			}
 		}
 		else
@@ -106,11 +136,16 @@ public boolean analyzeStock(Stock stockToAnalyze)
 public ArrayList<ArrayList<Stock>> analyzeStockList()
 {
 	ArrayList<ArrayList<Stock>>result=new ArrayList<ArrayList<Stock>>();
+	
 	int limitCorrelactionCount=0;
 	Statistical statistical= new Statistical();
 
 	double correl_temp=0;
 	boolean positiveCorrelation=false;
+	
+	//TODO apagar
+	System.out.println("==Analyze StockList==");
+	System.out.println("Quantidade analizadas "+this.getStockListTemp_a().size());
 	
 	if(this.getStockListTemp_a().size()>0)
 	{
@@ -118,35 +153,70 @@ public ArrayList<ArrayList<Stock>> analyzeStockList()
 		this.getApprovedStockList().add(this.getStockListTemp_a().get(0));
 		this.getStockListTemp_a().remove(0);
 		
+		//TODO apagar
+		System.out.println(getApprovedStockList().size()+ "Acoes add na lista inicial ("+getApprovedStockList().get(0).getCodeName()+")");
+		System.out.println("Lista para avaliacao tem agora "+getStockListTemp_a().size()+" acoes");
+		
 		for(int i=0;i<this.getStockListTemp_a().size();i++)
 		{
+			correl_temp=0;
+			System.out.println("===Iniciar analise==");
+			System.out.println("Analisando  ["+this.getStockListTemp_a().get(i).getCodeName()+"]");
+			System.out.println(" Com "+this.getStockListTemp_a().get(i).getCandleSticks().size()+" candles");
 			
 			for(int j=0;j<this.getApprovedStockList().size();j++)
 			{
 				correl_temp= statistical.calculeCorrelationCoefficient_30(this.getStockListTemp_a().get(i).getCandleSticks(),this.getApprovedStockList().get(j).getCandleSticks());
 				
 				if(correl_temp>0)positiveCorrelation=true;
-					
-			
+				
+				
+				//TODO
+				System.out.println(getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+"\n");
+				System.out.println("Correl: "+correl_temp+" ["+poisitiveCorrelationTolerance+"]"+"\n");
+				System.out.println(getApprovedStockList().get(j)+" tem "+getApprovedStockList().get(j).getCandleSticks().size()+" Candles");
+				
 			}
 			if(positiveCorrelation)
 			{
+				//TODO
+				System.out.println("Teste de tolerancia");
+				
 				if(limitCorrelactionCount<this.getPoisitiveCorrelationTolerance())
 				{
+					//TODO
+					System.out.println("Na tolerancia");
+					
 					this.getApprovedStockList().add(this.getStockListTemp_a().get(i));
 					positiveCorrelation=false;
+					
 				}else
 				{
+					//TODO
+					System.out.println("Fora tolerancia");
 					this.getRefuseStockList().add(this.getStockListTemp_a().get(i));
 					positiveCorrelation=false;
+					
 				}
+				System.out.println("=====Analisado====");
+				//System.out.println("=="+getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+ "Analisadas==");
+				
 				
 			}else
 			{
 				this.getApprovedStockList().add(this.getStockListTemp_a().get(i));
+				
+				//TODO
+				System.out.println(getStockListTemp_a().get(i).getCodeName()+" Aprovada");
+			//	System.out.println("=="+getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+ "Analisadas==");
+				System.out.println("=====Analisado====");
+				
+				
 			}
+		
+			//}//Fim for 2
 	
-		}
+		}//Fim for 1
 		
 		result.add(approvedStockList);
 		result.add(refuseStockList);
@@ -168,7 +238,9 @@ public ArrayList<Stock> getStockList() {
 }
 
 public void setStockList(ArrayList<Stock> stockList) {
+	
 	this.stockList = stockList;
+	
 }
 
 public ArrayList<Stock> getApprovedStockList() {

@@ -3,6 +3,8 @@ package rcs.agents.suport;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.Assert;
 
@@ -10,82 +12,125 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import rcs.core.agents.suport.*;
+import rcs.core.agents.suport.WalletManagerAuxiliary;
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.wallet.Stock;
-import rcs.suport.util.database.mongoDB.dao.StockDao;
 
-public class StockChooserTest {
-	
-	StockChooser stkChooser;
-	ArrayList<Stock> stockList_a;
-	ArrayList<Stock> stockList_b;
-	
+public class WalletManagerAuxiliaryTest {
 
+	WalletManagerAuxiliary auxiliary;
+	Map<String,ArrayList<Stock>> infoExperts;
+	ArrayList<Stock>stockList;
+	
 	@Before
-	public void setUp() throws Exception 
-	{
-	
-	
-	}
-
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testStockChooser() 
-	{
-		stkChooser=new StockChooser(this.stockTestList(0), 0);
-		Assert.assertEquals(stkChooser.getClass(), StockChooser.class);
-	}
-
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testAnalyzeStock() {
+	public void setUp() throws Exception {
 		
-		Stock stockTest= new Stock("Local","Test");
+		this.infoExperts=null;
+		this.stockList= new ArrayList<Stock>();
+		this.infoExperts=new HashMap<String, ArrayList<Stock>>();
 		
-		stockList_a=this.stockTestList(0);	
-		stkChooser=new StockChooser(stockList_a, 0);
+		ArrayList<Stock>list_a=new ArrayList<Stock>();
+		ArrayList<Stock>list_b=new ArrayList<Stock>();
+		ArrayList<Stock>list_c=new ArrayList<Stock>();
+		ArrayList<Stock>list_d=new ArrayList<Stock>();
 		
-		stockTest.setCandleSticks(stockList_a.get(0).getCandleSticks());
+		this.stockList=this.stockTestList(2);
 		
-		Assert.assertFalse(stkChooser.analyzeStock(stockTest));
-	}
-
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testAnalyzeStockList() 
-	{
+		list_a.add(new Stock("Stock_a","Test"));
+		list_a.add(new Stock("Stock_a","Test"));
+		list_a.add(new Stock("Stock_a","Test"));
 		
-		stockList_a=this.stockTestList(0);	
-		stkChooser=new StockChooser(stockList_a, 0);
+		list_b.add(new Stock("Stock_b","Test"));
+		list_b.add(new Stock("Stock_b","Test"));
+		list_b.add(new Stock("Stock_b","Test"));
 		
-		Assert.assertEquals(0, stkChooser.analyzeStockList().get(1).size());
-		Assert.assertEquals(4, stkChooser.analyzeStockList().get(0).size());
+		list_c.add(new Stock("Stock_c","Test"));
+		list_c.add(new Stock("Stock_c","Test"));
+		list_c.add(new Stock("Stock_c","Test"));
 		
-		// Com uma correlacao positiva 
-		stockList_a=this.stockTestList(1);	
-		stkChooser=new StockChooser(stockList_a, 1);
+		list_d.add(new Stock("Stock_d","Test"));
+		list_d.add(new Stock("Stock_d","Test"));
+		list_d.add(new Stock("Stock_d","Test"));
 		
-		Assert.assertEquals(0, stkChooser.analyzeStockList().get(1).size());
-		Assert.assertEquals(4, stkChooser.analyzeStockList().get(0).size());
-
+		this.infoExperts.put("Expert_a", list_a);
+		this.infoExperts.put("Expert_b", list_b);
+		this.infoExperts.put("Expert_c", list_c);
+		this.infoExperts.put("Expert_d", list_d);
+		
+		auxiliary= new WalletManagerAuxiliary(this.stockList, 1000.0,0);
+		
 	}
 	
-	/*
-	 * qtdPositiveCorrel=0 sem correlacao
-	 * qtdPositiveCorrel=1 Uma correlacao positiva 
-	 * qtdPositiveCorrel=2 Duas correlacao positivas
-	 * qtdPositiveCorrel=3 Tres correlacao positivas 
-	 */
+
+	@Test
+	public void testCloseOrder() {
+		
+	
+		Assert.assertEquals(250.0, auxiliary.getQuota());
+		
+		auxiliary.closeOrder("Expert_a", 1000.0);
+		
+		Assert.assertEquals(500.0, auxiliary.getQuota());
+	}
+
+	@Test
+	public void testApproveOrderBuy() {
+		
+		Assert.assertEquals(250.0, auxiliary.approveOrderBuy("Expert_a"));
+		Assert.assertEquals(250.0, auxiliary.approveOrderBuy("Expert_b"));
+		Assert.assertEquals(250.0, auxiliary.approveOrderBuy("Expert_c"));
+		Assert.assertEquals(250.0, auxiliary.approveOrderBuy("Expert_d"));
+		
+	}
+
+	@Test
+	public void testRefreshWalletManager() {
+		
+	}
+
+	@Test
+	public void testAnalyzeStockSuggestions() {
+		
+		Assert.assertNotNull(this.stockList);
+		
+		Assert.assertEquals(4, this.auxiliary.analyzeStocksSuggestionsList().get(0).size());
+			
+	}
+	
+	@Test
+	public void testAnalyzeStock()
+	{
+		ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
+		Stock stockRefused=new Stock("Refused", "Test");
+		
+		ArrayList<CandleStick>candleList_2=new ArrayList<CandleStick>();
+		Stock stockApproved=new Stock("Approved", "Test");
+
+		this.auxiliary.analyzeStocksSuggestionsList();
+		
+		for(int i=0;i<31;i++)
+		{
+			candleList.add(new CandleStick(1, 1, 1, i+1, 10, null));
+			candleList_2.add(new CandleStick(1, 1, 1, Math.random()*100, 10, null));
+		}
+		
+		stockRefused.setCandleSticks(candleList);
+		stockApproved.setCandleSticks(candleList_2);
+		
+		Assert.assertFalse(this.auxiliary.analyzeStock(stockRefused));
+		
+		
+	}
+	
 	private ArrayList<Stock> stockTestList(int qtdPositiveCorrel)
 	{
 		
 		ArrayList<Stock>stockList= new ArrayList<Stock>();
 		
-		Stock stock_1=new Stock("Test_1", "test");
-		Stock stock_2=new Stock("Test_2", "test");
-		Stock stock_3=new Stock("Test_3", "test");
-		Stock stock_4=new Stock("Test_4", "test");
+		Stock stock_1=new Stock("Test_a", "test");
+		Stock stock_2=new Stock("Test_b", "test");
+		Stock stock_3=new Stock("Test_c", "test");
+		Stock stock_4=new Stock("Test_d", "test");
 		
 		ArrayList<CandleStick>candleList_1= new ArrayList<CandleStick>();
 		ArrayList<CandleStick>candleList_2= new ArrayList<CandleStick>();

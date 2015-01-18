@@ -14,7 +14,8 @@ public class InfoConversations implements Serializable{
 	 private String userName;
 	 private int userProfile;
 	 private ArrayList<Stock> stockList;
-	 
+	 private int lowerPercent;  //This variable can to be used when happen some stock rejection
+	 private int upperPercent;	//This variable can to be used when happen some stock rejection
 	 
 	 //Para uso dos experts e manages 
 	 InfoConversations()
@@ -49,6 +50,22 @@ public class InfoConversations implements Serializable{
 
 	public void setStockList(ArrayList<Stock> stockList) {
 		this.stockList = stockList;
+	}
+
+	public int getLowerPercent() {
+		return lowerPercent;
+	}
+
+	public void setLowerPercent(int lowerPercent) {
+		this.lowerPercent = lowerPercent;
+	}
+
+	public int getUpperPercent() {
+		return upperPercent;
+	}
+
+	public void setUpperPercent(int upperPercent) {
+		this.upperPercent = upperPercent;
 	}
 
 	
