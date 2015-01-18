@@ -136,10 +136,10 @@ public class Creator  extends Agent{
 			PlatformController container=getContainerController();
 			try 
 			{
-				//Xmx128m
+				//Xms128m
 				Object [] argument;
 				argument= new Object[1];
-				argument[0]="Xmx512m";
+				argument[0]="Xms1024m";
 				
 				AgentController  agentController=container.createNewAgent(nameAgentManager, "rcs.core.agents.Manager",argument);
 				

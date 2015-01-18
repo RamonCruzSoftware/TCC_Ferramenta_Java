@@ -72,6 +72,7 @@ public class StockDao {
 
 				stockList.add(stock);
 			}
+			cursor.close();
 			return stockList;
 			
 		}catch(Exception e)
@@ -95,7 +96,7 @@ public class StockDao {
 				collection_userStockSugestions.remove((BasicDBObject)cursor.next());
 			}
 			result=true;
-			
+			cursor.close();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -132,6 +133,8 @@ public boolean insertStocksSuggestion(Stock stock,String userIdentifier)
 											.append("version", 0);
 				
 				getCollection_userStockSugestions().insert(suggestion);
+				cursor.close();
+				
 				return true;
 			}else return false;
 			
@@ -203,6 +206,8 @@ public boolean updateStock(Stock stock)
 			getCollection_stocks().insert(updateStock);
 			getCollection_stock_prices().insert(updateStockPrices);
 			result=true;
+			cursorStock.close();
+			cursorStockPrices.close();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -289,6 +294,8 @@ public boolean updateStock(Stock stock)
 			getCollection_stock_prices().remove(stockStoredPrices);
 			getCollection_stock_prices().insert(stockPricesToStore);
 		
+			cursorStock.close();
+			cursorStockPrices.close();
 			return true;
 		}
 	
@@ -313,6 +320,7 @@ public boolean storeHistoricalStockValue(Stock stock)
 		{
 			collection_stock_prices.insert(stockPrices);
 			collection_stocks.insert(newStock);
+			
 			
 			return true;
 			
@@ -356,7 +364,7 @@ public Stock getStock(String codeName)
 			
 			
 		}
-		
+		cursor.close();
 		return stock;
 	}catch(Exception e)
 	{
@@ -406,7 +414,7 @@ public ArrayList<Stock> getAllStocks()
 			stockList.add(stock);
 			
 		}
-		
+		cursor.close();
 		return stockList;
 		
 	}
@@ -448,7 +456,7 @@ public ArrayList<Stock> getAllStocksPrices()
 			stockPricesList.add(stock);
 			
 		}
-		
+		cursor.close();
 		return stockPricesList;
 	}
 	
@@ -484,7 +492,7 @@ public ArrayList<Stock> getAllStocksPrices()
 			}
 			
 			
-	
+			cursor.close();
 		return candleList;
 	}
 	public ArrayList<CandleStick> getStockPrices_last30(String codeName)
@@ -496,16 +504,19 @@ public ArrayList<Stock> getAllStocksPrices()
 		ArrayList<BasicDBObject> mongo_candleList=null;
 		ArrayList<Stock> stockPricesList= new ArrayList<Stock>();
 		
+		//Pega todo historico existente no banco de dados
+		ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
 		
+	try
+	{
 		while(cursor.hasNext())
 		{
 			mongo_stock=cursor.next();
 			
 		}
+		cursor.close();
 		mongo_candleList=(ArrayList<BasicDBObject>) mongo_stock.get("values");
 			
-			//Pega todo historico existente no banco de dados
-			ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
 			
 			if(candleList.size()>=30)
 			{
@@ -532,7 +543,13 @@ public ArrayList<Stock> getAllStocksPrices()
 												);
 				}
 			}
+			cursor.close();
 			
+	}catch(Error error)
+	{
+		error.printStackTrace();
+	}
+		
 
 		
 	
@@ -547,43 +564,52 @@ public ArrayList<Stock> getAllStocksPrices()
 		ArrayList<BasicDBObject> mongo_candleList=null;
 		ArrayList<Stock> stockPricesList= new ArrayList<Stock>();
 		
+		//Pega todo historico existente no banco de dados
+		ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
 		
-		while(cursor.hasNext())
+		try
 		{
-			mongo_stock=cursor.next();
-			
-		}
-			mongo_candleList=(ArrayList<BasicDBObject>) mongo_stock.get("values");
-			
-			//Pega todo historico existente no banco de dados
-			ArrayList<CandleStick>candleList=new ArrayList<CandleStick>();
-			
-			if(mongo_candleList.size()>=40)
+			while(cursor.hasNext())
 			{
-				for(int i=(mongo_candleList.size()-40);i<(mongo_candleList.size());i++)
-				{
-					
-					candleList.add(new CandleStick(
-													mongo_candleList.get(i).getDouble("open"), 
-													mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
-													mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
-													mongo_candleList.get(i).getDate("date"))
-												);
-				}
-			}else
-			{
-				for(int i=0;i<(mongo_candleList.size());i++)
-				{
-					
-					candleList.add(new CandleStick(
-													mongo_candleList.get(i).getDouble("open"), 
-													mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
-													mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
-													mongo_candleList.get(i).getDate("date"))
-												);
-				}
+				mongo_stock=cursor.next();
+				
 			}
-			
+				mongo_candleList=(ArrayList<BasicDBObject>) mongo_stock.get("values");
+				
+				
+				
+				if(mongo_candleList.size()>=40)
+				{
+					for(int i=(mongo_candleList.size()-40);i<(mongo_candleList.size());i++)
+					{
+						
+						candleList.add(new CandleStick(
+														mongo_candleList.get(i).getDouble("open"), 
+														mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
+														mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
+														mongo_candleList.get(i).getDate("date"))
+													);
+					}
+				}else
+				{
+					for(int i=0;i<(mongo_candleList.size());i++)
+					{
+						
+						candleList.add(new CandleStick(
+														mongo_candleList.get(i).getDouble("open"), 
+														mongo_candleList.get(i).getDouble("high"), mongo_candleList.get(i).getDouble("low"),
+														mongo_candleList.get(i).getDouble("close"), mongo_candleList.get(i).getInt("volume"), 
+														mongo_candleList.get(i).getDate("date"))
+													);
+					}
+				}
+				
+				cursor.close();
+		}catch(Exception error)
+		{
+			error.printStackTrace();
+		}
+		
 			
 			
 	
@@ -602,27 +628,35 @@ public ArrayList<Stock> getStockOrderByStandardDeviation_30(double lowerLimit,do
 		ArrayList<Stock> stockList= new ArrayList<Stock>();
 		Stock stock=null;
 		
-		while(cursor.hasNext())
+		try
 		{
-			
-			mongo_stock=cursor.next();
-			stock=new Stock(mongo_stock.get("_id").toString(), null);
-			
-			stock.setAvarangeReturn_15(Double.parseDouble( mongo_stock.get("avarangeReturn_15").toString()));
-			stock.setAvarangeReturn_30(Double.parseDouble( mongo_stock.get("avarangeReturn_30").toString()));
-			
-			stock.setStandardDeviation_15(Double.parseDouble(mongo_stock.get("standardDeviation_15").toString()));
-			stock.setStandardDeviation_30(Double.parseDouble(mongo_stock.get("standardDeviation_30").toString()));
-			
-			stock.setVariance_15(Double.parseDouble(mongo_stock.get("variance_15").toString()));
-			stock.setVariance_30(Double.parseDouble(mongo_stock.get("variance_30").toString()));	
-			
-			stock.setVarianceCoefficient_15(Double.parseDouble(mongo_stock.get("varianceCoefficient_15").toString()));
-			stock.setVarianceCoefficient_30(Double.parseDouble(mongo_stock.get("varianceCoefficient_30").toString()));
+			while(cursor.hasNext())
+			{
+				
+				mongo_stock=cursor.next();
+				stock=new Stock(mongo_stock.get("_id").toString(), null);
+				
+				stock.setAvarangeReturn_15(Double.parseDouble( mongo_stock.get("avarangeReturn_15").toString()));
+				stock.setAvarangeReturn_30(Double.parseDouble( mongo_stock.get("avarangeReturn_30").toString()));
+				
+				stock.setStandardDeviation_15(Double.parseDouble(mongo_stock.get("standardDeviation_15").toString()));
+				stock.setStandardDeviation_30(Double.parseDouble(mongo_stock.get("standardDeviation_30").toString()));
+				
+				stock.setVariance_15(Double.parseDouble(mongo_stock.get("variance_15").toString()));
+				stock.setVariance_30(Double.parseDouble(mongo_stock.get("variance_30").toString()));	
+				
+				stock.setVarianceCoefficient_15(Double.parseDouble(mongo_stock.get("varianceCoefficient_15").toString()));
+				stock.setVarianceCoefficient_30(Double.parseDouble(mongo_stock.get("varianceCoefficient_30").toString()));
 
-			stockList.add(stock);
-			
+				stockList.add(stock);
+				
+			}
+			cursor.close();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
 		}
+		
 		
 		return stockList;
 	}
@@ -635,27 +669,35 @@ public ArrayList<Stock> getStockOrderByStandardDeviation_15()
 		ArrayList<Stock> stockList= new ArrayList<Stock>();
 		Stock stock=null;
 		
-		while(cursor.hasNext())
+		try
+		{
+			while(cursor.hasNext())
+			{
+				
+				mongo_stock=cursor.next();
+				stock=new Stock(mongo_stock.get("_id").toString(), null);
+				
+				stock.setAvarangeReturn_15(Double.parseDouble( mongo_stock.get("avarangeReturn_15").toString()));
+				stock.setAvarangeReturn_30(Double.parseDouble( mongo_stock.get("avarangeReturn_30").toString()));
+				
+				stock.setStandardDeviation_15(Double.parseDouble(mongo_stock.get("standardDeviation_15").toString()));
+				stock.setStandardDeviation_30(Double.parseDouble(mongo_stock.get("standardDeviation_30").toString()));
+				
+				stock.setVariance_15(Double.parseDouble(mongo_stock.get("variance_15").toString()));
+				stock.setVariance_30(Double.parseDouble(mongo_stock.get("variance_30").toString()));	
+				
+				stock.setVarianceCoefficient_15(Double.parseDouble(mongo_stock.get("varianceCoefficient_15").toString()));
+				stock.setVarianceCoefficient_30(Double.parseDouble(mongo_stock.get("varianceCoefficient_30").toString()));
+
+				stockList.add(stock);
+				
+			}
+			cursor.close();
+		}catch(Exception e)
 		{
 			
-			mongo_stock=cursor.next();
-			stock=new Stock(mongo_stock.get("_id").toString(), null);
-			
-			stock.setAvarangeReturn_15(Double.parseDouble( mongo_stock.get("avarangeReturn_15").toString()));
-			stock.setAvarangeReturn_30(Double.parseDouble( mongo_stock.get("avarangeReturn_30").toString()));
-			
-			stock.setStandardDeviation_15(Double.parseDouble(mongo_stock.get("standardDeviation_15").toString()));
-			stock.setStandardDeviation_30(Double.parseDouble(mongo_stock.get("standardDeviation_30").toString()));
-			
-			stock.setVariance_15(Double.parseDouble(mongo_stock.get("variance_15").toString()));
-			stock.setVariance_30(Double.parseDouble(mongo_stock.get("variance_30").toString()));	
-			
-			stock.setVarianceCoefficient_15(Double.parseDouble(mongo_stock.get("varianceCoefficient_15").toString()));
-			stock.setVarianceCoefficient_30(Double.parseDouble(mongo_stock.get("varianceCoefficient_30").toString()));
-
-			stockList.add(stock);
-			
 		}
+		
 		
 		return stockList;
 	}
@@ -687,6 +729,8 @@ public boolean dropStock(Stock stock)
 				result=true;
 			}
 			
+			cursorStock.close();
+			cursorStockPrices.close();
 		}catch(Exception e)
 		{
 			e.printStackTrace();

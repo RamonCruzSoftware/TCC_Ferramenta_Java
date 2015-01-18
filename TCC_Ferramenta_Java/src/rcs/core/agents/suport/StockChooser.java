@@ -153,70 +153,107 @@ public ArrayList<ArrayList<Stock>> analyzeStockList()
 		this.getApprovedStockList().add(this.getStockListTemp_a().get(0));
 		this.getStockListTemp_a().remove(0);
 		
-		//TODO apagar
-		System.out.println(getApprovedStockList().size()+ "Acoes add na lista inicial ("+getApprovedStockList().get(0).getCodeName()+")");
+//		//TODO apagar
+//		System.out.println(getApprovedStockList().size()+ "Acoes add na lista inicial ("+getApprovedStockList().get(0).getCodeName()+")");
+//		System.out.println("Lista para avaliacao tem agora "+getStockListTemp_a().size()+" acoes");
+//		
+		
+		//testes 
+		Stock stockTemp=getApprovedStockList().get(0);
+		System.out.println("Stock inicial aprovado "+stockTemp.getCodeName());
 		System.out.println("Lista para avaliacao tem agora "+getStockListTemp_a().size()+" acoes");
 		
-		for(int i=0;i<this.getStockListTemp_a().size();i++)
+		for(int i=0;i<getStockListTemp_a().size();i++)
 		{
 			correl_temp=0;
 			System.out.println("===Iniciar analise==");
 			System.out.println("Analisando  ["+this.getStockListTemp_a().get(i).getCodeName()+"]");
 			System.out.println(" Com "+this.getStockListTemp_a().get(i).getCandleSticks().size()+" candles");
+			System.out.println("\n");
 			
-			for(int j=0;j<this.getApprovedStockList().size();j++)
+			System.out.println(" Stock 1: "+stockTemp.getCodeName()+" com "+stockTemp.getCandleSticks().size()+" candles");
+			System.out.println(" Stock 2: "+this.getStockListTemp_a().get(i).getCandleSticks().size()+" candles");
+			
+			correl_temp= statistical.calculeCorrelationCoefficient_30(stockTemp.getCandleSticks(),this.getStockListTemp_a().get(i).getCandleSticks());
+			System.out.println("Correl "+correl_temp);
+			if(correl_temp>0)
 			{
-				correl_temp= statistical.calculeCorrelationCoefficient_30(this.getStockListTemp_a().get(i).getCandleSticks(),this.getApprovedStockList().get(j).getCandleSticks());
-				
-				if(correl_temp>0)positiveCorrelation=true;
-				
-				
-				//TODO
-				System.out.println(getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+"\n");
-				System.out.println("Correl: "+correl_temp+" ["+poisitiveCorrelationTolerance+"]"+"\n");
-				System.out.println(getApprovedStockList().get(j)+" tem "+getApprovedStockList().get(j).getCandleSticks().size()+" Candles");
-				
-			}
-			if(positiveCorrelation)
-			{
-				//TODO
-				System.out.println("Teste de tolerancia");
-				
-				if(limitCorrelactionCount<this.getPoisitiveCorrelationTolerance())
-				{
-					//TODO
-					System.out.println("Na tolerancia");
-					
-					this.getApprovedStockList().add(this.getStockListTemp_a().get(i));
-					positiveCorrelation=false;
-					
-				}else
-				{
-					//TODO
-					System.out.println("Fora tolerancia");
-					this.getRefuseStockList().add(this.getStockListTemp_a().get(i));
-					positiveCorrelation=false;
-					
-				}
-				System.out.println("=====Analisado====");
-				//System.out.println("=="+getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+ "Analisadas==");
-				
+				System.out.println("::: "+getStockListTemp_a().get(i)+" Refused");
+				getRefuseStockList().add(getStockListTemp_a().get(i));
 				
 			}else
+			if(correl_temp<0)
 			{
-				this.getApprovedStockList().add(this.getStockListTemp_a().get(i));
-				
-				//TODO
-				System.out.println(getStockListTemp_a().get(i).getCodeName()+" Aprovada");
-			//	System.out.println("=="+getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+ "Analisadas==");
-				System.out.println("=====Analisado====");
-				
+				System.out.println("::: "+getStockListTemp_a().get(i)+" Approved");
+				getApprovedStockList().add(getStockListTemp_a().get(i));
 				
 			}
+			
+		}
+//		
+//		for(int i=0;i<this.getStockListTemp_a().size();i++)
+//		{
+//			correl_temp=0;
+//			System.out.println("===Iniciar analise==");
+//			System.out.println("Analisando  ["+this.getStockListTemp_a().get(i).getCodeName()+"]");
+//			System.out.println(" Com "+this.getStockListTemp_a().get(i).getCandleSticks().size()+" candles");
+//			
+//			for(int j=0;j<this.getApprovedStockList().size();j++)
+//			{
+//				correl_temp= statistical.calculeCorrelationCoefficient_30(this.getStockListTemp_a().get(i).getCandleSticks(),this.getApprovedStockList().get(j).getCandleSticks());
+//				
+//				if(correl_temp>0)positiveCorrelation=true;
+//				
+//				
+//				//TODO
+//				System.out.println(getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+"\n");
+//				System.out.println("Correl: "+correl_temp+" ["+poisitiveCorrelationTolerance+"]"+"\n");
+//				System.out.println(getApprovedStockList().get(j)+" tem "+getApprovedStockList().get(j).getCandleSticks().size()+" Candles");
+//				
+//			}
+//			if(positiveCorrelation)
+//			{
+//				//TODO
+//				System.out.println("Teste de tolerancia");
+//				
+//				if(limitCorrelactionCount<this.getPoisitiveCorrelationTolerance())
+//				{
+//					//TODO
+//					System.out.println("Na tolerancia");
+//					
+//					this.getApprovedStockList().add(this.getStockListTemp_a().get(i));
+//					positiveCorrelation=false;
+//					
+//				}else
+//				{
+//					//TODO
+//					System.out.println("Fora tolerancia");
+//					this.getRefuseStockList().add(this.getStockListTemp_a().get(i));
+//					positiveCorrelation=false;
+//					
+//				}
+//				System.out.println("=====Analisado====");
+//				//System.out.println("=="+getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+ "Analisadas==");
+//				
+//				
+//			}else
+//			{
+//				this.getApprovedStockList().add(this.getStockListTemp_a().get(i));
+//				
+//				//TODO
+//				System.out.println(getStockListTemp_a().get(i).getCodeName()+" Aprovada");
+//			//	System.out.println("=="+getStockListTemp_a().get(i).getCodeName()+" e "+getApprovedStockList().get(j).getCodeName()+ "Analisadas==");
+//				System.out.println("=====Analisado====");
+//				
+//				
+//			}
+//		
+//			//}//Fim for 2
+//	
+//		}//Fim for 1
 		
-			//}//Fim for 2
-	
-		}//Fim for 1
+		System.out.println("Stocks aprovados "+getApprovedStockList().size());
+		System.out.println("Stocks recusados "+getRefuseStockList().size());
 		
 		result.add(approvedStockList);
 		result.add(refuseStockList);
