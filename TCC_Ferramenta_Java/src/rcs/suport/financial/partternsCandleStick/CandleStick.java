@@ -1,10 +1,14 @@
 package rcs.suport.financial.partternsCandleStick;
 
+import jade.util.leap.Serializable;
+
 import java.util.Date;
 
-public class CandleStick {
+public class CandleStick implements Serializable {
 
-    private double open, high, low, close, volume;
+    
+	private static final long serialVersionUID = 1L;
+	private double open, high, low, close, volume;
     private Date date;
 
     public CandleStick(double open, double high, double low, double close, double volume

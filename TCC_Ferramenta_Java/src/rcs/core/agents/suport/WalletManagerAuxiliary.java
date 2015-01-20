@@ -58,9 +58,8 @@ public class WalletManagerAuxiliary {
 		 this.managedWallet= new ManagedWallet();
 		 this.stockDao= new StockDao();
 		 this.managedWalletDao= new ManagedWalletDao();
-		
-		 this.expertsQuota=new HashMap<String, Double>();
 		 this.stockList=stockList;
+		 this.expertsQuota=new HashMap<String, Double>();
 		 this.userProfile=userProfile;
 		 
 		 try
@@ -98,7 +97,7 @@ public class WalletManagerAuxiliary {
 				break;
 			}
  
-			
+			//Erro Aqui TODO
 			this.stkChooser=new StockChooser(this.stockList, this.userProfile);
 		 
 	 }

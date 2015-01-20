@@ -1,5 +1,7 @@
 package rcs.main;
 
+import javax.sound.midi.Instrument;
+
 import rcs.suport.financial.wallet.Stock;
 import rcs.suport.statistical.Statistical;
 import rcs.suport.util.database.mongoDB.dao.StockDao;
@@ -141,6 +143,7 @@ public class MainClass
 		 
 		 System.out.println("correl "+statistical.calculeCorrelationCoefficient_30(stk1.getCandleSticks(), stk2.getCandleSticks()));
 		 
+		
 		
 	 }
 	 

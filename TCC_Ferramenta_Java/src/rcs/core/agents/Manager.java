@@ -4,8 +4,10 @@ package rcs.core.agents;
 
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.SequentialBehaviour;
 import jade.core.behaviours.WakerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -50,6 +52,11 @@ private StockDao stockDao;
 private String userName;
 private InfoConversations info;
 private WalletManagerAuxiliary walletManagerAuxiliary;
+
+private int STOCK_QTD_CORAJOSO=8;
+private int STOCK_QTD_MODERADO=13;
+private int STOCK_QTD_CONSERVADOR=30;
+
 
 protected void setup()
 {
@@ -155,35 +162,194 @@ protected void setup()
 							if(message.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
 							{
 								
-								InfoConversations inf= (InfoConversations) message.getContentObject();
-								manager.stockListManaged=inf.getStockList();
+								manager.info= (InfoConversations) message.getContentObject();
+								manager.stockListManaged= new ArrayList<Stock>();
 								
 								System.out.println("=====================");
-								System.out.println("stock List size"+manager.stockListManaged.size());
+								System.out.println("stock List size"+manager.info.getStockList().size());
 								
 								System.out.println("user value "+manager.user.getUserValue());
-								System.out.println("user profile "+inf.getUserProfile());
+								System.out.println("user profile "+manager.info.getUserProfile());
 								System.out.println("=====================");
 								
 								
-								try
+								SequentialBehaviour suggestions= new SequentialBehaviour(manager);
+								suggestions.addSubBehaviour(new OneShotBehaviour(manager)
 								{
-									walletManagerAuxiliary= new WalletManagerAuxiliary(manager.stockListManaged,manager.user.getUserValue(),inf.getUserProfile());
-									//TODO apagar print
-									System.out.println("Suggetions: "+inf.getStockList().size()+ " Acoes");
-									System.out.println("Lower Percent: "+inf.getLowerPercent());
-									System.out.println("Upper Percent: "+inf.getUpperPercent());
 									
-									System.out.println("Approved Number :"+manager.walletManagerAuxiliary.analyzeStocksSuggestionsList().size());
+									@Override
+									public void action() 
+									{
+										try
+										{
+											ArrayList<ArrayList<Stock>> listTemp;
+											ArrayList<Stock> listTemp_approved;
+											ArrayList<Stock> listTemp_refused;
+											
+											walletManagerAuxiliary= new WalletManagerAuxiliary(manager.info.getStockList(),manager.user.getUserValue(),manager.info.getUserProfile());
+											//TODO apagar print
+											System.out.println("Suggetions: "+manager.info.getStockList().size()+ " Acoes");
+											System.out.println("Lower Percent: "+manager.info.getLowerPercent());
+											System.out.println("Upper Percent: "+manager.info.getUpperPercent());
+											
+											System.out.println("Value user "+manager.user.getUserValue());
+											System.out.println("Profile User "+manager.info.getUserProfile());
+											
+											listTemp=manager.walletManagerAuxiliary.analyzeStocksSuggestionsList();
+											listTemp_approved=listTemp.get(0);
+											listTemp_refused=listTemp.get(1);
+											
+											/*
+											 * Esse trecho pode da problema ... melhorar isso 
+											 * do jeito q esta, se a quantidade de acoes for menor do que o limite ... vai dar erro 
+											 * 
+											 */
+								
+											switch (manager.info.getUserProfile()) {
+											case 0://Corajoso
+											{
+												for(int i=0;i<manager.STOCK_QTD_CORAJOSO;i++)
+												{
+													manager.stockListManaged.add(listTemp_approved.get(i));
+												}
+											}
+												break;
+											case 1://Moderado
+											{
+												for(int i=0;i<manager.STOCK_QTD_MODERADO;i++)
+												{
+													manager.stockListManaged.add(listTemp_approved.get(i));
+												}
+											}
+												break;
+											case 2://Conservador
+											{
+												for(int i=0;i<manager.STOCK_QTD_CONSERVADOR;i++)
+												{
+													manager.stockListManaged.add(listTemp_approved.get(i));
+												}
+												
+											}
+												break;
+
+											default:
+												break;
+											}
+											
+											
+											//Criando os agentes experts
+											manager.createExperts(manager.info.getUserProfile(), manager.info.getUserName(), manager.stockListManaged);
+										}catch(Exception e)
+										{
+											e.printStackTrace();
+										}
+										
+										
+									}
 									
-								}catch(Exception e)
-								{
-									e.printStackTrace();
-								}
+									
+								});
+								
+							
+								//Reparticao das acoes 
+								suggestions.addSubBehaviour(new WakerBehaviour(manager,200) {
+									
+									
+									
+									@Override
+									public void onWake() {
+										
+										
+											System.out.println("Enviando mensagem para ..");
+											System.out.println(manager.infoExperts);
+											for( Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
+											{
+												try {
+													ACLMessage message=new ACLMessage(ACLMessage.INFORM);
+													message.setLanguage("English");
+													message.setConversationId(ConversationsID.INIT_WORK);
+													message.addReceiver(new AID(s.getKey(),AID.ISLOCALNAME));
+													
+													message.setContentObject(s.getValue());
+													
+													System.out.println("{"+s.getKey()+"}");
+													
+													
+													myAgent.send(message);
+													
+											} catch (IOException e)
+											{
+												
+												e.printStackTrace();
+											}
+											}
+										
+										
+									}
+								});
 								
 								
+								//Reparticao das estratégias entre os agentes 
+								suggestions.addSubBehaviour(new WakerBehaviour(manager,200) 
+								{
+									
+									@Override
+									public void onWake() {
+										
+										for(Entry<String, String>s:manager.strategyExperts.entrySet())
+										{
+											try {
+												ACLMessage message=new ACLMessage(ACLMessage.INFORM);
+												message.setLanguage("English");
+												message.setConversationId(s.getValue());
+												message.addReceiver(new AID(s.getKey(),AID.ISLOCALNAME));
+												
+												myAgent.send(message);
+												
+										} catch (Exception e)
+										{
+											
+											e.printStackTrace();
+										}
+										}
+									}
+								});
+								
+								
+								//Informa aos experts o nome do usuario 
+								suggestions.addSubBehaviour(new OneShotBehaviour(manager) {
+									
+									@Override
+									public void action() {
+										for(Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
+										{
+											try 
+											{
+												ACLMessage message=new ACLMessage(ACLMessage.INFORM);
+												message.setLanguage("English");
+												message.setConversationId(ConversationsID.EXPERT_USER_NAME);
+												message.addReceiver(new AID(s.getKey(),AID.ISLOCALNAME));
+												
+												message.setContentObject(manager.user);
+												
+											} catch (IOException e) {
+												
+												e.printStackTrace();
+											}
+											
+											
+										}										
+									}
+								});
+								
+								
+								addBehaviour(suggestions);
+
 								
 							}
+							
+							
+							
 						}break;
 
 						default:
@@ -404,6 +570,7 @@ private void dropExpertAgent()
 
 private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock> listStocks)
 {
+	
 	PlatformController container=getContainerController();
 	AgentController  agentController;
 	infoExperts=new HashMap<String,ArrayList<Stock>>();
@@ -415,7 +582,7 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 	
 	if(userProfile==0) //Corajoso
 	{
-		if(listStocks.size()>8)
+		if(listStocks.size()>=8)
 		{
 			for(int i=0;i<8;i++)
 			{
@@ -465,7 +632,7 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 		
 		if(userProfile==1)
 		{
-			if(listStocks.size()>13)
+			if(listStocks.size()>=13)
 			{
 				for(int i=0;i<13;i++)
 				{
@@ -521,7 +688,7 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 					stockSeleted.add(listStocks.get(i));
 				}
 			}else
-				if(listStocks.size()<30)
+				if(listStocks.size()<=30)
 				{
 					stockSeleted=listStocks;
 				}
@@ -594,6 +761,9 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 					//MMS (13/21) MMS(21/34) MME (21/34)
 				}
 		}
+		
+		
+		
 		for(Entry<String, ArrayList<Stock>>s:infoExperts.entrySet())
 		{
 			try

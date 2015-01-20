@@ -1,6 +1,6 @@
 package rcs.suport.financial.wallet;
 
-import jade.util.leap.Serializable;
+import jade.util.leap.*;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,11 @@ import rcs.suport.financial.partternsCandleStick.CandleStick;
 
 public class Stock implements Serializable {
 
-	 private String codeName;
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String codeName;
 	 private String sector;
 	 private ArrayList<CandleStick> candleSticks;
 	 

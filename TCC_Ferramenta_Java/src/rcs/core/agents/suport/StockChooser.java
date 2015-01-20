@@ -1,5 +1,6 @@
 package rcs.core.agents.suport;
 
+import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.Currency;
 
@@ -35,49 +36,62 @@ public class StockChooser
 		this.setRefuseStockList(new ArrayList<Stock>());
 		
 		
-		if(this.getStockList().size()>0)
-		{
-			this.setStockListTemp_a(new ArrayList<Stock>());
-			this.setStockListTemp_b(new ArrayList<Stock>());
-			
-			
-			//Getting the candleSticks of each stock
-			for(Stock s:this.getStockList())
-			{
-				
-				if(s.getCandleSticks()==null)s.setCandleSticks(this.getStockDao().getStockPrices_last30(s.getCodeName()));
 		
-				//TODO apagar prints 
-				System.out.println("==Construtor==");
-				System.out.println("Add Stock :"+s.getCodeName());
-				
-				this.getStockListTemp_a().add(s);
-				
-			}
-			
-			//Setting the correlaction criteria by user profile 
-			switch (this.getUserProfile())
+		try
+		{
+			if(this.getStockList().size()>0)
 			{
-			case 0://corajoso
+				this.setStockListTemp_a(new ArrayList<Stock>());
+				this.setStockListTemp_b(new ArrayList<Stock>());
 				
-				this.setPoisitiveCorrelationTolerance(2);
+				int stop=0;
+				//Getting the candleSticks of each stock
+				for(Stock s:this.getStockList())
+				{
+					//TODO Retirar esse gato de quebra de laco e resolver o problema
+					stop++;
+					if(stop==100)break;
+					
+					if(s.getCandleSticks()==null)s.setCandleSticks(this.getStockDao().getStockPrices_last30(s.getCodeName()));
+			
+					//TODO apagar prints 
+					System.out.println("==Construtor==");
+					System.out.println("Add Stock :"+s.getCodeName());
+					
+					
+					this.getStockListTemp_a().add(s);
+					
+				}
 				
-				break;
-			case 1://Moderado
-				this.setPoisitiveCorrelationTolerance(1);
-				break;
-			case 2://Conservador
-				this.setPoisitiveCorrelationTolerance(0);
-				break;
+				//Setting the correlaction criteria by user profile 
+				switch (this.getUserProfile())
+				{
+				case 0://corajoso
+					
+					this.setPoisitiveCorrelationTolerance(2);
+					
+					break;
+				case 1://Moderado
+					this.setPoisitiveCorrelationTolerance(1);
+					break;
+				case 2://Conservador
+					this.setPoisitiveCorrelationTolerance(0);
+					break;
 
-			default:
-				this.setPoisitiveCorrelationTolerance(1);
-				break;
+				default:
+					this.setPoisitiveCorrelationTolerance(1);
+					break;
+				}
+				System.out.println("Perfil "+getPoisitiveCorrelationTolerance());
+				System.out.println("==Fim Construtor==");
+				
 			}
-			System.out.println("Perfil "+getPoisitiveCorrelationTolerance());
-			System.out.println("==Fim Construtor==");
+		}catch(Exception e)
+		{
+			e.printStackTrace();
 			
 		}
+	
 		
 }
 	
