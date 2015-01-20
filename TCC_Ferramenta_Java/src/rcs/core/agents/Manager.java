@@ -154,6 +154,37 @@ protected void setup()
 								});
 								
 							}
+							
+							//Se usuario estiver logado
+							if(message.getConversationId()==ConversationsID.USER_LOGGED)
+							{
+								try
+								{
+									
+									for(Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
+									{
+										for(Stock stk:s.getValue())
+										{
+											manager.stockDao.insertStocksSuggestion(stk,manager.userName);
+											
+										}
+									}
+								}catch(MongoException e)
+								{
+									e.printStackTrace();
+								}
+								
+							}
+							
+							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_SELL)
+							{
+								System.out.println(getLocalName()+": "+ message.getSender().getLocalName()+ " vendeu acoes e lucrou.. .");
+								
+								double profitValue= Double.parseDouble((String)message.getContent());
+								
+									System.out.println(profitValue);
+								
+							}
 						}break;
 						
 						case ACLMessage.PROPOSE:
@@ -254,12 +285,13 @@ protected void setup()
 								//Reparticao das acoes 
 								suggestions.addSubBehaviour(new WakerBehaviour(manager,200) {
 									
-									
-									
+		
 									@Override
 									public void onWake() {
 										
-										
+											//Informando nome dos experts para trabalhar a gestao de valores 
+										    manager.walletManagerAuxiliary.putInfoExperts(manager.infoExperts);
+										   
 											System.out.println("Enviando mensagem para ..");
 											System.out.println(manager.infoExperts);
 											for( Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
@@ -349,168 +381,45 @@ protected void setup()
 							}
 							
 							
+							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_BUY)
+							{
+								double value=0;
+								System.out.println(message.getSender().getLocalName()+ " pediu dinheiro para comprar..");
+								
+								ACLMessage reply=message.createReply();
+
+								value=manager.walletManagerAuxiliary.approveOrderBuy(message.getSender().getLocalName());
+								
+								if(value>0)
+								{
+									reply.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+									reply.setPerformative(ACLMessage.AGREE);
+									reply.setContent(""+value);
+									
+								}else
+								{
+									reply.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+									reply.setPerformative(ACLMessage.REFUSE);
+								}
+								
+								
+								myAgent.send(reply);
+													
+								
+							}
+
 							
 						}break;
+						
+						case 0:
+						{
+							
+						}
 
 						default:
 							break;
 						}
 						
-						
-				/*			
-							if(message.getConversationId()==ConversationsID.STOCKS_HUNTER_SUGGESTIONS)
-							{
-								InfoConversations inf= (InfoConversations) message.getContentObject();
-							
-							//TODO apagar print
-								System.out.println("Suggetions: "+inf.getStockList().size()+ " Acoes");
-							//colocar aqui tratamento de aceite de acoes 
-							//	System.out.println("Carreira aprovada? "+m.analyzeStockSuggestions(inf.getStockList(), 2));
-								
-								//Descomentar isso
-								manager.createExperts(inf.getUserProfile(), inf.getUserName(), inf.getStockList());
-								
-								//Iniciando atividade delegando aos experts tutela de acoes 
-								addBehaviour(new WakerBehaviour(myAgent, 100) 
-								{
-									
-									private static final long serialVersionUID = 1L;
-
-									protected void onWake()
-									{
-										
-										System.out.println("Enviando mensagem para ..");
-										System.out.println(manager.infoExperts);
-										for( Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
-										{
-											try {
-												ACLMessage message=new ACLMessage(ACLMessage.INFORM);
-												message.setLanguage("English");
-												message.setConversationId(ConversationsID.INIT_WORK);
-												message.addReceiver(new AID(s.getKey(),AID.ISLOCALNAME));
-												
-												message.setContentObject(s.getValue());
-												
-												System.out.println("{"+s.getKey()+"}");
-												myAgent.send(message);
-												
-										} catch (IOException e)
-										{
-											
-											e.printStackTrace();
-										}
-										}
-										//Faz reparticao de dinheiro 
-									//	manager.walletManager= new WalletManagerAuxiliary(manager.infoExperts,manager.user.getUserValue());
-										
-		
-									}
-								});
-								
-								//enviando Estrategias para agentes experts 
-								addBehaviour(new WakerBehaviour(myAgent, 200) 
-								{
-
-									private static final long serialVersionUID = 1L;
-									protected void onWake()
-									{
-										for(Entry<String, String>s:manager.strategyExperts.entrySet())
-										{
-											try {
-												ACLMessage message=new ACLMessage(ACLMessage.INFORM);
-												message.setLanguage("English");
-												message.setConversationId(s.getValue());
-												message.addReceiver(new AID(s.getKey(),AID.ISLOCALNAME));
-												
-												myAgent.send(message);
-												
-										} catch (Exception e)
-										{
-											
-											e.printStackTrace();
-										}
-										}
-									}
-									
-								});
-								
-								//Envia nome do usuario
-								addBehaviour(new WakerBehaviour(manager, 300) 
-								{
-									
-									private static final long serialVersionUID = 1L;
-
-									protected void onWake()
-									{
-										for(Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
-										{
-											try 
-											{
-												ACLMessage message=new ACLMessage(ACLMessage.INFORM);
-												message.setLanguage("English");
-												message.setConversationId(ConversationsID.EXPERT_USER_NAME);
-												message.addReceiver(new AID(s.getKey(),AID.ISLOCALNAME));
-												
-												message.setContentObject(manager.user);
-												
-											} catch (IOException e) {
-												
-												e.printStackTrace();
-											}
-											
-											
-										}
-										
-									}
-								});
-								
-								
-							}//Fim if Suggestions
-							
-							*/
-							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_BUY)
-							{
-								
-								System.out.println(message.getSender().getLocalName()+ " pediu dinheiro para comprar..");
-								
-								ACLMessage reply=message.createReply();
-								String stringValue=""+manager.walletManagerAuxiliary.approveOrderBuy(message.getSender().getLocalName());
-								reply.setContent(stringValue);
-								myAgent.send(reply);
-													
-								
-							}
-							
-							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_SELL)
-							{
-								System.out.println(getLocalName()+": "+ message.getSender().getLocalName()+ " vendeu acoes e lucrou.. .");
-								
-								double profitValue= Double.parseDouble((String)message.getContent());
-								
-									System.out.println(profitValue);
-								
-							}
-							
-							if(message.getConversationId()==ConversationsID.USER_LOGGED)
-							{
-								try
-								{
-									
-									for(Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
-									{
-										for(Stock stk:s.getValue())
-										{
-											manager.stockDao.insertStocksSuggestion(stk,manager.userName);
-											
-										}
-									}
-								}catch(MongoException e)
-								{
-									e.printStackTrace();
-								}
-								
-							}
-							
 	
 						} catch(UnreadableException e1) 
 						{

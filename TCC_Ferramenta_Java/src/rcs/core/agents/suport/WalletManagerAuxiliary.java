@@ -38,21 +38,7 @@ public class WalletManagerAuxiliary {
 	 {
 		 this.stockDao= new StockDao();
 	 }
-	 
-	 public void putInfoExperts(Map<String,ArrayList<Stock>> infoExperts)
-	 {
-		 this.infoExperts=infoExperts;
-		 //Money qtd for Expert
-		 this.setQuota(this.managedWallet.getWalletValue()/this.infoExperts.size());
-		 
-		 //Criando map para controlar quantidade de dinheiro por agente 
-		 for(Entry<String, ArrayList<Stock>>e:this.infoExperts.entrySet())
-		 {
-			 this.expertsQuota.put(e.getKey(), this.getQuota());
-			 
-		 }
-		 
-	 }
+	
 	 public WalletManagerAuxiliary(ArrayList<Stock>stockList,double userValue,int userProfile)
 	 {
 		 this.managedWallet= new ManagedWallet();
@@ -103,6 +89,20 @@ public class WalletManagerAuxiliary {
 	 }
 	 
 	 
+	 public void putInfoExperts(Map<String,ArrayList<Stock>> infoExperts)
+	 {
+		 this.infoExperts=infoExperts;
+		 //Money qtd for Expert
+		 this.setQuota(this.managedWallet.getWalletValue()/this.infoExperts.size());
+		 
+		 //Criando map para controlar quantidade de dinheiro por agente 
+		 for(Entry<String, ArrayList<Stock>>e:this.infoExperts.entrySet())
+		 {
+			 this.expertsQuota.put(e.getKey(), this.getQuota());
+			 
+		 }
+		 
+	 }
 	 public void closeOrder(String expertName,double value)
 	 {
 		 this.setQuota(this.getQuota() + value/this.infoExperts.size());

@@ -63,6 +63,7 @@ public class Expert extends Agent {
 	private double quota;
 	private StockManager stockManager;
 	
+	private boolean ordersLocker;
 	
 	protected void setup()
 	{
@@ -80,8 +81,9 @@ public class Expert extends Agent {
 			
 			stockManager = new StockManager();
 			
+			ordersLocker=false;
 			
-		    
+			    
 			DFAgentDescription dfd =new DFAgentDescription();
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
@@ -99,6 +101,13 @@ public class Expert extends Agent {
 					if(msg!=null)
 					{
 						try {
+							
+							
+							switch (msg.getPerformative())
+							{
+							case ACLMessage.INFORM:
+							{
+								
 								if(msg.getConversationId()==ConversationsID.INIT_WORK)
 								{
 									ArrayList<Stock> temp=(ArrayList<Stock>)msg.getContentObject();
@@ -159,7 +168,9 @@ public class Expert extends Agent {
 										e.printStackTrace();
 									}
 									
-								}if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_MMS_13_21)
+								}
+								
+								if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_MMS_13_21)
 								{
 									
 									System.out.println(expert.getLocalName()+" Strategy MMS 13/21");
@@ -215,6 +226,7 @@ public class Expert extends Agent {
 										//Date date = (Date)format.parse("10/26/2014 10:02pm");
 										Date date = new Date();
 										date.setMinutes(date.getMinutes()+1);
+										
 										expert.requestRoutine(date, 0, 60*1000);
 										
 									} catch (Exception e)
@@ -235,6 +247,13 @@ public class Expert extends Agent {
 								{
 									System.out.println(expert.getLocalName()+" Strategy dark cloud bullish engulf");
 								}
+								
+								
+								
+							}break;
+							
+							case ACLMessage.AGREE:
+							{
 								
 								if(msg.getConversationId()==ConversationsID.EXPERT_ORDER_BUY)
 								{
@@ -262,10 +281,31 @@ public class Expert extends Agent {
 										
 										
 									}
+									
+									expert.ordersLocker=true;
+									
 									expert.orderToApproveBuy.clear();
 									
 								}
 								
+								
+							}break;
+							
+							case ACLMessage.REFUSE:
+							{
+								if(msg.getConversationId()==ConversationsID.EXPERT_ORDER_BUY)
+								{
+									System.out.println(this.getAgent().getLocalName()+": Manager dind't approved");
+									
+									expert.ordersLocker=false;
+								}
+								
+							}break;
+
+							default:
+								break;
+							}
+	
 								
 						} catch (UnreadableException e) {
 						
@@ -310,15 +350,7 @@ public class Expert extends Agent {
 			 {
 				 candleStick= expert.yahooFinances.getCurrentValue(stock.getCodeName());
 			 }
-			
-			
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-		
-		
+
 		if(!(candleStick.getDate().getTime()
 				==
 				stock.getCandleSticks().get(stock.getCandleSticks().size()-1).getDate().getTime()))
@@ -327,6 +359,12 @@ public class Expert extends Agent {
 			return candleStick;
 			
 		}else return null;	
+		
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 		
 	}
 	
@@ -381,20 +419,21 @@ public class Expert extends Agent {
 							strategy=e.getValue();
 							strategy.addValue(current.getClose());
 							
-							//TODO apagar isso
-							System.out.println(e.getKey().getCodeName()+" Order  "+strategy.makeOrder());
+						//TODO apagar isso
+						//	System.out.println(e.getKey().getCodeName()+" Order  "+strategy.makeOrder());
 						//	System.out.println(getLocalName()+": Add new Candle: "+stockTemp.addCurrentCandleStick(current));
 							
 							
 							//Armazeno as ordens para pedir autorizacao ao manager 
-							if(expert.ordensToBuyOrSell.get(e.getKey())!=null && !strategy.makeOrder().equalsIgnoreCase("nothing"))
+							if(expert.ordensToBuyOrSell.get(e.getKey())!=null && !strategy.makeOrder().equalsIgnoreCase("nothing") && !strategy.makeOrder().equalsIgnoreCase(null))
 							{
 								expert.ordensToBuyOrSell.remove(e.getKey());
 								expert.ordensToBuyOrSell.put(e.getKey(), strategy.makeOrder());
 								
 							}else
 							{
-								expert.ordensToBuyOrSell.put(stockTemp, strategy.makeOrder());
+								//TODO acredito q essa linha nao seja necessaria 
+								//expert.ordensToBuyOrSell.put(stockTemp, strategy.makeOrder());
 							}
 										
 							expert.stocksMap.remove(e);
@@ -559,11 +598,15 @@ public class Expert extends Agent {
 			}//Fim for
 		}
 		
-		System.out.println(getLocalName()+" :Pedir autorizacao para  comprar "+expert.orderToApproveBuy.size()+" Acoes");
-		System.out.println(getLocalName()+" :Vender  "+expert.orderToApproveBuy.size()+" Acoes");
+		if(expert.orderToApproveBuy.size()>0 && expert.ordersLocker)
+		{
+			System.out.println(getLocalName()+" :Pedir autorizacao para  comprar "+expert.orderToApproveBuy.size()+" Acoes");
+			System.out.println(getLocalName()+" :Comprar  "+expert.orderToApproveBuy.size()+" Acoes");
+		}
 		
 		
-		if(expert.orderToApproveBuy.size()>0)
+		//TODO mudar paramentros perfomative
+		if(expert.orderToApproveBuy.size()>0 && expert.ordersLocker)
 		{
 			addBehaviour( new OneShotBehaviour(expert)
 			{	
@@ -573,7 +616,7 @@ public class Expert extends Agent {
 					
 					try 
 					{
-						ACLMessage msg= new ACLMessage(ACLMessage.INFORM);
+						ACLMessage msg= new ACLMessage(ACLMessage.PROPOSE);
 						msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
 						msg.addReceiver(new AID(expert.managerName, AID.ISLOCALNAME));
 						
@@ -590,14 +633,11 @@ public class Expert extends Agent {
 			});
 			
 		}
+		
+		//TODO Melhorar esse esquema 
 		if(expert.orderToApproveSell.size()>0)
 		{
-			
-			for(Stock stock: expert.orderToApproveSell)
-			{
-				if(stock!=null)expert.stockManager.orderSell(stock);
-			}
-			
+
 			addBehaviour(new OneShotBehaviour(expert)
 			{
 				
@@ -606,15 +646,29 @@ public class Expert extends Agent {
 				{
 					try 
 					{
-						double profitValue;
-						ACLMessage msg= new ACLMessage(ACLMessage.INFORM);
-						msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
-						msg.addReceiver(new AID(expert.managerName, AID.ISLOCALNAME));
+						for(Stock stock: expert.orderToApproveSell)
+						{
+							if(expert.stockManager.stockBougth(stock))
+							{
+								if(stock!=null)expert.stockManager.orderSell(stock);
+								double profitValue;
+								ACLMessage msg= new ACLMessage(ACLMessage.INFORM);
+								msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
+								msg.addReceiver(new AID(expert.managerName, AID.ISLOCALNAME));
+								
+								profitValue=expert.stockManager.getProfitValue(stock);
+								msg.setContent(""+profitValue);
+								
+								expert.stockManager.removeManagedStock(stock);
+								myAgent.send(msg);
+								
+								
+							}
+						}
 						
-						profitValue=expert.stockManager.getProfitValue();
-						msg.setContent(""+profitValue);
+						//Caso tenha liquidado tudo, volta a solicitar dinheiro pra comprar 
 						
-							myAgent.send(msg);
+						if(expert.stockManager.listManagedStock.size()==0) expert.ordersLocker=false;
 						
 					} catch (Exception e1) 
 						{
@@ -629,35 +683,43 @@ public class Expert extends Agent {
 		
 	}
 	
-	private class StockManager
-	{
+	
+private class StockManager
+{
 		private StockDao stockDao;
-		private ManagedStock managedStock;
 		private ManagedStockDao managedStockDao;
 		
-		 private double profitValue;
-		 private double profitPercent;
+		
+		private Map<String, ManagedStock>listManagedStock;
+		private double profitValue; 
+	    private double profitPercent;
 		
 		public StockManager()
 		{
 			this.setStockDao(new StockDao());
 			this.setManagedStockDao(new ManagedStockDao());
+			this.listManagedStock= new HashMap<String, ManagedStock>();
 		}
 		public void orderBuy(Stock stock,int qtdStocksBought)
 		{
 			try
 			{
-				this.setProfitPercent(0);
-				this.setProfitValue(0);
+				this.profitPercent=0;
+				this.profitValue=0;
 				
-				this.managedStock= new ManagedStock();
-				this.managedStock.setBuyed(stock.getCurrentCandleStick());
-				this.managedStock.setCodeName(stock.getCodeName());
-				this.managedStock.setUserIdentifier(userIdentifier);
-				this.managedStock.setQtdStocksBought(qtdStocksBought);
-				this.managedStock.setSector(stock.getSector());
+				ManagedStock managedStock= new ManagedStock();
 				
-				this.getManagedStockDao().insertManagedStock(getManagedStock());
+				managedStock.setBuyed(stock.getCurrentCandleStick());
+				managedStock.setCodeName(stock.getCodeName());
+				managedStock.setUserIdentifier(userIdentifier);
+				managedStock.setQtdStocksBought(qtdStocksBought);
+				managedStock.setSector(stock.getSector());
+				
+				this.getManagedStockDao().insertManagedStock(managedStock);
+				
+				this.listManagedStock= new HashMap<String, ManagedStock>();
+				this.listManagedStock.put(stock.getCodeName(), managedStock);
+				
 				
 			}catch(Exception e)
 			{
@@ -671,23 +733,44 @@ public class Expert extends Agent {
 			double profitPercent=0;
 			double profitValue=0;
 			
-			if(managedStockStored!=null)
+			try
 			{
-				profitValue=stock.getCurrentCandleStick().getClose()- managedStockStored.getBuyed().getClose();
-				profitPercent=stock.getCurrentCandleStick().getClose()/profitValue;
-				
-				this.setProfitPercent(this.getProfitPercent() + profitPercent);
-				this.setProfitValue(this.getProfitValue() + profitValue);
+				if(managedStockStored!=null)
+				{
+					profitValue=stock.getCurrentCandleStick().getClose()- managedStockStored.getBuyed().getClose();
+					profitPercent=stock.getCurrentCandleStick().getClose()/profitValue;
+					
+					ManagedStock managedStock_temp=this.listManagedStock.get(stock.getCodeName());
+					managedStock_temp.setProfitPercent(managedStock_temp.getProfitPercent() + profitPercent);
+					managedStock_temp.setProfitValue(managedStock_temp.getProfitValue()+profitValue);
+					
+					this.listManagedStock.put(stock.getCodeName(), managedStock_temp);
+					
+				}
+			}catch(Exception e)
+			{
+				e.printStackTrace();
 			}
 			
-			this.managedStock= new ManagedStock();
-			this.managedStock.setSelled(stock.getCurrentCandleStick());
-			this.managedStock.setCodeName(stock.getCodeName());
-			this.managedStock.setUserIdentifier(userIdentifier);
-			this.managedStock.setProfitPercent(profitPercent);
-			this.managedStock.setProfitValue(profitValue);
 			
+		}
+		public void removeManagedStock(Stock stock)
+		{
+			this.listManagedStock.remove(stock.getCodeName());
+		}
+		
+		public void clearListManagedStockList()
+		{
+			this.listManagedStock.clear();
+		}
+		
+		public boolean stockBougth(Stock stockToVerify)
+		{
+			ManagedStock managedStockStored=this.managedStockDao.getManagedStock(stockToVerify.getCodeName(), userIdentifier);
 			
+			if(managedStockStored!=null)
+				return true;
+				else return false;
 		}
 		
 		
@@ -697,30 +780,22 @@ public class Expert extends Agent {
 		public void setStockDao(StockDao stockDao) {
 			this.stockDao = stockDao;
 		}
-		public ManagedStock getManagedStock() {
-			return managedStock;
-		}
-		public void setManagedStock(ManagedStock managedStock) {
-			this.managedStock = managedStock;
-		}
+		
 		public ManagedStockDao getManagedStockDao() {
 			return managedStockDao;
 		}
 		public void setManagedStockDao(ManagedStockDao managedStockDao) {
 			this.managedStockDao = managedStockDao;
 		}
-		public double getProfitValue() {
-			return profitValue;
+		public double getProfitValue(Stock stock) {
+			
+			return this.listManagedStock.get(stock.getCodeName()).getProfitValue();
 		}
-		public void setProfitValue(double profitValue) {
-			this.profitValue = profitValue;
+		
+		public double getProfitPercent(Stock stock) {
+			return this.listManagedStock.get(stock.getCodeName()).getProfitPercent();
 		}
-		public double getProfitPercent() {
-			return profitPercent;
-		}
-		public void setProfitPercent(double profitPercent) {
-			this.profitPercent = profitPercent;
-		}
+		
 		
 	}
 	
