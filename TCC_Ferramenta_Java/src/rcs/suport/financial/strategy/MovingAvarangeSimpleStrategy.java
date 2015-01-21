@@ -3,6 +3,7 @@ package rcs.suport.financial.strategy;
 import java.util.ArrayList;
 
 import rcs.suport.financial.indicators.MovingAvarange;
+import rcs.suport.financial.partternsCandleStick.CandleStick;
 
 public class MovingAvarangeSimpleStrategy implements Strategy 
 {
@@ -119,6 +120,12 @@ public class MovingAvarangeSimpleStrategy implements Strategy
 
 	public void setMmsBValues(ArrayList<Double> mmsBValues) {
 		this.mmsBValues = mmsBValues;
+	}
+
+	@Override
+	public void addCandleStick(CandleStick candleStick) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

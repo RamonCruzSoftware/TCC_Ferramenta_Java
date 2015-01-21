@@ -1,6 +1,8 @@
 package rcs.suport.financial.strategy;
 
 import java.util.ArrayList;
+
+import rcs.suport.financial.partternsCandleStick.CandleStick;
  
 public class MovingAvarangeExponentialStrategy implements Strategy{
 
@@ -102,6 +104,12 @@ public class MovingAvarangeExponentialStrategy implements Strategy{
 	public ArrayList<Double> getMme21Values()
 	{
 		return this.mme21Values;
+	}
+
+	@Override
+	public void addCandleStick(CandleStick candleStick) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
