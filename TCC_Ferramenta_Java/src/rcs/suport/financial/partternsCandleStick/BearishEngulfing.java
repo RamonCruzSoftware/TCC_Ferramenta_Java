@@ -24,7 +24,8 @@ public class BearishEngulfing extends Pattern
             int i=0;
             double C1,C,O,O1,H,L;
            
-            for (i = 0; i < getList().size(); i++)
+            //for (i = 0; i < getList().size(); i++)
+            for (i = 0; i < 5; i++)
             { 
                 if ((i + 1) < getList().size())
                 {

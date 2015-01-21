@@ -4,7 +4,6 @@ package rcs.core.agents;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SequentialBehaviour;
@@ -27,13 +26,8 @@ import java.util.Map.Entry;
 
 import rcs.core.agents.suport.WalletManagerAuxiliary;
 import rcs.suport.financial.wallet.Stock;
-import rcs.suport.statistical.Statistical;
 import rcs.suport.util.InfoConversations;
-import rcs.suport.util.database.mongoDB.dao.ManagedStockDao;
-import rcs.suport.util.database.mongoDB.dao.ManagedWalletDao;
 import rcs.suport.util.database.mongoDB.dao.StockDao;
-import rcs.suport.util.database.mongoDB.pojo.ManagedStock;
-import rcs.suport.util.database.mongoDB.pojo.ManagedWallet;
 import rcs.suport.util.database.mongoDB.pojo.OrdersCreate;
 
 import com.mongodb.MongoException;

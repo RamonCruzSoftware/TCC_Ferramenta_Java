@@ -21,6 +21,7 @@ public class DarkCloud extends Pattern
         try
         {
         	double C1,C,O,O1,H,L;
+        	
             for (int i = 0; i < getList().size(); i++)
             {
                 if ((i + 1) < getList().size())
