@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 import com.mongodb.util.MyAsserts.MyAssert;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
+import rcs.suport.financial.strategy.Bearish_Bullish_Strategy;
 import rcs.suport.financial.strategy.MovingAvarangeExponentialStrategy;
 import rcs.suport.financial.strategy.MovingAvarangeSimpleStrategy;
 import rcs.suport.financial.strategy.Strategy;
@@ -237,15 +238,101 @@ public class Expert extends Agent {
 								}if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_MME_21_34)
 								{
 									System.out.println(expert.getLocalName()+" Strategy MME 21/34");
+									
+									Strategy mms=null;
+									
+									for(Stock s : expert.stockList)
+									{
+										
+										mms=new MovingAvarangeExponentialStrategy(0,21, 34);
+										
+										for(int i=0;i<s.getCandleSticks().size();i++)
+										{
+											
+											mms.addValue(s.getCandleSticks().get(i).getClose());
+										}
+										stocksMap.put(s,mms);
+												
+									}
+									try 
+									{
+										DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);
+										//Date date = (Date)format.parse("10/26/2014 10:02pm");
+										Date date = new Date();
+										date.setMinutes(date.getMinutes()+1);
+										
+										expert.requestRoutine(date, 0, 60*1000);
+										
+									} catch (Exception e)
+									{
+										e.printStackTrace();
+									}
 								}
 								
 								if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_BEARISH_ENGULFING_BULLSH_ENGULF)
 								{
 									System.out.println(expert.getLocalName()+" Strategy Bearish engulfing bullsh engulf");
 									
+									Strategy BearBull=null;
+									
+									for(Stock s : expert.stockList)
+									{
+										
+										BearBull=new Bearish_Bullish_Strategy();
+										
+										for(int i=0;i<s.getCandleSticks().size();i++)
+										{
+											
+											BearBull.addCandleStick(s.getCandleSticks().get(i));
+										}
+										stocksMap.put(s,BearBull);
+												
+									}
+									try 
+									{
+										DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);
+										//Date date = (Date)format.parse("10/26/2014 10:02pm");
+										Date date = new Date();
+										date.setMinutes(date.getMinutes()+1);
+										
+										expert.requestRoutine(date, 0, 60*1000);
+										
+									} catch (Exception e)
+									{
+										e.printStackTrace();
+									}
+									
 								}if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF)
 								{
 									System.out.println(expert.getLocalName()+" Strategy dark cloud bullish engulf");
+									Strategy DarkBull=null;
+									
+									for(Stock s : expert.stockList)
+									{
+										
+										DarkBull=new Bearish_Bullish_Strategy();
+										
+										for(int i=0;i<s.getCandleSticks().size();i++)
+										{
+											
+											DarkBull.addCandleStick(s.getCandleSticks().get(i));
+										}
+										stocksMap.put(s,DarkBull);
+												
+									}
+									try 
+									{
+										DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);
+										//Date date = (Date)format.parse("10/26/2014 10:02pm");
+										Date date = new Date();
+										date.setMinutes(date.getMinutes()+1);
+										
+										expert.requestRoutine(date, 0, 60*1000);
+										
+									} catch (Exception e)
+									{
+										e.printStackTrace();
+									}
 								}
 								
 								
