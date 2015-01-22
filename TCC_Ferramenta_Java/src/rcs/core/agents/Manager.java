@@ -60,7 +60,8 @@ protected void setup()
 		 * 
 		 */
 		
-	 manager=this;	
+	 manager=this;
+	 manager.stockDao=new StockDao();
 			 
 	 
 		

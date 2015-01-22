@@ -32,7 +32,6 @@ public class Creator  extends Agent{
 		try
 		{
 			
-			
 			DFAgentDescription dfd=new DFAgentDescription();
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
@@ -71,8 +70,6 @@ public class Creator  extends Agent{
 	}
 	
 	
-	
-	
 	private class ListenGrails extends TickerBehaviour
 	{
 		private Agent creatorAgent;
@@ -106,14 +103,13 @@ public class Creator  extends Agent{
 					public void action() 
 					{
 						ACLMessage message=new ACLMessage(ACLMessage.INFORM);
-						message.setOntology(ConversationsID.ONTOLOGY_USER_COMUNITATION);
+						
 						message.setLanguage(ConversationsID.LANGUAGE);
 						message.setPerformative(ACLMessage.INFORM);
 						message.setConversationId(ConversationsID.USER_LOGGED);
 						message.setContent(userLogged);
 						message.addReceiver(new AID("Manager_"+userLogged, AID.ISLOCALNAME));
-						
-						
+									
 						System.out.println("Creator says: User "+userLogged+" is logged" );
 						myAgent.send(message);
 						

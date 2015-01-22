@@ -394,7 +394,7 @@ public class Expert extends Agent {
 							}
 	
 								
-						} catch (UnreadableException e) {
+						} catch (Exception e) {
 						
 							e.printStackTrace();
 						}
