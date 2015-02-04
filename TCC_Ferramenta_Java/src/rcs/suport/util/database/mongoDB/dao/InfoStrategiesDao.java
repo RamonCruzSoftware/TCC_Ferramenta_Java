@@ -23,7 +23,7 @@ public class InfoStrategiesDao {
 			 this.setConnection(MongoConnection.getInstance());
 			 this.setDb(this.getConnection().getDB());
 
-			this.setCollection_infoStrategies(getDb().getCollection("infoStrategies"));
+			this.setCollection_infoStrategies(getDb().getCollection("JADE_infoStrategies"));
 			
 		}catch (Exception e)
 		{

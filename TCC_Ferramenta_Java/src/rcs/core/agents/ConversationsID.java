@@ -42,6 +42,17 @@ public class ConversationsID
 	public static final String EXPERT_USER_NAME="User name";
 	
 	
+	//User Conversations 
+	public static final int SELL_REQUEST=10;
+	public static final int SELL_APPROVED=11;
+	public static final int SELL_REFUSED=12;
+	
+	public static final int BUY_REQUEST=20;
+	public static final int BUY_APPROVED=21;
+	public static final int BUY_REFUSED=22;
+	
+	
+	
 	
 	
 

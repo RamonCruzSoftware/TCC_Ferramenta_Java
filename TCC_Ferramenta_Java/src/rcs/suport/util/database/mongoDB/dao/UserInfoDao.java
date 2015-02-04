@@ -23,9 +23,9 @@ public class UserInfoDao {
 		try{
 			MongoConnection connection=MongoConnection.getInstance();
 			DB db=connection.getDB();
-			this.setCollection_userInfo(db.getCollection("userInfo"));
-			this.setCollection_userLogged(db.getCollection("userLogged"));
-			this.setCollection_userUnLogged(db.getCollection("userUnLogged"));
+			this.setCollection_userInfo(db.getCollection("JADE_userInfo"));
+			this.setCollection_userLogged(db.getCollection("JADE_userLogged"));
+			this.setCollection_userUnLogged(db.getCollection("JADE_userUnLogged"));
 			
 			
 		}catch (Exception e)

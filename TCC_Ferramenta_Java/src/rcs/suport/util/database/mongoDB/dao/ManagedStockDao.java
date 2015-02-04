@@ -24,7 +24,7 @@ public class ManagedStockDao {
 	{
 		this.setConnection(MongoConnection.getInstance());
 		this.setDb(this.getConnection().getDB());
-		this.setCollection_managedStock(getDb().getCollection("managedStock"));
+		this.setCollection_managedStock(getDb().getCollection("JADE_managedStock"));
 		
 	}
 	

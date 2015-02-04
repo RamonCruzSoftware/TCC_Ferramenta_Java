@@ -143,7 +143,7 @@ public class Hunter extends Agent {
 							System.out.println("Vou calcular os valores estatisticos para catalogar");
 							
 							//TODO Descomentar isso 
-						//	hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
+							hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
 							
 						}else 
 						{

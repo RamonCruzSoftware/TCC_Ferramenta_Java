@@ -31,8 +31,8 @@ public class StockDao {
 		{
 			MongoConnection connection=MongoConnection.getInstance();
 			DB db=connection.getDB();
-			this.setCollection_stock_prices(db.getCollection("stocks_prices"));
-			this.setCollection_stocks(db.getCollection("stocks"));
+			this.setCollection_stock_prices(db.getCollection("JADE_stocks_prices"));
+			this.setCollection_stocks(db.getCollection("JADE_stocks"));
 			this.setCollection_userStockSugestions(db.getCollection("stock"));
 			
 			
@@ -130,7 +130,10 @@ public boolean insertStocksSuggestion(Stock stock,String userIdentifier)
 											.append("variance_15", stock.getVariance_15())
 											.append("variance_30", stock.getVariance_30())
 											.append("userId",userIdentifier)
-											.append("version", 0);
+											.append("suggestion", stock.getSuggestion())
+											.append("qtd", stock.getQtd())
+											.append("currentPrice", stock.getCurrentPrice());
+				 
 				
 				getCollection_userStockSugestions().insert(suggestion);
 				cursor.close();
@@ -197,7 +200,10 @@ public boolean updateStock(Stock stock)
 												.append("avarangeReturn_30", stock.getAvarangeReturn_30())
 												.append("standardDeviation_30", stock.getStandardDeviation_30())
 												.append("variance_30", stock.getVariance_30())
-												.append("varianceCoefficient_30", stock.getVarianceCoefficient_30());						
+												.append("varianceCoefficient_30", stock.getVarianceCoefficient_30())
+												.append("suggestion", stock.getSuggestion())
+												.append("qtd", stock.getQtd())
+												.append("currentPrice", stock.getCurrentPrice());					
 				
 			
 			getCollection_stocks().remove(stocks);

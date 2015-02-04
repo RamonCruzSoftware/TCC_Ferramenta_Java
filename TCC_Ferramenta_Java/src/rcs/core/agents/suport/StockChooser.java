@@ -214,12 +214,59 @@ public ArrayList<ArrayList<Stock>> analyzeStockList()
 		
 		result.add(approvedStockList);
 		result.add(refuseStockList);
-		this.stockListTemp_a.clear();
+		//this.stockListTemp_a.clear();
 	}else
 		{
 			result.add(approvedStockList);
 			result.add(refuseStockList);
 		}
+	
+	
+	switch (this.getUserProfile())
+	{
+	case 0://corajoso
+	{
+		if(result.get(0).size()<8 && this.stockListTemp_a.size()>=8)
+		{
+			this.approvedStockList.clear();
+			
+			this.analyzeStockList();
+		}
+	}
+		break;
+	case 1://Moderado
+	{
+		if(result.get(0).size()<13 && this.stockListTemp_a.size()>=13)
+		{
+			this.approvedStockList.clear();
+			
+			this.analyzeStockList();
+		}
+	}
+		break;
+	case 2://Conservador
+	{
+		if(result.get(0).size()<30 && this.stockListTemp_a.size()>=30)
+		{
+			System.out.println("\t\t\t Roda De novo ");
+			this.approvedStockList.clear();
+			
+			this.analyzeStockList();
+		}
+	}
+		break;
+
+	default:
+	{
+		if(result.get(0).size()<10 && this.stockListTemp_a.size()>=10)
+		{
+			this.approvedStockList.clear();
+			
+			this.analyzeStockList();
+		}
+	}
+		break;
+	}
 	
 	return result;
 	

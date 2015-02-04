@@ -38,9 +38,10 @@ public class Manager  extends Agent{
 
 private static final long serialVersionUID = 1L;
 private OrdersCreate user;	
-private Map<String,ArrayList<Stock>> infoExperts;
-private Map <String,String> strategyExperts;
-private ArrayList<Stock>stockListManaged;
+private Map<String,ArrayList<Stock>> infoExperts; // Key:AID Expert ; Value: list of Stocks
+private Map <String,String> strategyExperts;      //Key:AID Expert  ; Value: Strategy Name
+private ArrayList<Stock>stockListManaged;		  //List of Stocks workeds	
+private ArrayList<Stock> stockListForUserApprove;//
 private Manager manager;
 private StockDao stockDao;
 private String userName;
@@ -62,7 +63,7 @@ protected void setup()
 		
 	 manager=this;
 	 manager.stockDao=new StockDao();
-			 
+	 stockListForUserApprove= new ArrayList<Stock>();		 
 	 
 		
 		try{
@@ -156,14 +157,24 @@ protected void setup()
 								try
 								{
 									
-									for(Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
+//									for(Entry<String, ArrayList<Stock>>s:manager.infoExperts.entrySet())
+//									{
+//										for(Stock stk:s.getValue())
+//										{
+//											manager.stockDao.insertStocksSuggestion(stk,manager.userName);
+//											
+//										}
+//									}
+									if(manager.stockListForUserApprove.size()>0)
 									{
-										for(Stock stk:s.getValue())
+										for(Stock s:manager.stockListForUserApprove)
 										{
-											manager.stockDao.insertStocksSuggestion(stk,manager.userName);
-											
+											manager.stockDao.insertStocksSuggestion(s, manager.userName);
 										}
 									}
+									
+									
+									
 								}catch(MongoException e)
 								{
 									e.printStackTrace();
@@ -222,6 +233,9 @@ protected void setup()
 											System.out.println("Profile User "+manager.info.getUserProfile());
 											
 											listTemp=manager.walletManagerAuxiliary.analyzeStocksSuggestionsList();
+											//TODO apagar 
+											System.out.println("Lista de acoes recebidas "+listTemp);
+											
 											listTemp_approved=listTemp.get(0);
 											listTemp_refused=listTemp.get(1);
 											
@@ -234,26 +248,69 @@ protected void setup()
 											switch (manager.info.getUserProfile()) {
 											case 0://Corajoso
 											{
-												for(int i=0;i<manager.STOCK_QTD_CORAJOSO;i++)
+												if(listTemp_approved.size()>=manager.STOCK_QTD_CORAJOSO)
 												{
-													manager.stockListManaged.add(listTemp_approved.get(i));
+													for(int i=0;i<manager.STOCK_QTD_CORAJOSO;i++)
+													{
+														manager.stockListManaged.add(listTemp_approved.get(i));
+													}
+													
+												}else
+												{
+													for(Stock stock : listTemp_approved)
+													{
+														manager.stockListManaged.add(stock);
+													}
+													for(int i=0;i<2;i++)
+													{
+														manager.stockListManaged.add(listTemp_refused.get(i));
+													}
 												}
+												
 											}
 												break;
 											case 1://Moderado
 											{
-												for(int i=0;i<manager.STOCK_QTD_MODERADO;i++)
+												if(listTemp_approved.size()>=manager.STOCK_QTD_MODERADO)
 												{
-													manager.stockListManaged.add(listTemp_approved.get(i));
+													for(int i=0;i<manager.STOCK_QTD_MODERADO;i++)
+													{
+														manager.stockListManaged.add(listTemp_approved.get(i));
+													}
+												}else
+												{
+													for(Stock stock : listTemp_approved)
+													{
+														manager.stockListManaged.add(stock);
+													}
+													for(int i=0;i<2;i++)
+													{
+														manager.stockListManaged.add(listTemp_refused.get(i));
+													}
 												}
+												
 											}
 												break;
 											case 2://Conservador
 											{
-												for(int i=0;i<manager.STOCK_QTD_CONSERVADOR;i++)
+												if(listTemp_approved.size()>=manager.STOCK_QTD_CONSERVADOR)
 												{
-													manager.stockListManaged.add(listTemp_approved.get(i));
+													for(int i=0;i<manager.STOCK_QTD_CONSERVADOR;i++)
+													{
+														manager.stockListManaged.add(listTemp_approved.get(i));
+													}
+												}else
+												{
+													for(Stock stock : listTemp_approved)
+													{
+														manager.stockListManaged.add(stock);
+													}
+													for(int i=0;i<2;i++)
+													{
+														manager.stockListManaged.add(listTemp_refused.get(i));
+													}
 												}
+												
 												
 											}
 												break;
@@ -378,28 +435,40 @@ protected void setup()
 							
 							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_BUY)
 							{
-								double value=0;
+								
+//								double value=0;
+//								System.out.println(message.getSender().getLocalName()+ " pediu dinheiro para comprar..");
+//								
+//								ACLMessage reply=message.createReply();
+//
+//								value=manager.walletManagerAuxiliary.approveOrderBuy(message.getSender().getLocalName());
+//								
+//								if(value>0)
+//								{
+//									reply.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+//									reply.setPerformative(ACLMessage.AGREE);
+//									reply.setContent(""+value);
+//									
+//								}else
+//								{
+//									reply.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+//									reply.setPerformative(ACLMessage.REFUSE);
+//								}
+//								
+//								
+//								myAgent.send(reply);
+								
 								System.out.println(message.getSender().getLocalName()+ " pediu dinheiro para comprar..");
 								
-								ACLMessage reply=message.createReply();
-
-								value=manager.walletManagerAuxiliary.approveOrderBuy(message.getSender().getLocalName());
+								ArrayList<Stock> contentObject= (ArrayList<Stock>) message.getContentObject();
 								
-								if(value>0)
+								if(contentObject!=null && contentObject.size()>0)
 								{
-									reply.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
-									reply.setPerformative(ACLMessage.AGREE);
-									reply.setContent(""+value);
-									
-								}else
-								{
-									reply.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
-									reply.setPerformative(ACLMessage.REFUSE);
+									for(Stock s:contentObject)
+									{
+										manager.stockListForUserApprove.add(s);
+									}
 								}
-								
-								
-								myAgent.send(reply);
-													
 								
 							}
 

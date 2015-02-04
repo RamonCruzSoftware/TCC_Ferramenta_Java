@@ -20,12 +20,11 @@ public class BullishEngulfing extends Pattern{
 	{
 		  ArrayList<CandleStick> listResult = new ArrayList<CandleStick>();
 	        
-	        try
+		  try
 	        {
 	        	double C1,C,O,O1,H,L;
 	        	
-	            //for (int i = 0; i < getList().size(); i++)
-	            for (int i = 0; i < 5; i++)
+	            for (int i = 0; i < getList().size(); i++)
 	            {
 	                if ((i + 1) < getList().size())
 	                {
@@ -38,22 +37,16 @@ public class BullishEngulfing extends Pattern{
 	                	L=getList().get(i + 1).getLow();
 	                	
 	                    if (
-	                    		(O1 > C1) 
-	                    		&&
-	                            (C1 < C) 
-	                            &&
-	                            (O< C)
-	                            &&
-	                            (O < C1) 
-	                            &&
-	                            (C > O1) 
-	                            &&
-	                            (((O - C) / (0.001 + H - L))> 0.6)
+	                    		(O1>C1)&&
+	                    		(C>O1)&&
+	                    		(O<C1)
+	                    		
 	                       )
 
 	                    {
 	                        listResult.add(getList().get(i+1));
 	                    }
+	                  
 
 	                }
 

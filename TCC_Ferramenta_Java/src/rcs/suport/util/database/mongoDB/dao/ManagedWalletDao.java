@@ -21,7 +21,7 @@ public class ManagedWalletDao
 	{
 		this.setConnection(MongoConnection.getInstance());
 		this.setDb(getConnection().getDB());
-		this.setCollection_managedWallet(getDb().getCollection("managedWallet"));
+		this.setCollection_managedWallet(getDb().getCollection("JADE_managedWallet"));
 		
 	}
 	

@@ -20,11 +20,12 @@ public class BearishEngulfingTest {
 		bearishEngulfing= new BearishEngulfing();
 	}
 	
-	 @Test
+	 @SuppressWarnings("deprecation")
+	@Test
 	 public void findCandleStickPatternsTest()
 	 {
 		 ArrayList<CandleStick>candleTestList=new ArrayList<CandleStick>();
-		
+		 					// CandleStick(open, high, low, close, volume, date)
 		 candleTestList.add(new CandleStick(2, 4, 1, 3, 0, null));
 		 candleTestList.add(new CandleStick(6, 8, 5, 7, 0, null));
 		 candleTestList.add(new CandleStick(10, 12, 9, 11, 0, null));

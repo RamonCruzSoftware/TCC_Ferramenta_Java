@@ -654,8 +654,10 @@ public class Expert extends Agent {
 					if( e.getValue().equalsIgnoreCase("buy"))
 					{
 						  //Autorizacao de compra 
-
-						expert.orderToApproveBuy.add(e.getKey());
+						Stock stockTemp=e.getKey();
+						stockTemp.setSuggestion(ConversationsID.BUY_REQUEST);
+						
+						expert.orderToApproveBuy.add(stockTemp);
 						
 						
 					}else 
@@ -663,8 +665,10 @@ public class Expert extends Agent {
 						{
 							//Autorizacao de venda 
 							
+							Stock stockTemp=e.getKey();
+							stockTemp.setSuggestion(ConversationsID.SELL_REQUEST);
 							
-							expert.orderToApproveSell.add(e.getKey());
+							expert.orderToApproveSell.add(stockTemp);
 							
 						}
 				}else
@@ -672,7 +676,10 @@ public class Expert extends Agent {
 					if(managedStock!=null && managedStock.getBuyed()==null && e.getValue().equalsIgnoreCase("buy"))
 					{
 						  //Autorizacao de compra 
-						expert.orderToApproveBuy.add(e.getKey());
+						Stock stockTemp=e.getKey();
+						stockTemp.setSuggestion(ConversationsID.BUY_REQUEST);
+						
+						expert.orderToApproveBuy.add(stockTemp);
 						
 					}
 				}
@@ -706,8 +713,9 @@ public class Expert extends Agent {
 						ACLMessage msg= new ACLMessage(ACLMessage.PROPOSE);
 						msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
 						msg.addReceiver(new AID(expert.managerName, AID.ISLOCALNAME));
+						msg.setContentObject(expert.orderToApproveBuy);
 						
-							myAgent.send(msg);
+						myAgent.send(msg);
 						
 					} catch (Exception e1) 
 						{

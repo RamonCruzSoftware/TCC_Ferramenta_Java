@@ -18,7 +18,7 @@ public class OrdersCreateDao {
 		try{
 			MongoConnection connection=MongoConnection.getInstance();
 			DB db=connection.getDB();
-			 this.setColl(db.getCollection("ordersCreate"));
+			 this.setColl(db.getCollection("JADE_ordersCreate"));
 			
 		}catch (Exception e)
 		{

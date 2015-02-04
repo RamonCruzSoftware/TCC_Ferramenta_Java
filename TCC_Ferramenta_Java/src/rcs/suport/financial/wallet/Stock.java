@@ -27,6 +27,12 @@ public class Stock implements Serializable {
 	 private double variance_15;
 	 private double varianceCoefficient_15;
 	 
+	 //For user know
+	 private int suggestion;
+	 private int qtd;
+	 private int currentPrice;
+	 
+	 
 	 	 
 	 public Stock(){}
 	 public Stock(String codeName,String sector)
@@ -130,6 +136,24 @@ public class Stock implements Serializable {
 	}
 	public void setAvarangeReturn_30(double avarangeReturn_30) {
 		this.avarangeReturn_30 = avarangeReturn_30;
+	}
+	public int getSuggestion() {
+		return suggestion;
+	}
+	public void setSuggestion(int suggestion) {
+		this.suggestion = suggestion;
+	}
+	public int getQtd() {
+		return qtd;
+	}
+	public void setQtd(int qtd) {
+		this.qtd = qtd;
+	}
+	public int getCurrentPrice() {
+		return currentPrice;
+	}
+	public void setCurrentPrice(int currentPrice) {
+		this.currentPrice = currentPrice;
 	}
 
 	
