@@ -1,11 +1,14 @@
 package rcs.core.agents.suport;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import rcs.suport.financial.wallet.Stock;
+import rcs.suport.statistical.Matrix;
+import rcs.suport.statistical.Statistical;
 import rcs.suport.util.database.mongoDB.dao.ManagedStockDao;
 import rcs.suport.util.database.mongoDB.dao.ManagedWalletDao;
 import rcs.suport.util.database.mongoDB.dao.StockDao;
@@ -26,7 +29,7 @@ public class WalletManagerAuxiliary {
 	 private ArrayList<Stock> approvedStockList;
      private ArrayList<Stock> refuseStockList;
 	 
-	 
+	 private double risk=0.f;
 	 private StockChooser stkChooser;
 	 
 	 String userName;
@@ -114,6 +117,7 @@ public class WalletManagerAuxiliary {
 	 }
 	 public double approveOrderBuy(String expertName)
 	 {
+		 
 		 double quota=0;
 		 try
 		 {
@@ -163,10 +167,64 @@ public class WalletManagerAuxiliary {
 		 return this.stkChooser.analyzeStock(stock);
 	 }
 
-	 
-	 
-	 
-	 
+	 public double calculeRisk(ArrayList<Stock>stockList)
+	 {
+		 int nCol=stockList.size();
+		 int nLin=stockList.size();
+		 double result=0.f;
+		 
+		 try
+		 {
+			 Matrix variance_matrix= new Matrix(nLin, nLin);
+			 Statistical statistical= new Statistical();
+			 
+			 //Montando matriz de variancias
+			 for(int i=1;i<=nLin;i++)
+			 {
+				 for(int j=1;j<=nCol;j++)
+				 {
+					 if(i==j) variance_matrix.setContent(i-1,j-1,0);
+					 else
+					 {
+						 if(i>j) 
+							 {
+							 	 variance_matrix.setContent(i-1, j-1, statistical.calculeVariance_15BetweenTwoStocks(
+								 stockList.get(i-1).getCandleSticks(),
+								 stockList.get(j-1).getCandleSticks(), 1/stockList.size(), 1/stockList.size())); //calcula
+							 	 
+							 	 variance_matrix.setContent(j-1, i-1, variance_matrix.getContent(i, j));
+							 	 
+							 }
+						 else continue;
+					 }
+				 }
+			 }
+			 
+			 //Montando matriz coluna de percentual de participacao 
+			 Matrix percentual_matrix=new Matrix(nLin, 1);
+			 
+			 for(int i=1;i<=nLin;i++)
+				 percentual_matrix.setContent(i-1, 1, 1/stockList.size());
+			 
+
+			 //Montando matriz linha de retorno medio 
+			 Matrix avarangeReturn_matrix= new Matrix(nLin, 1);
+			 
+			 for(int i=1;i<=nLin;i++)
+				 avarangeReturn_matrix.setContent(i-1, 1, stockList.get(i-1).getAvarangeReturn_15());
+			 
+			 result= Matrix.product(Matrix.product(Matrix.transposed(percentual_matrix), variance_matrix),avarangeReturn_matrix).getContent(0, 0);
+			 
+		 }catch(Exception e)
+		 {
+			 e.printStackTrace();
+		 }
+		
+		 
+		 return result;
+		 
+	 }
+	
 	public String getAgentLocalName() {
 		return AgentLocalName;
 	}
@@ -222,6 +280,14 @@ public class WalletManagerAuxiliary {
 
 	public void setRefuseStockList(ArrayList<Stock> refuseStockList) {
 		this.refuseStockList = refuseStockList;
+	}
+
+	public double getRisk() {
+		return risk;
+	}
+
+	public void setRisk(double risk) {
+		this.risk = risk;
 	}
 
 	}

@@ -41,6 +41,7 @@ public class StockDao {
 			e.printStackTrace();
 		}
 	}
+	
 	public ArrayList<Stock> getStocksSuggestion(String userIdentifier)
 	{
 		try
@@ -106,7 +107,7 @@ public class StockDao {
 		return result;
 	}
 	
-	//as sugestoes sao vistas pelos usuarios atraves do Grails
+//as sugestoes sao vistas pelos usuarios atraves do Grails
 public boolean insertStocksSuggestion(Stock stock,String userIdentifier)
 	{
 		
@@ -150,6 +151,40 @@ public boolean insertStocksSuggestion(Stock stock,String userIdentifier)
 		
 	}
 
+public ArrayList<Stock> getStocksSuggestionWithUserAuthorized(String userIdentifier)
+{
+	
+	try
+	{
+		BasicDBObject where = new BasicDBObject("userId", userIdentifier);
+		DBCursor cursor= collection_stocks.find(where);
+		
+		DBObject mongo_stock=null;	
+		ArrayList<Stock> stockList=null;
+		
+		
+		while(cursor.hasNext())
+		{
+			
+			mongo_stock=cursor.next();
+			//stock=new Stock(mongo_stock.get("_id").toString(), mongo_stock.get("sector").toString());
+			Stock stock=new Stock(mongo_stock.get("_id").toString(), "FAKE");	
+			stock.setSuggestion(Integer.parseInt(mongo_stock.get("suggestion").toString()));
+			stockList.add(stock);
+			
+		}
+		cursor.close();
+		return stockList;
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		return null;
+	}
+	
+	
+	
+	
+}
 public boolean updateStock(Stock stock)
 {	
 		boolean result=false;
@@ -224,7 +259,7 @@ public boolean updateStock(Stock stock)
 		
 	}
 	
-	public boolean insertCurrentStock(Stock stock)
+public boolean insertCurrentStock(Stock stock)
 	{
 		BasicDBObject where=new BasicDBObject("_id",stock.getCodeName());
 		
@@ -353,8 +388,8 @@ public Stock getStock(String codeName)
 		{
 			
 			mongo_stock=cursor.next();
-			stock=new Stock(mongo_stock.get("_id").toString(), mongo_stock.get("sector").toString());
-																					
+			//stock=new Stock(mongo_stock.get("_id").toString(), mongo_stock.get("sector").toString());
+			stock=new Stock(mongo_stock.get("_id").toString(), "FAKE");	
 			stock.setAvarangeReturn_15(Double.parseDouble( mongo_stock.get("avarangeReturn_15").toString()));
 			stock.setAvarangeReturn_30(Double.parseDouble( mongo_stock.get("avarangeReturn_30").toString()));
 			

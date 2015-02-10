@@ -13,17 +13,17 @@ public class Matrix {
         this.setnLin(nLin);
         setContent(new double[nLin][nCol]);
     }
-    double getContent(int nLin,int nCol )
+    public  double getContent(int nLin,int nCol )
     {
         return content[nLin][nCol];
     }
 
-    void setContent (int nLin,int nCol, double value)
+   public  void setContent (int nLin,int nCol, double value)
     {
         content[nLin][nCol] = value;
     }
 
-    static  Matrix product(Matrix matrixA, Matrix matrixB)
+   public static  Matrix product(Matrix matrixA, Matrix matrixB)
     {
         Matrix result = new Matrix(matrixA.getnLin(), matrixB.getnCol());
         double[][] aux= new double[matrixA.getnLin()][matrixB.getnCol()]; 
@@ -54,7 +54,7 @@ public class Matrix {
         	return null;
         
     }
-    static Matrix transposed(Matrix matrix)
+   public static Matrix transposed(Matrix matrix)
     {
         Matrix result = new Matrix(matrix.getnCol(), matrix.getnLin());
         

@@ -1,19 +1,18 @@
 package rcs.suport.financial.wallet;
 
 import jade.util.leap.*;
-
+import java.lang.Comparable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 
 
-public class Stock implements Serializable {
+public class Stock implements Serializable ,Comparable<Stock>{
 
-	 /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String codeName;
+	
+	 private static final long serialVersionUID = 1L;
+	 private String codeName;
 	 private String sector;
 	 private ArrayList<CandleStick> candleSticks;
 	 
@@ -54,6 +53,19 @@ public class Stock implements Serializable {
 		 }
 		 return false;
 	 }
+	 
+	 
+	 @Override
+		public int compareTo(Stock o) {
+			if(this.variance_15<o.variance_15)
+				return -1;
+			if(this.variance_15>o.variance_15)
+				return 1;
+			
+			return 0;
+		}
+	 
+	 
 	public String getCodeName() {
 		return codeName;
 	}
@@ -155,6 +167,10 @@ public class Stock implements Serializable {
 	public void setCurrentPrice(int currentPrice) {
 		this.currentPrice = currentPrice;
 	}
+	
+	
+	
+	
 
 	
 	

@@ -252,6 +252,36 @@ public class Statistical
 		return variance;
 	}
 	
+	public double calculeVariance_15BetweenTwoStocks(ArrayList<CandleStick>listA,ArrayList<CandleStick>listB,double percentA,double percentB)
+	{
+		double variance=0.0f;
+		double avarangeA=calculeAvarange_15(listA);
+		double avarangeB=calculeAvarange_15(listB);
+		
+		if(listA.size()>=15 && listB.size()>=15)
+		{
+			for(int i=0;i<15;i++)
+			{
+				variance+=(Math.pow((listA.get(i).getClose()-avarangeA), 2)/15)*percentA+
+						  (Math.pow((listB.get(i).getClose()-avarangeB), 2)/15*percentB);
+			}
+			
+		}else
+		{
+			int size=Math.min(listA.size(), listB.size());
+			for(int i=0;i<size;i++)
+			{
+				variance+=(Math.pow((listA.get(i).getClose()-avarangeA), 2)/15)*percentA+
+						  (Math.pow((listB.get(i).getClose()-avarangeB), 2)/15*percentB);
+			}
+			
+		}
+		
+		
+		
+		return variance;
+	}
+	
 	public double calculeStandardDeviation(double[] values)
 	{	
 		return Math.sqrt(calculeVariance(values));

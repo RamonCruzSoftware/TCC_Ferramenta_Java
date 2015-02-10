@@ -26,6 +26,7 @@ import com.mongodb.util.MyAsserts.MyAssert;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 import rcs.suport.financial.strategy.Bearish_Bullish_Strategy;
+import rcs.suport.financial.strategy.Fake_Strategy;
 import rcs.suport.financial.strategy.MovingAvarangeExponentialStrategy;
 import rcs.suport.financial.strategy.MovingAvarangeSimpleStrategy;
 import rcs.suport.financial.strategy.Strategy;
@@ -135,9 +136,43 @@ public class Expert extends Agent {
 									expert.managerName=msg.getSender().getLocalName();
 									
 								}
+								
 								if(msg.getConversationId()==ConversationsID.EXPERT_USER_NAME)
 								{
 									expert.userIdentifier=(String)msg.getContentObject();
+								}
+								
+								if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_FAKE)
+								{
+									
+									System.out.println(expert.getLocalName()+" Strategy FAKE");
+									Strategy mms=null;
+									
+									for(Stock s : expert.stockList)
+									{
+										
+										mms=new Fake_Strategy();
+										
+										for(int i=0;i<s.getCandleSticks().size();i++)
+										{
+											
+											mms.addValue(s.getCandleSticks().get(i).getClose());
+										}
+										stocksMap.put(s,mms);
+												
+									}
+									try 
+									{
+										DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);
+										//Date date = (Date)format.parse("10/26/2014 10:02pm");
+										Date date = new Date();
+										date.setMinutes(date.getMinutes()+1);
+										expert.requestRoutine(date, 0, 60*1000);
+										
+									} catch (Exception e)
+									{
+										e.printStackTrace();
+									}
 								}
 								
 								if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_MME_13_21)
@@ -203,6 +238,7 @@ public class Expert extends Agent {
 										e.printStackTrace();
 									}
 								}
+								
 								if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_MMS_21_34)
 								{
 									System.out.println(expert.getLocalName()+" Strategy MMS 21/34");
@@ -235,7 +271,10 @@ public class Expert extends Agent {
 										e.printStackTrace();
 									}
 									
-								}if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_MME_21_34)
+									
+								}
+								
+								if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_MME_21_34)
 								{
 									System.out.println(expert.getLocalName()+" Strategy MME 21/34");
 									
@@ -302,7 +341,9 @@ public class Expert extends Agent {
 										e.printStackTrace();
 									}
 									
-								}if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF)
+								}
+								
+								if(msg.getConversationId()==ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF)
 								{
 									System.out.println(expert.getLocalName()+" Strategy dark cloud bullish engulf");
 									Strategy DarkBull=null;
@@ -330,22 +371,29 @@ public class Expert extends Agent {
 										expert.requestRoutine(date, 0, 60*1000);
 										
 									} catch (Exception e)
+								
 									{
 										e.printStackTrace();
 									}
 								}
 								
-								
+								if(msg.getConversationId()==ConversationsID.EXPERT_REMOVE_STOCK)
+								{
+									
+								}
 								
 							}break;
 							
 							case ACLMessage.AGREE:
-							{
+							{ //TODO INCLUIR O ID PARA AUTORIZACAO DE VENDAS 
 								
 								if(msg.getConversationId()==ConversationsID.EXPERT_ORDER_BUY)
 								{
 									
-									System.out.println(getLocalName()+ ": "+msg.getSender().getLocalName()+" Enviou R$ "+msg.getContent());
+//									String managerAnswer=msg.getContent();
+//									while(managerAnswer.)
+									
+									
 									expert.quota=Double.parseDouble(msg.getContent().toString());
 									System.out.println(getLocalName()+ ": D‡ R$:"+expert.quota/expert.orderToApproveBuy.size()+" para cada acao");
 									
@@ -365,6 +413,7 @@ public class Expert extends Agent {
 												expert.stockManager.orderBuy(s,qtd);
 											}
 										}
+										
 										
 										
 									}
@@ -416,10 +465,30 @@ public class Expert extends Agent {
 		System.out.println(getLocalName()+" says: Bye");
 		try
 		{
+			
+			addBehaviour(new OneShotBehaviour() 
+			{
+				
+	
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void action() 
+				{
+					
+					ACLMessage message=new ACLMessage(ACLMessage.INFORM);
+					message.addReceiver(new AID(managerName, AID.ISLOCALNAME));
+					message.setConversationId(ConversationsID.DEAD_EXPERT);
+
+					myAgent.send(message);
+					
+				}
+			});
+			
 			DFAgentDescription dfd=new DFAgentDescription();
 			dfd.setName(getAID());
 			DFService.deregister(this, dfd);
-			
+
 		}catch (Exception e)
 		{
 			e.printStackTrace();
@@ -651,7 +720,7 @@ public class Expert extends Agent {
 					
 				if(managedStock==null)
 				{
-					if( e.getValue().equalsIgnoreCase("buy"))
+					if( e.getValue().equalsIgnoreCase("Buy"))
 					{
 						  //Autorizacao de compra 
 						Stock stockTemp=e.getKey();
@@ -661,7 +730,7 @@ public class Expert extends Agent {
 						
 						
 					}else 
-						if(e.getValue().equalsIgnoreCase("sell"))
+						if(e.getValue().equalsIgnoreCase("Sell"))
 						{
 							//Autorizacao de venda 
 							
@@ -673,7 +742,7 @@ public class Expert extends Agent {
 						}
 				}else
 				{
-					if(managedStock!=null && managedStock.getBuyed()==null && e.getValue().equalsIgnoreCase("buy"))
+					if(managedStock!=null && managedStock.getBuyed()==null && e.getValue().equalsIgnoreCase("Buy"))
 					{
 						  //Autorizacao de compra 
 						Stock stockTemp=e.getKey();
@@ -692,7 +761,7 @@ public class Expert extends Agent {
 			}//Fim for
 		}
 		
-		if(expert.orderToApproveBuy.size()>0 && expert.ordersLocker)
+		if(expert.orderToApproveBuy.size()>0 && !expert.ordersLocker)
 		{
 			System.out.println(getLocalName()+" :Pedir autorizacao para  comprar "+expert.orderToApproveBuy.size()+" Acoes");
 			System.out.println(getLocalName()+" :Comprar  "+expert.orderToApproveBuy.size()+" Acoes");
@@ -700,7 +769,7 @@ public class Expert extends Agent {
 		
 		
 		//TODO mudar paramentros perfomative
-		if(expert.orderToApproveBuy.size()>0 && expert.ordersLocker)
+		if(expert.orderToApproveBuy.size()>0 && !expert.ordersLocker)
 		{
 			addBehaviour( new OneShotBehaviour(expert)
 			{	

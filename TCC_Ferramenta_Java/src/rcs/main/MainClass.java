@@ -1,5 +1,11 @@
 package rcs.main;
 
+import jade.util.leap.Collection;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.sound.midi.Instrument;
 
 import rcs.suport.financial.wallet.Stock;
@@ -126,25 +132,71 @@ public class MainClass
 
 	 */
 		 
-		 StockDao stockDao= new StockDao();
-		 Statistical statistical= new Statistical();
+//		 StockDao stockDao= new StockDao();
+//		 Statistical statistical= new Statistical();
+//		 
+//		 Stock stk1,stk2,stk3,stk4;
+//		 stk1= stockDao.getStock("BBAS3.SA");
+//		 stk2= stockDao.getStock("BBDC4.SA");
+//		 stk3= stockDao.getStock("BEES3.SA");
+//		 stk4= stockDao.getStock("BEMA3.SA");
+//		 
+//		 
+//		 stk1.setCandleSticks(stockDao.getStockPrices_last30("GEPA4.SA"));
+//		 stk2.setCandleSticks(stockDao.getStockPrices_last30("BMKS3.SA"));
+//		 
+//		 System.out.println("GEPA4 tem "+stk1.getCandleSticks().size());
+//		 System.out.println("BMKS3 tem "+stk2.getCandleSticks().size());
+//		 
+//		 System.out.println("correl "+statistical.calculeCorrelationCoefficient_30(stk1.getCandleSticks(), stk2.getCandleSticks()));
+//		 
+//		 System.out.println("========Sort======");
+//		 System.out.println("Variance 15 GEPA4 "+stk1.getVariance_15());
+//		 System.out.println("Variance 15 BMKS3 "+stk2.getVariance_15());
+//		 System.out.println("Variance 15 BEES3 "+stk3.getVariance_15());
+//		 System.out.println("Variance 15 BEMA3 "+stk4.getVariance_15());
+//		 
+//		 System.out.println("=========ArrayList=========");
+//		 
+//		 List<Stock>stockList= new ArrayList<Stock>();
+//		 
+//		 stockList.add(stk1);
+//		 stockList.add(stk2);
+//		 stockList.add(stk3);
+//		 stockList.add(stk4);
+//		 
+//		 for(Stock s:stockList)
+//		 {
+//			 System.out.println("->"+s.getCodeName()+" Variance 15: "+s.getVariance_15());
+//		 }
+//		 
+//		 System.out.println("=========Sort ArrayList=========");
+//		 
+//		 Collections.sort(stockList);
+//		 for(Stock s:stockList)
+//		 {
+//			 System.out.println("->"+s.getCodeName()+" Variance 15: "+s.getVariance_15());
+//		 }
 		 
-		 Stock stk1,stk2;
-		 stk1= stockDao.getStock("GEPA4.SA");
-		 stk2= stockDao.getStock("BMKS3.SA");
 		 
+		 String managerAnswer="RAMON.SA_40.21";
 		 
-		 
-		 stk1.setCandleSticks(stockDao.getStockPrices_last30("GEPA4.SA"));
-		 stk2.setCandleSticks(stockDao.getStockPrices_last30("BMKS3.SA"));
-		 
-		 System.out.println("GEPA4 tem "+stk1.getCandleSticks().size());
-		 System.out.println("BMKS3 tem "+stk2.getCandleSticks().size());
-		 
-		 System.out.println("correl "+statistical.calculeCorrelationCoefficient_30(stk1.getCandleSticks(), stk2.getCandleSticks()));
-		 
+		 System.out.println("Lengh "+managerAnswer.length());
+		 int underScore=0;
+		for(int i=0;i<managerAnswer.length();i++)
+		{
+			
+			if ((managerAnswer.charAt(i)+"").equals("_"))
+			{
+				underScore=i;
+			}
+			
+		}
+		String codeName=managerAnswer.substring(0, underScore);
+		String value = managerAnswer.substring(underScore+1, managerAnswer.length());
 		
-		
+		System.out.println(" name "+codeName);
+		System.out.println(" value "+value);
 	 }
 	 
 	

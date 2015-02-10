@@ -4,15 +4,18 @@ package rcs.core.agents;
 
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SequentialBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.core.behaviours.WakerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
+import jade.util.leap.Set;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
 import jade.wrapper.PlatformController;
@@ -20,6 +23,7 @@ import jade.wrapper.StaleProxyException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,8 +35,6 @@ import rcs.suport.util.database.mongoDB.dao.StockDao;
 import rcs.suport.util.database.mongoDB.pojo.OrdersCreate;
 
 import com.mongodb.MongoException;
-
-
 
 public class Manager  extends Agent{
 
@@ -52,15 +54,16 @@ private int STOCK_QTD_CORAJOSO=8;
 private int STOCK_QTD_MODERADO=13;
 private int STOCK_QTD_CONSERVADOR=30;
 
+private double RISK_CORAJOSO=40;
+private double RISK_MODERADO=30;
+private double RISK_CONSERVADOR=20;
+
+private int countExpertAux=0; //For help manager to count Experts
+private int countStocksSentToUser=0;
 
 protected void setup()
 {
 	
-		/*
-		 * Create the hashMap with informations: FullName and an list of Stock Names
-		 * 
-		 */
-		
 	 manager=this;
 	 manager.stockDao=new StockDao();
 	 stockListForUserApprove= new ArrayList<Stock>();		 
@@ -182,7 +185,7 @@ protected void setup()
 								
 							}
 							
-							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_SELL)
+							if(message.getConversationId()==ConversationsID.EXPERT_REMOVE_STOCK)
 							{
 								System.out.println(getLocalName()+": "+ message.getSender().getLocalName()+ " vendeu acoes e lucrou.. .");
 								
@@ -191,6 +194,178 @@ protected void setup()
 									System.out.println(profitValue);
 								
 							}
+							
+							
+							//Dead Experts
+							if(message.getConversationId()==ConversationsID.DEAD_EXPERT)
+							{
+								
+								manager.infoExperts.remove(message.getSender());
+								//TODO
+								System.out.println("Agente morto =( os outros "+manager.infoExperts.size()+" est‹o tristes");
+							}
+							
+							//Risk informations 
+							if(message.getConversationId()==ConversationsID.RISK_CALCULATION_TIME)
+							{
+								if(manager.countExpertAux==0)manager.stockListManaged.clear();
+								
+								manager.countExpertAux++;
+								
+								if(manager.countExpertAux==manager.infoExperts.size())
+								{
+									ArrayList<Stock> stockList=(ArrayList<Stock>)message.getContentObject();
+									if(stockList!=null && stockList.size()>0)
+									{
+										for(Stock s:stockList)
+										{
+											manager.stockListManaged.add(s);
+										}
+									}
+									
+									//Risk
+									double risk=manager.walletManagerAuxiliary.calculeRisk(manager.stockListManaged);
+									System.out.println(" Risco calculado "+risk);
+									
+									String expertName="";
+									String stockCodeNameToRemove="";
+									switch (manager.info.getUserProfile())
+									{
+										case 0:
+										{
+											try
+											{
+												
+												if(risk>manager.RISK_CORAJOSO)
+												{
+													Collections.sort(manager.stockListManaged);
+													stockCodeNameToRemove=manager.stockListManaged.get(0).getCodeName();
+													
+													for(Entry<String, ArrayList<Stock>>e:manager.infoExperts.entrySet())
+													{
+														expertName=e.getKey();
+														for(Stock s:e.getValue())
+														{
+															if(s.getCodeName().equalsIgnoreCase(stockCodeNameToRemove))
+															{
+																e.getValue().remove(s);
+																break;
+															}
+																	
+														}
+													}
+												}
+												
+												ACLMessage removeMessange= new ACLMessage(ACLMessage.INFORM);
+												removeMessange.addReceiver(new AID(expertName, AID.ISLOCALNAME));
+												removeMessange.setConversationId(ConversationsID.EXPERT_REMOVE_STOCK);
+												removeMessange.setContent(stockCodeNameToRemove);
+												
+												myAgent.send(removeMessange);
+												
+											}catch(Exception e)
+											{
+												e.printStackTrace();
+											}
+											
+											
+											
+										}
+											break;
+										case 1:
+										{
+											try
+											{
+												
+												if(risk>manager.RISK_MODERADO)
+												{
+													Collections.sort(manager.stockListManaged);
+													stockCodeNameToRemove=manager.stockListManaged.get(0).getCodeName();
+													
+													for(Entry<String, ArrayList<Stock>>e:manager.infoExperts.entrySet())
+													{
+														expertName=e.getKey();
+														for(Stock s:e.getValue())
+														{
+															if(s.getCodeName().equalsIgnoreCase(stockCodeNameToRemove))
+															{
+																e.getValue().remove(s);
+																break;
+															}
+																	
+														}
+													}
+												}
+												
+												ACLMessage removeMessange= new ACLMessage(ACLMessage.INFORM);
+												removeMessange.addReceiver(new AID(expertName, AID.ISLOCALNAME));
+												removeMessange.setConversationId(ConversationsID.EXPERT_REMOVE_STOCK);
+												removeMessange.setContent(stockCodeNameToRemove);
+												
+												myAgent.send(removeMessange);
+												
+											}catch(Exception e)
+											{
+												e.printStackTrace();
+											}
+										}
+											break;
+											
+										case 2:
+										{
+											try
+											{
+												
+												if(risk>manager.RISK_CONSERVADOR)
+												{
+													Collections.sort(manager.stockListManaged);
+													stockCodeNameToRemove=manager.stockListManaged.get(0).getCodeName();
+													
+													for(Entry<String, ArrayList<Stock>>e:manager.infoExperts.entrySet())
+													{
+														expertName=e.getKey();
+														for(Stock s:e.getValue())
+														{
+															if(s.getCodeName().equalsIgnoreCase(stockCodeNameToRemove))
+															{
+																e.getValue().remove(s);
+																break;
+															}
+																	
+														}
+													}
+												}
+												
+												ACLMessage removeMessange= new ACLMessage(ACLMessage.INFORM);
+												removeMessange.addReceiver(new AID(expertName, AID.ISLOCALNAME));
+												removeMessange.setConversationId(ConversationsID.EXPERT_REMOVE_STOCK);
+												removeMessange.setContent(stockCodeNameToRemove);
+												
+												myAgent.send(removeMessange);
+												
+											}catch(Exception e)
+											{
+												e.printStackTrace();
+											}
+										}
+											break;
+											
+										default:
+											break;
+										}
+									
+								}
+								
+								ArrayList<Stock> stockList=(ArrayList<Stock>)message.getContentObject();
+								if(stockList!=null && stockList.size()>0)
+								{
+									for(Stock s:stockList)
+									{
+										manager.stockListManaged.add(s);
+									}
+								}
+							}
+							
 						}break;
 						
 						case ACLMessage.PROPOSE:
@@ -433,32 +608,11 @@ protected void setup()
 							}
 							
 							
-							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_BUY)
+							if(message.getConversationId()==ConversationsID.EXPERT_ORDER_BUY
+									||
+							   message.getConversationId()==ConversationsID.EXPERT_ORDER_SELL)
 							{
-								
-//								double value=0;
-//								System.out.println(message.getSender().getLocalName()+ " pediu dinheiro para comprar..");
-//								
-//								ACLMessage reply=message.createReply();
-//
-//								value=manager.walletManagerAuxiliary.approveOrderBuy(message.getSender().getLocalName());
-//								
-//								if(value>0)
-//								{
-//									reply.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
-//									reply.setPerformative(ACLMessage.AGREE);
-//									reply.setContent(""+value);
-//									
-//								}else
-//								{
-//									reply.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
-//									reply.setPerformative(ACLMessage.REFUSE);
-//								}
-//								
-//								
-//								myAgent.send(reply);
-								
-								System.out.println(message.getSender().getLocalName()+ " pediu dinheiro para comprar..");
+								System.out.println("Manager : Solicitacao de autorizacao de ordem.");
 								
 								ArrayList<Stock> contentObject= (ArrayList<Stock>) message.getContentObject();
 								
@@ -468,6 +622,12 @@ protected void setup()
 									{
 										manager.stockListForUserApprove.add(s);
 									}
+								}
+							
+								if(manager.countStocksSentToUser==0)
+								{
+									manager.countStocksSentToUser=manager.stockListForUserApprove.size();
+									addBehaviour(new UserAuthorization(manager));
 								}
 								
 							}
@@ -500,7 +660,10 @@ protected void setup()
 		{
 			e.printStackTrace();
 		}
-	}
+		
+		addBehaviour(new RiskCalculationRoutine(manager, 1000*60*3));
+		
+		}
 	
 
 	protected void takeDown()
@@ -589,7 +752,8 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 			infoExperts.put(userIdentifier+"["+1+"]" , listA);
 			infoExperts.put(userIdentifier+"["+2+"]" , listB);
 			
-			strategyExperts.put(userIdentifier+"["+1+"]", ConversationsID.EXPERT_STRATEGY_MME_13_21);
+			//strategyExperts.put(userIdentifier+"["+1+"]", ConversationsID.EXPERT_STRATEGY_MME_13_21);
+			strategyExperts.put(userIdentifier+"["+1+"]", ConversationsID.EXPERT_STRATEGY_FAKE);
 			strategyExperts.put(userIdentifier+"["+2+"]", ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF);
 			
 			
@@ -745,6 +909,7 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 				agentController.start();
 			}catch (StaleProxyException e) {
 				
+			
 				e.printStackTrace();
 			} catch (ControllerException e) {
 				
@@ -753,6 +918,185 @@ private void createExperts(int userProfile,String userIdentifier,ArrayList<Stock
 			
 		}
 
+}
+
+private class RiskCalculationRoutine extends TickerBehaviour
+{
+
+	public RiskCalculationRoutine(Agent a, long period) 
+	{
+		super(a, period);
+		
+	}
+	public RiskCalculationRoutine(Manager manager, long period)
+	{
+		super(manager,period);
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void onTick()
+	{
+		
+		
+	}
+	
+}
+private class UserAuthorization extends Behaviour
+{
+
+	
+	private static final long serialVersionUID = 1L;
+	private Manager manager;
+	private StockDao stockDao;
+	private ArrayList<Stock> stockListManaged;
+	private ArrayList<Stock> userAuthorization;
+	
+	public UserAuthorization(Manager manager)
+	{
+		this.manager=manager;
+		this.stockDao= new StockDao();
+		this.stockListManaged=manager.stockListManaged;
+		
+	}
+	
+	@Override
+	public void action() 
+	{
+		
+		try
+		{
+			this.userAuthorization=this.stockDao.getStocksSuggestionWithUserAuthorized( manager.userName);
+			if(this.userAuthorization!=null && this.userAuthorization.size()>0)
+			{
+				ACLMessage msg=null;
+				String expertName="";
+				double value=0;
+				
+				
+				for(Stock s:this.userAuthorization)
+				{
+					switch (s.getSuggestion())
+					{
+						case ConversationsID.BUY_APPROVED:
+						{
+							//Looking for Expert Name
+							for(Entry<String, ArrayList<Stock>>e:this.manager.infoExperts.entrySet())
+							{
+								expertName=e.getKey();
+								for(Stock stock:e.getValue())
+								{
+									if(stock.getCodeName().equalsIgnoreCase(s.getCodeName()))
+										break;
+								}
+							}
+							value=this.manager.walletManagerAuxiliary.approveOrderBuy(expertName);
+							if(value >0)
+							{
+								msg= new ACLMessage(ACLMessage.AGREE);
+								msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+								msg.setContent(s.getCodeName()+"_"+value);
+								msg.addReceiver(new AID(expertName,AID.ISLOCALNAME));
+								
+								myAgent.send(msg);
+
+								System.out.println(manager.getLocalName()+": Ordem de compra autorizada para "+expertName);
+								
+							}
+														
+							
+						}
+							break;
+						case ConversationsID.BUY_REFUSED:
+						{
+							//Looking for Expert Name
+							for(Entry<String, ArrayList<Stock>>e:this.manager.infoExperts.entrySet())
+							{
+								expertName=e.getKey();
+								for(Stock stock:e.getValue())
+								{
+									if(stock.getCodeName().equalsIgnoreCase(s.getCodeName()))
+										break;
+								}
+							}
+							
+							msg= new ACLMessage(ACLMessage.REFUSE);
+							msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+							msg.setContent(s.getCodeName());
+							msg.addReceiver(new AID(expertName,AID.ISLOCALNAME));
+							
+							myAgent.send(msg);
+						}
+							break;
+						case ConversationsID.SELL_APPROVED:
+						{
+							//Looking for Expert Name
+							for(Entry<String, ArrayList<Stock>>e:this.manager.infoExperts.entrySet())
+							{
+								expertName=e.getKey();
+								for(Stock stock:e.getValue())
+								{
+									if(stock.getCodeName().equalsIgnoreCase(s.getCodeName()))
+										break;
+								}
+							}
+							msg= new ACLMessage(ACLMessage.AGREE);
+							msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
+							msg.setContent(s.getCodeName());
+							msg.addReceiver(new AID(expertName,AID.ISLOCALNAME));
+							
+							myAgent.send(msg);
+						}
+						
+							break;
+						case ConversationsID.SELL_REFUSED:
+						{
+							//Looking for Expert Name
+							for(Entry<String, ArrayList<Stock>>e:this.manager.infoExperts.entrySet())
+							{
+								expertName=e.getKey();
+								for(Stock stock:e.getValue())
+								{
+									if(stock.getCodeName().equalsIgnoreCase(s.getCodeName()))
+										break;
+								}
+							}
+							msg= new ACLMessage(ACLMessage.REFUSE);
+							msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
+							msg.setContent(s.getCodeName());
+							msg.addReceiver(new AID(expertName,AID.ISLOCALNAME));
+							
+							myAgent.send(msg);
+						}
+							break;
+	
+						default:
+							break;
+						}
+					
+					this.manager.countStocksSentToUser--;
+				}
+				
+			}
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+	
+		}
+		
+	}
+
+	@Override
+	public boolean done() 
+	{
+		if(manager.countStocksSentToUser==0)
+			return true;
+		else
+			return false;
+	}
+	
 }
 
 }

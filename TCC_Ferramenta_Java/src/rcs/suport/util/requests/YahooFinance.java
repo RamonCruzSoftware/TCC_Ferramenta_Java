@@ -200,13 +200,13 @@ public class YahooFinance implements Runnable {
 		        }
 			 }
 		
-//	FeedBack	
-//		System.out.println("foram encontrados  "+sectors.size()+ " Setores e "+list.size()+" Ações");
-//		System.out.println("Carregados os seguintes Stocks");
-//		for(Stock s:list)
-//		{
-//			System.out.println(s.getCodeName());
-//		}
+	//FeedBack	
+		System.out.println("foram encontrados  "+sectors.size()+ " Setores e "+list.size()+" Ações");
+		System.out.println("Carregados os seguintes Stocks");
+		for(Stock s:list)
+		{
+			System.out.println(s.getCodeName());
+		}
 		
 		return list;
 		
