@@ -142,6 +142,7 @@ public class YahooFinance implements Runnable {
 		           TableLine = Str.split(",");
 		           	date = (Date)format.parse(TableLine[0]);
 		           	
+		           
 	             	list.add(new CandleStick(TableLine[1],TableLine[2],TableLine[3],TableLine[4], TableLine[5],date));
 
 	            }
