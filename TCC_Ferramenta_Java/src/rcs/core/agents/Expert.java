@@ -46,11 +46,13 @@ public class Expert extends Agent {
 	private StockDao stockDao;
 	private YahooFinance yahooFinances;
 	
-	private String dir_1="/Users/alissonnunes/Desktop";
+	
+	private String dir_1="/home/ramon/Desktop";
 	private String subDir_1="/TCC2";
 	private String subDir_2="/Ativos";
-	private String sectorsCsvFilePath="/Users/alissonnunes/Desktop/Setores";
-
+	private String sectorsCsvFilePath="/home/ramon/Documents/Workspace/Setores";
+	
+	
 	private ManagedStock managedStock;
 	private ManagedStockDao managedStockDao;
 	private Map<Stock, Strategy> stocksMap;
@@ -407,7 +409,7 @@ public class Expert extends Agent {
 									String value = managerAnswer.substring(underScore+1, managerAnswer.length());
 									
 									expert.quota=Double.parseDouble(value);
-									System.out.println(getLocalName()+ ": D‡ R$:"+expert.quota/expert.orderToApproveBuy.size()+" para cada acao");
+									System.out.println(getLocalName()+ ": Dï¿½ R$:"+expert.quota/expert.orderToApproveBuy.size()+" para cada acao");
 									
 									for(Stock s: expert.orderToApproveBuy)
 									{
@@ -417,7 +419,7 @@ public class Expert extends Agent {
 										{
 											int qtd=(int)(expert.quota/s.getCurrentCandleStick().getClose());
 											System.out.println(getLocalName()+" comprando "+s.getCodeName());
-											System.out.println(getLocalName()+" preco unitario R$: "+s.getCurrentCandleStick());
+											System.out.println(getLocalName()+" preco unitario R$: "+(s.getCurrentCandleStick().getClose()));
 											System.out.println(getLocalName()+" Quantidade a comprar "+qtd);
 											
 											if(qtd>0 )
@@ -605,7 +607,7 @@ public class Expert extends Agent {
 							
 						//TODO apagar isso
 							System.out.println(e.getKey().getCodeName()+" Order  "+strategy.makeOrder());
-							System.out.println(getLocalName()+": Add new Candle: "+stockTemp.addCurrentCandleStick(current));
+							//System.out.println(getLocalName()+": Add new Candle: "+stockTemp.addCurrentCandleStick(current));
 							
 							
 							//Armazeno as ordens para pedir autorizacao ao manager 
@@ -613,6 +615,9 @@ public class Expert extends Agent {
 							{
 								expert.ordensToBuyOrSell.remove(e.getKey());
 								expert.ordensToBuyOrSell.put(e.getKey(), strategy.makeOrder());
+								
+								//TODO
+								System.out.println("pedir para vender essa acao "+e.getKey());
 								
 							}else
 							{
@@ -634,6 +639,9 @@ public class Expert extends Agent {
 					if(expert.ordensToBuyOrSell.size()>0)
 					{
 						expert.ordersToBuyOrSell();
+						
+						//TODO
+						System.out.println("Existem acoes para vender ou comprar ");
 					}
 					
 				}catch(Exception e)

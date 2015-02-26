@@ -202,7 +202,7 @@ protected void setup()
 								
 								manager.infoExperts.remove(message.getSender());
 								//TODO
-								System.out.println("Agente morto =( os outros "+manager.infoExperts.size()+" est‹o tristes");
+								System.out.println("Agente morto =( os outros "+manager.infoExperts.size()+" estï¿½o tristes");
 							}
 							
 							//Risk informations 
@@ -548,7 +548,7 @@ protected void setup()
 								});
 								
 								
-								//Reparticao das estratŽgias entre os agentes 
+								//Reparticao das estratï¿½gias entre os agentes 
 								suggestions.addSubBehaviour(new WakerBehaviour(manager,200) 
 								{
 									
@@ -1097,7 +1097,12 @@ private class UserAuthorization extends Behaviour
 	public boolean done() 
 	{
 		if(manager.countStocksSentToUser==0)
+		{
+			System.out.println("Comportamento de escuta encerrado");
 			return true;
+			
+		}
+			
 		else
 			return false;
 	}

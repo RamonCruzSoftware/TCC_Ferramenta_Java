@@ -105,7 +105,7 @@ public class ManagedStockDao {
 		try
 		{
 			candlesticks=new ArrayList<BasicDBObject>();
-			
+			/*
 			for(CandleStick c:mStock.getCandleSticks())
 			{
 				candlesticks.add(new BasicDBObject("date",c.getDate())
@@ -115,7 +115,7 @@ public class ManagedStockDao {
 										.append("close", c.getClose())
 										.append("volume", c.getVolume()));
 			}
-			
+			*/
 			if(mStock.getBuyed()!=null)
 			{
 				buylled= new BasicDBObject("date",mStock.getBuyed().getDate())
