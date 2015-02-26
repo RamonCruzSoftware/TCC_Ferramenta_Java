@@ -392,9 +392,21 @@ public class Expert extends Agent {
 									
 //									String managerAnswer=msg.getContent();
 //									while(managerAnswer.)
+									 String managerAnswer=msg.getContent().toString();
+									 int underScore=0;
+									for(int i=0;i<managerAnswer.length();i++)
+									{
+										
+										if ((managerAnswer.charAt(i)+"").equals("_"))
+										{
+											underScore=i;
+										}
+										
+									}
+									String codeName=managerAnswer.substring(0, underScore);
+									String value = managerAnswer.substring(underScore+1, managerAnswer.length());
 									
-									
-									expert.quota=Double.parseDouble(msg.getContent().toString());
+									expert.quota=Double.parseDouble(value);
 									System.out.println(getLocalName()+ ": D‡ R$:"+expert.quota/expert.orderToApproveBuy.size()+" para cada acao");
 									
 									for(Stock s: expert.orderToApproveBuy)
@@ -495,6 +507,11 @@ public class Expert extends Agent {
 		}
 	}
 	
+	private CandleStick requestStocksPrices_FAKE(Stock stock)
+	{
+		System.out.println("Fake requestPrices");
+		return new CandleStick(10, 10, 10, 10, 100, new Date());
+	}
 	private CandleStick requestStocksPrices(Stock stock)
 	{
 		
@@ -507,9 +524,14 @@ public class Expert extends Agent {
 				 candleStick= expert.yahooFinances.getCurrentValue(stock.getCodeName());
 			 }
 
+			// candleStick= expert.yahooFinances.getCurrentValue(stock.getCodeName());
 		if(!(candleStick.getDate().getTime()
 				==
-				stock.getCandleSticks().get(stock.getCandleSticks().size()-1).getDate().getTime()))
+				stock.getCandleSticks().get(stock.getCandleSticks().size()-1).getDate().getTime()
+				)
+//				&&
+//				candleStick!=null
+			)
 		{
 			
 			return candleStick;
@@ -569,15 +591,21 @@ public class Expert extends Agent {
 						
 						System.out.println(getLocalName()+ ": Request Current Value of "+e.getKey().getCodeName());
 						
-						current=expert.requestStocksPrices(e.getKey());
+						//TODO
+						
+							current=expert.requestStocksPrices_FAKE(e.getKey());
+						
+						//	current=expert.requestStocksPrices(e.getKey());
+						//TODO
+						System.out.println("Current = "+current);
 						if(current!=null)
 						{
 							strategy=e.getValue();
 							strategy.addValue(current.getClose());
 							
 						//TODO apagar isso
-						//	System.out.println(e.getKey().getCodeName()+" Order  "+strategy.makeOrder());
-						//	System.out.println(getLocalName()+": Add new Candle: "+stockTemp.addCurrentCandleStick(current));
+							System.out.println(e.getKey().getCodeName()+" Order  "+strategy.makeOrder());
+							System.out.println(getLocalName()+": Add new Candle: "+stockTemp.addCurrentCandleStick(current));
 							
 							
 							//Armazeno as ordens para pedir autorizacao ao manager 
@@ -647,6 +675,7 @@ public class Expert extends Agent {
 								System.out.println(getLocalName()+ ": Request Current Value of "+e.getKey().getCodeName());
 								
 								current=expert.requestStocksPrices(e.getKey());
+								
 								if(current!=null)
 								{
 									strategy=e.getValue();
@@ -712,7 +741,7 @@ public class Expert extends Agent {
 		{	
 			for(Entry<Stock, String>e:expert.ordensToBuyOrSell.entrySet())
 			{
-				managedStock=expert.managedStockDao.getManagedStock(e.getKey().getCodeName(),expert.userIdentifier);
+				managedStock=expert.managedStockDao.getManagedStock(e.getKey().getCodeName(),expert.userIdentifier); 
 				
 				
 				try
@@ -751,6 +780,8 @@ public class Expert extends Agent {
 						expert.orderToApproveBuy.add(stockTemp);
 						
 					}
+					
+					
 				}
 				
 				}catch(Exception error)
@@ -816,7 +847,7 @@ public class Expert extends Agent {
 							{
 								if(stock!=null)expert.stockManager.orderSell(stock);
 								double profitValue;
-								ACLMessage msg= new ACLMessage(ACLMessage.INFORM);
+								ACLMessage msg= new ACLMessage(ACLMessage.PROPOSE);
 								msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
 								msg.addReceiver(new AID(expert.managerName, AID.ISLOCALNAME));
 								

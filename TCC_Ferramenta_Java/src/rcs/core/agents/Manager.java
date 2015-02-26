@@ -621,11 +621,15 @@ protected void setup()
 									for(Stock s:contentObject)
 									{
 										manager.stockListForUserApprove.add(s);
+										System.out.println(manager.getLocalName()+" Pedindo autorizacao para "+s.getCodeName());
 									}
 								}
 							
+								System.out.println(manager.getLocalName()+" Verificando comportamento ="+manager.countStocksSentToUser);
 								if(manager.countStocksSentToUser==0)
 								{
+								
+									System.out.println(manager.getLocalName()+" iniciando comportamento de escuta");
 									manager.countStocksSentToUser=manager.stockListForUserApprove.size();
 									addBehaviour(new UserAuthorization(manager));
 								}
@@ -951,7 +955,7 @@ private class UserAuthorization extends Behaviour
 	private Manager manager;
 	private StockDao stockDao;
 	private ArrayList<Stock> stockListManaged;
-	private ArrayList<Stock> userAuthorization;
+	private ArrayList<Stock> userAuthorizations;
 	
 	public UserAuthorization(Manager manager)
 	{
@@ -967,15 +971,16 @@ private class UserAuthorization extends Behaviour
 		
 		try
 		{
-			this.userAuthorization=this.stockDao.getStocksSuggestionWithUserAuthorized( manager.userName);
-			if(this.userAuthorization!=null && this.userAuthorization.size()>0)
+			this.userAuthorizations=this.stockDao.getStocksSuggestionWithUserAuthorized( manager.userName);
+			if(this.userAuthorizations!=null && this.userAuthorizations.size()>0)
 			{
 				ACLMessage msg=null;
 				String expertName="";
 				double value=0;
 				
 				
-				for(Stock s:this.userAuthorization)
+				
+				for(Stock s:this.userAuthorizations)
 				{
 					switch (s.getSuggestion())
 					{
@@ -998,11 +1003,9 @@ private class UserAuthorization extends Behaviour
 								msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
 								msg.setContent(s.getCodeName()+"_"+value);
 								msg.addReceiver(new AID(expertName,AID.ISLOCALNAME));
-								
-								myAgent.send(msg);
 
 								System.out.println(manager.getLocalName()+": Ordem de compra autorizada para "+expertName);
-								
+								myAgent.send(msg);
 							}
 														
 							
@@ -1075,6 +1078,8 @@ private class UserAuthorization extends Behaviour
 							break;
 						}
 					
+					//TODO
+					System.out.println(manager.getLocalName()+"Decrementando countStocksSentToUser");
 					this.manager.countStocksSentToUser--;
 				}
 				

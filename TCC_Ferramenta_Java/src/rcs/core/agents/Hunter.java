@@ -1,7 +1,6 @@
 package rcs.core.agents;
 
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SequentialBehaviour;
@@ -37,10 +36,10 @@ public class Hunter extends Agent {
 	private Statistical statistical=null;
 	
 	
-	private String dir_1="/home/ramon/Desktop";
+	private String dir_1="/Users/alissonnunes/Desktop";
 	private String subDir_1="/TCC2";
 	private String subDir_2="/Ativos";
-	private String sectorsCsvFilePath="/home/ramon/Documents/Workspace/Setores";
+	private String sectorsCsvFilePath="/Users/alissonnunes/Dropbox/UnB/TCC/workspace/java/Setores";
 	
 	protected void setup()
 	{
@@ -128,22 +127,24 @@ public class Hunter extends Agent {
 						{
 							if(file.listFiles().length>2) System.out.println("Alguem ja baixou os arquivos CSV.. nao precisa baixar");
 							
-							hunter.stockList=hunter.stockDao.getAllStocksPrices();
-							if(hunter.stockList.size()==0)
+							
+							if(hunter.stockDao.getStocksPricesCount()==0)
 							{
 								hunter.loadDataBase();
-								hunter.stockList=hunter.stockDao.getAllStocksPrices();
-								System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
+								
+								System.out.println("OK ja existem "+hunter.stockDao.getStocksPricesCount()+" no banco de dados");
 								
 							}else
 							{
-								System.out.println("OK ja existem "+hunter.stockList.size()+" no banco de dados");
+								System.out.println("OK ja existem "+hunter.stockDao.getStocksPricesCount()+" no banco de dados");
+								hunter.stockList=hunter.stockDao.getAllStocksWithPrices();
+								System.out.println("Vou calcular os valores estatisticos para catalogar");
+								
+								//TODO Descomentar isso 
+								hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
 							}
 							
-							System.out.println("Vou calcular os valores estatisticos para catalogar");
 							
-							//TODO Descomentar isso 
-							hunter.downloadCurrentCsvFiles(hunter.dir_1, hunter.subDir_1, hunter.subDir_2, hunter.sectorsCsvFilePath);
 							
 						}else 
 						{
@@ -1094,8 +1095,9 @@ private  void loadDataBase()
 	int countStocks=0;
 	int countCandleSticks=0;
 	
+	ArrayList<Stock> stocksFromCsv=yahooFinance.loadStocksFromCsv(this.sectorsCsvFilePath);
 	
-	for(Stock s: yahooFinance.loadStocksFromCsv(this.sectorsCsvFilePath))
+	for(Stock s:stocksFromCsv)
 	{
 		s.setCandleSticks(yahooFinance.getHistoricalValue(s.getCodeName()));
 		System.out.println(s.getCodeName()+ " Carregado com "+s.getCandleSticks().size()+ " Valores");

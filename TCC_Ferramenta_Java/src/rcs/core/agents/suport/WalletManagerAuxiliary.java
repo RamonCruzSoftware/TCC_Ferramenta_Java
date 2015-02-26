@@ -1,5 +1,6 @@
 package rcs.core.agents.suport;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -95,14 +96,19 @@ public class WalletManagerAuxiliary {
 	 public void putInfoExperts(Map<String,ArrayList<Stock>> infoExperts)
 	 {
 		 this.infoExperts=infoExperts;
+		 DecimalFormat df = new DecimalFormat("0.00");
+		 
+		 String quotaValue=df.format((this.managedWallet.getWalletValue()/this.infoExperts.size()));
 		 //Money qtd for Expert
-		 this.setQuota(this.managedWallet.getWalletValue()/this.infoExperts.size());
+		 this.setQuota(Double.parseDouble(quotaValue));
+		
 		 
 		 //Criando map para controlar quantidade de dinheiro por agente 
 		 for(Entry<String, ArrayList<Stock>>e:this.infoExperts.entrySet())
 		 {
-			 this.expertsQuota.put(e.getKey(), this.getQuota());
 			 
+			 this.expertsQuota.put(e.getKey(), this.getQuota());
+			   
 		 }
 		 
 	 }
