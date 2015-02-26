@@ -37,10 +37,10 @@ public class Hunter extends Agent {
 	private Statistical statistical=null;
 	
 	
-	private String dir_1="/Users/alissonnunes/Desktop";
+	private String dir_1="/home/ramon/Desktop";
 	private String subDir_1="/TCC2";
 	private String subDir_2="/Ativos";
-	private String sectorsCsvFilePath="/Users/alissonnunes/Dropbox/UnB/TCC/workspace/java/Setores";
+	private String sectorsCsvFilePath="/home/ramon/Documents/Workspace/Setores";
 	
 	protected void setup()
 	{
