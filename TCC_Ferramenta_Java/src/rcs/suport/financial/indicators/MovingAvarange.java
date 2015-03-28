@@ -1,16 +1,14 @@
 package rcs.suport.financial.indicators;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class MovingAvarange {
 
 
-	private double value;
+    double value;
 	private ArrayList<Double>values;
 	private double currentPrice,lastMME;
 	private int period;
-	
 	/**
 	 * For to calculate the Simple MovingAvarange 
 	 * pass the values list and period
@@ -19,12 +17,8 @@ public class MovingAvarange {
 	 */
 	public MovingAvarange(int period)
 	{
-		
 		this.setPeriod(period);
-		this.values= new ArrayList<Double>();
-
-		
-		
+		this.values= new ArrayList<Double>();	
 	}
 	/**
 	 * For to calculate the Exponencial Moving Avarange
@@ -35,19 +29,15 @@ public class MovingAvarange {
 	 * @param currentPrice
 	 * @param period
 	 */
-	
 	public MovingAvarange(double lastMME,double currentPrice, int period)
 	{
 		this.lastMME=lastMME;
 		this.currentPrice=currentPrice;
 		this.setPeriod(period);
-		
 	}
-
 	public double simpleAvarange()
 	{
-		double result=0;
-		
+		double result=0;	
 		if(this.values.size()>0 && this.values.size()>=this.getPeriod())
 		{
 			for(int i=(this.values.size()-1);i>(this.values.size()-1-this.getPeriod());i--)
@@ -75,7 +65,6 @@ public class MovingAvarange {
 	{
 		this.values.add(value);
 	}
-	
 	/**
 	 * For to recalcute the Exponencial value 
 	 * inform the new values in paramters 
@@ -85,8 +74,7 @@ public class MovingAvarange {
 	public void setLastMMEandCurrentPrice(double lastMME, double currentPrice)
 	{
 		this.lastMME=lastMME;
-		this.currentPrice=currentPrice;
-		
+		this.currentPrice=currentPrice;	
 	}
 	public int getPeriod() {
 		return period;
@@ -94,5 +82,4 @@ public class MovingAvarange {
 	public void setPeriod(int period) {
 		this.period = period;
 	}
-	
 }

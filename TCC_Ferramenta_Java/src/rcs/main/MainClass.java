@@ -1,16 +1,5 @@
 package rcs.main;
 
-import jade.util.leap.Collection;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.sound.midi.Instrument;
-
-import rcs.suport.financial.wallet.Stock;
-import rcs.suport.statistical.Statistical;
-import rcs.suport.util.database.mongoDB.dao.StockDao;
 
 public class MainClass 
 {

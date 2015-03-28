@@ -1,46 +1,36 @@
 package rcs.suport.financial.wallet;
 
-import jade.util.leap.*;
-import java.lang.Comparable;
+import jade.util.leap.Serializable;
+
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import rcs.suport.financial.partternsCandleStick.CandleStick;
 
 
 public class Stock implements Serializable ,Comparable<Stock>{
 
-	
 	 private static final long serialVersionUID = 1L;
 	 private String codeName;
 	 private String sector;
-	 private ArrayList<CandleStick> candleSticks;
-	 
+	 private ArrayList<CandleStick> candleSticks;	 
 	 private double avarangeReturn_30;
 	 private double standardDeviation_30;
 	 private double variance_30;
 	 private double varianceCoefficient_30;
-	
 	 private double avarangeReturn_15;
 	 private double standardDeviation_15;
 	 private double variance_15;
 	 private double varianceCoefficient_15;
-	 
 	 //For user know
 	 private int suggestion;
 	 private int qtd;
 	 private int currentPrice;
-	 
-	 
-	 	 
 	 public Stock(){}
 	 public Stock(String codeName,String sector)
 	 {
 		 this.codeName=codeName;
 		 this.sector=sector;
 	 }
-
-	 
 	 public boolean addCurrentCandleStick(CandleStick candleStick)
 	 {
 		 if(this.candleSticks.get(this.candleSticks.size()-1).getDate().getTime()
@@ -53,54 +43,38 @@ public class Stock implements Serializable ,Comparable<Stock>{
 		 }
 		 return false;
 	 }
-	 
-	 
 	 @Override
 		public int compareTo(Stock o) {
 			if(this.variance_15<o.variance_15)
 				return -1;
 			if(this.variance_15>o.variance_15)
-				return 1;
-			
+				return 1;	
 			return 0;
 		}
-	 
-	 
 	public String getCodeName() {
 		return codeName;
 	}
-
 	public void setCodeName(String codeName) {
 		this.codeName = codeName;
 	}
-
-
-
 	public String getSector() {
 		return sector;
 	}
-
 	public void setSector(String sector) {
 		this.sector = sector;
 	}
-
 	public ArrayList<CandleStick> getCandleSticks()
 	{
 		return candleSticks;
 	}
-
 	public void setCandleSticks(ArrayList<CandleStick> candleSticks) 
 	{	
-		
 		this.candleSticks = candleSticks;
 	}
-
 	public CandleStick getCurrentCandleStick() 
 	{
 		return this.candleSticks.get(this.candleSticks.size()-1);
 	}
-
-	
 	public double getStandardDeviation_30() {
 		return standardDeviation_30;
 	}

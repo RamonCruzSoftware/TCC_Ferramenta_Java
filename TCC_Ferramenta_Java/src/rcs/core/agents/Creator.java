@@ -27,35 +27,22 @@ public class Creator  extends Agent{
 
 	protected void setup()
 	{
-		orderCreateDao= new OrdersCreateDao();
-		
+		orderCreateDao= new OrdersCreateDao();	
 		try
-		{
-			
+		{//TODO log
 			DFAgentDescription dfd=new DFAgentDescription();
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
-			
-			System.out.println("I'm live... My name is "+this.getLocalName());
-			
-		
-			/**
-			 * Este comportamento fica observando as requesicoes dos usuarios enviados pelo grails
-			 * 
-			 */
+			//TODO APAGA
 			addBehaviour(new ListenGrails(this,(long)10));
 			
-		
 		}catch(Exception e)
-		{
+		{//TODO LOG
 			e.printStackTrace();
 		}
-		
 	}
-	
 	protected void takedown()
-	{
-		System.out.println(this.getLocalName()+" says: Bye");
+	{//TODO LOG
 		try
 		{
 			//Unregister the agent in plataform 
@@ -68,8 +55,6 @@ public class Creator  extends Agent{
 			e.printStackTrace();
 		}
 	}
-	
-	
 	private class ListenGrails extends TickerBehaviour
 	{
 		private Agent creatorAgent;
@@ -78,13 +63,11 @@ public class Creator  extends Agent{
 			super(agent,period);
 			creatorAgent=agent;
 			
-		}
-		
+		}	
 		private static final long serialVersionUID = 1L;
-
 		@Override
 		protected void onTick() 
-		{
+		{ //TODO LOG
 			userInfoDao=new UserInfoDao();
 			newOrderCreate=orderCreateDao.getNewOrderCreate();
 			userLogged=userInfoDao.userLogged();
@@ -93,33 +76,27 @@ public class Creator  extends Agent{
 			{
 				createManagerForUser("Manager_"+newOrderCreate.getUserIndetifier(), newOrderCreate.getUserPerfil(), newOrderCreate.getUserValue());
 			}
-			
 			if(!(userLogged==null))
-			{
-				addBehaviour(new OneShotBehaviour() {
-					
+			{//TODO LOG
+				addBehaviour(new OneShotBehaviour() 
+				{
 					private static final long serialVersionUID = 1L;
 					@Override
 					public void action() 
 					{
-						ACLMessage message=new ACLMessage(ACLMessage.INFORM);
-						
+						ACLMessage message=new ACLMessage(ACLMessage.INFORM);		
 						message.setLanguage(ConversationsID.LANGUAGE);
 						message.setPerformative(ACLMessage.INFORM);
 						message.setConversationId(ConversationsID.USER_LOGGED);
 						message.setContent(userLogged);
 						message.addReceiver(new AID("Manager_"+userLogged, AID.ISLOCALNAME));
-									
+						//TODO LOG
 						System.out.println("Creator says: User "+userLogged+" is logged" );
 						myAgent.send(message);
-						
 					}
 				});
 			}
-			
 		}
-		
-		
 		/**
 		 * This method create a team for each users.
 		 * 
@@ -128,7 +105,7 @@ public class Creator  extends Agent{
 		 * @param userValue : It's the user's value for investiments
 		 */
 		public void createManagerForUser(final String nameAgentManager,int userPerfilType,double userValue)
-		{
+		{//TODO LOG
 			PlatformController container=getContainerController();
 			try 
 			{
@@ -138,32 +115,25 @@ public class Creator  extends Agent{
 				argument[0]="Xms1024m";
 				
 				AgentController  agentController=container.createNewAgent(nameAgentManager, "rcs.core.agents.Manager",argument);
-				
 				agentController.start();
 				
 			} 
 			catch (Exception e) 
-			{
+			{//TODO LOG
 				e.printStackTrace();
 			}
-			
 				addBehaviour(new Behaviour(creatorAgent) 
 				{
-					/**
-					 * 
-					 */
 					private static final long serialVersionUID = 1L;
 					boolean stopBehaviour=false;
-					
 					@Override
 					public boolean done() 
 					{
 						return stopBehaviour;
 					}
-					
 					@Override
-					public void action() {
-						//Send Message to New Manager
+					public void action() 
+					{//TODO LOG
 						ACLMessage message=new ACLMessage(ACLMessage.INFORM);
 						message.addReceiver(new AID(nameAgentManager,AID.ISLOCALNAME));
 						message.setLanguage(ConversationsID.LANGUAGE);
@@ -171,10 +141,7 @@ public class Creator  extends Agent{
 						message.setConversationId(ConversationsID.CREATE_MANAGER);
 						message.setContent(ConversationsID.CREATE_MANAGER);
 						
-						System.out.println("Creater says for "+nameAgentManager+": "+message.getContent());
-						myAgent.send(message);
-						
-						//Listener messages 
+						myAgent.send(message); 
 						try
 						{
 							ACLMessage messages=myAgent.receive();
@@ -182,28 +149,22 @@ public class Creator  extends Agent{
 							{
 								if(message.getConversationId()==ConversationsID.CREATE_MANAGER)
 								{
-									
 									stopBehaviour=true;
 								}
 							}else block();
-							
 						}catch (Exception e)
-						{
+						{//TODO LOG
 							e.printStackTrace();
 						}
-						
 					}
 				});
-				
 				addBehaviour(new OneShotBehaviour() 
 				{
-					
 					private static final long serialVersionUID = 1L;
-
 					@Override
-					public void action() {
-						try {
-							
+					public void action()
+					{
+						try {//TODO LOG
 							ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 							message.addReceiver(new AID(nameAgentManager,AID.ISLOCALNAME));
 							message.setLanguage(ConversationsID.LANGUAGE);
@@ -213,22 +174,14 @@ public class Creator  extends Agent{
 							myAgent.send(message);
 						
 						} catch (IOException e)
-						{
+						{//TODO LOG
 							e.printStackTrace();
 						}
-		
-						
 					}
 				});
-				
-				
-				
 		}
-		
 	}
-	
 	public void dropManagerForUser(String userIdentifier)
-	{
-		
+	{	
 	}
 }
