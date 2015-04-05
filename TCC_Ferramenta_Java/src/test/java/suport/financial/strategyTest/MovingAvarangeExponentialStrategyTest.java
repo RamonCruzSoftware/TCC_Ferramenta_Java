@@ -6,35 +6,32 @@ import suport.financial.strategy.Strategy;
 
 public class MovingAvarangeExponentialStrategyTest {
 
-private Strategy movingAvarangeStrategy;
-	
-	
-	public void setUp() 
-	{
-		
-		movingAvarangeStrategy=null;
+	private Strategy movingAvarangeStrategy;
+
+	public void setUp() {
+
+		movingAvarangeStrategy = null;
 
 	}
 
-	
-	public void testMovingAvarangeStrategy() 
-	{
-		movingAvarangeStrategy=new MovingAvarangeExponentialStrategy(0.00,0.0,0.0);
-		Assert.assertEquals(MovingAvarangeExponentialStrategy.class, movingAvarangeStrategy.getClass());
+	public void testMovingAvarangeStrategy() {
+		movingAvarangeStrategy = new MovingAvarangeExponentialStrategy(0.00,
+				0.0, 0.0);
+		Assert.assertEquals(MovingAvarangeExponentialStrategy.class,
+				movingAvarangeStrategy.getClass());
 	}
 
-	 
-	public void testMakeOrder() 
-	{
-		movingAvarangeStrategy=new MovingAvarangeExponentialStrategy(0.00,0.0,0.0);
-		
-		//valoes of ALLL3.SA 09/05/2013-> 11/06/2013  (dd/mm/yyyy)
+	public void testMakeOrder() {
+		movingAvarangeStrategy = new MovingAvarangeExponentialStrategy(0.00,
+				0.0, 0.0);
+
+		// valoes of ALLL3.SA 09/05/2013-> 11/06/2013 (dd/mm/yyyy)
 		movingAvarangeStrategy.addValue(10.89);
 		movingAvarangeStrategy.addValue(10.79);
 		movingAvarangeStrategy.addValue(10.64);
-		movingAvarangeStrategy.addValue(10.68); //Nothing
+		movingAvarangeStrategy.addValue(10.68); // Nothing
 		Assert.assertEquals("nothing", movingAvarangeStrategy.makeOrder());
-		
+
 		movingAvarangeStrategy.addValue(10.72);
 		movingAvarangeStrategy.addValue(10.64);
 		movingAvarangeStrategy.addValue(10.69);
@@ -54,22 +51,18 @@ private Strategy movingAvarangeStrategy;
 		movingAvarangeStrategy.addValue(10.45);
 		movingAvarangeStrategy.addValue(10.19);
 		movingAvarangeStrategy.addValue(0);
-		movingAvarangeStrategy.addValue(0);//Order Buy
-		
-		//movingAvarangeStrategy.addValue(10.40);
+		movingAvarangeStrategy.addValue(0);// Order Buy
+
+		// movingAvarangeStrategy.addValue(10.40);
 		Assert.assertEquals("Sell", movingAvarangeStrategy.makeOrder());
-		
-		movingAvarangeStrategy.addValue(12);//Buy
+
+		movingAvarangeStrategy.addValue(12);// Buy
 		Assert.assertEquals("Buy", movingAvarangeStrategy.makeOrder());
-		
-		
+
 	}
 
-	 
 	public void testAddValue() {
-		
 
 	}
-
 
 }
