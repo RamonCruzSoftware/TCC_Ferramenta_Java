@@ -34,32 +34,32 @@ public class Creator extends Agent {
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
 			
-     			//log=LogManager.getLogger(this.getLocalName().toString());
-     			log=null;
-				log.info("Registro Paginas Amarelas");
-				log.info("Iniciando comportamento de escuta do Grails");
+			//TODO
+//     			log=LogManager.getLogger(this.getLocalName());
+//				log.info("Registro Paginas Amarelas");
+//				log.info("Iniciando comportamento de escuta do Grails");
 			
 			addBehaviour(new ListenGrails( (long) 10));
 
 		} catch (Exception e) { 
 			e.printStackTrace();
-			log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+			//log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
 			
 		}
 	}
 
 	protected void takedown() {
-		try {
+		try {//TODO
 			// Unregister the agent in plataform
 			DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
 			DFService.deregister(this, dfd);
 
-			log.info("Desregistrando das paginas amarelas");
+//			log.info("Desregistrando das paginas amarelas");
 		} catch (Exception e) 
 		{
 			e.printStackTrace();
-			log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+//			log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
 		}
 	}
 
@@ -68,7 +68,9 @@ public class Creator extends Agent {
 
 		public ListenGrails( Long period) {
 			super(creator, period);
-			log.debug("Comportamento de escuta Iniciado");
+			
+			//TODO
+//			log.debug("Comportamento de escuta Iniciado");
 
 		}
 
@@ -80,19 +82,19 @@ public class Creator extends Agent {
 			newOrderCreate = orderCreateDao.getNewOrderCreate();
 			userLogged = userInfoDao.userLogged();
 
-			
+			//TODO
 			
 			if (!(newOrderCreate == null)) {
 				createManagerForUser(
 						"Manager_" + newOrderCreate.getUserIndetifier(),
 						newOrderCreate.getUserPerfil(),
 						newOrderCreate.getUserValue());
-				log.info("Novo usuario criado:"+newOrderCreate.getUserIndetifier()+" - "+newOrderCreate.getUserPerfil()+" - "+newOrderCreate.getUserValue());
+				//log.info("Novo usuario criado:"+newOrderCreate.getUserIndetifier()+" - "+newOrderCreate.getUserPerfil()+" - "+newOrderCreate.getUserValue());
 			}
 			if (!(userLogged == null)) {
-				
-				log.info("Usuario Logado :"+userLogged);
-				log.debug("Iniciar comportamento OneShort para avisar Gestor responsavel");
+				//TODO
+//				log.info("Usuario Logado :"+userLogged);
+//				log.debug("Iniciar comportamento OneShort para avisar Gestor responsavel");
 				addBehaviour(new OneShotBehaviour(creator) 
 				{
 					private static final long serialVersionUID = 1L;
@@ -108,7 +110,8 @@ public class Creator extends Agent {
 								AID.ISLOCALNAME));
 					
 						myAgent.send(message);
-						creator.log.info("Gestor :Manager_"+userLogged+" Alertado usuario logado");
+						//TODO
+						//creator.log.info("Gestor :Manager_"+userLogged+" Alertado usuario logado");
 					}
 				});
 			}
@@ -129,8 +132,8 @@ public class Creator extends Agent {
 				int userPerfilType, double userValue) 
 		{
 			PlatformController container = getContainerController();
-			try {
-				log.info("Criando Gertor:"+nameAgentManager);
+			try {//TODO
+				//log.info("Criando Gertor:"+nameAgentManager);
 				// Xms128m
 				Object[] argument;
 				argument = new Object[1];
@@ -141,8 +144,8 @@ public class Creator extends Agent {
 				agentController.start();
 
 			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+				e.printStackTrace();//TODO
+				//log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
 			}
 			addBehaviour(new OneShotBehaviour() {
 				private static final long serialVersionUID = 1L;
@@ -158,12 +161,12 @@ public class Creator extends Agent {
 						message.setConversationId(ConversationsID.CREATE_EXPERTS);
 						message.setContentObject(newOrderCreate);
 						myAgent.send(message);
-						
-						creator.log.info("Solicitando criacao dos Experts do gestor:"+nameAgentManager);
+						//TODO
+					//	creator.log.info("Solicitando criacao dos Experts do gestor:"+nameAgentManager);
 
 					} catch (IOException e) {
-						e.printStackTrace();
-						log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+						e.printStackTrace();//TODO
+						//log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
 					}
 				}
 			});

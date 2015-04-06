@@ -53,5 +53,9 @@ public class ConversationsID {
 	public static final int BUY_REQUEST = 20;
 	public static final int BUY_APPROVED = 21;
 	public static final int BUY_REFUSED = 22;
+	
+	//Simulation
+	public static final String SUMULATION_REQUEST="Simulation stocks";
+	
 
 }

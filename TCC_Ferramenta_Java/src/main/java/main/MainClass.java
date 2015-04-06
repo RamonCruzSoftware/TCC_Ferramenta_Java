@@ -1,5 +1,11 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import suport.financial.wallet.Stock;
+
 public class MainClass {
 	static String dir_1 = "/Users/alissonnunes/Desktop";
 	static String subDir_1 = "/TCC2";
@@ -166,7 +172,15 @@ public class MainClass {
 //		System.out.println(" name " + codeName);
 //		System.out.println(" value " + value);
 		
-		ClasseA c= new ClasseA();
+		Map<String, ArrayList<Stock>>dictionary=new HashMap<String, ArrayList<Stock>>();
+		
+		String codeName="RAMON.SA";
+		System.out.println("resultado :"+dictionary.containsKey(codeName));
+		
+		dictionary.put(codeName, null);
+		
+		System.out.println("resultado :"+dictionary.containsKey(codeName));
+		
 		
 	}
 
