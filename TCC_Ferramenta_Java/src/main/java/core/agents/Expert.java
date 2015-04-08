@@ -56,7 +56,8 @@ public class Expert extends Agent {
 	private double quota;
 	private StockManager stockManager;
 	private boolean ordersLocker;
-
+	private boolean isSimulation;
+	
 	protected void setup() {
 		try {
 
@@ -69,7 +70,10 @@ public class Expert extends Agent {
 			ordensToBuyOrSell = new HashMap<Stock, String>();
 			stockManager = new StockManager();
 			ordersLocker = false;
-
+			isSimulation=false;
+			
+			if(isSimulation) simulationStart();
+				
 			DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
@@ -88,7 +92,8 @@ public class Expert extends Agent {
 				@Override
 				public void action() {
 					ACLMessage msg = myAgent.receive();
-					if (msg != null) {
+					if (msg != null)
+					{
 						try {
 							switch (msg.getPerformative()) {
 							case ACLMessage.INFORM: {
@@ -347,16 +352,15 @@ public class Expert extends Agent {
 													+ qtd);
 
 											if (qtd > 0) {
-												expert.stockManager.orderBuy(s,
-														qtd);
+												expert.stockManager.orderBuy(s,qtd);
 											}
 										}
 									}
 									expert.ordersLocker = true;
 									expert.orderToApproveBuy.clear();
 								}
-							}
-								break;
+							}break;
+							
 							case ACLMessage.REFUSE: {
 								if (msg.getConversationId() == ConversationsID.EXPERT_ORDER_BUY) {// TODO
 																									// log
@@ -365,19 +369,92 @@ public class Expert extends Agent {
 											+ ": Manager dind't approved");
 									expert.ordersLocker = false;
 								}
+							}break;
+							case ACLMessage.PROPOSE:
+							{
+								if(msg.getConversationId()==ConversationsID.SIMULATION_REQUEST)
+								{
+									try{
+										Strategy strategy = null;
+										CandleStick current = null;
+										String codeName=null;
+										Stock stockTemp = null;
+										
+										 current=(CandleStick)msg.getContentObject();
+										 codeName=msg.getContent();
+										 
+										 for(Entry<Stock, Strategy>s:expert.stocksMap.entrySet())
+										 {
+											 	if(s.getKey().getCodeName().equalsIgnoreCase(codeName))
+											 		{
+											 		 stockTemp=s.getKey();
+											 		 strategy=s.getValue();
+											 		}
+										 }
+										 
+										 if(current!=null && codeName!=null)
+										 {
+											strategy.addValue(current.getClose());
+											// TODO log
+											System.out.println(stockTemp.getCodeName()
+													+ " Order  " + strategy.makeOrder());
+											// Armazeno as ordens para pedir autorizacao ao
+											// manager
+											if (expert.ordensToBuyOrSell.get(stockTemp) != null
+													&& !strategy.makeOrder().equalsIgnoreCase(
+															"nothing")
+													&& !strategy.makeOrder().equalsIgnoreCase(
+															null)) 
+											{
+												expert.ordensToBuyOrSell.remove(stockTemp);
+												expert.ordensToBuyOrSell.put(stockTemp,
+														strategy.makeOrder());
+												// TODO LOG
+												System.out
+														.println("pedir para vender essa acao "
+																+ stockTemp);
+											} else {
+												// TODO acredito q essa linha nao seja
+												// necessaria
+												// expert.ordensToBuyOrSell.put(stockTemp,
+												// strategy.makeOrder());
+											}
+											
+											expert.stocksMap.remove(stockTemp);
+											expert.stocksMap.put(stockTemp, strategy);
+												
+											}
+											if (expert.ordensToBuyOrSell.size() > 0) 
+											{
+												expert.ordersToBuyOrSell();
+												// TODO log
+												System.out
+														.println("Existem acoes para vender ou comprar ");
+											}
+										 
+									
+									}catch (Exception e) 
+											{
+												 
+											}
+									
 							}
-								break;
+								
+									
+							}break;
+							
 							default:
 								break;
 							}
-						} catch (Exception e) {
+						} catch (Exception e) 
+						{
 							e.printStackTrace();
 						}
-
-					} else
+						} else
 						block();
 				}
 			});
+			
 		} catch (Exception e) {
 			// TODO log
 			System.out.println("Saw exception in HostAgent: " + e);
@@ -408,12 +485,31 @@ public class Expert extends Agent {
 		}
 	}
 
-	private CandleStick requestStocksPrices_simulation(Stock stock) {// TODO log
-		System.out.println("Fake requestPrices");
-		return new CandleStick(10, 10, 10, 10, 100, new Date());
+	private void simulationStart(final String simulationAgentName,int timeInterval) 
+	{// TODO log
+		
+		// inicia o trabalho requisitando o preco corrente
+				addBehaviour(new TickerBehaviour(expert,timeInterval) 
+				{
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void onTick()
+					{
+						for(Entry<Stock, Strategy>s:expert.stocksMap.entrySet())
+						{
+							ACLMessage msgRequest=new ACLMessage(ACLMessage.CFP);
+							msgRequest.setConversationId(ConversationsID.SIMULATION_REQUEST);
+							msgRequest.addReceiver(new AID(simulationAgentName, AID.ISLOCALNAME));
+							msgRequest.setContent(s.getKey().getCodeName());
+							myAgent.send(msgRequest);
+						}
+					}
+				});
 	}
 
-	private CandleStick requestStocksPrices(Stock stock) {
+	private CandleStick requestStocksPrices(Stock stock) 
+	{
 		CandleStick candleStick = null;
 		try {
 			if (expert.yahooFinances.storeCsvCurrentPriceStock(stock
@@ -456,142 +552,146 @@ public class Expert extends Agent {
 			periodicInteval = 0;
 			break;
 		}
-		// inicia o trabalho requistando o preco corrente
-		addBehaviour(new OneShotBehaviour(this) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+		if(!isSimulation)
+		{
+			// inicia o trabalho requistando o preco corrente
+			addBehaviour(new OneShotBehaviour(this) 
+			{
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 
-			@Override
-			public void action() {
-				try {
-					Strategy strategy = null;
-					CandleStick current = null;
-					Stock stockTemp = null;
+				@Override
+				public void action() {
+					try {
+						Strategy strategy = null;
+						CandleStick current = null;
+						Stock stockTemp = null;
 
-					for (Entry<Stock, Strategy> e : expert.stocksMap.entrySet()) { // TODO
-																					// log
-						stockTemp = e.getKey();
-						System.out.println(getLocalName()
-								+ ": Request Current Value of "
-								+ e.getKey().getCodeName());
+						for (Entry<Stock, Strategy> e : expert.stocksMap.entrySet()) { // TODO
+																						// log
+							stockTemp = e.getKey();
+							System.out.println(getLocalName()
+									+ ": Request Current Value of "
+									+ e.getKey().getCodeName());
 
-						// TODO
-						current = expert.requestStocksPrices_simulation(e
-								.getKey());
-						// current=expert.requestStocksPrices(e.getKey());
-						// TODO LOG
-						System.out.println("Current = " + current);
-						if (current != null) {
-							strategy = e.getValue();
-							strategy.addValue(current.getClose());
-							// TODO log
-							System.out.println(e.getKey().getCodeName()
-									+ " Order  " + strategy.makeOrder());
-							// Armazeno as ordens para pedir autorizacao ao
-							// manager
-							if (expert.ordensToBuyOrSell.get(e.getKey()) != null
-									&& !strategy.makeOrder().equalsIgnoreCase(
-											"nothing")
-									&& !strategy.makeOrder().equalsIgnoreCase(
-											null)) {
-								expert.ordensToBuyOrSell.remove(e.getKey());
-								expert.ordensToBuyOrSell.put(e.getKey(),
-										strategy.makeOrder());
-								// TODO LOG
-								System.out
-										.println("pedir para vender essa acao "
-												+ e.getKey());
-							} else {
-								// TODO acredito q essa linha nao seja
-								// necessaria
-								// expert.ordensToBuyOrSell.put(stockTemp,
-								// strategy.makeOrder());
-							}
-							expert.stocksMap.remove(e);
-							expert.stocksMap.put(stockTemp, strategy);
-						}
-					}
-					if (expert.ordensToBuyOrSell.size() > 0) {
-						expert.ordersToBuyOrSell();
-						// TODO log
-						System.out
-								.println("Existem acoes para vender ou comprar ");
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		// Configura a rotina de requisicao de valores
-		addBehaviour(new WakerBehaviour(this, startDate) {
-			private static final long serialVersionUID = 1L;
-
-			protected void onWake() {
-				// colocar periodicInteval
-				addBehaviour(new TickerBehaviour(expert, testInterval) {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					protected void onTick() {
-						try {
-							Strategy strategy = null;
-							CandleStick current = null;
-							Stock stockTemp = null;
-
-							for (Entry<Stock, Strategy> e : expert.stocksMap
-									.entrySet()) {// TODO log
-								stockTemp = e.getKey();
-								System.out.println(getLocalName()
-										+ ": Request Current Value of "
-										+ e.getKey().getCodeName());
-								current = expert
-										.requestStocksPrices(e.getKey());
-
-								if (current != null) {
-									strategy = e.getValue();
-									strategy.addValue(current.getClose());
-
-									// TODO log
+							// TODO
+							
+							 current=expert.requestStocksPrices(e.getKey());
+							// TODO LOG
+							System.out.println("Current = " + current);
+							if (current != null) {
+								strategy = e.getValue();
+								strategy.addValue(current.getClose());
+								// TODO log
+								System.out.println(e.getKey().getCodeName()
+										+ " Order  " + strategy.makeOrder());
+								// Armazeno as ordens para pedir autorizacao ao
+								// manager
+								if (expert.ordensToBuyOrSell.get(e.getKey()) != null
+										&& !strategy.makeOrder().equalsIgnoreCase(
+												"nothing")
+										&& !strategy.makeOrder().equalsIgnoreCase(
+												null)) {
+									expert.ordensToBuyOrSell.remove(e.getKey());
+									expert.ordensToBuyOrSell.put(e.getKey(),
+											strategy.makeOrder());
+									// TODO LOG
 									System.out
-											.println(e.getKey().getCodeName()
-													+ " Order  "
-													+ strategy.makeOrder());
-
-									// Armazeno as ordens para pedir autorizacao
-									// ao manager
-									if (expert.ordensToBuyOrSell
-											.get(e.getKey()) != null
-											&& !strategy
-													.makeOrder()
-													.equalsIgnoreCase("nothing")) {
-										expert.ordensToBuyOrSell.remove(e
-												.getKey());
-										expert.ordensToBuyOrSell.put(
-												e.getKey(),
-												strategy.makeOrder());
-
-									} else {
-										expert.ordensToBuyOrSell.put(stockTemp,
-												strategy.makeOrder());
-									}
-									expert.stocksMap.remove(e);
-									expert.stocksMap.put(stockTemp, strategy);
+											.println("pedir para vender essa acao "
+													+ e.getKey());
+								} else {
+									// TODO acredito q essa linha nao seja
+									// necessaria
+									// expert.ordensToBuyOrSell.put(stockTemp,
+									// strategy.makeOrder());
 								}
+								expert.stocksMap.remove(e);
+								expert.stocksMap.put(stockTemp, strategy);
 							}
-							// Se existir oportunidades de compra ou venda pede
-							// autorizacao pro manager
-							if (expert.ordensToBuyOrSell.size() > 0) {
-								expert.ordersToBuyOrSell();
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
 						}
+						if (expert.ordensToBuyOrSell.size() > 0) {
+							expert.ordersToBuyOrSell();
+							// TODO log
+							System.out
+									.println("Existem acoes para vender ou comprar ");
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-				});
-			}
-		});
+				}
+			});
+			// Configura a rotina de requisicao de valores
+			addBehaviour(new WakerBehaviour(this, startDate) {
+				private static final long serialVersionUID = 1L;
+
+				protected void onWake() {
+					// colocar periodicInteval
+					addBehaviour(new TickerBehaviour(expert, testInterval) {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						protected void onTick() {
+							try {
+								Strategy strategy = null;
+								CandleStick current = null;
+								Stock stockTemp = null;
+
+								for (Entry<Stock, Strategy> e : expert.stocksMap
+										.entrySet()) {// TODO log
+									stockTemp = e.getKey();
+									System.out.println(getLocalName()
+											+ ": Request Current Value of "
+											+ e.getKey().getCodeName());
+									current = expert
+											.requestStocksPrices(e.getKey());
+
+									if (current != null) {
+										strategy = e.getValue();
+										strategy.addValue(current.getClose());
+
+										// TODO log
+										System.out
+												.println(e.getKey().getCodeName()
+														+ " Order  "
+														+ strategy.makeOrder());
+
+										// Armazeno as ordens para pedir autorizacao
+										// ao manager
+										if (expert.ordensToBuyOrSell
+												.get(e.getKey()) != null
+												&& !strategy
+														.makeOrder()
+														.equalsIgnoreCase("nothing")) {
+											expert.ordensToBuyOrSell.remove(e
+													.getKey());
+											expert.ordensToBuyOrSell.put(
+													e.getKey(),
+													strategy.makeOrder());
+
+										} else {
+											expert.ordensToBuyOrSell.put(stockTemp,
+													strategy.makeOrder());
+										}
+										expert.stocksMap.remove(e);
+										expert.stocksMap.put(stockTemp, strategy);
+									}
+								}
+								// Se existir oportunidades de compra ou venda pede
+								// autorizacao pro manager
+								if (expert.ordensToBuyOrSell.size() > 0) {
+									expert.ordersToBuyOrSell();
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			});
+		}
+
 	}
 
 	// Rotina de solicitacao de autorizacao de compra e vendas
