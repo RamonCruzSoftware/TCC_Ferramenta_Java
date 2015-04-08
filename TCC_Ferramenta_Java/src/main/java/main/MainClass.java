@@ -1,10 +1,7 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
-import suport.financial.wallet.Stock;
 
 public class MainClass {
 	static String dir_1 = "/Users/alissonnunes/Desktop";
@@ -13,6 +10,7 @@ public class MainClass {
 	static String sectorsCsvFilePath = "/Users/alissonnunes/Desktop/Setores";
 
 	
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 
 		/*
@@ -172,16 +170,22 @@ public class MainClass {
 //		System.out.println(" name " + codeName);
 //		System.out.println(" value " + value);
 		
-		Map<String, ArrayList<Stock>>dictionary=new HashMap<String, ArrayList<Stock>>();
 		
-		String codeName="RAMON.SA";
-		System.out.println("resultado :"+dictionary.containsKey(codeName));
+		ClasseA a=new ClasseA(new Date(113, 1, 1),new Date(113, 2, 3));
 		
-		dictionary.put(codeName, null);
+		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
 		
-		System.out.println("resultado :"+dictionary.containsKey(codeName));
 		
 		
 	}
-
+	
+	
 }

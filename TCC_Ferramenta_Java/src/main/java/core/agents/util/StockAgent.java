@@ -1,9 +1,11 @@
 package core.agents.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import suport.financial.wallet.Stock;
+import suport.util.database.mongoDB.dao.StockDao;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFService;
@@ -16,15 +18,23 @@ public class StockAgent extends Agent {
  private Map<String, ArrayList<Stock>> stocks;
  
 	private static final long serialVersionUID = 1L;
+	private Date startDate;
+	private Date finishDate;
 	
+	@SuppressWarnings("deprecation")
 	protected void setup() 
 	{
 		try 
 		{
+			startDate = new Date(2015, 1, 1);
+			finishDate=new Date(2015, 3, 1);
+			
 			stocks=new HashMap<String, ArrayList<Stock>>();
 			DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
+			
+			
      			
 		} catch (Exception e) 
 		{ 
@@ -79,15 +89,35 @@ public class StockAgent extends Agent {
 	}
  }
  
-private ArrayList<Stock> simulationData(String codeName)
+private Stock simulationData(String codeName)
 {
+	ArrayList<Stock>stockList=null;
+	Stock stockReturn=null;
+	int indexToReturn=0;
+	StockDao stockDao= new StockDao();
+	
 	if(this.stocks.containsKey(codeName))
 	{
-		return this.stocks.get(codeName);
+		stockList=this.stocks.get(codeName);
+		indexToReturn=stockList.size();
+		stockReturn=stockList.get(indexToReturn);
+		stockList.remove(indexToReturn);
+		
+		this.stocks.remove(codeName);
+		this.stocks.put(codeName, stockList);
+		
 	}else
 	{
-		
+		stockList=stockDao.getAllStocksWithPricesBetweenInterval(startDate, finishDate);
+		if(stockList.size()>0)
+		{
+			indexToReturn=stockList.size();
+			stockReturn=stockList.get(indexToReturn);
+			stockList.remove(indexToReturn);
+			this.stocks.put(codeName, stockList);
+			
+		}else stockReturn=null;
 	}
-	return null;
+	return stockReturn;
 }
 }

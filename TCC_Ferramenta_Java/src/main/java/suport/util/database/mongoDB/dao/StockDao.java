@@ -1,6 +1,8 @@
 package suport.util.database.mongoDB.dao;
 
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 
 import core.agents.ConversationsID;
 import suport.financial.partternsCandleStick.CandleStick;
@@ -448,6 +450,139 @@ public class StockDao {
 		cursor.close();
 		return stockList;
 	}
+	
+	public ArrayList<Stock> getAllStocksWithPricesBetweenInterval(Date start,Date finish) {
+		BasicDBObject wherePrices = null;
+
+		DBCursor cursor = getCollection_stocks().find();
+		DBCursor cursorPrices = null;
+
+		DBObject mongo_stock = null;
+		BasicDBObject price = null;
+
+		ArrayList<Stock> stockList = new ArrayList<Stock>();
+		ArrayList<CandleStick> candleList = null;
+
+		Stock stock = null;
+
+		while (cursor.hasNext()) {
+
+			mongo_stock = cursor.next();
+			stock = new Stock(mongo_stock.get("_id").toString(), mongo_stock
+					.get("sector").toString());
+
+			stock.setAvarangeReturn_15(Double.parseDouble(mongo_stock.get(
+					"avarangeReturn_15").toString()));
+			stock.setAvarangeReturn_30(Double.parseDouble(mongo_stock.get(
+					"avarangeReturn_30").toString()));
+
+			stock.setStandardDeviation_15(Double.parseDouble(mongo_stock.get(
+					"standardDeviation_15").toString()));
+			stock.setStandardDeviation_30(Double.parseDouble(mongo_stock.get(
+					"standardDeviation_30").toString()));
+
+			stock.setVariance_15(Double.parseDouble(mongo_stock.get(
+					"variance_15").toString()));
+			stock.setVariance_30(Double.parseDouble(mongo_stock.get(
+					"variance_30").toString()));
+
+			stock.setVarianceCoefficient_15(Double.parseDouble(mongo_stock.get(
+					"varianceCoefficient_15").toString()));
+			stock.setVarianceCoefficient_30(Double.parseDouble(mongo_stock.get(
+					"varianceCoefficient_30").toString()));
+
+			wherePrices = new BasicDBObject("stockCodeName",stock.getCodeName())
+							 .append("date",new BasicDBObject("$gt",start).append("$lt", finish));
+			
+			
+			cursorPrices = getCollection_stock_prices().find(wherePrices);
+			candleList = new ArrayList<CandleStick>();
+			
+			
+			
+			while (cursorPrices.hasNext())
+			{
+				price = (BasicDBObject) cursorPrices.next();
+				
+				candleList.add(new CandleStick(price.getDouble("open"), price
+						.getDouble("high"), price.getDouble("low"), price
+						.getDouble("close"), price.getInt("volume"), price
+						.getDate("date")));
+			
+			}
+			stock.setCandleSticks(candleList);
+			stockList.add(stock);
+			
+		}
+		cursor.close();
+		return stockList;
+	}
+
+	public Stock getStocksWithPricesBetweenInterval(String codeName,Date start,Date finish) {
+		BasicDBObject wherePrices = null;
+
+		DBCursor cursor = getCollection_stocks().find(new BasicDBObject("_id", codeName));
+		DBCursor cursorPrices = null;
+
+		DBObject mongo_stock = null;
+		BasicDBObject price = null;
+		ArrayList<CandleStick> candleList = null;
+
+		Stock stock = null;
+
+		while (cursor.hasNext()) {
+
+			mongo_stock = cursor.next();
+			stock = new Stock(mongo_stock.get("_id").toString(), mongo_stock
+					.get("sector").toString());
+
+			stock.setAvarangeReturn_15(Double.parseDouble(mongo_stock.get(
+					"avarangeReturn_15").toString()));
+			stock.setAvarangeReturn_30(Double.parseDouble(mongo_stock.get(
+					"avarangeReturn_30").toString()));
+
+			stock.setStandardDeviation_15(Double.parseDouble(mongo_stock.get(
+					"standardDeviation_15").toString()));
+			stock.setStandardDeviation_30(Double.parseDouble(mongo_stock.get(
+					"standardDeviation_30").toString()));
+
+			stock.setVariance_15(Double.parseDouble(mongo_stock.get(
+					"variance_15").toString()));
+			stock.setVariance_30(Double.parseDouble(mongo_stock.get(
+					"variance_30").toString()));
+
+			stock.setVarianceCoefficient_15(Double.parseDouble(mongo_stock.get(
+					"varianceCoefficient_15").toString()));
+			stock.setVarianceCoefficient_30(Double.parseDouble(mongo_stock.get(
+					"varianceCoefficient_30").toString()));
+
+			wherePrices = new BasicDBObject("stockCodeName",stock.getCodeName())
+							 .append("date",new BasicDBObject("$gt",start).append("$lt", finish));
+			
+			
+			cursorPrices = getCollection_stock_prices().find(wherePrices);
+			candleList = new ArrayList<CandleStick>();
+			
+			
+			
+			while (cursorPrices.hasNext())
+			{
+				price = (BasicDBObject) cursorPrices.next();
+				
+				candleList.add(new CandleStick(price.getDouble("open"), price
+						.getDouble("high"), price.getDouble("low"), price
+						.getDouble("close"), price.getInt("volume"), price
+						.getDate("date")));
+			
+			}
+			stock.setCandleSticks(candleList);
+			
+			
+		}
+		cursor.close();
+		return stock;
+	}
+
 
 	public ArrayList<Stock> getAllStocks() {
 
