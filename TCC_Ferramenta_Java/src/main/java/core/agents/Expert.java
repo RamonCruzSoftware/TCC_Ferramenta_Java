@@ -72,7 +72,7 @@ public class Expert extends Agent {
 			ordersLocker = false;
 			isSimulation=false;
 			
-			if(isSimulation) simulationStart();
+			if(isSimulation) expert.simulationStart("simulator", 10000);
 				
 			DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
@@ -696,7 +696,8 @@ public class Expert extends Agent {
 
 	// Rotina de solicitacao de autorizacao de compra e vendas
 	// Ver mensagens do tipo proposta
-	private void ordersToBuyOrSell() {
+	private void ordersToBuyOrSell()
+	{
 		ManagedStock managedStock = null;
 		expert.orderToApproveBuy = new ArrayList<Stock>();
 		expert.orderToApproveSell = new ArrayList<Stock>();

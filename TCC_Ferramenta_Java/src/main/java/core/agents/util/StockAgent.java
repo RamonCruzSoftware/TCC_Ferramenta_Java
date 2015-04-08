@@ -1,24 +1,20 @@
 package core.agents.util;
 
+import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.lang.acl.ACLMessage;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import main.ClasseA;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import suport.financial.partternsCandleStick.CandleStick;
 import suport.financial.wallet.Stock;
 import suport.util.database.mongoDB.dao.StockDao;
-import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.lang.acl.ACLMessage;
 import core.agents.ConversationsID;
 
 public class StockAgent extends Agent {
@@ -36,8 +32,8 @@ public class StockAgent extends Agent {
 		try 
 		{
 			stockAgent=this;
-			startDate = new Date(2015, 1, 1);
-			finishDate=new Date(2015, 3, 1);
+			startDate = new Date(113, 1, 1);
+			finishDate=new Date(114, 3, 1);
 			new HashMap<String, ArrayList<Stock>>();
 			stockCandleList=new HashMap<String, ArrayList<CandleStick>>();	
 			this.loadSimulationData();
@@ -47,6 +43,8 @@ public class StockAgent extends Agent {
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
 			
+			//TODO
+			System.out.println("Simulador "+this.getName());
 			addBehaviour(new SimulationBehaviour(stockAgent));
      			
 		} catch (Exception e) 
@@ -92,14 +90,22 @@ public class StockAgent extends Agent {
 				if(msg.getConversationId()==ConversationsID.SIMULATION_REQUEST)
 				{
 					try {
+						String code=null;
 						ACLMessage reply=msg.createReply();
 						reply.setConversationId(ConversationsID.SIMULATION_REQUEST);
 						reply.setPerformative(ACLMessage.PROPOSE);
-						reply.setContent(msg.getContent());
-						reply.setContentObject(stockAgent.simulation(msg.getContent()));
-						myAgent.send(reply);
 						
-					} catch (IOException e) {
+						code = msg.getContent().toString();
+						reply.setContent(code);
+						reply.setContentObject(stockAgent.simulation(code));
+						
+						myAgent.send(reply);
+						//TODO
+						
+							System.out.println("[code:"+code+"] Proposta de "+reply.getSender().getName()+" respondida ");
+						
+					} catch (IOException e)
+					{
 						
 						e.printStackTrace();
 					}
@@ -125,12 +131,20 @@ public class StockAgent extends Agent {
 		
 		if(this.stockCandleList.containsKey(codeName))
 		{
-			candleList=this.stockCandleList.get(codeName);
-			indexToReturn=candleList.size()-1;
-			returnCandle=candleList.get(indexToReturn);
-			candleList.remove(indexToReturn);	
-			this.stockCandleList.remove(codeName);
-			this.stockCandleList.put(codeName, candleList);
+			try
+			{
+				candleList=this.stockCandleList.get(codeName);
+				indexToReturn=candleList.size()-1;
+				returnCandle=candleList.get(indexToReturn);
+				candleList.remove(indexToReturn);	
+				this.stockCandleList.remove(codeName);
+				this.stockCandleList.put(codeName, candleList);
+				
+				returnCandle.setStockCode(codeName);
+				
+			}catch (Exception e) {
+				
+			}
 			
 		}else
 		{

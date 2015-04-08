@@ -9,6 +9,7 @@ public class CandleStick implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private double open, high, low, close, volume;
 	private Date date;
+	private String stockCode; //Utilizado somente para simulacao
 
 	public CandleStick(double open, double high, double low, double close,
 			double volume, Date date) {
@@ -58,5 +59,13 @@ public class CandleStick implements Serializable {
 		return "Date:" + this.date + " Open:" + this.open + " High:"
 				+ this.high + " Low:" + this.low + " Close:" + this.close
 				+ " Volume:" + this.volume;
+	}
+
+	public String getStockCode() {
+		return stockCode;
+	}
+
+	public void setStockCode(String stockCode) {
+		this.stockCode = stockCode;
 	}
 }

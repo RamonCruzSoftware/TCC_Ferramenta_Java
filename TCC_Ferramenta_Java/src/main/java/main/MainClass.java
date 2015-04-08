@@ -182,7 +182,7 @@ public class MainClass {
 		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
 		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
 		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
-		
+		//PETR4.SA PRBC4.SA SANB4.SA
 		
 		
 	}

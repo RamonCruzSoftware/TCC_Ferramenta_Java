@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -108,11 +109,11 @@ public class ClasseA {
 					this.stockCandleList.put(stock.getCodeName(), stock.getCandleSticks());
 			}
 		}
-//		System.out.println("Carregado com "+this.stockCandleList.size());
-//		for(Entry<String, ArrayList<CandleStick>>c:this.stockCandleList.entrySet())
-//		{
-//			System.out.println("Code "+c.getKey());
-//		}
+		System.out.println("Carregado com "+this.stockCandleList.size());
+		for(Entry<String, ArrayList<CandleStick>>c:this.stockCandleList.entrySet())
+		{
+			System.out.println("Code "+c.getKey());
+		}
 		
 	}
 
