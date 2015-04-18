@@ -44,6 +44,8 @@ public class ConversationsID {
 	public static final String EXPERT_USER_NAME = "User name";
 
 	public static final String EXPERT_REMOVE_STOCK = "Remove stock";
+	
+	public static final String SOLD="Sold";
 
 	// User Conversations
 	public static final int SELL_REQUEST = 10;

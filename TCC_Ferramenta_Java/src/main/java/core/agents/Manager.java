@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -141,7 +142,8 @@ public class Manager extends Agent {
 									});
 								}
 								// Se usuario estiver logado
-								if (message.getConversationId() == ConversationsID.USER_LOGGED) {
+								if (message.getConversationId() == ConversationsID.USER_LOGGED) 
+								{
 									try {
 										if (manager.stockListForUserApprove
 												.size() > 0) {
@@ -156,13 +158,16 @@ public class Manager extends Agent {
 										e.printStackTrace();
 									}
 								}
-								if (message.getConversationId() == ConversationsID.EXPERT_REMOVE_STOCK) {// TODO
-																											// LOG
-									System.out.println(getLocalName()
-											+ ": "
-											+ message.getSender()
-													.getLocalName()
-											+ " vendeu acoes e lucrou.. .");
+								if(message.getConversationId()==ConversationsID.SOLD)
+								{//TODO Terminar 
+									double value=Double.parseDouble(message.getContent());
+									System.out.println("Vendido valor recebido de volta "+value);
+									
+								}
+								if (message.getConversationId() == ConversationsID.EXPERT_REMOVE_STOCK)
+								{// TODO
+								// LOG
+									System.out.println(getLocalName()+ ": "+ message.getSender().getLocalName()+ " vendeu acoes e lucrou.. .");
 								}
 								// Dead Experts
 								if (message.getConversationId() == ConversationsID.DEAD_EXPERT) {
@@ -307,14 +312,11 @@ public class Manager extends Agent {
 												}
 												ACLMessage removeMessange = new ACLMessage(
 														ACLMessage.INFORM);
-												removeMessange
-														.addReceiver(new AID(
+												removeMessange.addReceiver(new AID(
 																expertName,
 																AID.ISLOCALNAME));
-												removeMessange
-														.setConversationId(ConversationsID.EXPERT_REMOVE_STOCK);
-												removeMessange
-														.setContent(stockCodeNameToRemove);
+												removeMessange.setConversationId(ConversationsID.EXPERT_REMOVE_STOCK);
+												removeMessange.setContent(stockCodeNameToRemove);
 
 												myAgent.send(removeMessange);
 
@@ -407,11 +409,21 @@ public class Manager extends Agent {
 																	manager.stockListManaged
 																			.add(stock);
 																}
-																for (int i = 0; i < 2; i++) {
-																	manager.stockListManaged
-																			.add(listTemp_refused
-																					.get(i));
-																}
+																if(listTemp_refused.size()>=2)
+																	for (int i = 0; i < 2; i++) 
+																	{
+																		manager.stockListManaged
+																				.add(listTemp_refused
+																						.get(i));
+																	}
+																	else
+																		for (int i = 0; i < listTemp_refused.size(); i++) 
+																		{
+																			manager.stockListManaged
+																					.add(listTemp_refused
+																							.get(i));
+																		}
+																
 															}
 														}
 															break;
@@ -424,15 +436,26 @@ public class Manager extends Agent {
 																					.get(i));
 																}
 															} else {
-																for (Stock stock : listTemp_approved) {
+																for (Stock stock : listTemp_approved) 
+																{
 																	manager.stockListManaged
 																			.add(stock);
 																}
-																for (int i = 0; i < 2; i++) {
+																if(listTemp_refused.size()>=2)
+																for (int i = 0; i < 2; i++) 
+																{
 																	manager.stockListManaged
 																			.add(listTemp_refused
 																					.get(i));
 																}
+																else
+																	for (int i = 0; i < listTemp_refused.size(); i++) 
+																	{
+																		manager.stockListManaged
+																				.add(listTemp_refused
+																						.get(i));
+																	}
+																	
 															}
 														}
 															break;
@@ -449,11 +472,21 @@ public class Manager extends Agent {
 																	manager.stockListManaged
 																			.add(stock);
 																}
-																for (int i = 0; i < 2; i++) {
-																	manager.stockListManaged
-																			.add(listTemp_refused
-																					.get(i));
-																}
+																if(listTemp_refused.size()>=2)
+																	for (int i = 0; i < 2; i++) 
+																	{
+																		manager.stockListManaged
+																				.add(listTemp_refused
+																						.get(i));
+																	}
+																	else
+																		for (int i = 0; i < listTemp_refused.size(); i++) 
+																		{
+																			manager.stockListManaged
+																					.add(listTemp_refused
+																							.get(i));
+																		}
+																
 															}
 														}
 															break;
@@ -495,10 +528,8 @@ public class Manager extends Agent {
 																		// valores
 													manager.walletManagerAuxiliary
 															.putInfoExperts(manager.infoExperts);
-													System.out
-															.println("Enviando mensagem para ..");
-													System.out
-															.println(manager.infoExperts);
+													System.out.println(manager.getLocalName()+":Enviando mensagem para ..");
+													System.out.println(manager.infoExperts);
 													for (Entry<String, ArrayList<Stock>> s : manager.infoExperts
 															.entrySet()) {
 														try {
@@ -669,11 +700,15 @@ public class Manager extends Agent {
 
 	private void createExperts(int userProfile, String userIdentifier,
 			ArrayList<Stock> listStocks) {
+		
 		PlatformController container = getContainerController();
 		AgentController agentController;
 		infoExperts = new HashMap<String, ArrayList<Stock>>();
 		strategyExperts = new HashMap<String, String>();
 		ArrayList<Stock> stockSeleted = new ArrayList<Stock>();
+		
+		listStocks=manager.removeRepetitions(listStocks);
+		
 		// Create the experts agents
 		if (userProfile == CORAJOSO) {
 			if (listStocks.size() >= 8) {
@@ -692,22 +727,23 @@ public class Manager extends Agent {
 				for (int i = stockSeleted.size() / 2; i < stockSeleted.size(); i++) {
 					listB.add(stockSeleted.get(i));
 				}
-				infoExperts.put(userIdentifier + "[" + 1 + "]", listA);
-				infoExperts.put(userIdentifier + "[" + 2 + "]", listB);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
+			//	infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
 
-				// strategyExperts.put(userIdentifier+"["+1+"]",
-				// ConversationsID.EXPERT_STRATEGY_MME_13_21);
-				strategyExperts.put(userIdentifier + "[" + 1 + "]",
-						ConversationsID.EXPERT_STRATEGY_FAKE);
-				strategyExperts
-						.put(userIdentifier + "[" + 2 + "]",
-								ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF);
+				strategyExperts.put("Expert_"+userIdentifier+"["+1+"]", ConversationsID.EXPERT_STRATEGY_MME_13_21);
+			//	strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF);
+				//TODO apagar print
+				System.out.println(manager.getLocalName()+": agente 1 lista ");
+				for(Stock s:listA) System.out.println("->[1] "+s.getCodeName());
+//				System.out.println(manager.getLocalName()+": agente 1 lista ");
+//				for(Stock s:listB) System.out.println("->[2] "+s.getCodeName());
+				
 
 			} else {
 				if (stockSeleted.size() == 1) {
-					infoExperts.put(userIdentifier + "[" + 1 + "]",
+					infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",
 							stockSeleted);
-					strategyExperts.put(userIdentifier + "[" + 1 + "]",
+					strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",
 							ConversationsID.EXPERT_STRATEGY_MME_13_21);
 				}
 			}
@@ -735,16 +771,16 @@ public class Manager extends Agent {
 				for (int i = (int) ((listSize / 3) * 2); i < (int) listSize; i++) {
 					listC.add(stockSeleted.get(i));
 				}
-				infoExperts.put(userIdentifier + "[" + 1 + "]", listA);
-				infoExperts.put(userIdentifier + "[" + 2 + "]", listB);
-				infoExperts.put(userIdentifier + "[" + 3 + "]", listC);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 3 + "]", listC);
 
 				// Mudar estrategia
-				strategyExperts.put(userIdentifier + "[" + 1 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",
 						ConversationsID.EXPERT_STRATEGY_MME_13_21);
-				strategyExperts.put(userIdentifier + "[" + 2 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",
 						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
-				strategyExperts.put(userIdentifier + "[" + 3 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",
 						ConversationsID.EXPERT_STRATEGY_MME_13_21);
 
 			}
@@ -788,30 +824,30 @@ public class Manager extends Agent {
 				for (int i = (int) ((listSize / 7) * 6); i < (int) (listSize); i++) {
 					listG.add(stockSeleted.get(i));
 				}
-				infoExperts.put(userIdentifier + "[" + 1 + "]", listA);
-				infoExperts.put(userIdentifier + "[" + 2 + "]", listB);
-				infoExperts.put(userIdentifier + "[" + 3 + "]", listC);
-				infoExperts.put(userIdentifier + "[" + 4 + "]", listD);
-				infoExperts.put(userIdentifier + "[" + 5 + "]", listE);
-				infoExperts.put(userIdentifier + "[" + 6 + "]", listF);
-				infoExperts.put(userIdentifier + "[" + 7 + "]", listG);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 3 + "]", listC);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 4 + "]", listD);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 5 + "]", listE);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 6 + "]", listF);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 7 + "]", listG);
 
 				// Mudar estrategia
-				strategyExperts.put(userIdentifier + "[" + 1 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",
 						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
-				strategyExperts.put(userIdentifier + "[" + 2 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",
 						ConversationsID.EXPERT_STRATEGY_MMS_21_34);
-				strategyExperts.put(userIdentifier + "[" + 3 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",
 						ConversationsID.EXPERT_STRATEGY_MME_21_34);
 
-				strategyExperts.put(userIdentifier + "[" + 4 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 4 + "]",
 						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
-				strategyExperts.put(userIdentifier + "[" + 5 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 5 + "]",
 						ConversationsID.EXPERT_STRATEGY_MMS_21_34);
-				strategyExperts.put(userIdentifier + "[" + 6 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 6 + "]",
 						ConversationsID.EXPERT_STRATEGY_MME_21_34);
 
-				strategyExperts.put(userIdentifier + "[" + 7 + "]",
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 7 + "]",
 						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
 
 				// MMS (13/21) MMS(21/34) MME (21/34)
@@ -820,7 +856,7 @@ public class Manager extends Agent {
 		for (Entry<String, ArrayList<Stock>> s : infoExperts.entrySet()) {
 			try {
 				agentController = container.createNewAgent(s.getKey(),
-						"rcs.core.agents.Expert", null);
+						"core.agents.Expert", null);
 				agentController.start();
 			} catch (StaleProxyException e) {// TODO LOG
 				e.printStackTrace();
@@ -976,5 +1012,30 @@ public class Manager extends Agent {
 			} else
 				return false;
 		}
+		
+	}
+	public ArrayList<Stock> removeRepetitions(ArrayList<Stock> list)
+	{
+		ArrayList<Stock>returnList=new ArrayList<Stock>();
+		HashSet<String>codeName= new HashSet<String>();
+		
+		for(Stock s:list)
+		{
+			codeName.add(s.getCodeName());
+		}
+		for(String s:codeName)
+		{
+			for(Stock stock:list)
+			{
+				if(s.equals(stock.getCodeName()))
+					{
+						returnList.add(stock);
+						break;
+					}
+			}
+		}
+		
+		
+		return returnList;
 	}
 }

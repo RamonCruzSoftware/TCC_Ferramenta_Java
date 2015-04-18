@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -33,10 +34,10 @@ public class ClasseA {
 	{
 		new HashMap<String, ArrayList<Stock>>();
 		stockCandleList=new HashMap<String, ArrayList<CandleStick>>();
-		logg.debug("DEBUG");
-		logg.info("INFO");
-		logg.error("ERROR");
-		logg.fatal("FATAL");
+//		logg.debug("DEBUG");
+//		logg.info("INFO");
+//		logg.error("ERROR");
+//		logg.fatal("FATAL");
 	}
 //	public Stock simulationData(String codeName)
 //	{
@@ -115,6 +116,30 @@ public class ClasseA {
 			System.out.println("Code "+c.getKey());
 		}
 		
+	}
+	public ArrayList<Stock> removeRepetitions(ArrayList<Stock> list)
+	{
+		ArrayList<Stock>returnList=new ArrayList<Stock>();
+		HashSet<String>codeName= new HashSet<String>();
+		
+		for(Stock s:list)
+		{
+			codeName.add(s.getCodeName());
+		}
+		for(String s:codeName)
+		{
+			for(Stock stock:list)
+			{
+				if(s.equals(stock.getCodeName()))
+					{
+						returnList.add(stock);
+						break;
+					}
+			}
+		}
+		
+		
+		return returnList;
 	}
 
 }

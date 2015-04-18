@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
 import suport.financial.partternsCandleStick.CandleStick;
 import suport.financial.wallet.Stock;
 
 public class YahooFinance implements Runnable {
 
 	private String mainDirPath;
-
+	
 	private String subDirPath_1;
 	private String subDirPath_2;
 
@@ -79,13 +80,8 @@ public class YahooFinance implements Runnable {
 				// passando como parametro o divisor ",".
 				TableLine = Str.split(",");
 
-				DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",
-						Locale.US);
-				Date date = (Date) format.parse(TableLine[1].substring(1,
-						TableLine[1].length() - 1)
-						+ " "
-						+ TableLine[2].substring(1, TableLine[2].length() - 1));
-
+				DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mma",Locale.US);
+				Date date = (Date) format.parse(TableLine[1].substring(1,TableLine[1].length() - 1)+ " "+ TableLine[2].substring(1, TableLine[2].length() - 1));
 				try {
 
 					candleResult = new CandleStick(TableLine[3], TableLine[4],
@@ -195,7 +191,7 @@ public class YahooFinance implements Runnable {
 
 		// FeedBack
 		System.out.println("foram encontrados  " + sectors.size()
-				+ " Setores e " + list.size() + " A��es");
+				+ " Setores e " + list.size() + " Acoes");
 		System.out.println("Carregados os seguintes Stocks");
 		for (Stock s : list) {
 			System.out.println(s.getCodeName());
@@ -211,14 +207,13 @@ public class YahooFinance implements Runnable {
 	 * @param stockCodeName
 	 * @return
 	 */
+	
+	//TODO simulacao
 	public boolean storeCsvCurrentPriceStock(String stockCodeName) {
 		boolean returnResult = false;
-		String urlPath = "http://finance.yahoo.com/d/quotes.csv?s="
-				+ stockCodeName + "&f=sd1t1ohgl1v&e=.csv";
-		String dirOutputPath = this.getMainDirPath() + this.getSubDirPath_1()
-				+ this.getSubDirPath_2() + "/" + stockCodeName;
-		String fileOutputPath = dirOutputPath + "/currentPrice_"
-				+ stockCodeName + ".csv";
+		String urlPath = "http://finance.yahoo.com/d/quotes.csv?s="+ stockCodeName + "&f=sd1t1ohgl1v&e=.csv";
+		String dirOutputPath = this.getMainDirPath() + this.getSubDirPath_1()+ this.getSubDirPath_2() + "/" + stockCodeName;
+		String fileOutputPath = dirOutputPath + "/currentPrice_"+ stockCodeName + ".csv";
 
 		try {
 
@@ -252,9 +247,16 @@ public class YahooFinance implements Runnable {
 	 * @param stockNameCode
 	 * @return
 	 */
+	//TODO simulacao 
 	public boolean storeCsvHistoricalPriceStock(String stockCodeName) {
 		boolean returnResult = false;
-		Calendar currentDate = Calendar.getInstance();
+		
+		Calendar currentDate=null;
+		
+//		if(isSimulation)  currentDate=simulationSetup.getStartDateCalendar();
+//		else currentDate = Calendar.getInstance();
+		
+		currentDate = Calendar.getInstance();
 
 		String urlPath = "http://real-chart.finance.yahoo.com/table.csv?s="
 				+ stockCodeName + "&d="

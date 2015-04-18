@@ -23,7 +23,7 @@ public class Stock implements Serializable, Comparable<Stock> {
 	// For user know
 	private int suggestion;
 	private int qtd;
-	private int currentPrice;
+	private double currentPrice;
 
 	public Stock() {
 	}
@@ -34,8 +34,8 @@ public class Stock implements Serializable, Comparable<Stock> {
 	}
 
 	public boolean addCurrentCandleStick(CandleStick candleStick) {
-		if (this.candleSticks.get(this.candleSticks.size() - 1).getDate()
-				.getTime() == candleStick.getDate().getTime()) {
+		if (this.candleSticks.get(this.candleSticks.size() - 1).getDate().getTime() == candleStick.getDate().getTime()) 
+		{
 			return false;
 		} else {
 			this.candleSticks.add(candleStick);
@@ -159,12 +159,12 @@ public class Stock implements Serializable, Comparable<Stock> {
 		this.qtd = qtd;
 	}
 
-	public int getCurrentPrice() {
+	public double getCurrentPrice() {
 		return currentPrice;
 	}
 
-	public void setCurrentPrice(int currentPrice) {
+	public void setCurrentPrice(double currentPrice) {
 		this.currentPrice = currentPrice;
+		
 	}
-
 }

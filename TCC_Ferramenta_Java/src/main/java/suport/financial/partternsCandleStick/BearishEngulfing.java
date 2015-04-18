@@ -5,21 +5,32 @@ import suport.financial.partternsCandleStick.CandleStick;
 
 public class BearishEngulfing extends Pattern {
 	private ArrayList<CandleStick> list;
-
+	private int limitPeriod;
 	public BearishEngulfing(ArrayList<CandleStick> list) {
 		this.setList(list);
+		this.limitPeriod=10;
 	}
 
 	public BearishEngulfing() {
+		this.limitPeriod=10;
 	}
 
 	public ArrayList<CandleStick> findCandleSticksPatterns() {
+		
 		ArrayList<CandleStick> listResult = null;
+		ArrayList<CandleStick>toAnalize= new ArrayList<CandleStick>();
+		for(int i=((getList().size()-1)-this.limitPeriod);i<getList().size();i++)
+		{
+			toAnalize.add(getList().get(i));
+		}
+		setList(toAnalize);
+		
 		try {
 			listResult = new ArrayList<CandleStick>();
 			int i = 0;
 			double C1, C, O, O1, H, L;
-			for (i = 0; i < 5; i++) {
+			for (i = 0; i < 5; i++) 
+			{
 				if ((i + 1) < getList().size()) {
 					C1 = getList().get(i).getClose();
 					O1 = getList().get(i).getOpen();
@@ -28,9 +39,13 @@ public class BearishEngulfing extends Pattern {
 					H = getList().get(i + 1).getHigh();
 					L = getList().get(i + 1).getLow();
 
-					if ((C1 > O1) && (((C1 + O1) / 2) > C) && (O > C)
+					if (
+							(C1 > O1) && (((C1 + O1) / 2) > C) && (O > C)
 							&& (O > C1) && (C < O1)
-							&& (((O - C) / (.001 + H - L)) > 0.6)) {
+							&& (((O - C) / (.001 + H - L)) > 0.6)
+							&&((C1-O1)/C1>=0.02)
+							) 
+					{
 						listResult.add(getList().get(i + 1));
 					}
 				}

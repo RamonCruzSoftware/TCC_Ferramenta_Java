@@ -18,7 +18,8 @@ public class DarckCloud_Bullish_Strategy implements Strategy {
 
 	private ArrayList<CandleStick> candleSticks;
 
-	public String makeOrder() {
+	public String makeOrder() 
+	{
 		String order = null;
 		this.darkCloud.setList(candleSticks);
 		this.bullish.setList(candleSticks);

@@ -70,9 +70,9 @@ public class Expert extends Agent {
 			ordensToBuyOrSell = new HashMap<Stock, String>();
 			stockManager = new StockManager();
 			ordersLocker = false;
-			isSimulation=false;
+			isSimulation=true;
 			
-			if(isSimulation) expert.simulationStart("simulator", 10000);
+			if(isSimulation) expert.simulationStart("simulator", 3000);
 				
 			DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
@@ -135,12 +135,10 @@ public class Expert extends Agent {
 								}
 								if (msg.getConversationId() == ConversationsID.EXPERT_STRATEGY_MME_13_21) { // TODO
 																											// log
-									System.out.println(expert.getLocalName()
-											+ " Strategy MME 13/21");
+									System.out.println(expert.getLocalName()+ " Strategy MME 13/21");
 									Strategy mme = null;
 									for (Stock s : expert.stockList) {
-										mme = new MovingAvarangeExponentialStrategy(
-												0, 0, 0);
+										mme = new MovingAvarangeExponentialStrategy(0, 0, 0);
 										for (int i = 0; i < s.getCandleSticks()
 												.size(); i++) {
 											mme.addValue(s.getCandleSticks()
@@ -248,9 +246,7 @@ public class Expert extends Agent {
 								}
 								if (msg.getConversationId() == ConversationsID.EXPERT_STRATEGY_BEARISH_ENGULFING_BULLSH_ENGULF) {// TODO
 																																	// log
-									System.out
-											.println(expert.getLocalName()
-													+ " Strategy Bearish engulfing bullsh engulf");
+									System.out.println(expert.getLocalName()+ " Strategy Bearish engulfing bullsh engulf");
 									Strategy BearBull = null;
 									for (Stock s : expert.stockList) {
 										BearBull = new Bearish_Bullish_Strategy();
@@ -277,9 +273,7 @@ public class Expert extends Agent {
 								}
 								if (msg.getConversationId() == ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF) {// TODO
 																															// log
-									System.out
-											.println(expert.getLocalName()
-													+ " Strategy dark cloud bullish engulf");
+									System.out.println(expert.getLocalName()+ " Strategy dark cloud bullish engulf");
 									Strategy DarkBull = null;
 
 									for (Stock s : expert.stockList) {
@@ -312,6 +306,23 @@ public class Expert extends Agent {
 								break;
 							case ACLMessage.AGREE: { // TODO INCLUIR O ID PARA
 														// AUTORIZACAO DE VENDAS
+								
+								if(msg.getConversationId()==ConversationsID.EXPERT_ORDER_SELL)
+								{
+									Stock stockTemp=null;
+									double value=0;
+									for(Stock s:expert.orderToApproveSell)
+									{
+										if(s.getCodeName().equals(msg.getContent()))
+											stockTemp=s;
+									}
+									value=expert.stockManager.orderSell(stockTemp);
+									ACLMessage infoValue=new ACLMessage(ACLMessage.INFORM);
+									infoValue.setConversationId(ConversationsID.SOLD);
+									infoValue.setContent(""+value);
+									System.out.println(expert.getLocalName()+": Vendido ["+stockTemp.getCodeName()+"]- R$ "+value);
+									
+								}
 
 								if (msg.getConversationId() == ConversationsID.EXPERT_ORDER_BUY) {
 									String managerAnswer = msg.getContent()
@@ -329,27 +340,17 @@ public class Expert extends Agent {
 									expert.quota = Double.parseDouble(value);
 									// TODO log
 									System.out.println(getLocalName()
-											+ ": D� R$:" + expert.quota
+											+ ": Da R$:" + expert.quota
 											/ expert.orderToApproveBuy.size()
 											+ " para cada acao");
 
 									for (Stock s : expert.orderToApproveBuy) {
 										if (s != null) {
-											int qtd = (int) (expert.quota / s
-													.getCurrentCandleStick()
-													.getClose());
+											int qtd = (int) (expert.quota / s.getCurrentCandleStick().getClose());
 											// TODO log
-											System.out.println(getLocalName()
-													+ " comprando "
-													+ s.getCodeName());
-											System.out
-													.println(getLocalName()
-															+ " preco unitario R$: "
-															+ (s.getCurrentCandleStick()
-																	.getClose()));
-											System.out.println(getLocalName()
-													+ " Quantidade a comprar "
-													+ qtd);
+											System.out.println(getLocalName()+ " comprando "+ s.getCodeName());
+											System.out.println(getLocalName()+ " preco unitario R$: "+ (s.getCurrentCandleStick().getClose()));
+											System.out.println(getLocalName()+ " Quantidade a comprar "+ qtd);
 
 											if (qtd > 0) {
 												expert.stockManager.orderBuy(s,qtd);
@@ -366,7 +367,7 @@ public class Expert extends Agent {
 																									// log
 									System.out.println(this.getAgent()
 											.getLocalName()
-											+ ": Manager dind't approved");
+											+ expert.getLocalName()+": Manager dind't approved");
 									expert.ordersLocker = false;
 								}
 							}break;
@@ -375,63 +376,72 @@ public class Expert extends Agent {
 								if(msg.getConversationId()==ConversationsID.SIMULATION_REQUEST)
 								{
 									try{
+										
 										Strategy strategy = null;
 										CandleStick current = null;
 										String codeName=null;
 										Stock stockTemp = null;
 										
 										 current=(CandleStick)msg.getContentObject();
-										 codeName=msg.getContent();
+										 codeName=current.getStockCode();
+										 
+//										 System.out.println(expert.getLocalName()+":[SIMULATION] Recebido cotacao :"+codeName+" ;" +
+//										 		"date:"+current.getDate()+" close:R$ "+current.getClose());
 										 
 										 for(Entry<Stock, Strategy>s:expert.stocksMap.entrySet())
 										 {
 											 	if(s.getKey().getCodeName().equalsIgnoreCase(codeName))
 											 		{
-											 		 stockTemp=s.getKey();
-											 		 strategy=s.getValue();
+												 		 stockTemp=s.getKey();
+												 		 strategy=s.getValue();
 											 		}
 										 }
 										 
 										 if(current!=null && codeName!=null)
 										 {
+											
 											strategy.addValue(current.getClose());
+											strategy.addCandleStick(current);
+											stockTemp.setCurrentPrice(current.getClose());
+											stockTemp.addCurrentCandleStick(current);
 											// TODO log
-											System.out.println(stockTemp.getCodeName()
-													+ " Order  " + strategy.makeOrder());
+											System.out.println(expert.getLocalName()+" : "+stockTemp.getCodeName()+ 
+																"-Order  " + strategy.makeOrder()+" valor:"+current.getClose()+
+																"  Date:"+stockTemp.getCandleSticks().get(stockTemp.getCandleSticks().size()-1).getDate()+"\n\n");
 											// Armazeno as ordens para pedir autorizacao ao
 											// manager
-											if (expert.ordensToBuyOrSell.get(stockTemp) != null
-													&& !strategy.makeOrder().equalsIgnoreCase(
-															"nothing")
-													&& !strategy.makeOrder().equalsIgnoreCase(
-															null)) 
+											if (
+													expert.ordensToBuyOrSell.get(stockTemp) == null
+													&& !strategy.makeOrder().equalsIgnoreCase("nothing")
+													&& !strategy.makeOrder().equalsIgnoreCase(null)
+													&& !expert.ordersLocker
+												) 
 											{
-												expert.ordensToBuyOrSell.remove(stockTemp);
-												expert.ordensToBuyOrSell.put(stockTemp,
-														strategy.makeOrder());
+//												expert.ordensToBuyOrSell.remove(stockTemp);
+												
+												//expert.ordensToBuyOrSell.put(stockTemp,strategy.makeOrder());//Descomentar essa linha
 												// TODO LOG
-												System.out
-														.println("pedir para vender essa acao "
-																+ stockTemp);
+											//	System.out.println(expert.getLocalName()+":[SIMULACAO] pedir para compra/vender essa acao "+ stockTemp+"[R$:"+stockTemp.getCurrentPrice()+" ]");
 											} else {
 												// TODO acredito q essa linha nao seja
 												// necessaria
-												// expert.ordensToBuyOrSell.put(stockTemp,
-												// strategy.makeOrder());
+												
+												// expert.ordensToBuyOrSell.put(stockTemp,strategy.makeOrder());
 											}
-											
+									
 											expert.stocksMap.remove(stockTemp);
 											expert.stocksMap.put(stockTemp, strategy);
 												
-											}
+										 }
+										 
 											if (expert.ordensToBuyOrSell.size() > 0) 
 											{
-												expert.ordersToBuyOrSell();
 												// TODO log
-												System.out
-														.println("Existem acoes para vender ou comprar ");
+												System.out.println(expert.getLocalName()+":[SIMULACAO] Existem acoes para vender ou comprar ");
+												expert.ordersToBuyOrSell();
+												
 											}
-										 
+										
 									
 									}catch (Exception e) 
 											{
@@ -502,7 +512,8 @@ public class Expert extends Agent {
 							msgRequest.setConversationId(ConversationsID.SIMULATION_REQUEST);
 							msgRequest.addReceiver(new AID(simulationAgentName, AID.ISLOCALNAME));
 							msgRequest.setContent(s.getKey().getCodeName());
-							myAgent.send(msgRequest);
+							myAgent.send(msgRequest); //TODO
+							System.out.println(expert.getLocalName()+":Pedido de cotacao ["+s.getKey().getCodeName()+"] Feito");
 						}
 					}
 				});
@@ -589,23 +600,25 @@ public class Expert extends Agent {
 										+ " Order  " + strategy.makeOrder());
 								// Armazeno as ordens para pedir autorizacao ao
 								// manager
-								if (expert.ordensToBuyOrSell.get(e.getKey()) != null
+								if (expert.ordensToBuyOrSell.get(e.getKey()) == null
 										&& !strategy.makeOrder().equalsIgnoreCase(
 												"nothing")
 										&& !strategy.makeOrder().equalsIgnoreCase(
-												null)) {
-									expert.ordensToBuyOrSell.remove(e.getKey());
-									expert.ordensToBuyOrSell.put(e.getKey(),
-											strategy.makeOrder());
+												null)
+												&&!expert.ordersLocker
+												) {
+									//expert.ordensToBuyOrSell.remove(e.getKey());
+									expert.ordensToBuyOrSell.put(e.getKey(),strategy.makeOrder());
 									// TODO LOG
-									System.out
-											.println("pedir para vender essa acao "
+									System.out.println("pedir para vender essa acao "
 													+ e.getKey());
 								} else {
 									// TODO acredito q essa linha nao seja
 									// necessaria
-									// expert.ordensToBuyOrSell.put(stockTemp,
-									// strategy.makeOrder());
+//									if(expert.ordensToBuyOrSell.get(e.getKey())==null)
+//										expert.ordensToBuyOrSell.put(stockTemp,strategy.makeOrder());
+									
+									
 								}
 								expert.stocksMap.remove(e);
 								expert.stocksMap.put(stockTemp, strategy);
@@ -641,13 +654,11 @@ public class Expert extends Agent {
 								for (Entry<Stock, Strategy> e : expert.stocksMap
 										.entrySet()) {// TODO log
 									stockTemp = e.getKey();
-									System.out.println(getLocalName()
-											+ ": Request Current Value of "
-											+ e.getKey().getCodeName());
-									current = expert
-											.requestStocksPrices(e.getKey());
+									System.out.println(getLocalName()+ ": Request Current Value of "+ e.getKey().getCodeName());
+									current = expert.requestStocksPrices(e.getKey());
 
-									if (current != null) {
+									if (current != null)
+									{
 										strategy = e.getValue();
 										strategy.addValue(current.getClose());
 
@@ -659,20 +670,14 @@ public class Expert extends Agent {
 
 										// Armazeno as ordens para pedir autorizacao
 										// ao manager
-										if (expert.ordensToBuyOrSell
-												.get(e.getKey()) != null
-												&& !strategy
-														.makeOrder()
-														.equalsIgnoreCase("nothing")) {
-											expert.ordensToBuyOrSell.remove(e
-													.getKey());
-											expert.ordensToBuyOrSell.put(
-													e.getKey(),
-													strategy.makeOrder());
+										if (expert.ordensToBuyOrSell.get(e.getKey()) == null
+												&& !strategy.makeOrder().equalsIgnoreCase("nothing"))
+										{
+											//expert.ordensToBuyOrSell.remove(e.getKey());
+											expert.ordensToBuyOrSell.put(e.getKey(),strategy.makeOrder());
 
 										} else {
-											expert.ordensToBuyOrSell.put(stockTemp,
-													strategy.makeOrder());
+										//	expert.ordensToBuyOrSell.put(stockTemp,strategy.makeOrder());
 										}
 										expert.stocksMap.remove(e);
 										expert.stocksMap.put(stockTemp, strategy);
@@ -703,49 +708,53 @@ public class Expert extends Agent {
 		expert.orderToApproveSell = new ArrayList<Stock>();
 
 		if (expert.ordensToBuyOrSell.size() > 0) {
-			for (Entry<Stock, String> e : expert.ordensToBuyOrSell.entrySet()) {
-				managedStock = expert.managedStockDao.getManagedStock(e
-						.getKey().getCodeName(), expert.userIdentifier);
+			for (Entry<Stock, String> e : expert.ordensToBuyOrSell.entrySet())
+			{
+				managedStock = expert.managedStockDao.getManagedStock(e.getKey().getCodeName(), expert.userIdentifier);
 				try {
 					if (managedStock == null) {
-						if (e.getValue().equalsIgnoreCase("Buy")) {// TODO Log
+						if (e.getValue().equalsIgnoreCase("Buy")) 
+						{// TODO Log
 																	// Autorizacao
 																	// de compra
 							Stock stockTemp = e.getKey();
-							stockTemp
-									.setSuggestion(ConversationsID.BUY_REQUEST);
+							stockTemp.setSuggestion(ConversationsID.BUY_REQUEST);
 							expert.orderToApproveBuy.add(stockTemp);
+							expert.ordensToBuyOrSell.remove(e.getKey());
+							managedStock = new ManagedStock();
+							managedStock.setCodeName(e.getKey().getCodeName());
+							managedStock.setUserIdentifier(expert.userIdentifier);
+							expert.managedStockDao.insertManagedStock(managedStock);
+							
 
 						} else if (e.getValue().equalsIgnoreCase("Sell")) {
 							// Autorizacao de venda
 							Stock stockTemp = e.getKey();
-							stockTemp
-									.setSuggestion(ConversationsID.SELL_REQUEST);
+							stockTemp.setSuggestion(ConversationsID.SELL_REQUEST);
 							expert.orderToApproveSell.add(stockTemp);
+							expert.ordensToBuyOrSell.remove(e.getKey());
 						}
 					} else {
 						if (managedStock != null
 								&& managedStock.getBuyed() == null
-								&& e.getValue().equalsIgnoreCase("Buy")) {
+								&& e.getValue().equalsIgnoreCase("Buy")) 
+						{
 							// Autorizacao de compra
 							Stock stockTemp = e.getKey();
-							stockTemp
-									.setSuggestion(ConversationsID.BUY_REQUEST);
+							stockTemp.setSuggestion(ConversationsID.BUY_REQUEST);
 							expert.orderToApproveBuy.add(stockTemp);
+							expert.ordensToBuyOrSell.remove(e.getKey());
 						}
 					}
 				} catch (Exception error) {// TODO log
-											// error.printStackTrace();
+											error.printStackTrace();
 				}
 			}// Fim for
 		}
 		if (expert.orderToApproveBuy.size() > 0 && !expert.ordersLocker) {// TODO
 																			// log
-			System.out.println(getLocalName()
-					+ " :Pedir autorizacao para  comprar "
-					+ expert.orderToApproveBuy.size() + " Acoes");
-			System.out.println(getLocalName() + " :Comprar  "
-					+ expert.orderToApproveBuy.size() + " Acoes");
+			System.out.println(getLocalName()+ " :Pedir autorizacao para  comprar "+ expert.orderToApproveBuy.size() + " Acoes");
+			System.out.println(getLocalName() + " :Comprar  "+ expert.orderToApproveBuy.size() + " Acoes");
 		}
 		// TODO mudar paramentros perfomative
 		if (expert.orderToApproveBuy.size() > 0 && !expert.ordersLocker) {
@@ -757,8 +766,7 @@ public class Expert extends Agent {
 					try {// TODO log
 						ACLMessage msg = new ACLMessage(ACLMessage.PROPOSE);
 						msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
-						msg.addReceiver(new AID(expert.managerName,
-								AID.ISLOCALNAME));
+						msg.addReceiver(new AID(expert.managerName,AID.ISLOCALNAME));
 						msg.setContentObject(expert.orderToApproveBuy);
 						myAgent.send(msg);
 
@@ -779,18 +787,17 @@ public class Expert extends Agent {
 				@Override
 				public void action() {
 					try {// TODO log
-						for (Stock stock : expert.orderToApproveSell) {
-							if (expert.stockManager.stockBougth(stock)) {
+						for (Stock stock : expert.orderToApproveSell) 
+						{
+							if (expert.stockManager.stockBougth(stock)) 
+							{
 								if (stock != null)
 									expert.stockManager.orderSell(stock);
 								double profitValue;
-								ACLMessage msg = new ACLMessage(
-										ACLMessage.PROPOSE);
+								ACLMessage msg = new ACLMessage(ACLMessage.PROPOSE);
 								msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
-								msg.addReceiver(new AID(expert.managerName,
-										AID.ISLOCALNAME));
-								profitValue = expert.stockManager
-										.getProfitValue(stock);
+								msg.addReceiver(new AID(expert.managerName,AID.ISLOCALNAME));
+								profitValue = expert.stockManager.getProfitValue(stock);
 								msg.setContent("" + profitValue);
 								expert.stockManager.removeManagedStock(stock);
 								myAgent.send(msg);
@@ -838,7 +845,7 @@ public class Expert extends Agent {
 			}
 		}
 
-		public void orderSell(Stock stock) {
+		public double orderSell(Stock stock) {
 			ManagedStock managedStockStored = this.managedStockDao
 					.getManagedStock(stock.getCodeName(), userIdentifier);
 			double profitPercent = 0;
@@ -846,22 +853,20 @@ public class Expert extends Agent {
 
 			try {
 				if (managedStockStored != null) {
-					profitValue = stock.getCurrentCandleStick().getClose()
-							- managedStockStored.getBuyed().getClose();
-					profitPercent = stock.getCurrentCandleStick().getClose()
-							/ profitValue;
-					ManagedStock managedStock_temp = this.listManagedStock
-							.get(stock.getCodeName());
-					managedStock_temp.setProfitPercent(managedStock_temp
-							.getProfitPercent() + profitPercent);
-					managedStock_temp.setProfitValue(managedStock_temp
-							.getProfitValue() + profitValue);
-					this.listManagedStock.put(stock.getCodeName(),
-							managedStock_temp);
+					
+					profitValue = stock.getCurrentCandleStick().getClose()- managedStockStored.getBuyed().getClose();
+					profitPercent = stock.getCurrentCandleStick().getClose()/ profitValue;
+					ManagedStock managedStock_temp = this.listManagedStock.get(stock.getCodeName());
+					managedStock_temp.setProfitPercent(managedStock_temp.getProfitPercent() + profitPercent);
+					managedStock_temp.setProfitValue(managedStock_temp.getProfitValue() + profitValue);
+					this.listManagedStock.put(stock.getCodeName(),managedStock_temp);
+					
+					
 				}
 			} catch (Exception e) {// TODO log
 				e.printStackTrace();
 			}
+			return profitValue;
 		}
 
 		public void removeManagedStock(Stock stock) {

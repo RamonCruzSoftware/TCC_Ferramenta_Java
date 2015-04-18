@@ -1,6 +1,16 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+
+import core.agents.util.SimulationSetup;
+
+import suport.financial.wallet.Stock;
+
+
 
 
 public class MainClass {
@@ -171,18 +181,57 @@ public class MainClass {
 //		System.out.println(" value " + value);
 		
 		
-		ClasseA a=new ClasseA(new Date(113, 1, 1),new Date(113, 2, 3));
-		
-		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
-		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
-		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
-		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
-		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
-		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
-		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
-		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
-		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+//		ClasseA a=new ClasseA(new Date(113, 1, 1),new Date(113, 2, 3));
+//		
+//		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+//		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+//		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+//		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+//		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+//		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+//		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+//		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
+//		System.out.println("content :"+a.simulation("BAZA3.SA").getDate());
 		//PETR4.SA PRBC4.SA SANB4.SA
+		
+//		ClasseA classe=new ClasseA();
+//		
+//		ArrayList<Stock> list= new ArrayList<Stock>();
+//		
+//		Stock a=new Stock("RAMON","CASA");
+//		Stock b=new Stock("RENAN","CASA");
+//		Stock c=new Stock("NAYANE","CASA");
+//		Stock d=new Stock("PRISCILA","CASA");
+//		Stock e=new Stock("DIONA","CASA");
+//		Stock f=new Stock("IARA","CASA");
+//		
+//		list.add(a);
+//		list.add(b);
+//		list.add(a);
+//		list.add(c);
+//		list.add(d);
+//		list.add(d);
+//		list.add(b);
+//		list.add(e);
+//		list.add(f);
+//		list.add(c);
+//		
+//		for(Stock s:list)
+//		{
+//			System.out.println("->"+s.getCodeName());
+//		}
+//		System.out.println("===");
+//		ArrayList<Stock>list1;
+//		list=classe.removeRepetitions(list);;
+//		
+//		for(Stock s:list)
+//		{
+//			System.out.println("->"+s.getCodeName());
+//		}
+		
+		
+		
+		
 		
 		
 	}

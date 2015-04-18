@@ -99,8 +99,8 @@ public class Creator extends Agent {
 				{
 					private static final long serialVersionUID = 1L;
 					@Override
-					public void action() {
-						creator.log.debug("Comportamento OneShor iniciado");
+					public void action() {//TODO
+						//creator.log.debug("Comportamento OneShor iniciado");
 						ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 						message.setLanguage(ConversationsID.LANGUAGE);
 						message.setPerformative(ACLMessage.INFORM);
@@ -112,6 +112,7 @@ public class Creator extends Agent {
 						myAgent.send(message);
 						//TODO
 						//creator.log.info("Gestor :Manager_"+userLogged+" Alertado usuario logado");
+						System.out.println("Gestor :Manager_"+userLogged+" Alertado usuario logado");
 					}
 				});
 			}
@@ -140,7 +141,7 @@ public class Creator extends Agent {
 				argument[0] = "Xms1024m";
 
 				AgentController agentController = container.createNewAgent(
-						nameAgentManager, "rcs.core.agents.Manager", argument);
+						nameAgentManager, "core.agents.Manager", argument);
 				agentController.start();
 
 			} catch (Exception e) {

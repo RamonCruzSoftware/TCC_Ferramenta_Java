@@ -15,7 +15,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import javax.swing.JOptionPane;
+
 import org.apache.logging.log4j.*;
+
+import core.agents.util.SimulationSetup;
 import suport.financial.wallet.Stock;
 import suport.statistical.Statistical;
 import suport.util.InfoConversations;
@@ -38,6 +43,8 @@ public class Hunter extends Agent {
 	private String subDir_1 = "/TCC2";
 	private String subDir_2 = "/Ativos";
 	private String sectorsCsvFilePath = "/home/ramon/Documentos/Setores";
+	private SimulationSetup simulationSetup;
+	private boolean isSimulation;
 
 	protected void setup() {
 		try {
@@ -46,6 +53,9 @@ public class Hunter extends Agent {
 			conversations = true;
 			stockDao = new StockDao();
 			statistical = new Statistical();
+			
+			simulationSetup=new SimulationSetup();
+			isSimulation=true;
 
 			DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
@@ -95,31 +105,47 @@ public class Hunter extends Agent {
 				@Override
 				public void action() {
 					try {
-						File file = new File(hunter.dir_1 + hunter.subDir_1
-								+ hunter.subDir_2);
+						File file = new File(hunter.dir_1 + hunter.subDir_1+ hunter.subDir_2);
 						if (file.isDirectory()) 
 						{
 							if (file.listFiles().length > 2)//TODO
-//							   hunter.log.debug("Arquivos CSV ja foram baixados");
+						   {
+							//	hunter.log.debug("Arquivos CSV ja foram baixados");
+								//hunter.loadDataBase();
+							}
+							else 
+							{
+								//hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1, hunter.subDir_2,hunter.sectorsCsvFilePath);
+							}
 							if (hunter.stockDao.getStocksPricesCount() == 0) 
 							{//TODO
 //								hunter.log.debug("Carregar dados no Banco");
-//								hunter.loadDataBase();
+								System.out.println(hunter.getLocalName()+":Carregar dados no Banco");
+								hunter.loadDataBase();
 //								hunter.log.debug("Banco carregado com "+hunter.stockDao.getStocksPricesCount()+"cotacoes");
 								
-							} else {
+							} else 
+							{
 								//TODO
+								
 //								hunter.log.debug("Banco ja carregado com "+ hunter.stockDao.getStocksPricesCount()+ " Cotacoes");
-								hunter.stockList = hunter.stockDao.getAllStocksWithPrices();
+								System.out.println(hunter.getLocalName()+":Banco jah carregado com "+ hunter.stockDao.getStocksPricesCount()+ " Cotacoes");
+								
+								if(!isSimulation)hunter.stockList = hunter.stockDao.getAllStocksWithPrices();
+								else hunter.stockList=hunter.stockDao.getAllStocksWithPricesBetweenInterval(hunter.simulationSetup.getStartDate(), hunter.simulationSetup.getFinishDate());
+								
 //								hunter.log.debug("Iniciando procedimento de calculo de valores estatisticos");
-								hunter.downloadCurrentCsvFiles(hunter.dir_1,hunter.subDir_1, hunter.subDir_2,hunter.sectorsCsvFilePath);
+								
+								System.out.println(hunter.getLocalName()+":Iniciando procedimento de calculo de valores estatisticos");
+								if(!isSimulation)hunter.downloadCurrentCsvFiles(hunter.dir_1,hunter.subDir_1, hunter.subDir_2,hunter.sectorsCsvFilePath);
+								else hunter.calculateStatistical();
 							}
-						} else { //TODO
+						} else
+						{ //TODO
 						//	hunter.log.debug("Iniciando procedimento de downloand de csv com cotacoes");
 							hunter.conversations = false;
-							hunter.downloadCsvFiles(hunter.dir_1,
-									hunter.subDir_1, hunter.subDir_2,
-									hunter.sectorsCsvFilePath);
+							System.out.println(hunter.getLocalName()+":Baixar CSV");
+							hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1, hunter.subDir_2,hunter.sectorsCsvFilePath);
 						}
 					} catch (Exception e) { //TODO
 						e.printStackTrace();
@@ -259,8 +285,8 @@ public class Hunter extends Agent {
 								upperLimit = info.getUpperPercent();
 								int countLoop = 0;
 								do {
-									stocksuggestion = hunter.stockDao
-											.getStockOrderByStandardDeviation_30(
+									stocksuggestion=null;
+									stocksuggestion = hunter.stockDao.getStockOrderByStandardDeviation_30(
 													lowerLimit, upperLimit);
 									if (lowerLimit > 0)
 										lowerLimit--;
@@ -279,6 +305,7 @@ public class Hunter extends Agent {
 								upperLimit = info.getUpperPercent();
 								int countLoop = 0;
 								do {
+									stocksuggestion=null;
 									stocksuggestion = hunter.stockDao
 											.getStockOrderByStandardDeviation_30(
 													lowerLimit, upperLimit);
@@ -300,6 +327,7 @@ public class Hunter extends Agent {
 								upperLimit = info.getUpperPercent();
 								int countLoop = 0;
 								do {
+									stocksuggestion=null;
 									stocksuggestion = hunter.stockDao
 											.getStockOrderByStandardDeviation_30(
 													lowerLimit, upperLimit);
@@ -333,7 +361,7 @@ public class Hunter extends Agent {
 		}
 	}
 
-	private void downloadCurrentCsvFiles(String dir_1, String subdir_1,
+private void downloadCurrentCsvFiles(String dir_1, String subdir_1,
 			String subdir_2, String sectorsPath) {// TODO LOG
 		YahooFinance yahoo = new YahooFinance(dir_1, subdir_1, subdir_2);
 		final long ti = System.currentTimeMillis();
@@ -378,14 +406,22 @@ public class Hunter extends Agent {
 							}
 						}
 					}
-					if (codeName != null) {// TODO LOG
-						System.out.println("Baixando dados de : " + codeName);
-						System.out.println(codeName + "_current :"
-								+ storeCsvCurrentPriceStock(codeName));
-						System.out.print("\n");
+					try
+					{
+						if (codeName != null) 
+						{// TODO LOG
+							System.out.println("Baixando dados de : " + codeName);
+							System.out.println(codeName + "_current :"
+									+ storeCsvCurrentPriceStock(codeName));
+							System.out.print("\n");
+						}
+					}catch (Exception e) 
+					{
+						
 					}
+					
 				}
-			}
+			}//TODO Dar um jeito nessas threads 
 		};
 		// Thread 2
 		final int id2 = 2;
@@ -419,11 +455,18 @@ public class Hunter extends Agent {
 							}
 						}
 					}
-					if (codeName != null) {// TODO LOG
-						System.out.println("Baixando dados de : " + codeName);
-						System.out.println(codeName + "_current :"
-								+ storeCsvCurrentPriceStock(codeName));
-						System.out.print("\n");
+					try
+					{
+						if (codeName != null) 
+						{// TODO LOG
+							System.out.println("Baixando dados de : " + codeName);
+							System.out.println(codeName + "_current :"
+									+ storeCsvCurrentPriceStock(codeName));
+							System.out.print("\n");
+						}
+					}catch (Exception e) 
+					{
+						
 					}
 				}
 			}
@@ -440,8 +483,7 @@ public class Hunter extends Agent {
 							stockList.remove(0);
 						} else {
 							try {
-								System.out.println("Thread " + id3
-										+ ": Concluido!");
+								System.out.println("Thread " + id3+ ": Concluido!");
 								long t = System.currentTimeMillis();
 								System.out.println("\t\t\tTempo total :"
 										+ (t - ti));
@@ -449,8 +491,7 @@ public class Hunter extends Agent {
 								thread_finish[2] = true;
 								if (thread_finish[1] && thread_finish[0]) {
 									conversations = true;
-									System.out
-											.println("Thread 3:Download(Current) concluido");
+									System.out.println("Thread 3:Download(Current) concluido");
 									hunter.updateDataBase();
 								}
 								stockList.wait();
@@ -459,11 +500,17 @@ public class Hunter extends Agent {
 							}
 						}
 					}
-					if (codeName != null) {
-						System.out.println("Baixando dados de : " + codeName);
-						System.out.println(codeName + "_current :"
-								+ storeCsvCurrentPriceStock(codeName));
-						System.out.print("\n");
+					try
+					{
+						if (codeName != null) 
+						{// TODO LOG
+							System.out.println("Baixando dados de : " + codeName);
+							System.out.println(codeName + "_current :"+ storeCsvCurrentPriceStock(codeName));
+							System.out.print("\n");
+						}
+					}catch (Exception e) 
+					{
+						
 					}
 				}
 			}
@@ -480,8 +527,8 @@ public class Hunter extends Agent {
 	 * Dir 1: "/Users/alissonnunes/Desktop"Sub dir 1: "/Ramon"Sub dir 2 "/Cruz"
 	 * SectorsPath "/Users/alissonnunes/Desktop/Setores"
 	 */
-	private void downloadCsvFiles(String dir_1, String subdir_1,
-			String subdir_2, String sectorsPath) {
+	private void downloadCsvFiles(String dir_1, String subdir_1,String subdir_2, String sectorsPath) 
+	{
 		YahooFinance yahoo = new YahooFinance(dir_1, subdir_1, subdir_2);
 		final long ti = System.currentTimeMillis();//TODO
 	//	hunter.log.debug("Iniciando contagem de tempo e disparando threads");
@@ -528,7 +575,14 @@ public class Hunter extends Agent {
 //						hunter.log.debug("Baixando dados de : " + codeName);
 //						hunter.log.debug(codeName + "_historical :"+ storeCsvHistoricalPriceStock(codeName));
 //						hunter.log.debug(codeName + "_current :"+ storeCsvCurrentPriceStock(codeName));
-						
+						try
+						{
+							System.out.println("Baixando dados de : " + codeName);
+							storeCsvHistoricalPriceStock(codeName);
+							storeCsvCurrentPriceStock(codeName);
+						}catch (Exception e) {
+							
+						}
 					}
 				}
 			}
@@ -572,6 +626,14 @@ public class Hunter extends Agent {
 //						hunter.log.debug("Baixando dados de : " + codeName);
 //						hunter.log.debug(codeName + "_historical :"+ storeCsvHistoricalPriceStock(codeName));
 //						hunter.log.debug(codeName + "_current :"+ storeCsvCurrentPriceStock(codeName));
+						try
+						{
+							System.out.println("Baixando dados de : " + codeName);
+							storeCsvHistoricalPriceStock(codeName);
+							storeCsvCurrentPriceStock(codeName);
+						}catch (Exception e) {
+							
+						}
 					}
 				}
 			}
@@ -583,11 +645,12 @@ public class Hunter extends Agent {
 				while (true) {
 					String codeName = null;
 					synchronized (stockList) { 
-						if (stockList.size() != 0) {//TODO
+						if (stockList.size() != 0)
+						{//TODO
 							//hunter.log.debug("Baixando dados de : "+ stockList.get(0).getCodeName());
 							
 							codeName = stockList.get(0).getCodeName();
-							stockList.remove(0);//TODO
+							
 						//	hunter.log.debug("Baixando dados de : "+ stockList.get(0).getCodeName());
 							codeName = stockList.get(0).getCodeName();
 
@@ -617,6 +680,16 @@ public class Hunter extends Agent {
 //						hunter.log.debug("Baixando dados de : " + codeName);
 //						hunter.log.debug(codeName + "_historical :"+ storeCsvHistoricalPriceStock(codeName));
 //						hunter.log.debug(codeName + "_current :"	+ storeCsvCurrentPriceStock(codeName));
+					
+						try
+						{
+							System.out.println("Baixando dados de : " + codeName);
+							storeCsvHistoricalPriceStock(codeName);
+							storeCsvCurrentPriceStock(codeName);
+						}catch (Exception e) {
+							
+						}
+						
 			
 					}
 				}
@@ -653,93 +726,105 @@ public class Hunter extends Agent {
 		try {//TODO
 			//hunter.log.debug("updateDataBase()  stocks:");
 			ArrayList<Stock> stockTemp = this.stockList;
+			System.out.println(hunter.getLocalName()+":Alualizar "+stockTemp.size()+" Stocks");
 			for (int i = 1; i < stockTemp.size(); i++) 
 			{
 				try {//TODO
 					//hunter.log.debug(stockTemp.get(i).getCodeName()+ " Atualizado :"+ stockTemp.get(i).addCurrentCandleStick(yahooFinance.getCurrentValue(stockTemp.get(i).getCodeName())));
-					
+					System.out.println(stockTemp.get(i).getCodeName()+ " Atualizado :"+ stockTemp.get(i).addCurrentCandleStick(yahooFinance.getCurrentValue(stockTemp.get(i).getCodeName())));
 					if (stockTemp.get(i).getCandleSticks().size() > 0) {
 					//	hunter.log.debug(stockTemp.get(i).getCodeName()+ " DB Atuazado? "+ this.stockDao.insertCurrentStock(stockTemp.get(i)));
-						
+						System.out.println(stockTemp.get(i).getCodeName()+ " DB Atuazado? "+ this.stockDao.insertCurrentStock(stockTemp.get(i)));
 					}
 				} catch (Exception e) { 
-					//log.error("Msg:"+e.getMessage()+" Causa:"+e.getCause());		
+					//log.error("Msg:"+e.getMessage()+" Causa:"+e.getCause());	
+					e.printStackTrace();
 				}
 			}
 			//hunter.log.debug("Atualizando dados estatisticos.");
+			System.out.println(hunter.getLocalName()+":Atualizando dados estatisticos.");
 			hunter.calculateStatistical();
 		} catch (Exception e) 
 		{//TODO
 			//log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());	
+			e.printStackTrace();
 		}
 	}
 
 	private void loadDataBase() {
-		YahooFinance yahooFinance = new YahooFinance(this.dir_1, this.subDir_1,this.subDir_2);
+		YahooFinance yahooFinance;
 		this.stockList = new ArrayList<Stock>();
 		int countStocks = 0;
 		int countCandleSticks = 0;
-		ArrayList<Stock> stocksFromCsv = yahooFinance
-				.loadStocksFromCsv(this.sectorsCsvFilePath);
-		for (Stock s : stocksFromCsv) 
-		{
-			s.setCandleSticks(yahooFinance.getHistoricalValue(s.getCodeName()));//TODO
-			//hunter.log.debug(s.getCodeName() + " Carregado com "+ s.getCandleSticks().size() + " Valores");
-			if (s.getCandleSticks().size() > 0) 
+		
+		try
+		{ 
+			yahooFinance = new YahooFinance(this.dir_1, this.subDir_1,this.subDir_2);
+			ArrayList<Stock> stocksFromCsv = yahooFinance.loadStocksFromCsv(this.sectorsCsvFilePath);
+			System.out.println("Setores =:"+this.sectorsCsvFilePath);
+			if(stocksFromCsv!=null)
 			{
-				this.stockDao.storeHistoricalStockValue(s);
-				countCandleSticks += s.getCandleSticks().size();
-				countStocks++;
-				this.stockList.add(s);
+				for (Stock s : stocksFromCsv) 
+				{
+					s.setCandleSticks(yahooFinance.getHistoricalValue(s.getCodeName()));//TODO
+					//hunter.log.debug(s.getCodeName() + " Carregado com "+ s.getCandleSticks().size() + " Valores");
+					if (s.getCandleSticks().size() > 0) 
+					{
+						this.stockDao.storeHistoricalStockValue(s);
+						countCandleSticks += s.getCandleSticks().size();
+						countStocks++;
+						this.stockList.add(s);
+					}
+				}//TODO
+//				hunter.log.debug(countStocks + " Acoes persistidas com sucesso !");
+//				hunter.log.debug( this.stockList.size() + "Acoes em memoria");
+//				hunter.log.debug("Total de CandleSticks: " + countCandleSticks);
+//				hunter.log.debug("Iniciando calculo de valores estatisticos para catalogar");
+//				
+				hunter.calculateStatistical();
 			}
-		}//TODO
-//		hunter.log.debug(countStocks + " Acoes persistidas com sucesso !");
-//		hunter.log.debug( this.stockList.size() + "Acoes em memoria");
-//		hunter.log.debug("Total de CandleSticks: " + countCandleSticks);
-//		hunter.log.debug("Iniciando calculo de valores estatisticos para catalogar");
-//		
-		hunter.calculateStatistical();
+		}catch (Exception e) {
+			
+		}
+		
+		
 	}
+
 
 	private void calculateStatistical() 
 	{
+		
 		this.conversations = false;
 		for (Stock s : this.stockList) 
-		{//TODO
+		{//TODO 
+			
 			//hunter.log.debug("Calculando valores estatiscos para "+ s.getCodeName());
-			s.setAvarangeReturn_15(this.statistical.averangeReturn_15(s
-					.getCandleSticks()));
-			s.setAvarangeReturn_30(this.statistical.averangeReturn_30(s
-					.getCandleSticks()));
-			s.setStandardDeviation_15(this.statistical
-					.calculeStandardDeviation_15(s.getCandleSticks()));
-			s.setStandardDeviation_30(this.statistical
-					.calculeStandardDeviation_30(s.getCandleSticks()));
-			s.setVariance_15(this.statistical.calculeVariance_15(s
-					.getCandleSticks()));
-			s.setVariance_30(this.statistical.calculeVariance_30(s
-					.getCandleSticks()));
-			s.setVarianceCoefficient_15(this.statistical.calculeVariance_15(s
-					.getCandleSticks()));
-			s.setVarianceCoefficient_30(this.statistical.calculeVariance_30(s
-					.getCandleSticks()));
+			System.out.println("Calculando valores estatiscos para "+ s.getCodeName());
+			s.setAvarangeReturn_15(this.statistical.averangeReturn_15(s.getCandleSticks()));
+			s.setAvarangeReturn_30(this.statistical.averangeReturn_30(s.getCandleSticks()));
+			s.setStandardDeviation_15(this.statistical.calculeStandardDeviation_15(s.getCandleSticks()));
+			s.setStandardDeviation_30(this.statistical.calculeStandardDeviation_30(s.getCandleSticks()));
+			s.setVariance_15(this.statistical.calculeVariance_15(s.getCandleSticks()));
+			s.setVariance_30(this.statistical.calculeVariance_30(s.getCandleSticks()));
+			s.setVarianceCoefficient_15(this.statistical.calculeVariance_15(s.getCandleSticks()));
+			s.setVarianceCoefficient_30(this.statistical.calculeVariance_30(s.getCandleSticks()));
 			this.hunter.stockDao.updateStock(s);
 		}
 
 		this.conversations = true;//TODO
 	//	hunter.log.debug("Calculos concluidos! ");
+		
+		System.out.println(hunter.getLocalName()+": Calculos concuidos!");
 	}
 
 	@SuppressWarnings("unused")
 	private void stocksSorted(double lowerLimit, double upperLimit) {// TODO LOG
 		System.out.println("Stock Sorted by Standard Deviation 30 "
-				+ this.stockDao.getStockOrderByStandardDeviation_30(lowerLimit,
-						upperLimit).size());
-		for (Stock s : this.stockDao.getStockOrderByStandardDeviation_30(
-				lowerLimit, upperLimit)) {
+				+ this.stockDao.getStockOrderByStandardDeviation_30(lowerLimit,upperLimit).size());
+		for (Stock s : this.stockDao.getStockOrderByStandardDeviation_30(lowerLimit, upperLimit)) 
+		{
 			System.out.println(s.getCodeName());
-			System.out.println("Standard Deviation 30: "
-					+ s.getStandardDeviation_30());
+			System.out.println("Standard Deviation 30: "+ s.getStandardDeviation_30());
 		}
 	}
 }

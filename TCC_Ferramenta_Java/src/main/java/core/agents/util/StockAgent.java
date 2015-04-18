@@ -25,19 +25,19 @@ public class StockAgent extends Agent {
 	private Date startDate;
 	private Date finishDate;
 	private StockAgent stockAgent;
-	
+	private SimulationSetup simulationSetup;
 	@SuppressWarnings("deprecation")
 	protected void setup() 
 	{
 		try 
 		{
+			this.simulationSetup=new SimulationSetup();
 			stockAgent=this;
-			startDate = new Date(113, 1, 1);
-			finishDate=new Date(114, 3, 1);
+			startDate = simulationSetup.getStartDate();
+			finishDate=simulationSetup.getFinishDate();
 			new HashMap<String, ArrayList<Stock>>();
 			stockCandleList=new HashMap<String, ArrayList<CandleStick>>();	
 			this.loadSimulationData();
-			
 			
 			DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
@@ -101,8 +101,7 @@ public class StockAgent extends Agent {
 						
 						myAgent.send(reply);
 						//TODO
-						
-							System.out.println("[code:"+code+"] Proposta de "+reply.getSender().getName()+" respondida ");
+							//System.out.println("[code:"+code+"] Proposta de "+msg.getSender().getLocalName()+" respondida ");
 						
 					} catch (IOException e)
 					{

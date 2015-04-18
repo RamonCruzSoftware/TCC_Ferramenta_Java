@@ -78,25 +78,39 @@ public class WalletManagerAuxiliary {
 		this.stkChooser = new StockChooser(this.stockList, this.userProfile);
 	}
 
-	public void putInfoExperts(Map<String, ArrayList<Stock>> infoExperts) {
-		this.infoExperts = infoExperts;
-		DecimalFormat df = new DecimalFormat("0.00");
-		String quotaValue = df
-				.format((this.managedWallet.getWalletValue() / this.infoExperts
-						.size()));
-		// Money qtd for Expert
-		this.setQuota(Double.parseDouble(quotaValue));
-		// Criando map para controlar quantidade de dinheiro por agente
-		for (Entry<String, ArrayList<Stock>> e : this.infoExperts.entrySet()) {
-			this.expertsQuota.put(e.getKey(), this.getQuota());
+	public void putInfoExperts(Map<String, ArrayList<Stock>> infoExperts) 
+	{
+		try
+		{
+			this.infoExperts = infoExperts;
+			DecimalFormat df = new DecimalFormat("0,00");
+			String quotaValue = df
+					.format((this.managedWallet.getWalletValue() / this.infoExperts
+							.size()));
+			// Money qtd for Expert
+			this.setQuota(Double.parseDouble(quotaValue));
+			// Criando map para controlar quantidade de dinheiro por agente
+			for (Entry<String, ArrayList<Stock>> e : this.infoExperts.entrySet()) {
+				this.expertsQuota.put(e.getKey(), this.getQuota());
+			}
+			
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
+		
 	}
 
 	public void closeOrder(String expertName, double value) {
-		this.setQuota(this.getQuota() + value / this.infoExperts.size());
-		for (Entry<String, ArrayList<Stock>> e : this.infoExperts.entrySet()) {
-			this.expertsQuota.put(e.getKey(), this.getQuota());
+		try
+		{
+			this.setQuota(this.getQuota() + value / this.infoExperts.size());
+			for (Entry<String, ArrayList<Stock>> e : this.infoExperts.entrySet()) {
+				this.expertsQuota.put(e.getKey(), this.getQuota());
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
+		
 	}
 
 	public double approveOrderBuy(String expertName) {
