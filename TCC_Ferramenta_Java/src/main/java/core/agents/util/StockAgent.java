@@ -81,6 +81,7 @@ public class StockAgent extends Agent {
 	@Override
 	public void action() 
 	{
+		CandleStick candleStick = null;
 		ACLMessage msg =receive();
 		if(msg!=null)
 		{
@@ -90,14 +91,27 @@ public class StockAgent extends Agent {
 				if(msg.getConversationId()==ConversationsID.SIMULATION_REQUEST)
 				{
 					try {
+						
 						String code=null;
 						ACLMessage reply=msg.createReply();
-						reply.setConversationId(ConversationsID.SIMULATION_REQUEST);
-						reply.setPerformative(ACLMessage.PROPOSE);
-						
 						code = msg.getContent().toString();
-						reply.setContent(code);
-						reply.setContentObject(stockAgent.simulation(code));
+						
+						candleStick = stockAgent.simulation(code);
+						
+						if(candleStick!=null)
+						{
+							reply.setConversationId(ConversationsID.SIMULATION_REQUEST);
+							reply.setPerformative(ACLMessage.PROPOSE);
+							reply.setContent(code);
+							reply.setContentObject(stockAgent.simulation(code));
+							
+						}else
+						{
+							reply.setConversationId(ConversationsID.SIMULATION_REQUEST_STOP);
+							reply.setPerformative(ACLMessage.PROPOSE);
+							reply.setContent(code);
+						}
+						
 						
 						myAgent.send(reply);
 						//TODO
@@ -171,14 +185,14 @@ public class StockAgent extends Agent {
 			for(Stock stock : stockList)
 			{
 				if(stock.getCandleSticks().size()>0)
+				{
 					this.stockCandleList.put(stock.getCodeName(), stock.getCandleSticks());
+					System.out.println(stockAgent.getLocalName()+" : "+stock.getCodeName()+" => "+stock.getCandleSticks().size());
+				}
 			}
+				
 		}
-//		System.out.println("Carregado com "+this.stockCandleList.size());
-//		for(Entry<String, ArrayList<CandleStick>>c:this.stockCandleList.entrySet())
-//		{
-//			System.out.println("Code "+c.getKey());
-//		}
+	
 		
 	}
 }

@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,17 +8,20 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import core.agents.util.SimulationSetup;
-
 import suport.financial.wallet.Stock;
+import suport.util.database.mongoDB.dao.SimulationDataDao;
+import suport.util.database.mongoDB.pojo.SimulationData;
 
 
 
 
 public class MainClass {
-	static String dir_1 = "/Users/alissonnunes/Desktop";
+	
+	
+	static String dir_1 = "/Users/ramoncruz/Desktop";
 	static String subDir_1 = "/TCC2";
 	static String subDir_2 = "/Ativos";
-	static String sectorsCsvFilePath = "/Users/alissonnunes/Desktop/Setores";
+	static String sectorsCsvFilePath = "/Users/ramoncruz/Dropbox/UnB/TCC/workspace/java/Setores";
 
 	
 	@SuppressWarnings("deprecation")
@@ -229,11 +233,16 @@ public class MainClass {
 //			System.out.println("->"+s.getCodeName());
 //		}
 		
-		
-		
-		
-		
-		
+//	SimulationDataDao dao= new SimulationDataDao();
+//	System.out.println("=>"+dao.findDataOfSimulation("DAGB11.SA").size());
+//	
+//	ArrayList<SimulationData> teste= dao.findDataOfSimulation("DAGB11.SA");
+//	for(int i=0; i<teste.size();i++)
+//	{
+//		System.out.println("->"+teste.get(i).getDate());
+//	}
+//		
+
 	}
 	
 	

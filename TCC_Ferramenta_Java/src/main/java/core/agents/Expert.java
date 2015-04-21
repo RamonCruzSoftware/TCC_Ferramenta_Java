@@ -23,8 +23,10 @@ import suport.financial.strategy.MovingAvarangeSimpleStrategy;
 import suport.financial.strategy.Strategy;
 import suport.financial.wallet.Stock;
 import suport.util.database.mongoDB.dao.ManagedStockDao;
+import suport.util.database.mongoDB.dao.SimulationDataDao;
 import suport.util.database.mongoDB.dao.StockDao;
 import suport.util.database.mongoDB.pojo.ManagedStock;
+import suport.util.database.mongoDB.pojo.SimulationData;
 import suport.util.requests.YahooFinance;
 
 public class Expert extends Agent {
@@ -58,6 +60,10 @@ public class Expert extends Agent {
 	private boolean ordersLocker;
 	private boolean isSimulation;
 	
+	private SimulationDataDao simulationDataDao;
+	private SimulationData simulationData;
+	
+	
 	protected void setup() {
 		try {
 
@@ -72,7 +78,11 @@ public class Expert extends Agent {
 			ordersLocker = false;
 			isSimulation=true;
 			
-			if(isSimulation) expert.simulationStart("simulator", 3000);
+			if(isSimulation)
+				{
+					expert.simulationStart("simulator", 3000);
+					expert.simulationDataDao=new SimulationDataDao();
+				}
 				
 			DFAgentDescription dfd = new DFAgentDescription();
 			dfd.setName(getAID());
@@ -96,7 +106,8 @@ public class Expert extends Agent {
 					{
 						try {
 							switch (msg.getPerformative()) {
-							case ACLMessage.INFORM: {
+							case ACLMessage.INFORM: 
+							{
 								if (msg.getConversationId() == ConversationsID.INIT_WORK) {
 									ArrayList<Stock> temp = (ArrayList<Stock>) msg
 											.getContentObject();
@@ -302,6 +313,11 @@ public class Expert extends Agent {
 								if (msg.getConversationId() == ConversationsID.EXPERT_REMOVE_STOCK) {
 									// TODO fazer isso kkk
 								}
+								
+								if(msg.getConversationId()==ConversationsID.SIMULATION_REQUEST_STOP)
+								{
+									expert.stocksMap.remove(msg.getContent().toString());
+								}
 							}
 								break;
 							case ACLMessage.AGREE: { // TODO INCLUIR O ID PARA
@@ -405,9 +421,19 @@ public class Expert extends Agent {
 											stockTemp.setCurrentPrice(current.getClose());
 											stockTemp.addCurrentCandleStick(current);
 											// TODO log
-											System.out.println(expert.getLocalName()+" : "+stockTemp.getCodeName()+ 
-																"-Order  " + strategy.makeOrder()+" valor:"+current.getClose()+
-																"  Date:"+stockTemp.getCandleSticks().get(stockTemp.getCandleSticks().size()-1).getDate()+"\n\n");
+//											System.out.println(expert.getLocalName()+" : "+stockTemp.getCodeName()+ 
+//																"-Order  " + strategy.makeOrder()+" valor:"+current.getClose()+
+//																"  Date:"+stockTemp.getCandleSticks().get(stockTemp.getCandleSticks().size()-1).getDate()+"\n\n");
+											
+											if(!strategy.makeOrder().equalsIgnoreCase("nothing"))
+											{
+												expert.simulationData = new SimulationData(expert.getLocalName(),strategy.makeOrder() , 
+														stockTemp.getCandleSticks().get(stockTemp.getCandleSticks().size()-1).getDate(),
+														current.getClose(), stockTemp.getCodeName());
+												expert.simulationDataDao.insertManagedStock(simulationData);
+											}
+											
+											
 											// Armazeno as ordens para pedir autorizacao ao
 											// manager
 											if (
@@ -506,15 +532,23 @@ public class Expert extends Agent {
 					@Override
 					public void onTick()
 					{
-						for(Entry<Stock, Strategy>s:expert.stocksMap.entrySet())
+						if(expert.stocksMap.size()>0)
 						{
-							ACLMessage msgRequest=new ACLMessage(ACLMessage.CFP);
-							msgRequest.setConversationId(ConversationsID.SIMULATION_REQUEST);
-							msgRequest.addReceiver(new AID(simulationAgentName, AID.ISLOCALNAME));
-							msgRequest.setContent(s.getKey().getCodeName());
-							myAgent.send(msgRequest); //TODO
-							System.out.println(expert.getLocalName()+":Pedido de cotacao ["+s.getKey().getCodeName()+"] Feito");
+							for(Entry<Stock, Strategy>s:expert.stocksMap.entrySet())
+							{
+								ACLMessage msgRequest=new ACLMessage(ACLMessage.CFP);
+								msgRequest.setConversationId(ConversationsID.SIMULATION_REQUEST);
+								msgRequest.addReceiver(new AID(simulationAgentName, AID.ISLOCALNAME));
+								msgRequest.setContent(s.getKey().getCodeName());
+								myAgent.send(msgRequest); //TODO
+								
+							}
+						}else 
+						{
+							System.out.println("====Simulacao finalizada!====");
+							this.stop();
 						}
+						
 					}
 				});
 	}

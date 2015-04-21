@@ -39,10 +39,10 @@ public class Hunter extends Agent {
 	private ArrayList<Stock> stockList = null;
 	private StockDao stockDao = null;
 	private Statistical statistical = null;
-	private String dir_1 = "/home/ramon/Documentos";
+	private String dir_1 = "/Users/ramoncruz/Desktop";
 	private String subDir_1 = "/TCC2";
 	private String subDir_2 = "/Ativos";
-	private String sectorsCsvFilePath = "/home/ramon/Documentos/Setores";
+	private String sectorsCsvFilePath = "/Users/ramoncruz/Dropbox/UnB/TCC/workspace/java/Setores";
 	private SimulationSetup simulationSetup;
 	private boolean isSimulation;
 
@@ -111,7 +111,7 @@ public class Hunter extends Agent {
 							if (file.listFiles().length > 2)//TODO
 						   {
 							//	hunter.log.debug("Arquivos CSV ja foram baixados");
-								//hunter.loadDataBase();
+								hunter.loadDataBase();
 							}
 							else 
 							{

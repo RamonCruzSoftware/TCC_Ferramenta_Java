@@ -58,6 +58,7 @@ public class ConversationsID {
 	
 	//Simulation
 	public static final String SIMULATION_REQUEST="Simulation stocks";
+	public static final String SIMULATION_REQUEST_STOP="Simulation stocks stop";
 	
 
 }
