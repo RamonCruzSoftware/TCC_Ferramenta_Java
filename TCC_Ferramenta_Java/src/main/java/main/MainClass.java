@@ -233,16 +233,19 @@ public class MainClass {
 //			System.out.println("->"+s.getCodeName());
 //		}
 		
-//	SimulationDataDao dao= new SimulationDataDao();
-//	System.out.println("=>"+dao.findDataOfSimulation("DAGB11.SA").size());
-//	
-//	ArrayList<SimulationData> teste= dao.findDataOfSimulation("DAGB11.SA");
-//	for(int i=0; i<teste.size();i++)
-//	{
-//		System.out.println("->"+teste.get(i).getDate());
-//	}
-//		
-
+		String code="USIM3.SA";
+	SimulationDataDao dao= new SimulationDataDao();
+	System.out.println("=>"+dao.findDataOfSimulation(code).size());
+	
+	ArrayList<SimulationData> teste= dao.findDataOfSimulation(code);
+	for(int i=0; i<teste.size();i++)
+	{
+		System.out.println("\""+teste.get(i).getCodeName()+"\","
+				+ ""+"\""+teste.get(i).getDate().getDay()+"/"+teste.get(i).getDate().getMonth()+"/"+(teste.get(i).getDate().getYear()+1900)+"\","
+				+"\""+teste.get(i).getOrder()+"\","+teste.get(i).getValue());
+	}
+		
+//"ABCB4.SA","4/10/2015","5:05pm",12.50,12.57,12.32,12.55,85300
 	}
 	
 	

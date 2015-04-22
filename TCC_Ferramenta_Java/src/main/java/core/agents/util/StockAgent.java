@@ -26,7 +26,6 @@ public class StockAgent extends Agent {
 	private Date finishDate;
 	private StockAgent stockAgent;
 	private SimulationSetup simulationSetup;
-	@SuppressWarnings("deprecation")
 	protected void setup() 
 	{
 		try 
@@ -115,7 +114,7 @@ public class StockAgent extends Agent {
 						
 						myAgent.send(reply);
 						//TODO
-							//System.out.println("[code:"+code+"] Proposta de "+msg.getSender().getLocalName()+" respondida ");
+							System.out.println("[code:"+code+"] Proposta de "+msg.getSender().getLocalName()+" respondida ");
 						
 					} catch (IOException e)
 					{

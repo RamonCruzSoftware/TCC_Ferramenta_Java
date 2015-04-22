@@ -728,15 +728,16 @@ public class Manager extends Agent {
 					listB.add(stockSeleted.get(i));
 				}
 				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
-			//	infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
 
 				strategyExperts.put("Expert_"+userIdentifier+"["+1+"]", ConversationsID.EXPERT_STRATEGY_MME_13_21);
-			//	strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF);
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
+				//strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF);
 				//TODO apagar print
 				System.out.println(manager.getLocalName()+": agente 1 lista ");
 				for(Stock s:listA) System.out.println("->[1] "+s.getCodeName());
-//				System.out.println(manager.getLocalName()+": agente 1 lista ");
-//				for(Stock s:listB) System.out.println("->[2] "+s.getCodeName());
+     			System.out.println(manager.getLocalName()+": agente 1 lista ");
+				for(Stock s:listB) System.out.println("->[2] "+s.getCodeName());
 				
 
 			} else {

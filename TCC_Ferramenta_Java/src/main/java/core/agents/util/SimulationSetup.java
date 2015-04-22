@@ -13,12 +13,20 @@ public class SimulationSetup {
 	@SuppressWarnings("deprecation")
 	public SimulationSetup()
 	{
-		// 113 = 2013 -1900
-		this.startDate=new Date(112, 1, 1);
-		this.finishDate=new Date(115, 3, 1);
+//		// 113 = 2013 -1900
+//		this.startDate=new Date(112, 1, 1);
+//		this.finishDate=new Date(115, 3, 1);
+//		
+//		this.startDateCalendar=Calendar.getInstance();
+//		this.startDateCalendar.set(2012, 2, 1);
 		
-		this.startDateCalendar=Calendar.getInstance();
-		this.startDateCalendar.set(2012, 2, 1);
+		
+		// 113 = 2013 -1900
+				this.startDate=new Date(114, 1, 1);
+				this.finishDate=new Date(115, 3, 1);
+				
+				this.startDateCalendar=Calendar.getInstance();
+				this.startDateCalendar.set(2014, 1, 1);
 		
 	}
 

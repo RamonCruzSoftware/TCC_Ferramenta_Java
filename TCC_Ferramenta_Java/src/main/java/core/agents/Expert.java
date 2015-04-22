@@ -541,6 +541,7 @@ public class Expert extends Agent {
 								msgRequest.addReceiver(new AID(simulationAgentName, AID.ISLOCALNAME));
 								msgRequest.setContent(s.getKey().getCodeName());
 								myAgent.send(msgRequest); //TODO
+								System.out.println(expert.getLocalName()+": solicitando cotacao para "+s.getKey().getCodeName());
 								
 							}
 						}else 
