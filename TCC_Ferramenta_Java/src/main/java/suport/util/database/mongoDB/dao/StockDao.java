@@ -2,15 +2,20 @@ package suport.util.database.mongoDB.dao;
 
 import jade.util.leap.HashSet;
 
+import java.awt.Cursor;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import core.agents.ConversationsID;
 import suport.financial.partternsCandleStick.CandleStick;
 import suport.financial.wallet.Stock;
 import suport.util.database.mongoDB.MongoConnection;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -452,7 +457,78 @@ public class StockDao {
 		return stockList;
 	}
 	
-	public ArrayList<Stock> getAllStocksWithPricesBetweenInterval(Date start,Date finish) {
+public CandleStick getCandleStickOfStockByDate(String codeName,Date date)
+{
+	BasicDBObject where=null;
+	BasicDBObject mongo_candle=null;
+	DBCursor cursor=null;
+	CandleStick candlestickReturn=null;
+	
+	where = new BasicDBObject("stockCodeName", codeName).append("date", date);
+	
+	cursor=getCollection_stock_prices().find(where);
+	
+	while(cursor.hasNext())
+	{
+		mongo_candle=(BasicDBObject)cursor.next();
+		candlestickReturn=new CandleStick(
+											mongo_candle.getDouble("open"), mongo_candle.getDouble("high"),
+											mongo_candle.getDouble("low"), mongo_candle.getDouble("close"), 
+											mongo_candle.getInt("volume"), mongo_candle.getDate("date")
+											);
+	}
+	cursor.close();
+	
+	return candlestickReturn;
+}
+public Map<String, ArrayList<Date>> getAllDatesOfPricesBetweenInterval(Date start,Date finish)
+{
+	DBCursor cursorStockPrices=null;
+	DBCursor cursorStocks= getCollection_stocks().find();
+	BasicDBObject whereStocksPrices = null;
+	
+	BasicDBObject mongoStock=null;
+	BasicDBObject mongoCandle=null;
+	
+	String codeName=null;
+	ArrayList<Date> dates=null;
+	
+	Map<String, ArrayList<Date>> mapReturn=new HashMap<String, ArrayList<Date>>();
+	
+	while(cursorStocks.hasNext())
+	{
+		cursorStockPrices=null;
+		mongoStock=null;
+		codeName=null;
+		whereStocksPrices=null;
+		dates=null;
+		
+		mongoStock=(BasicDBObject)cursorStocks.next();
+		codeName=mongoStock.getString("_id");
+		
+		whereStocksPrices= new BasicDBObject("stockCodeName",codeName).append("date",new BasicDBObject("$gt",start).append("$lt", finish));
+		
+		cursorStockPrices=getCollection_stock_prices().find(whereStocksPrices);
+		dates= new ArrayList<Date>();
+		
+		while(cursorStockPrices.hasNext())
+		{
+			mongoCandle=(BasicDBObject)cursorStockPrices.next();
+			dates.add(mongoCandle.getDate("date"));
+		}
+		
+		mapReturn.put(codeName, dates);
+		
+	}
+	
+	cursorStockPrices.close();
+	cursorStocks.close();
+	
+	return mapReturn;
+	
+	//wherePrices = new BasicDBObject("stockCodeName",stock.getCodeName()).append("date",new BasicDBObject("$gt",start).append("$lt", finish));
+}
+public ArrayList<Stock> getAllStocksWithPricesBetweenInterval(Date start,Date finish) {
 		BasicDBObject wherePrices = null;
 
 		DBCursor cursor = getCollection_stocks().find();
@@ -466,7 +542,6 @@ public class StockDao {
 
 		Stock stock = null;
 
-		
 		while (cursor.hasNext()) {
 
 			mongo_stock = cursor.next();
@@ -521,7 +596,7 @@ public class StockDao {
 		return stockList;
 	}
 
-	public Stock getStocksWithPricesBetweenInterval(String codeName,Date start,Date finish) {
+public Stock getStocksWithPricesBetweenInterval(String codeName,Date start,Date finish) {
 		BasicDBObject wherePrices = null;
 
 		DBCursor cursor = getCollection_stocks().find(new BasicDBObject("_id", codeName));
@@ -640,7 +715,8 @@ public class StockDao {
 		return getCollection_stock_prices().find().count();
 	}
 
-	public ArrayList<CandleStick> getStockPrices_last10(String codeName) {
+public ArrayList<CandleStick> getStockPrices_last10(String codeName) {
+	
 		BasicDBObject where = new BasicDBObject("stockCodeName", codeName);
 		DBCursor cursor = getCollection_stock_prices().find(where).limit(10);
 
