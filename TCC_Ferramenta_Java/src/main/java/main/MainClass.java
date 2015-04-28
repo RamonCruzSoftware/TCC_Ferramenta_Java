@@ -10,6 +10,7 @@ import java.util.Iterator;
 import core.agents.util.SimulationSetup;
 import suport.financial.wallet.Stock;
 import suport.util.database.mongoDB.dao.SimulationDataDao;
+import suport.util.database.mongoDB.dao.StockDao;
 import suport.util.database.mongoDB.pojo.SimulationData;
 
 
@@ -233,7 +234,8 @@ public class MainClass {
 //			System.out.println("->"+s.getCodeName());
 //		}
 		
-		String code="USIM3.SA";
+/*		
+	String code="USIM3.SA";
 	SimulationDataDao dao= new SimulationDataDao();
 	System.out.println("=>"+dao.findDataOfSimulation(code).size());
 	
@@ -246,6 +248,29 @@ public class MainClass {
 	}
 		
 //"ABCB4.SA","4/10/2015","5:05pm",12.50,12.57,12.32,12.55,85300
+ 
+*/
+		SimulationSetup setup=new SimulationSetup();
+		StockDao stDao= new StockDao();
+		
+	//	stDao.getAllDatesOfPricesBetweenInterval(setup.getStartDate(), setup.getFinishDate());
+	//	System.out.println("====finalizado====");
+		
+		System.out.println("day->"+setup.getStartDate().getDay());
+		System.out.println("month->"+setup.getStartDate().getMonth());
+		System.out.println("year->"+setup.getStartDate().getYear());
+	
+		System.out.println(" inserir data:"+new Date(setup.getStartDate().getYear(),
+																	setup.getStartDate().getMonth(),
+																	setup.getStartDate().getDate()+2));
+	
+		System.out.println("=="+stDao.getCandleStickOfStockByDate("USIM3.SA", 
+																new 
+																Date(setup.getStartDate().getYear(),
+																	setup.getStartDate().getMonth(),
+																	setup.getStartDate().getDate()+2
+																	)
+																).getDate());
 	}
 	
 	

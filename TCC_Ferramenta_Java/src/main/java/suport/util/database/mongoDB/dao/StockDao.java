@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import core.agents.ConversationsID;
 import suport.financial.partternsCandleStick.CandleStick;
@@ -322,7 +323,7 @@ public class StockDao {
 	public boolean storeHistoricalStockValue(Stock stock) {
 
 		ArrayList<CandleStick> candleListAux = stock.getCandleSticks();
-
+		
 		try {
 			collection_stocks
 					.save(new BasicDBObject("_id", stock.getCodeName()).append(
@@ -330,8 +331,9 @@ public class StockDao {
 
 			for (CandleStick c : candleListAux) {
 
-				collection_stock_prices.save(new BasicDBObject("stockCodeName",
-						stock.getCodeName()).append("date", c.getDate())
+				collection_stock_prices.save(new BasicDBObject("_id",stock.getCodeName()+"+"+c.getDate().toString()).
+						append("stockCodeName",stock.getCodeName()).
+						append("date", c.getDate())
 						.append("open", c.getOpen())
 						.append("high", c.getHigh()).append("low", c.getLow())
 						.append("close", c.getClose())
@@ -464,25 +466,38 @@ public CandleStick getCandleStickOfStockByDate(String codeName,Date date)
 	DBCursor cursor=null;
 	CandleStick candlestickReturn=null;
 	
-	where = new BasicDBObject("stockCodeName", codeName).append("date", date);
+	System.out.println("1");
+	
+	where = new BasicDBObject("_id", codeName+"+"+date.toString());
 	
 	cursor=getCollection_stock_prices().find(where);
 	
+	System.out.println("2");
+	
+	
 	while(cursor.hasNext())
 	{
+		System.out.println("3");
 		mongo_candle=(BasicDBObject)cursor.next();
 		candlestickReturn=new CandleStick(
 											mongo_candle.getDouble("open"), mongo_candle.getDouble("high"),
 											mongo_candle.getDouble("low"), mongo_candle.getDouble("close"), 
 											mongo_candle.getInt("volume"), mongo_candle.getDate("date")
 											);
+		
+		System.out.println("4");
+		break;
 	}
 	cursor.close();
-	
+	System.out.println("5");
 	return candlestickReturn;
 }
+//Metodo pesado pra caralho 
 public Map<String, ArrayList<Date>> getAllDatesOfPricesBetweenInterval(Date start,Date finish)
 {
+	System.out.println("Start time:");
+	long t0 = System.currentTimeMillis();
+	
 	DBCursor cursorStockPrices=null;
 	DBCursor cursorStocks= getCollection_stocks().find();
 	BasicDBObject whereStocksPrices = null;
@@ -494,7 +509,7 @@ public Map<String, ArrayList<Date>> getAllDatesOfPricesBetweenInterval(Date star
 	ArrayList<Date> dates=null;
 	
 	Map<String, ArrayList<Date>> mapReturn=new HashMap<String, ArrayList<Date>>();
-	
+	//TODO bug
 	while(cursorStocks.hasNext())
 	{
 		cursorStockPrices=null;
@@ -506,7 +521,14 @@ public Map<String, ArrayList<Date>> getAllDatesOfPricesBetweenInterval(Date star
 		mongoStock=(BasicDBObject)cursorStocks.next();
 		codeName=mongoStock.getString("_id");
 		
-		whereStocksPrices= new BasicDBObject("stockCodeName",codeName).append("date",new BasicDBObject("$gt",start).append("$lt", finish));
+		mapReturn.put(codeName, dates);
+		
+		
+	}
+	
+	for(Entry<String, ArrayList<Date>> stockMap : mapReturn.entrySet())
+	{
+		whereStocksPrices= new BasicDBObject("stockCodeName",stockMap.getKey()).append("date",new BasicDBObject("$gt",start).append("$lt", finish));
 		
 		cursorStockPrices=getCollection_stock_prices().find(whereStocksPrices);
 		dates= new ArrayList<Date>();
@@ -515,15 +537,18 @@ public Map<String, ArrayList<Date>> getAllDatesOfPricesBetweenInterval(Date star
 		{
 			mongoCandle=(BasicDBObject)cursorStockPrices.next();
 			dates.add(mongoCandle.getDate("date"));
+			
 		}
-		
-		mapReturn.put(codeName, dates);
-		
+		stockMap.setValue(dates);
+		System.out.println("StockDao:"+codeName+" carregado");
 	}
 	
 	cursorStockPrices.close();
 	cursorStocks.close();
 	
+	long t1 = System.currentTimeMillis();
+	
+	System.out.println("finish Time ======\n"+(t1-t0)+"\n======");
 	return mapReturn;
 	
 	//wherePrices = new BasicDBObject("stockCodeName",stock.getCodeName()).append("date",new BasicDBObject("$gt",start).append("$lt", finish));
@@ -592,7 +617,11 @@ public ArrayList<Stock> getAllStocksWithPricesBetweenInterval(Date start,Date fi
 			
 			
 		}
+		cursorPrices.close();
 		cursor.close();
+		
+		
+
 		return stockList;
 	}
 

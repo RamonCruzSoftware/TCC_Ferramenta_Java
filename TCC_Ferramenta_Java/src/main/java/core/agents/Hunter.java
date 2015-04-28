@@ -111,6 +111,7 @@ public class Hunter extends Agent {
 							if (file.listFiles().length > 2)//TODO
 						   {
 							//	hunter.log.debug("Arquivos CSV ja foram baixados");
+								System.out.println("Arquivos CSV ja foram baixados");
 								hunter.loadDataBase();
 							}
 							else 
@@ -132,7 +133,7 @@ public class Hunter extends Agent {
 								System.out.println(hunter.getLocalName()+":Banco jah carregado com "+ hunter.stockDao.getStocksPricesCount()+ " Cotacoes");
 								
 								if(!isSimulation)hunter.stockList = hunter.stockDao.getAllStocksWithPrices();
-								else hunter.stockList=hunter.stockDao.getAllStocksWithPricesBetweenInterval(hunter.simulationSetup.getStartDate(), hunter.simulationSetup.getFinishDate());
+								else hunter.stockList=hunter.stockDao.getAllStocksWithPricesBetweenInterval(hunter.simulationSetup.getStartDate(), hunter.simulationSetup.getStartDate());
 								
 //								hunter.log.debug("Iniciando procedimento de calculo de valores estatisticos");
 								

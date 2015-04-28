@@ -208,7 +208,7 @@ public class YahooFinance implements Runnable {
 	 * @return
 	 */
 	
-	//TODO simulacao
+	//TODO 
 	public boolean storeCsvCurrentPriceStock(String stockCodeName) {
 		boolean returnResult = false;
 		String urlPath = "http://finance.yahoo.com/d/quotes.csv?s="+ stockCodeName + "&f=sd1t1ohgl1v&e=.csv";
@@ -247,7 +247,7 @@ public class YahooFinance implements Runnable {
 	 * @param stockNameCode
 	 * @return
 	 */
-	//TODO simulacao 
+	//TODO  
 	public boolean storeCsvHistoricalPriceStock(String stockCodeName) {
 		boolean returnResult = false;
 		

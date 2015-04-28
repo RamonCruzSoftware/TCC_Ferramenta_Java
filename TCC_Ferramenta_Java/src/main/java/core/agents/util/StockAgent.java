@@ -22,6 +22,7 @@ public class StockAgent extends Agent {
 	private static final long serialVersionUID = 1L;
 	
 	private Map<String, ArrayList<CandleStick>>stockCandleList;
+	private Map<String, ArrayList<Date>> stockCandleDateList;
 	private Date startDate;
 	private Date finishDate;
 	private StockAgent stockAgent;
@@ -174,23 +175,30 @@ public class StockAgent extends Agent {
 	}
 	public void loadSimulationData()
 	{
-		StockDao stockDao= new StockDao();
-		ArrayList<Stock>stockList=null;
+
 		
-		stockList=stockDao.getAllStocksWithPricesBetweenInterval(startDate, finishDate);
-		this.stockCandleList = new HashMap<String, ArrayList<CandleStick>>();
-		if(stockList!=null && stockList.size()>0)
-		{
-			for(Stock stock : stockList)
-			{
-				if(stock.getCandleSticks().size()>0)
-				{
-					this.stockCandleList.put(stock.getCodeName(), stock.getCandleSticks());
-					System.out.println(stockAgent.getLocalName()+" : "+stock.getCodeName()+" => "+stock.getCandleSticks().size());
-				}
-			}
-				
-		}
+		
+		StockDao stockDao= new StockDao();
+		this.stockCandleDateList=stockDao.getAllDatesOfPricesBetweenInterval(startDate, finishDate);
+		
+		
+//        ArrayList<Stock>stockList=null;
+//		stockList=stockDao.getAllStocksWithPricesBetweenInterval(startDate, finishDate);
+//		this.stockCandleList = new HashMap<String, ArrayList<CandleStick>>();
+//		
+//	
+//		if(stockList!=null && stockList.size()>0)
+//		{
+//			for(Stock stock : stockList)
+//			{
+//				if(stock.getCandleSticks().size()>0)
+//				{
+//					this.stockCandleList.put(stock.getCodeName(), stock.getCandleSticks());
+//					System.out.println(stockAgent.getLocalName()+" : "+stock.getCodeName()+" => "+stock.getCandleSticks().size());
+//				}
+//			}
+//				
+//		}
 	
 		
 	}
