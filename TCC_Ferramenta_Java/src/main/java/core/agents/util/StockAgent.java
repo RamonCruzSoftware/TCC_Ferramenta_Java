@@ -23,18 +23,17 @@ public class StockAgent extends Agent {
 	
 	private Map<String, ArrayList<CandleStick>>stockCandleList;
 	private Map<String, ArrayList<Date>> stockCandleDateList;
-	private Date startDate;
-	private Date finishDate;
 	private StockAgent stockAgent;
 	private SimulationSetup simulationSetup;
+	private StocksInMemory simulationsData;
 	protected void setup() 
 	{
 		try 
 		{
-			this.simulationSetup=new SimulationSetup();
+			
 			stockAgent=this;
-			startDate = simulationSetup.getStartDate();
-			finishDate=simulationSetup.getFinishDate();
+			this.simulationsData = StocksInMemory.getInstance();
+			
 			new HashMap<String, ArrayList<Stock>>();
 			stockCandleList=new HashMap<String, ArrayList<CandleStick>>();	
 			this.loadSimulationData();
@@ -161,7 +160,8 @@ public class StockAgent extends Agent {
 			
 		}else
 		{
-			stockAux=stockDao.getStocksWithPricesBetweenInterval(codeName,startDate, finishDate);
+			this.simulationSetup = new SimulationSetup();
+			stockAux=stockDao.getStocksWithPricesBetweenInterval(codeName,this.simulationSetup.getStartDate(), this.simulationSetup.getFinishDate());
 			if(stockAux!=null&& stockAux.getCandleSticks().size()>0)
 			{
 				candleList=new ArrayList<CandleStick>();
@@ -174,32 +174,32 @@ public class StockAgent extends Agent {
 		return returnCandle;
 	}
 	public void loadSimulationData()
-	{
-
+	{	
 		
+	//	StockDao stockDao= new StockDao();
+	//	this.stockCandleDateList=stockDao.getAllDatesOfPricesBetweenInterval(startDate, finishDate);
+			
+        ArrayList<Stock>stockList=null;
+	//	stockList=stockDao.getAllStocksWithPricesBetweenInterval(startDate, finishDate);
+       stockList=this.simulationsData.getStockList();
+        
+       
+		this.stockCandleList = new HashMap<String, ArrayList<CandleStick>>();
 		
-		StockDao stockDao= new StockDao();
-		this.stockCandleDateList=stockDao.getAllDatesOfPricesBetweenInterval(startDate, finishDate);
-		
-		
-//        ArrayList<Stock>stockList=null;
-//		stockList=stockDao.getAllStocksWithPricesBetweenInterval(startDate, finishDate);
-//		this.stockCandleList = new HashMap<String, ArrayList<CandleStick>>();
-//		
-//	
-//		if(stockList!=null && stockList.size()>0)
-//		{
-//			for(Stock stock : stockList)
-//			{
-//				if(stock.getCandleSticks().size()>0)
-//				{
-//					this.stockCandleList.put(stock.getCodeName(), stock.getCandleSticks());
-//					System.out.println(stockAgent.getLocalName()+" : "+stock.getCodeName()+" => "+stock.getCandleSticks().size());
-//				}
-//			}
-//				
-//		}
 	
+		if(stockList!=null && stockList.size()>0)
+		{
+			for(Stock stock : stockList)
+			{
+				if(stock.getCandleSticks().size()>0)
+					this.stockCandleList.put(stock.getCodeName(), stock.getCandleSticks());
+					
+				
+			}
+				
+		}
+		
+
 		
 	}
 }

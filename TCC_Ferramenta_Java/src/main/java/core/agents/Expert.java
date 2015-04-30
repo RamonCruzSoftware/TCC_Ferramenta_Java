@@ -421,9 +421,10 @@ public class Expert extends Agent {
 											stockTemp.setCurrentPrice(current.getClose());
 											stockTemp.addCurrentCandleStick(current);
 											// TODO log
-//											System.out.println(expert.getLocalName()+" : "+stockTemp.getCodeName()+ 
-//																"-Order  " + strategy.makeOrder()+" valor:"+current.getClose()+
-//																"  Date:"+stockTemp.getCandleSticks().get(stockTemp.getCandleSticks().size()-1).getDate()+"\n\n");
+											
+											System.out.println(expert.getLocalName()+" : "+stockTemp.getCodeName()+ 
+																"-Order  " + strategy.makeOrder()+" valor:"+current.getClose()+
+																"  Date:"+stockTemp.getCandleSticks().get(stockTemp.getCandleSticks().size()-1).getDate()+"\n\n");
 											
 											if(!strategy.makeOrder().equalsIgnoreCase("nothing"))
 											{

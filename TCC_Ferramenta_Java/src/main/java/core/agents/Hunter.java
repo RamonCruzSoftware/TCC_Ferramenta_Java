@@ -10,6 +10,9 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import jade.wrapper.AgentController;
+import jade.wrapper.PlatformController;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import javax.swing.JOptionPane;
 import org.apache.logging.log4j.*;
 
 import core.agents.util.SimulationSetup;
+import core.agents.util.StocksInMemory;
 import suport.financial.wallet.Stock;
 import suport.statistical.Statistical;
 import suport.util.InfoConversations;
@@ -43,8 +47,9 @@ public class Hunter extends Agent {
 	private String subDir_1 = "/TCC2";
 	private String subDir_2 = "/Ativos";
 	private String sectorsCsvFilePath = "/Users/ramoncruz/Dropbox/UnB/TCC/workspace/java/Setores";
-	private SimulationSetup simulationSetup;
 	private boolean isSimulation;
+	
+	private StocksInMemory simulationsData;
 
 	protected void setup() {
 		try {
@@ -54,7 +59,7 @@ public class Hunter extends Agent {
 			stockDao = new StockDao();
 			statistical = new Statistical();
 			
-			simulationSetup=new SimulationSetup();
+			simulationsData = StocksInMemory.getInstance();
 			isSimulation=true;
 
 			DFAgentDescription dfd = new DFAgentDescription();
@@ -98,7 +103,8 @@ public class Hunter extends Agent {
 		private final long dailyInterval;
 
 		@SuppressWarnings("deprecation")
-		public InitWork(Agent agent) {
+		public InitWork(Agent agent)
+		{
 			this.addSubBehaviour(new OneShotBehaviour(agent) {
 				private static final long serialVersionUID = 1L;
 
@@ -133,13 +139,41 @@ public class Hunter extends Agent {
 								System.out.println(hunter.getLocalName()+":Banco jah carregado com "+ hunter.stockDao.getStocksPricesCount()+ " Cotacoes");
 								
 								if(!isSimulation)hunter.stockList = hunter.stockDao.getAllStocksWithPrices();
-								else hunter.stockList=hunter.stockDao.getAllStocksWithPricesBetweenInterval(hunter.simulationSetup.getStartDate(), hunter.simulationSetup.getStartDate());
+								else 
+								{
+									//hunter.stockList=hunter.stockDao.getAllStocksWithPricesBetweenInterval(hunter.simulationSetup.getStartDate(), hunter.simulationSetup.getStartDate());
+									
+									hunter.stockList=hunter.simulationsData.getStockList();
+								
+								}
 								
 //								hunter.log.debug("Iniciando procedimento de calculo de valores estatisticos");
 								
 								System.out.println(hunter.getLocalName()+":Iniciando procedimento de calculo de valores estatisticos");
 								if(!isSimulation)hunter.downloadCurrentCsvFiles(hunter.dir_1,hunter.subDir_1, hunter.subDir_2,hunter.sectorsCsvFilePath);
-								else hunter.calculateStatistical();
+								else
+									{
+										hunter.calculateStatistical();
+										
+										PlatformController container = getContainerController();
+										try {//TODO
+											//log.info("Criando Gertor:"+nameAgentManager);
+											// Xms128m
+											Object[] argument;
+											argument = new Object[1];
+											argument[0] = "Xms512m";
+
+											AgentController agentController = container.createNewAgent(
+													"Simulator", "core.agents.util.StockAgent", argument);
+											agentController.start();
+
+										} catch (Exception e) {
+											e.printStackTrace();//TODO
+											//log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+										}
+									}
+								
+								
 							}
 						} else
 						{ //TODO

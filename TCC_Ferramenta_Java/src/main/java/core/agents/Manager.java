@@ -75,6 +75,7 @@ public class Manager extends Agent {
 			DFService.register(this, dfd);
 			// TODO LOG
 			System.out.println("I'm live... My name is " + this.getLocalName());
+			
 			addBehaviour(new CyclicBehaviour(manager) {// TODO LOG
 				private static final long serialVersionUID = 1L;
 
@@ -698,7 +699,7 @@ public class Manager extends Agent {
 		}
 	}
 
-	private void createExperts(int userProfile, String userIdentifier,
+private void createExperts(int userProfile, String userIdentifier,
 			ArrayList<Stock> listStocks) {
 		
 		PlatformController container = getContainerController();

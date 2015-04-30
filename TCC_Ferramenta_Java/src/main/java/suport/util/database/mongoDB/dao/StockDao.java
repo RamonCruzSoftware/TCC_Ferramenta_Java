@@ -495,8 +495,7 @@ public CandleStick getCandleStickOfStockByDate(String codeName,Date date)
 //Metodo pesado pra caralho 
 public Map<String, ArrayList<Date>> getAllDatesOfPricesBetweenInterval(Date start,Date finish)
 {
-	System.out.println("Start time:");
-	long t0 = System.currentTimeMillis();
+	
 	
 	DBCursor cursorStockPrices=null;
 	DBCursor cursorStocks= getCollection_stocks().find();
@@ -546,9 +545,6 @@ public Map<String, ArrayList<Date>> getAllDatesOfPricesBetweenInterval(Date star
 	cursorStockPrices.close();
 	cursorStocks.close();
 	
-	long t1 = System.currentTimeMillis();
-	
-	System.out.println("finish Time ======\n"+(t1-t0)+"\n======");
 	return mapReturn;
 	
 	//wherePrices = new BasicDBObject("stockCodeName",stock.getCodeName()).append("date",new BasicDBObject("$gt",start).append("$lt", finish));
