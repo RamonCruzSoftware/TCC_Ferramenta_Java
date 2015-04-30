@@ -9,8 +9,10 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.lang.acl.ACLMessage;
 import jade.wrapper.AgentController;
 import jade.wrapper.PlatformController;
+
 import java.io.IOException;
-import org.apache.logging.log4j.*;
+
+import suport.util.Log;
 import suport.util.database.mongoDB.dao.OrdersCreateDao;
 import suport.util.database.mongoDB.dao.UserInfoDao;
 import suport.util.database.mongoDB.pojo.OrdersCreate;
@@ -22,7 +24,7 @@ public class Creator extends Agent {
 	private OrdersCreate newOrderCreate;
 	private UserInfoDao userInfoDao;
 	private String userLogged;
-	private Logger log;
+	private Log log;
 	private Creator creator;
 	protected void setup() 
 	{
@@ -34,16 +36,16 @@ public class Creator extends Agent {
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
 			
-			//TODO
-//     			log=LogManager.getLogger(this.getLocalName());
-//				log.info("Registro Paginas Amarelas");
-//				log.info("Iniciando comportamento de escuta do Grails");
+		
+     			log= new Log(this.getName()); 
+				log.info("Registro Paginas Amarelas");
+				log.info("Iniciando comportamento de escuta do Grails");
 			
 			addBehaviour(new ListenGrails( (long) 10));
 
 		} catch (Exception e) { 
 			e.printStackTrace();
-			//log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+			log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
 			
 		}
 	}
@@ -55,11 +57,11 @@ public class Creator extends Agent {
 			dfd.setName(getAID());
 			DFService.deregister(this, dfd);
 
-//			log.info("Desregistrando das paginas amarelas");
+			log.info("Desregistrando das paginas amarelas");
 		} catch (Exception e) 
 		{
 			e.printStackTrace();
-//			log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+			log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
 		}
 	}
 
@@ -69,8 +71,8 @@ public class Creator extends Agent {
 		public ListenGrails( Long period) {
 			super(creator, period);
 			
-			//TODO
-//			log.debug("Comportamento de escuta Iniciado");
+			
+			log.debug("Comportamento de escuta Iniciado");
 
 		}
 
@@ -82,25 +84,25 @@ public class Creator extends Agent {
 			newOrderCreate = orderCreateDao.getNewOrderCreate();
 			userLogged = userInfoDao.userLogged();
 
-			//TODO
+			
 			
 			if (!(newOrderCreate == null)) {
 				createManagerForUser(
 						"Manager_" + newOrderCreate.getUserIndetifier(),
 						newOrderCreate.getUserPerfil(),
 						newOrderCreate.getUserValue());
-				//log.info("Novo usuario criado:"+newOrderCreate.getUserIndetifier()+" - "+newOrderCreate.getUserPerfil()+" - "+newOrderCreate.getUserValue());
+				log.info("Novo usuario criado:"+newOrderCreate.getUserIndetifier()+" - "+newOrderCreate.getUserPerfil()+" - "+newOrderCreate.getUserValue());
 			}
 			if (!(userLogged == null)) {
-				//TODO
-//				log.info("Usuario Logado :"+userLogged);
-//				log.debug("Iniciar comportamento OneShort para avisar Gestor responsavel");
+				
+				log.info("Usuario Logado :"+userLogged);
+				log.debug("Iniciar comportamento OneShort para avisar Gestor responsavel");
 				addBehaviour(new OneShotBehaviour(creator) 
 				{
 					private static final long serialVersionUID = 1L;
 					@Override
 					public void action() {//TODO
-						//creator.log.debug("Comportamento OneShor iniciado");
+						creator.log.debug("Comportamento OneShor iniciado");
 						ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 						message.setLanguage(ConversationsID.LANGUAGE);
 						message.setPerformative(ACLMessage.INFORM);
@@ -111,8 +113,8 @@ public class Creator extends Agent {
 					
 						myAgent.send(message);
 						//TODO
-						//creator.log.info("Gestor :Manager_"+userLogged+" Alertado usuario logado");
-						System.out.println("Gestor :Manager_"+userLogged+" Alertado usuario logado");
+						creator.log.info("Gestor :Manager_"+userLogged+" Alertado usuario logado");
+						//System.out.println("Gestor :Manager_"+userLogged+" Alertado usuario logado");
 					}
 				});
 			}
@@ -134,7 +136,7 @@ public class Creator extends Agent {
 		{
 			PlatformController container = getContainerController();
 			try {//TODO
-				//log.info("Criando Gertor:"+nameAgentManager);
+				log.info("Criando Gertor:"+nameAgentManager);
 				// Xms128m
 				Object[] argument;
 				argument = new Object[1];
@@ -146,7 +148,7 @@ public class Creator extends Agent {
 
 			} catch (Exception e) {
 				e.printStackTrace();//TODO
-				//log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+				log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
 			}
 			addBehaviour(new OneShotBehaviour() {
 				private static final long serialVersionUID = 1L;
@@ -163,11 +165,11 @@ public class Creator extends Agent {
 						message.setContentObject(newOrderCreate);
 						myAgent.send(message);
 						//TODO
-					//	creator.log.info("Solicitando criacao dos Experts do gestor:"+nameAgentManager);
+						creator.log.info("Solicitando criacao dos Experts do gestor:"+nameAgentManager);
 
 					} catch (IOException e) {
 						e.printStackTrace();//TODO
-						//log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+						log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
 					}
 				}
 			});

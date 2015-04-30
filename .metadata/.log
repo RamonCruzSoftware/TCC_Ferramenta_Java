@@ -657,3 +657,9 @@ Caused by: java.net.UnknownHostException: Ramons-MBP: nodename nor servname prov
 	at java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1295)
 	at java.net.InetAddress.getLocalHost(InetAddress.java:1471)
 	... 25 more
+
+!ENTRY com.google.gdt.eclipse.suite 1 0 2015-04-30 09:30:10.420
+!MESSAGE Registering: com.google.appengine.eclipse.sdkbundle_1.9.19
+
+!ENTRY com.google.gdt.eclipse.suite 1 0 2015-04-30 09:30:10.524
+!MESSAGE Registering: com.google.gwt.eclipse.sdkbundle_2.6.0
