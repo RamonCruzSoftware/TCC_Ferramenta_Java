@@ -4,7 +4,17 @@
   <class id="1" language="java" name="suport.util.database.mongoDB.dao.UserInfoDao" project="TCC_Ferramenta_Java" 
     file="/TCC_Ferramenta_Java/src/main/java/suport/util/database/mongoDB/dao/UserInfoDao.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="313" width="254" x="137" y="111"/>    
+    <position height="-1" width="-1" x="150" y="209"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="suport.util.database.mongoDB.dao.StockDao" project="TCC_Ferramenta_Java" 
+    file="/TCC_Ferramenta_Java/src/main/java/suport/util/database/mongoDB/dao/StockDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="620" width="450" x="355" y="-25"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

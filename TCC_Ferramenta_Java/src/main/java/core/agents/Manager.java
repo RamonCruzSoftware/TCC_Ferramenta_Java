@@ -26,15 +26,19 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.logging.log4j.Logger;
+import javax.swing.JOptionPane;
 
-import core.agents.suport.WalletManagerAuxiliary;
 import suport.financial.wallet.Stock;
+import suport.financial.wallet.Wallet;
 import suport.util.InfoConversations;
 import suport.util.database.mongoDB.dao.StockDao;
+import suport.util.database.mongoDB.dao.WalletDao;
 import suport.util.database.mongoDB.pojo.OrdersCreate;
 
 import com.mongodb.MongoException;
+
+import core.agents.behaviours.UserAuthorization;
+import core.agents.suport.WalletManagerAuxiliary;
 
 public class Manager extends Agent {
 
@@ -59,15 +63,22 @@ public class Manager extends Agent {
 	private double RISK_CONSERVADOR = 20;
 	private int countExpertAux = 0; // For help manager to count Experts
 	private int countStocksSentToUser = 0;
-	private Logger log;
 	private static final int CORAJOSO = 0;
 	private static final int MODERADO = 1;
 	private static final int CONSERVADOR = 2;
+	
+	private UserAuthorization userAuthorizationBehaviour;
+	
+	private Wallet wallet;
+	private WalletDao walletDao;
 
-	protected void setup() {
+protected void setup() {
+	
 		manager = this;
 		manager.stockDao = new StockDao();
 		stockListForUserApprove = new ArrayList<Stock>();
+		this.walletDao= new WalletDao();
+		
 		try {
 			// create the agent description of ifself
 			DFAgentDescription dfd = new DFAgentDescription();
@@ -76,7 +87,8 @@ public class Manager extends Agent {
 			// TODO LOG
 			System.out.println("I'm live... My name is " + this.getLocalName());
 			
-			addBehaviour(new CyclicBehaviour(manager) {// TODO LOG
+			addBehaviour(new CyclicBehaviour(manager) 
+			{// TODO LOG
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -87,24 +99,28 @@ public class Manager extends Agent {
 							switch (message.getPerformative()) {
 							case ACLMessage.INFORM: {
 								// Create the Experts
-								if (message.getConversationId() == ConversationsID.CREATE_EXPERTS) {
+								if (message.getConversationId() == ConversationsID.CREATE_EXPERTS)
+								{
 									// TODO LOG
 									System.out.println("Create the Experts ");
 									user = (OrdersCreate) message
 											.getContentObject();
 									userName = user.getUserIndetifier();
 									// TODO LOG
-									System.out
-											.println("Manager Says: It's user's informations \n Name : "
+									System.out.println("Manager Says: It's user's informations \n Name : "
 													+ user.getUserIndetifier()
 													+ " Profile: "
 													+ user.getUserPerfil()
 													+ " Value: "
 													+ user.getUserValue());
+									
 									manager.info = new InfoConversations(
 											user.getUserIndetifier(),
 											user.getUserPerfil());
-
+									
+									//Criando carteira
+									manager.walletDao.insertWallet(new Wallet(user.getUserIndetifier(), user.getUserValue(), 0.0, 0.0));
+									
 									addBehaviour(new OneShotBehaviour(manager) {
 										private static final long serialVersionUID = 1L;
 										String hunterName;
@@ -117,23 +133,14 @@ public class Manager extends Agent {
 												service.setName("Hunter");
 
 												dfd.addServices(service);
-												DFAgentDescription[] result = DFService
-														.search(manager, dfd);
+												DFAgentDescription[] result = DFService.search(manager, dfd);
 												if (result != null)
-													hunterName = result[0]
-															.getName()
-															.getLocalName();
+													hunterName = result[0].getName().getLocalName();
 
-												ACLMessage hunterMessage = new ACLMessage(
-														ACLMessage.CFP);
-												hunterMessage
-														.addReceiver(new AID(
-																hunterName,
-																AID.ISLOCALNAME));
-												hunterMessage
-														.setConversationId(ConversationsID.STOCKS_HUNTER_SUGGESTIONS);
-												hunterMessage
-														.setContentObject(manager.info);
+												ACLMessage hunterMessage = new ACLMessage(ACLMessage.CFP);
+												hunterMessage.addReceiver(new AID(hunterName,AID.ISLOCALNAME));
+												hunterMessage.setConversationId(ConversationsID.STOCKS_HUNTER_SUGGESTIONS);
+												hunterMessage.setContentObject(manager.info);
 												myAgent.send(hunterMessage);
 
 											} catch (Exception e) {// TODO LOG
@@ -146,14 +153,18 @@ public class Manager extends Agent {
 								if (message.getConversationId() == ConversationsID.USER_LOGGED) 
 								{
 									try {
-										if (manager.stockListForUserApprove
-												.size() > 0) {
-											for (Stock s : manager.stockListForUserApprove) {
-												manager.stockDao
-														.insertStocksSuggestion(
-																s,
-																manager.userName);
+										if (manager.stockListForUserApprove.size() > 0) 
+										{
+											for (Stock s : manager.stockListForUserApprove) 
+											{
+												manager.stockDao.insertStocksSuggestion(s,manager.userName);
 											}
+											
+												System.out.println(manager.getLocalName()+ " iniciando comportamento de escuta");
+												manager.countStocksSentToUser = manager.stockListForUserApprove.size();
+												addBehaviour(new UserAuthorization(manager.userName, manager.infoExperts,manager.walletManagerAuxiliary));
+											
+											
 										}
 									} catch (MongoException e) {// TODO LOG
 										e.printStackTrace();
@@ -172,58 +183,51 @@ public class Manager extends Agent {
 								}
 								// Dead Experts
 								if (message.getConversationId() == ConversationsID.DEAD_EXPERT) {
-									manager.infoExperts.remove(message
-											.getSender());
+									manager.infoExperts.remove(message.getSender());
 									// TODO LOG
-									System.out
-											.println("Agente morto =( os outros "
+									System.out.println("Agente morto =( os outros "
 													+ manager.infoExperts
 															.size()
-													+ " est�o tristes");
+													+ " estao tristes");
 								}
 								// Risk informations
 								if (message.getConversationId() == ConversationsID.RISK_CALCULATION_TIME) {
-									if (manager.countExpertAux == 0)
-										manager.stockListManaged.clear();
+									
+									
+									
 									manager.countExpertAux++;
-									if (manager.countExpertAux == manager.infoExperts
-											.size()) {
-										@SuppressWarnings("unchecked")
-										ArrayList<Stock> stockList = (ArrayList<Stock>) message
-												.getContentObject();
-										if (stockList != null
-												&& stockList.size() > 0) {
-											for (Stock s : stockList) {
-												manager.stockListManaged.add(s);
-											}
+									
+									@SuppressWarnings("unchecked")
+									ArrayList<Stock> stockList = (ArrayList<Stock>) message.getContentObject();
+									if (stockList != null
+											&& stockList.size() > 0) 
+									{
+										for (Stock s : stockList) {
+											manager.stockListManaged.add(s);
 										}
+									}
+									
+									if (manager.countExpertAux == manager.infoExperts.size() && manager.stockListManaged.size()>0) 
+									{
 										// Risk
-										double risk = manager.walletManagerAuxiliary
-												.calculeRisk(manager.stockListManaged);
+										double risk = manager.walletManagerAuxiliary.calculeRisk(manager.stockListManaged);
 										// TODO LOG
-										System.out.println(" Risco calculado "
-												+ risk);
+										System.out.println(" Risco calculado "+ risk);
 										String expertName = "";
 										String stockCodeNameToRemove = "";
 										switch (manager.info.getUserProfile()) {
 										case CORAJOSO: {
 											try {
 												if (risk > manager.RISK_CORAJOSO) {
-													Collections
-															.sort(manager.stockListManaged);
-													stockCodeNameToRemove = manager.stockListManaged
-															.get(0)
-															.getCodeName();
-													for (Entry<String, ArrayList<Stock>> e : manager.infoExperts
-															.entrySet()) {
+													Collections.sort(manager.stockListManaged);
+													stockCodeNameToRemove = manager.stockListManaged.get(0).getCodeName();
+													for (Entry<String, ArrayList<Stock>> e : manager.infoExperts.entrySet()) 
+													{
 														expertName = e.getKey();
-														for (Stock s : e
-																.getValue()) {
-															if (s.getCodeName()
-																	.equalsIgnoreCase(
-																			stockCodeNameToRemove)) {
-																e.getValue()
-																		.remove(s);
+														for (Stock s : e.getValue()) {
+															if (s.getCodeName().equalsIgnoreCase(stockCodeNameToRemove))
+															{
+																e.getValue().remove(s);
 																break;
 															}
 														}
@@ -331,19 +335,20 @@ public class Manager extends Agent {
 											break;
 										}
 									}
-									@SuppressWarnings("unchecked")
-									ArrayList<Stock> stockList = (ArrayList<Stock>) message
-											.getContentObject();
-									if (stockList != null
-											&& stockList.size() > 0) {
-										for (Stock s : stockList) {
-											manager.stockListManaged.add(s);
-										}
-									}
+//									@SuppressWarnings("unchecked")
+//									ArrayList<Stock> stockList = (ArrayList<Stock>) message
+//											.getContentObject();
+//									if (stockList != null
+//											&& stockList.size() > 0) {
+//										for (Stock s : stockList) {
+//											manager.stockListManaged.add(s);
+//										}
+//									}
 								}
 							}
 								break;
-							case ACLMessage.PROPOSE: {// TODO LOG
+							case ACLMessage.PROPOSE:
+							{// TODO LOG
 								System.out.println("Propose Recived");
 								if (message.getConversationId() == ConversationsID.STOCKS_HUNTER_SUGGESTIONS) {
 									manager.info = (InfoConversations) message
@@ -372,13 +377,11 @@ public class Manager extends Agent {
 														ArrayList<Stock> listTemp_approved;
 														ArrayList<Stock> listTemp_refused;
 
-														walletManagerAuxiliary = new WalletManagerAuxiliary(
-																manager.info
-																		.getStockList(),
-																manager.user
-																		.getUserValue(),
-																manager.info
-																		.getUserProfile());
+														manager.walletManagerAuxiliary = new WalletManagerAuxiliary(
+																manager.info.getStockList(),
+																manager.user.getUserValue(),
+																manager.info.getUserProfile());
+														
 														listTemp = manager.walletManagerAuxiliary
 																.analyzeStocksSuggestionsList();
 														listTemp_approved = listTemp
@@ -460,7 +463,8 @@ public class Manager extends Agent {
 															}
 														}
 															break;
-														case CONSERVADOR: {
+														case CONSERVADOR: 
+														{
 															if (listTemp_approved
 																	.size() >= manager.STOCK_QTD_CONSERVADOR) {
 																for (int i = 0; i < manager.STOCK_QTD_CONSERVADOR; i++) {
@@ -509,9 +513,8 @@ public class Manager extends Agent {
 												}
 											});// TODO LOG
 												// Reparticao das acoes
-									suggestions
-											.addSubBehaviour(new WakerBehaviour(
-													manager, 200) {
+									suggestions.addSubBehaviour(new WakerBehaviour(manager, 200) 
+									{
 												private static final long serialVersionUID = 1L;
 
 												@Override
@@ -527,10 +530,10 @@ public class Manager extends Agent {
 																		// gestao
 																		// de
 																		// valores
-													manager.walletManagerAuxiliary
-															.putInfoExperts(manager.infoExperts);
+													manager.walletManagerAuxiliary.putInfoExperts(manager.infoExperts);
 													System.out.println(manager.getLocalName()+":Enviando mensagem para ..");
 													System.out.println(manager.infoExperts);
+													
 													for (Entry<String, ArrayList<Stock>> s : manager.infoExperts
 															.entrySet()) {
 														try {
@@ -556,11 +559,10 @@ public class Manager extends Agent {
 													}
 												}
 											});
-									// Reparticao das estrat�gias entre os
+									// Reparticao das estrategias entre os
 									// agentes
-									suggestions
-											.addSubBehaviour(new WakerBehaviour(
-													manager, 200) {
+									suggestions.addSubBehaviour(new WakerBehaviour(manager, 200) 
+									{
 												private static final long serialVersionUID = 1L;
 
 												@Override
@@ -587,9 +589,7 @@ public class Manager extends Agent {
 												}
 											});
 									// Informa aos experts o nome do usuario
-									suggestions
-											.addSubBehaviour(new OneShotBehaviour(
-													manager) {// TODO LOG
+									suggestions.addSubBehaviour(new OneShotBehaviour(manager) {// TODO LOG
 												private static final long serialVersionUID = 1L;
 
 												@Override
@@ -616,43 +616,32 @@ public class Manager extends Agent {
 											});
 									addBehaviour(suggestions);
 								}
+								
+								//Pedido de compra
 								if (message.getConversationId() == ConversationsID.EXPERT_ORDER_BUY
-										|| message.getConversationId() == ConversationsID.EXPERT_ORDER_SELL) {
-									System.out
-											.println("Manager : Solicitacao de autorizacao de ordem.");
+										|| message.getConversationId() == ConversationsID.EXPERT_ORDER_SELL) 
+								{
+									System.out.println("Manager : Solicitacao de autorizacao de ordem.");
+									
+								//	JOptionPane.showMessageDialog(null, manager.getLocalName()+" Pedido de "+message.getConversationId()+": para-"+message.getSender().getLocalName()+" Recebido");
+									
 									@SuppressWarnings("unchecked")
-									ArrayList<Stock> contentObject = ((ArrayList<Stock>) message
-											.getContentObject());
-									if (contentObject != null
-											&& contentObject.size() > 0) {
-										for (Stock s : contentObject) {
-											manager.stockListForUserApprove
-													.add(s);
-											System.out
-													.println(manager
-															.getLocalName()
-															+ " Pedindo autorizacao para "
-															+ s.getCodeName());
+									ArrayList<Stock> contentObject = ((ArrayList<Stock>) message.getContentObject());
+									
+									if (contentObject != null&& contentObject.size() > 0) {
+										
+										for (Stock s : contentObject) 
+										{
+											manager.stockListForUserApprove.add(s);
+											System.out.println(manager.getLocalName()
+													+ " Pedindo autorizacao para "
+													+ s.getCodeName());
 										}
 									}// TODO LOG
-									System.out.println(manager.getLocalName()
-											+ " Verificando comportamento ="
-											+ manager.countStocksSentToUser);
-									if (manager.countStocksSentToUser == 0) {
-										System.out
-												.println(manager.getLocalName()
-														+ " iniciando comportamento de escuta");
-										manager.countStocksSentToUser = manager.stockListForUserApprove
-												.size();
-										addBehaviour(new UserAuthorization(
-												manager));
-									}
+									
 								}
-							}
-								break;
-							case CORAJOSO: {
-							}
-
+							}break;
+								
 							default:
 								break;
 							}
@@ -881,141 +870,156 @@ private void createExperts(int userProfile, String userIdentifier,
 
 		@Override
 		protected void onTick() {
-		}
-
-	}
-
-	private class UserAuthorization extends Behaviour {
-		private static final long serialVersionUID = 1L;
-		private Manager manager;
-		private StockDao stockDao;
-		private ArrayList<Stock> userAuthorizations;
-
-		public UserAuthorization(Manager manager) {
-			this.manager = manager;
-			this.stockDao = new StockDao();
-		}
-
-		@Override
-		public void action() {
-			try {
-				this.userAuthorizations = this.stockDao
-						.getStocksSuggestionWithUserAuthorized(manager.userName);
-				if (this.userAuthorizations != null
-						&& this.userAuthorizations.size() > 0) {
-					ACLMessage msg = null;
-					String expertName = "";
-					double value = 0;
-					for (Stock s : this.userAuthorizations) {// TODO LOG
-						switch (s.getSuggestion()) {
-						case ConversationsID.BUY_APPROVED: {
-							// Looking for Expert Name
-							for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
-									.entrySet()) {
-								expertName = e.getKey();
-								for (Stock stock : e.getValue()) {
-									if (stock.getCodeName().equalsIgnoreCase(
-											s.getCodeName()))
-										break;
-								}
-							}
-							value = this.manager.walletManagerAuxiliary
-									.approveOrderBuy(expertName);
-							if (value > 0) {
-								msg = new ACLMessage(ACLMessage.AGREE);
-								msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
-								msg.setContent(s.getCodeName() + "_" + value);
-								msg.addReceiver(new AID(expertName,
-										AID.ISLOCALNAME));
-								// TODO LOG
-								System.out.println(manager.getLocalName()
-										+ ": Ordem de compra autorizada para "
-										+ expertName);
-								myAgent.send(msg);
-							}
-						}
-							break;
-						case ConversationsID.BUY_REFUSED: {
-							// Looking for Expert Name
-							for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
-									.entrySet()) {
-								expertName = e.getKey();
-								for (Stock stock : e.getValue()) {
-									if (stock.getCodeName().equalsIgnoreCase(
-											s.getCodeName()))
-										break;
-								}
-							}
-							msg = new ACLMessage(ACLMessage.REFUSE);
-							msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
-							msg.setContent(s.getCodeName());
-							msg.addReceiver(new AID(expertName, AID.ISLOCALNAME));
-
-							myAgent.send(msg);
-						}
-							break;
-						case ConversationsID.SELL_APPROVED: {
-							// Looking for Expert Name
-							for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
-									.entrySet()) {
-								expertName = e.getKey();
-								for (Stock stock : e.getValue()) {
-									if (stock.getCodeName().equalsIgnoreCase(
-											s.getCodeName()))
-										break;
-								}
-							}
-							msg = new ACLMessage(ACLMessage.AGREE);
-							msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
-							msg.setContent(s.getCodeName());
-							msg.addReceiver(new AID(expertName, AID.ISLOCALNAME));
-
-							myAgent.send(msg);
-						}
-							break;
-						case ConversationsID.SELL_REFUSED: {
-							// Looking for Expert Name
-							for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
-									.entrySet()) {
-								expertName = e.getKey();
-								for (Stock stock : e.getValue()) {
-									if (stock.getCodeName().equalsIgnoreCase(
-											s.getCodeName()))
-										break;
-								}
-							}
-							msg = new ACLMessage(ACLMessage.REFUSE);
-							msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
-							msg.setContent(s.getCodeName());
-							msg.addReceiver(new AID(expertName, AID.ISLOCALNAME));
-
-							myAgent.send(msg);
-						}
-							break;
-						default:
-							break;
-						}
-						// TODO LOG
-						System.out.println(manager.getLocalName()
-								+ "Decrementando countStocksSentToUser");
-						this.manager.countStocksSentToUser--;
-					}
-				}
-			} catch (Exception e) {// TODO LOG
-				e.printStackTrace();
-			}
-		}
-
-		@Override
-		public boolean done() {
-			if (manager.countStocksSentToUser == 0) {// TODO LOG
-				System.out.println("Comportamento de escuta encerrado");
-				return true;
-			} else
-				return false;
-		}
+		//Solicitar acoes compradas com cotacao atualizada
+			
+		manager.stockListManaged.clear();
+		manager.countExpertAux=0;
 		
+		
+		ACLMessage expertMessage = new ACLMessage(ACLMessage.CFP);
+		for(Entry<String, ArrayList<Stock>>expert:manager.infoExperts.entrySet())
+			expertMessage.addReceiver(new AID(expert.getKey(),AID.ISLOCALNAME));
+			
+		expertMessage.setConversationId(ConversationsID.RISK_CALCULATION_TIME);
+		myAgent.send(expertMessage);
+			
+		}
+
 	}
+
+//	private class UserAuthorization extends Behaviour {
+//		private static final long serialVersionUID = 1L;
+//		private Manager manager;
+//		private StockDao stockDao;
+//		private ArrayList<Stock> userAuthorizations;
+//
+//		public UserAuthorization(Manager manager) {
+//			this.manager = manager;
+//			this.stockDao = new StockDao();
+//		}
+//
+//		@Override
+//		public void action() {
+//			try {
+//				this.userAuthorizations = this.stockDao
+//						.getStocksSuggestionWithUserAuthorized(manager.userName);
+//				if (this.userAuthorizations != null
+//						&& this.userAuthorizations.size() > 0) {
+//					ACLMessage msg = null;
+//					String expertName = "";
+//					double value = 0;
+//					for (Stock s : this.userAuthorizations) {// TODO LOG
+//						switch (s.getSuggestion()) {
+//						case ConversationsID.BUY_APPROVED: {
+//							// Looking for Expert Name
+//							for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
+//									.entrySet()) {
+//								expertName = e.getKey();
+//								for (Stock stock : e.getValue()) {
+//									if (stock.getCodeName().equalsIgnoreCase(
+//											s.getCodeName()))
+//										break;
+//								}
+//							}
+//							value = this.manager.walletManagerAuxiliary
+//									.approveOrderBuy(expertName);
+//							if (value > 0) {
+//								msg = new ACLMessage(ACLMessage.AGREE);
+//								msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+//								msg.setContent(s.getCodeName() + "_" + value);
+//								msg.addReceiver(new AID(expertName,
+//										AID.ISLOCALNAME));
+//								// TODO LOG
+//								System.out.println(manager.getLocalName()
+//										+ ": Ordem de compra autorizada para "
+//										+ expertName);
+//								myAgent.send(msg);
+//							}
+//						}
+//							break;
+//						case ConversationsID.BUY_REFUSED: {
+//							// Looking for Expert Name
+//							for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
+//									.entrySet()) {
+//								expertName = e.getKey();
+//								for (Stock stock : e.getValue()) {
+//									if (stock.getCodeName().equalsIgnoreCase(
+//											s.getCodeName()))
+//										break;
+//								}
+//							}
+//							msg = new ACLMessage(ACLMessage.REFUSE);
+//							msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+//							msg.setContent(s.getCodeName());
+//							msg.addReceiver(new AID(expertName, AID.ISLOCALNAME));
+//
+//							myAgent.send(msg);
+//						}
+//							break;
+//						case ConversationsID.SELL_APPROVED: {
+//							// Looking for Expert Name
+//							for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
+//									.entrySet()) {
+//								expertName = e.getKey();
+//								for (Stock stock : e.getValue()) {
+//									if (stock.getCodeName().equalsIgnoreCase(
+//											s.getCodeName()))
+//										break;
+//								}
+//							}
+//							msg = new ACLMessage(ACLMessage.AGREE);
+//							msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
+//							msg.setContent(s.getCodeName());
+//							msg.addReceiver(new AID(expertName, AID.ISLOCALNAME));
+//
+//							myAgent.send(msg);
+//						}
+//							break;
+//						case ConversationsID.SELL_REFUSED: {
+//							// Looking for Expert Name
+//							for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
+//									.entrySet()) {
+//								expertName = e.getKey();
+//								for (Stock stock : e.getValue()) {
+//									if (stock.getCodeName().equalsIgnoreCase(
+//											s.getCodeName()))
+//										break;
+//								}
+//							}
+//							msg = new ACLMessage(ACLMessage.REFUSE);
+//							msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
+//							msg.setContent(s.getCodeName());
+//							msg.addReceiver(new AID(expertName, AID.ISLOCALNAME));
+//
+//							myAgent.send(msg);
+//						}
+//							break;
+//						default:
+//							break;
+//						}
+//						// TODO LOG
+//						System.out.println(manager.getLocalName()
+//								+ "Decrementando countStocksSentToUser");
+//						this.manager.countStocksSentToUser--;
+//					}
+//				}
+//			} catch (Exception e) {// TODO LOG
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		@Override
+//		public boolean done() {
+//			if (manager.countStocksSentToUser == 0) {// TODO LOG
+//				System.out.println("Comportamento de escuta encerrado");
+//				return true;
+//			} else
+//				return false;
+//		}
+//		
+//	}
+//	
+//	
 	public ArrayList<Stock> removeRepetitions(ArrayList<Stock> list)
 	{
 		ArrayList<Stock>returnList=new ArrayList<Stock>();

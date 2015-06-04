@@ -35,8 +35,7 @@ public class StockDao {
 		try {
 			MongoConnection connection = MongoConnection.getInstance();
 			DB db = connection.getDB();
-			this.setCollection_stock_prices(db
-					.getCollection("JADE_stocks_prices"));
+			this.setCollection_stock_prices(db.getCollection("JADE_stocks_prices"));
 			this.setCollection_stocks(db.getCollection("JADE_stocks"));
 			this.setCollection_userStockSugestions(db.getCollection("stock"));
 
@@ -156,6 +155,7 @@ public class StockDao {
 
 	}
 
+	
 	public ArrayList<Stock> getStocksSuggestionWithUserAuthorized(
 			String userIdentifier) {
 
@@ -170,12 +170,24 @@ public class StockDao {
 				mongo_stock = cursor.next();
 				// Stock stock=new Stock(mongo_stock.get("_id").toString(),
 				// mongo_stock.get("sector").toString());
-				Stock stock = new Stock(mongo_stock.get("_id").toString(),
-						"FAKE");
-				stock.setSuggestion(Integer.parseInt(mongo_stock.get(
-						"suggestion").toString()));
+				Stock stock = new Stock(mongo_stock.get("codeName").toString(),"FAKE");
+				stock.setSuggestion(Integer.parseInt(mongo_stock.get("suggestion").toString()));
+				
+				stock.setAvarangeReturn_15(Double.parseDouble(mongo_stock.get("avarangeReturn_15").toString()));
+				stock.setAvarangeReturn_30(Double.parseDouble(mongo_stock.get("avarangeReturn_30").toString()));
 
-				switch (stock.getSuggestion()) {
+				stock.setStandardDeviation_15(Double.parseDouble(mongo_stock.get("standardDeviation_15").toString()));
+				stock.setStandardDeviation_30(Double.parseDouble(mongo_stock.get("standardDeviation_30").toString()));
+
+				stock.setVariance_15(Double.parseDouble(mongo_stock.get("variance_15").toString()));
+				stock.setVariance_30(Double.parseDouble(mongo_stock.get("variance_30").toString()));
+
+				stock.setVarianceCoefficient_15(Double.parseDouble(mongo_stock.get("varianceCoefficient_15").toString()));
+				stock.setVarianceCoefficient_30(Double.parseDouble(mongo_stock.get("varianceCoefficient_30").toString()));
+				
+				
+				switch (stock.getSuggestion()) 
+				{
 				case ConversationsID.BUY_APPROVED: {
 					stockList.add(stock);
 				}
@@ -562,6 +574,9 @@ public ArrayList<Stock> getAllStocksWithPricesBetweenInterval(Date start,Date fi
 		ArrayList<CandleStick> candleList = null;
 
 		Stock stock = null;
+try
+{
+	
 
 		while (cursor.hasNext()) {
 
@@ -617,7 +632,11 @@ public ArrayList<Stock> getAllStocksWithPricesBetweenInterval(Date start,Date fi
 		cursor.close();
 		
 		
-
+}
+catch(Exception e)
+{
+	e.printStackTrace();
+}
 		return stockList;
 	}
 
@@ -632,7 +651,8 @@ public Stock getStocksWithPricesBetweenInterval(String codeName,Date start,Date 
 		ArrayList<CandleStick> candleList = null;
 
 		Stock stock = null;
-
+try
+{
 		while (cursor.hasNext()) {
 
 			mongo_stock = cursor.next();
@@ -683,6 +703,11 @@ public Stock getStocksWithPricesBetweenInterval(String codeName,Date start,Date 
 			
 		}
 		cursor.close();
+		
+}catch(Exception e)
+{
+	e.printStackTrace();
+}
 		return stock;
 	}
 

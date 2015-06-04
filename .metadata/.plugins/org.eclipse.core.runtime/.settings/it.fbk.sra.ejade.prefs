@@ -1,3 +1,4 @@
+core.agents.Creator=Creator
 eclipse.preferences.version=1
 rcs.core.agents.AgentHello=AgentHello
 rcs.core.agents.Manager=Manager

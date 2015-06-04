@@ -39,10 +39,10 @@ public class Hunter extends Agent {
 	private ArrayList<Stock> stockList = null;
 	private StockDao stockDao = null;
 	private Statistical statistical = null;
-	private String dir_1 = "/Users/ramoncruz/Desktop";
+	private String dir_1 = "/Users/ramon/Desktop";
 	private String subDir_1 = "/TCC2";
 	private String subDir_2 = "/Ativos";
-	private String sectorsCsvFilePath = "/Users/ramoncruz/Dropbox/UnB/TCC/workspace/java/Setores";
+	private String sectorsCsvFilePath = "/Users/ramon/Dropbox/UnB/TCC/workspace/java/Setores";
 	private boolean isSimulation;
 	
 	private StocksInMemory simulationsData;
@@ -80,7 +80,8 @@ public class Hunter extends Agent {
 		}
 	}
 
-	protected void takeDown() {
+	protected void takeDown() 
+	{
 		try {
 			// Unregister the agent in plataform
 			DFAgentDescription dfd = new DFAgentDescription();

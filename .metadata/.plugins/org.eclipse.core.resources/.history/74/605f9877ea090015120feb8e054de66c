@@ -1,0 +1,29 @@
+package suport.util.database.mongoDB.pojo;
+
+import suport.util.database.mongoDB.MongoConnection;
+
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+
+import jade.util.leap.Serializable;
+
+public class WalletDao implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	private DBCollection collection_wallet;
+	private MongoConnection connection;
+	private DB db;
+
+	public WalletDao() {
+		this.connection= MongoConnection.getInstance();
+		this.db=this.connection.getDB();
+		this.collection_wallet=(this.db.getCollection("Wallet"));
+
+	}
+
+}

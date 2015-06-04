@@ -458,3 +458,899 @@
 2015-04-30 10:18:41,089 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
 2015-04-30 10:18:41,092 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2015-04-30 10:18:41,092 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 14:50:59,874 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 14:50:59,875 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 14:50:59,877 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 14:50:59,877 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 14:51:03,814 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 14:51:03,814 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 14:51:03,816 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 14:51:03,816 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 14:51:08,234 [Worker-81] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 14:51:08,234 [Worker-81] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 14:51:08,236 [Worker-81] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 14:51:08,236 [Worker-81] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 14:53:33,025 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 14:53:33,026 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 14:53:33,027 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 14:53:33,027 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 22:37:29,798 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 22:37:29,807 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 22:37:29,815 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 22:37:29,815 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 22:38:12,482 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 22:38:12,487 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 22:38:12,489 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 22:38:12,489 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 22:40:22,688 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 22:40:22,689 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 22:40:22,692 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 22:40:22,692 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:00:45,943 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:00:45,944 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:00:45,946 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:00:45,946 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:08:35,994 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:08:35,996 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:08:35,998 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:08:35,998 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:09:57,357 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:09:57,358 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:09:57,361 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:09:57,361 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:10:11,211 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:10:11,212 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:10:11,215 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:10:11,216 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:11:27,195 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:11:27,196 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:11:27,198 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:11:27,198 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:12:05,086 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:12:05,087 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:12:05,089 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:12:05,089 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:16:13,157 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:16:13,157 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:16:13,159 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:16:13,160 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:18:21,937 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:18:21,937 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:18:21,939 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:18:21,939 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:18:55,105 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:18:55,106 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:18:55,108 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:18:55,108 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:19:25,069 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:19:25,071 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:19:25,073 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:19:25,074 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:20:08,043 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:20:08,044 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:20:08,045 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:20:08,045 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:22:00,910 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:22:00,910 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:22:00,911 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:22:00,912 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:22:14,013 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:22:14,014 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:22:14,016 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:22:14,017 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:25:25,302 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:25:25,303 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:25:25,304 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:25:25,305 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:27:37,736 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:27:37,736 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:27:37,738 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:27:37,738 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:28:27,521 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:28:27,521 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:28:27,523 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:28:27,523 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:28:58,470 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:28:58,471 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:28:58,473 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:28:58,473 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:58:45,907 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:58:45,908 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:58:45,909 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:58:45,910 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-04-30 23:59:01,586 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:59:01,586 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-04-30 23:59:01,588 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-04-30 23:59:01,588 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:02:27,833 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:02:27,833 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:02:27,835 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:02:27,835 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:02:49,351 [Worker-47] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:02:49,351 [Worker-47] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:02:49,353 [Worker-47] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:02:49,353 [Worker-47] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:04:59,030 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:04:59,030 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:04:59,031 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:04:59,031 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:05:21,276 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:05:21,276 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:05:21,277 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:05:21,278 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:05:37,492 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:05:37,492 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:05:37,493 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:05:37,493 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:05:53,198 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:05:53,198 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:05:53,200 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:05:53,200 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:09:31,095 [Worker-49] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:09:31,095 [Worker-49] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:09:31,097 [Worker-49] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:09:31,097 [Worker-49] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:11:13,748 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:11:13,749 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:11:13,750 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:11:13,751 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:38:18,189 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:38:18,189 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-05-01 00:38:18,191 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:38:18,191 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:44:22,091 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:44:22,091 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:44:22,093 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:44:22,093 [Worker-51] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-01 00:55:53,530 [Worker-59] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:55:53,531 [Worker-59] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-01 00:55:53,535 [Worker-59] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-01 00:55:53,535 [Worker-59] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-13 12:26:34,724 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-13 12:26:34,749 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-13 12:26:34,766 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-13 12:26:34,767 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-13 14:44:11,124 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-13 14:44:11,133 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-13 14:44:11,147 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-13 14:44:11,147 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-13 14:45:37,702 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-13 14:45:37,713 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-13 14:45:37,714 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-13 14:45:37,714 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-14 14:41:41,399 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-14 14:41:41,413 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-14 14:41:41,423 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-14 14:41:41,423 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-26 22:39:09,823 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-26 22:39:09,888 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-26 22:39:09,904 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-26 22:39:09,904 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-29 00:23:14,918 [Worker-202] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-29 00:23:14,951 [Worker-202] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-05-29 00:23:14,953 [Worker-202] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-29 00:23:14,955 [Worker-202] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-05-29 00:23:16,295 [Worker-198] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-29 00:23:16,295 [Worker-198] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-05-29 00:23:16,298 [Worker-198] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-05-29 00:23:16,298 [Worker-198] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 09:05:34,593 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 09:05:34,636 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 09:05:34,656 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 09:05:34,656 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:43:53,064 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:43:53,069 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:43:53,071 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:43:53,071 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:44:19,089 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:44:19,089 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:44:19,090 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:44:19,091 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:46:59,289 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:46:59,290 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:46:59,291 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:46:59,292 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:47:18,914 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:47:18,915 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:47:18,917 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:47:18,917 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:47:27,846 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:47:27,847 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:47:27,848 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:47:27,848 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:47:40,127 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:47:40,128 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:47:40,131 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:47:40,131 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:48:13,809 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:48:13,809 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:48:13,811 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:48:13,811 [Worker-41] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:48:30,529 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:48:30,530 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:48:30,533 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:48:30,533 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:48:42,360 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:48:42,361 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:48:42,363 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:48:42,363 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:50:22,560 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:50:22,561 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:50:22,563 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:50:22,564 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:51:28,029 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:51:28,030 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:51:28,031 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:51:28,031 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:51:32,820 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:51:32,820 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:51:32,822 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:51:32,822 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:51:43,451 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:51:43,452 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:51:43,453 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:51:43,453 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:55:57,643 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:55:57,644 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:55:57,645 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:55:57,645 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:58:04,401 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:58:04,402 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:58:04,404 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:58:04,404 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 10:58:28,292 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:58:28,293 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 10:58:28,295 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 10:58:28,295 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:06:40,338 [Worker-80] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:06:40,340 [Worker-80] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:06:40,343 [Worker-80] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:06:40,343 [Worker-80] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:12:10,403 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:12:10,404 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:12:10,406 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:12:10,406 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:13:13,318 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:13:13,319 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:13:13,321 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:13:13,321 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:14:18,201 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:14:18,201 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:14:18,203 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:14:18,203 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:15:01,230 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:15:01,231 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:15:01,232 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:15:01,233 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:15:10,569 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:15:10,569 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:15:10,570 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:15:10,571 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:18:27,774 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:18:27,775 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:18:27,777 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:18:27,777 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:19:33,861 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:19:33,862 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:19:33,864 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:19:33,864 [Worker-77] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:22:18,767 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:22:18,769 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:22:18,771 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:22:18,771 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:22:34,629 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:22:34,630 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:22:34,632 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:22:34,632 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:23:10,756 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:23:10,757 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:23:10,759 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:23:10,759 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:24:35,901 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:24:35,901 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:24:35,903 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:24:35,903 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:31:10,704 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:31:10,708 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:31:10,709 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:31:10,709 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:31:16,329 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:31:16,329 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:31:16,330 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:31:16,330 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:32:18,625 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:32:18,625 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:32:18,627 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:32:18,628 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:33:26,919 [Worker-99] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:33:26,920 [Worker-99] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:33:26,923 [Worker-99] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:33:26,923 [Worker-99] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:33:56,060 [Worker-97] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:33:56,061 [Worker-97] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:33:56,062 [Worker-97] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:33:56,062 [Worker-97] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:36:56,645 [Worker-96] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:36:56,646 [Worker-96] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:36:56,648 [Worker-96] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:36:56,648 [Worker-96] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:37:08,564 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:37:08,564 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:37:08,566 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:37:08,566 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:39:48,588 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:39:48,590 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:39:48,592 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:39:48,592 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:42:10,357 [Worker-102] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:42:10,358 [Worker-102] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:42:10,359 [Worker-102] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:42:10,359 [Worker-102] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 15:44:58,173 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:44:58,176 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 15:44:58,178 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 15:44:58,178 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:06:52,247 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:06:52,248 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:06:52,252 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:06:52,252 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:07:37,875 [Worker-142] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:07:37,876 [Worker-142] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:07:37,877 [Worker-142] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:07:37,878 [Worker-142] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:09:02,987 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:09:02,988 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:09:02,990 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:09:02,990 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:10:41,239 [Worker-140] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:10:41,240 [Worker-140] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:10:41,241 [Worker-140] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:10:41,241 [Worker-140] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:12:43,172 [Worker-140] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:12:43,173 [Worker-140] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:12:43,174 [Worker-140] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:12:43,175 [Worker-140] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:13:03,461 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:13:03,462 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:13:03,463 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:13:03,463 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:35:39,436 [Worker-148] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:35:39,437 [Worker-148] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:35:39,439 [Worker-148] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:35:39,439 [Worker-148] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:36:54,437 [Worker-148] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:36:54,438 [Worker-148] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:36:54,439 [Worker-148] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:36:54,439 [Worker-148] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:36:55,515 [Worker-150] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:36:55,516 [Worker-150] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:36:55,518 [Worker-150] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:36:55,518 [Worker-150] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:47:04,395 [Worker-151] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:47:04,398 [Worker-151] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:47:04,399 [Worker-151] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:47:04,399 [Worker-151] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:47:54,487 [Worker-153] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:47:54,488 [Worker-153] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:47:54,489 [Worker-153] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:47:54,489 [Worker-153] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:48:20,950 [Worker-154] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:48:20,950 [Worker-154] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:48:20,952 [Worker-154] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:48:20,952 [Worker-154] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 21:57:56,733 [Worker-161] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:57:56,735 [Worker-161] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 21:57:56,737 [Worker-161] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 21:57:56,737 [Worker-161] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 22:22:01,343 [Worker-157] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:22:01,345 [Worker-157] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 22:22:01,347 [Worker-157] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:22:01,347 [Worker-157] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 22:25:32,707 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:25:32,708 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 22:25:32,709 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:25:32,709 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 22:25:39,693 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:25:39,693 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 22:25:39,695 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:25:39,695 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 22:26:04,616 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:26:04,617 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 22:26:04,619 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:26:04,619 [Worker-167] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 22:26:21,164 [Worker-165] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:26:21,164 [Worker-165] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 22:26:21,166 [Worker-165] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:26:21,167 [Worker-165] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 22:26:29,129 [Worker-163] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:26:29,129 [Worker-163] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 22:26:29,130 [Worker-163] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:26:29,130 [Worker-163] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 22:39:15,173 [Worker-171] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:39:15,174 [Worker-171] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 22:39:15,176 [Worker-171] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 22:39:15,176 [Worker-171] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 23:06:05,123 [Worker-168] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 23:06:05,125 [Worker-168] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 23:06:05,127 [Worker-168] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 23:06:05,127 [Worker-168] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 23:08:37,142 [Worker-165] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 23:08:37,142 [Worker-165] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 23:08:37,143 [Worker-165] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 23:08:37,143 [Worker-165] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 23:11:15,173 [Worker-172] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 23:11:15,174 [Worker-172] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-01 23:11:15,176 [Worker-172] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 23:11:15,176 [Worker-172] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-01 23:26:04,364 [Worker-175] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 23:26:04,366 [Worker-175] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-06-01 23:26:04,371 [Worker-175] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-01 23:26:04,372 [Worker-175] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:04:04,612 [Worker-196] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:04:04,617 [Worker-196] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:04:04,622 [Worker-196] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:04:04,622 [Worker-196] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:04:41,192 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:04:41,193 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:04:41,194 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:04:41,194 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:05:07,928 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:05:07,930 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:05:07,933 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:05:07,933 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:07:18,217 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:07:18,218 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:07:18,219 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:07:18,219 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:08:15,829 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:08:15,830 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:08:15,831 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:08:15,831 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:10:45,989 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:10:45,989 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:10:45,990 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:10:45,990 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:12:19,423 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:12:19,424 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:12:19,425 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:12:19,425 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:12:56,625 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:12:56,625 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:12:56,627 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:12:56,627 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:13:02,794 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:13:02,794 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:13:02,796 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:13:02,796 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:13:07,783 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:13:07,783 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:13:07,785 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:13:07,785 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:13:12,695 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:13:12,695 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:13:12,696 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:13:12,696 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:13:59,606 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:13:59,606 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:13:59,607 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:13:59,607 [Worker-189] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:15:10,665 [Worker-196] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:15:10,666 [Worker-196] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:15:10,668 [Worker-196] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:15:10,668 [Worker-196] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:17:19,842 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:17:19,843 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:17:19,846 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:17:19,846 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:18:39,399 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:18:39,399 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:18:39,401 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:18:39,401 [Worker-199] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:19:53,826 [Worker-204] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:19:53,827 [Worker-204] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:19:53,829 [Worker-204] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:19:53,829 [Worker-204] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:20:07,367 [Worker-205] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:20:07,368 [Worker-205] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:20:07,369 [Worker-205] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:20:07,369 [Worker-205] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:20:38,741 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:20:38,742 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:20:38,744 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:20:38,744 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:20:41,380 [Worker-203] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:20:41,381 [Worker-203] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:20:41,383 [Worker-203] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:20:41,383 [Worker-203] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:21:02,284 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:21:02,284 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:21:02,285 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:21:02,285 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:21:08,080 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:21:08,081 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:21:08,084 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:21:08,085 [Worker-200] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:21:11,035 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:21:11,036 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:21:11,037 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:21:11,037 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:21:46,830 [Worker-204] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:21:46,831 [Worker-204] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:21:46,832 [Worker-204] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:21:46,832 [Worker-204] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:22:00,654 [Worker-205] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:22:00,655 [Worker-205] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:22:00,656 [Worker-205] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:22:00,656 [Worker-205] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:22:22,633 [Worker-203] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:22:22,633 [Worker-203] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:22:22,635 [Worker-203] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:22:22,635 [Worker-203] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:27:42,036 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:27:42,037 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:27:42,039 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:27:42,040 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:30:34,176 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:30:34,176 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:30:34,178 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:30:34,178 [Worker-195] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:35:46,105 [Worker-209] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:35:46,105 [Worker-209] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:35:46,106 [Worker-209] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:35:46,107 [Worker-209] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:52:42,925 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:52:42,927 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:52:42,929 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:52:42,929 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:53:23,211 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:53:23,211 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:53:23,213 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:53:23,213 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:55:18,442 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:55:18,442 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:55:18,443 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:55:18,443 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:55:48,263 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:55:48,263 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:55:48,267 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:55:48,267 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:56:02,185 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:56:02,186 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:56:02,187 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:56:02,188 [Worker-212] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 09:57:19,600 [Worker-218] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:57:19,601 [Worker-218] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 09:57:19,602 [Worker-218] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 09:57:19,602 [Worker-218] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:00:25,640 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:00:25,641 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:00:25,642 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:00:25,642 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:02:17,327 [Worker-217] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:02:17,328 [Worker-217] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:02:17,329 [Worker-217] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:02:17,329 [Worker-217] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:04:36,466 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:04:36,466 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:04:36,467 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:04:36,467 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:05:03,553 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:05:03,554 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:05:03,555 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:05:03,555 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:05:42,961 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:05:42,961 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:05:42,962 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:05:42,963 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:05:47,896 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:05:47,897 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:05:47,898 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:05:47,898 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:05:54,712 [Worker-219] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:05:54,713 [Worker-219] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:05:54,715 [Worker-219] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:05:54,715 [Worker-219] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:06:36,758 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:06:36,758 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:06:36,760 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:06:36,760 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:06:45,852 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:06:45,852 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:06:45,853 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:06:45,853 [Worker-216] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:10:20,098 [Worker-223] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:10:20,098 [Worker-223] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:10:20,100 [Worker-223] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:10:20,101 [Worker-223] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:12:23,454 [Worker-219] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:12:23,455 [Worker-219] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:12:23,456 [Worker-219] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:12:23,456 [Worker-219] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:13:16,970 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:13:16,971 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:13:16,972 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:13:16,972 [Worker-215] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:13:35,073 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:13:35,074 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:13:35,075 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:13:35,075 [Worker-213] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:16:15,360 [Worker-224] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:16:15,361 [Worker-224] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:16:15,363 [Worker-224] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:16:15,363 [Worker-224] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:16:35,985 [Worker-225] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:16:35,985 [Worker-225] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-06-02 10:16:35,986 [Worker-225] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:16:35,987 [Worker-225] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:34:19,059 [Worker-222] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:34:19,061 [Worker-222] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:34:19,062 [Worker-222] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:34:19,063 [Worker-222] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 10:40:49,068 [Worker-225] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:40:49,069 [Worker-225] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 10:40:49,071 [Worker-225] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 10:40:49,071 [Worker-225] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 11:09:16,775 [Worker-236] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:09:16,777 [Worker-236] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 11:09:16,781 [Worker-236] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:09:16,781 [Worker-236] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 11:20:44,125 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:20:44,129 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 11:20:44,131 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:20:44,131 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 11:24:13,401 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:24:13,402 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 11:24:13,403 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:24:13,403 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 11:25:50,294 [Worker-240] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:25:50,294 [Worker-240] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 11:25:50,295 [Worker-240] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:25:50,296 [Worker-240] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 11:38:22,964 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:38:22,965 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 11:38:22,967 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 11:38:22,967 [Worker-176] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:22:07,243 [Worker-238] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:22:07,245 [Worker-238] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:22:07,247 [Worker-238] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:22:07,248 [Worker-238] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:23:22,059 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:23:22,059 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:23:22,061 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:23:22,061 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:27:46,853 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:27:46,854 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:27:46,855 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:27:46,855 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:33:38,758 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:33:38,759 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:33:38,761 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:33:38,761 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:34:00,116 [Worker-238] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:34:00,116 [Worker-238] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:34:00,118 [Worker-238] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:34:00,118 [Worker-238] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:34:13,893 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:34:13,894 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:34:13,895 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:34:13,895 [Worker-272] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:48:31,741 [Worker-277] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:48:31,743 [Worker-277] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:48:31,745 [Worker-277] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:48:31,745 [Worker-277] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:49:27,273 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:49:27,273 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:49:27,276 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:49:27,276 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:49:35,400 [Worker-277] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:49:35,401 [Worker-277] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:49:35,402 [Worker-277] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:49:35,402 [Worker-277] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:53:19,635 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:53:19,635 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:53:19,636 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:53:19,636 [Worker-245] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 18:55:18,007 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:55:18,011 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 18:55:18,013 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 18:55:18,013 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 19:12:15,648 [Worker-274] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:12:15,649 [Worker-274] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 19:12:15,651 [Worker-274] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:12:15,651 [Worker-274] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 19:12:19,102 [Worker-274] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:12:19,103 [Worker-274] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 19:12:19,104 [Worker-274] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:12:19,104 [Worker-274] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 19:41:15,276 [Worker-278] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:41:15,282 [Worker-278] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 19:41:15,285 [Worker-278] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:41:15,285 [Worker-278] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 19:41:20,633 [Worker-268] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:41:20,634 [Worker-268] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 19:41:20,637 [Worker-268] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:41:20,637 [Worker-268] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 19:57:39,922 [Worker-278] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:57:39,923 [Worker-278] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 19:57:39,925 [Worker-278] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 19:57:39,925 [Worker-278] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 20:12:16,099 [Worker-283] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:12:16,100 [Worker-283] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 20:12:16,102 [Worker-283] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:12:16,102 [Worker-283] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 20:21:36,509 [Worker-286] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:21:36,511 [Worker-286] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 20:21:36,514 [Worker-286] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:21:36,514 [Worker-286] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 20:31:31,881 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:31:31,883 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 20:31:31,885 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:31:31,885 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 20:34:07,962 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:34:07,962 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 20:34:07,963 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:34:07,964 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 20:48:23,548 [Worker-290] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:48:23,550 [Worker-290] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 20:48:23,556 [Worker-290] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:48:23,556 [Worker-290] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 20:51:18,692 [Worker-294] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:51:18,692 [Worker-294] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 20:51:18,693 [Worker-294] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:51:18,694 [Worker-294] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 20:52:11,041 [Worker-296] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:52:11,042 [Worker-296] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 20:52:11,043 [Worker-296] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:52:11,044 [Worker-296] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 20:52:15,045 [Worker-294] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:52:15,046 [Worker-294] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 20:52:15,047 [Worker-294] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 20:52:15,047 [Worker-294] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 21:09:00,631 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:09:00,634 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 21:09:00,635 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:09:00,636 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 21:09:33,921 [Worker-299] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:09:33,922 [Worker-299] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 21:09:33,930 [Worker-299] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:09:33,930 [Worker-299] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 21:24:39,679 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:24:39,683 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 21:24:39,686 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:24:39,686 [Worker-282] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 21:43:04,427 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:43:04,430 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 21:43:04,433 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:43:04,433 [Worker-260] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 21:55:57,652 [Worker-308] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:55:57,654 [Worker-308] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 21:55:57,655 [Worker-308] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:55:57,656 [Worker-308] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 21:58:44,468 [Worker-305] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:58:44,468 [Worker-305] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 21:58:44,469 [Worker-305] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 21:58:44,469 [Worker-305] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 22:07:12,988 [Worker-305] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 22:07:12,989 [Worker-305] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 22:07:12,991 [Worker-305] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 22:07:12,991 [Worker-305] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 22:40:28,364 [Worker-314] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 22:40:28,366 [Worker-314] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 22:40:28,368 [Worker-314] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 22:40:28,368 [Worker-314] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 22:43:14,741 [Worker-314] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 22:43:14,742 [Worker-314] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 22:43:14,746 [Worker-314] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 22:43:14,746 [Worker-314] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 23:12:57,202 [Worker-313] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 23:12:57,205 [Worker-313] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 23:12:57,207 [Worker-313] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 23:12:57,207 [Worker-313] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 23:13:50,296 [Worker-315] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 23:13:50,297 [Worker-315] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 23:13:50,298 [Worker-315] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 23:13:50,298 [Worker-315] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-02 23:25:08,946 [Worker-304] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 23:25:08,947 [Worker-304] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-02 23:25:08,950 [Worker-304] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-02 23:25:08,950 [Worker-304] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 08:52:18,674 [Worker-331] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 08:52:18,678 [Worker-331] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 08:52:18,680 [Worker-331] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 08:52:18,681 [Worker-331] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:11:58,215 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:11:58,216 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:11:58,218 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:11:58,218 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:12:25,064 [Worker-334] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:12:25,064 [Worker-334] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:12:25,066 [Worker-334] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:12:25,066 [Worker-334] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:15:21,867 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:15:21,868 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:15:21,869 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:15:21,869 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:17:16,765 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:17:16,766 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:17:16,767 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:17:16,767 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:17:33,634 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:17:33,634 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:17:33,635 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:17:33,636 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:18:17,677 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:18:17,677 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:18:17,679 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:18:17,679 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:22:46,447 [Worker-337] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:22:46,447 [Worker-337] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:22:46,448 [Worker-337] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:22:46,448 [Worker-337] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:23:05,061 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:23:05,061 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:23:05,063 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:23:05,063 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:23:23,128 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:23:23,128 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:23:23,129 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:23:23,129 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:23:29,365 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:23:29,366 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:23:29,368 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:23:29,368 [Worker-329] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:27:13,418 [Worker-332] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:27:13,419 [Worker-332] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:27:13,420 [Worker-332] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:27:13,420 [Worker-332] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:27:54,441 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:27:54,442 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:27:54,443 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:27:54,443 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:28:41,720 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:28:41,720 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:28:41,722 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:28:41,722 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:29:51,622 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:29:51,623 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:29:51,624 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:29:51,624 [Worker-336] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:31:16,107 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:31:16,108 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:31:16,109 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:31:16,109 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:32:24,053 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:32:24,054 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:32:24,057 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:32:24,057 [Worker-330] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:41:15,725 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:41:15,727 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:41:15,729 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:41:15,729 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:54:16,748 [Worker-344] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:54:16,750 [Worker-344] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:54:16,752 [Worker-344] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:54:16,752 [Worker-344] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 09:59:47,463 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:59:47,464 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 09:59:47,465 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 09:59:47,466 [Worker-317] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 10:13:51,911 [Worker-347] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 10:13:51,912 [Worker-347] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 10:13:51,914 [Worker-347] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 10:13:51,915 [Worker-347] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 10:53:04,415 [Worker-355] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 10:53:04,417 [Worker-355] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 10:53:04,419 [Worker-355] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 10:53:04,420 [Worker-355] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 11:04:01,898 [Worker-360] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 11:04:01,899 [Worker-360] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 11:04:01,901 [Worker-360] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 11:04:01,901 [Worker-360] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 11:14:54,001 [Worker-352] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 11:14:54,003 [Worker-352] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2015-06-03 11:14:54,005 [Worker-352] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 11:14:54,005 [Worker-352] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources
+2015-06-03 16:26:40,636 [Worker-390] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 16:26:40,637 [Worker-390] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-06-03 16:26:40,638 [Worker-390] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-06-03 16:26:40,639 [Worker-390] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/Ramon/Documents/workspaces/TCC_Ferramenta_Java/TCC_Ferramenta_Java/src/test/resources

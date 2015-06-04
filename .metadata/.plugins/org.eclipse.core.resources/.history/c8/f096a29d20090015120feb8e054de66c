@@ -1,0 +1,149 @@
+package core.agents.behaviours;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import suport.financial.wallet.Stock;
+import suport.util.database.mongoDB.dao.StockDao;
+import core.agents.ConversationsID;
+import core.agents.Manager;
+import core.agents.suport.WalletManagerAuxiliary;
+import jade.core.AID;
+import jade.core.behaviours.Behaviour;
+import jade.lang.acl.ACLMessage;
+
+
+public class UserAuthorization extends Behaviour {
+
+	private static final long serialVersionUID = 1L;
+	private Manager manager;
+	private StockDao stockDao;
+	private ArrayList<Stock> userAuthorizations;
+	
+	private String userName;
+	private Map<String, ArrayList<Stock>> infoExperts;
+	private WalletManagerAuxiliary walletManagerAuxiliary;
+	
+	public UserAuthorization(Manager manager) {
+		this.manager = manager;
+		this.stockDao = new StockDao();
+	}
+
+	@Override
+	public void action() {
+		try {
+			this.userAuthorizations = this.stockDao.getStocksSuggestionWithUserAuthorized(manager.userName);
+			if (this.userAuthorizations != null
+					&& this.userAuthorizations.size() > 0) {
+				ACLMessage msg = null;
+				String expertName = "";
+				double value = 0;
+				for (Stock s : this.userAuthorizations) {// TODO LOG
+					switch (s.getSuggestion()) {
+					case ConversationsID.BUY_APPROVED: {
+						// Looking for Expert Name
+						for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts.entrySet()) {
+							expertName = e.getKey();
+							for (Stock stock : e.getValue()) {
+								if (stock.getCodeName().equalsIgnoreCase(
+										s.getCodeName()))
+									break;
+							}
+						}
+						value = this.manager.walletManagerAuxiliary.approveOrderBuy(expertName);
+						if (value > 0) {
+							msg = new ACLMessage(ACLMessage.AGREE);
+							msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+							msg.setContent(s.getCodeName() + "_" + value);
+							msg.addReceiver(new AID(expertName,
+									AID.ISLOCALNAME));
+							// TODO LOG
+							System.out.println(manager.getLocalName()
+									+ ": Ordem de compra autorizada para "
+									+ expertName);
+							myAgent.send(msg);
+						}
+					}
+						break;
+					case ConversationsID.BUY_REFUSED: {
+						// Looking for Expert Name
+						for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
+								.entrySet()) {
+							expertName = e.getKey();
+							for (Stock stock : e.getValue()) {
+								if (stock.getCodeName().equalsIgnoreCase(
+										s.getCodeName()))
+									break;
+							}
+						}
+						msg = new ACLMessage(ACLMessage.REFUSE);
+						msg.setConversationId(ConversationsID.EXPERT_ORDER_BUY);
+						msg.setContent(s.getCodeName());
+						msg.addReceiver(new AID(expertName, AID.ISLOCALNAME));
+
+						myAgent.send(msg);
+					}
+						break;
+					case ConversationsID.SELL_APPROVED: {
+						// Looking for Expert Name
+						for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts
+								.entrySet()) {
+							expertName = e.getKey();
+							for (Stock stock : e.getValue()) {
+								if (stock.getCodeName().equalsIgnoreCase(
+										s.getCodeName()))
+									break;
+							}
+						}
+						msg = new ACLMessage(ACLMessage.AGREE);
+						msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
+						msg.setContent(s.getCodeName());
+						msg.addReceiver(new AID(expertName, AID.ISLOCALNAME));
+
+						myAgent.send(msg);
+					}
+						break;
+					case ConversationsID.SELL_REFUSED: {
+						// Looking for Expert Name
+						for (Entry<String, ArrayList<Stock>> e : this.manager.infoExperts.entrySet()) {
+							expertName = e.getKey();
+							for (Stock stock : e.getValue()) {
+								if (stock.getCodeName().equalsIgnoreCase(
+										s.getCodeName()))
+									break;
+							}
+						}
+						msg = new ACLMessage(ACLMessage.REFUSE);
+						msg.setConversationId(ConversationsID.EXPERT_ORDER_SELL);
+						msg.setContent(s.getCodeName());
+						msg.addReceiver(new AID(expertName, AID.ISLOCALNAME));
+
+						myAgent.send(msg);
+					}
+						break;
+					default:
+						break;
+					}
+					// TODO LOG
+					System.out.println(manager.getLocalName()
+							+ "Decrementando countStocksSentToUser");
+					this.manager.countStocksSentToUser--;
+				}
+			}
+		} catch (Exception e) {// TODO LOG
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean done() {
+		if (manager.countStocksSentToUser == 0) {// TODO LOG
+			System.out.println("Comportamento de escuta encerrado");
+			return true;
+		} else
+			return false;
+	}
+	
+
+}

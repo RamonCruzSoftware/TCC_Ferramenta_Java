@@ -1,5 +1,0 @@
-package rcs.suport.util.database;
-
-public class JadeConnectToMongoTest {
-
-}

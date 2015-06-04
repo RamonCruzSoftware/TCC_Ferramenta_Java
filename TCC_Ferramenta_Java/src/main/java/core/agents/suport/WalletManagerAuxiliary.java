@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
+
 import suport.financial.wallet.Stock;
 import suport.statistical.Matrix;
 import suport.statistical.Statistical;
@@ -83,15 +85,16 @@ public class WalletManagerAuxiliary {
 		try
 		{
 			this.infoExperts = infoExperts;
+			this.expertsQuota=(this.expertsQuota==null)? new HashMap<String, Double>():this.expertsQuota;
 			DecimalFormat df = new DecimalFormat("0,00");
-			String quotaValue = df
-					.format((this.managedWallet.getWalletValue() / this.infoExperts
-							.size()));
+			String quotaValue = df.format((this.managedWallet.getWalletValue() / this.infoExperts.size()));
 			// Money qtd for Expert
-			this.setQuota(Double.parseDouble(quotaValue));
+			this.quota=Double.parseDouble(quotaValue);
 			// Criando map para controlar quantidade de dinheiro por agente
 			for (Entry<String, ArrayList<Stock>> e : this.infoExperts.entrySet()) {
-				this.expertsQuota.put(e.getKey(), this.getQuota());
+				
+				//this.expertsQuota.put(e.getKey(), this.quota);
+				this.expertsQuota.put(e.getKey(), 5000.0);//pog
 			}
 			
 		}catch (Exception e) {
@@ -114,15 +117,18 @@ public class WalletManagerAuxiliary {
 	}
 
 	public double approveOrderBuy(String expertName) {
-		double quota = 0;
-		try {
-			quota = this.expertsQuota.get(expertName);
-			this.expertsQuota.remove(expertName);
-			this.expertsQuota.put(expertName, 0.0);
-		} catch (Exception e) {// TODO LOG
-			e.printStackTrace();
-		}
+		double quota = 500.0;
+		//Descomentar e resolver problema de NullPoint Exception no expertsQuota
+//		try {
+//			JOptionPane.showMessageDialog(null,"<WallteManagerAuxiliary> L121: this.expertsQuota="+this.expertsQuota);
+//			quota = this.expertsQuota.get(expertName);
+//			this.expertsQuota.remove(expertName);
+//			this.expertsQuota.put(expertName, 0.0);
+//		} catch (Exception e) {// TODO LOG
+//			e.printStackTrace();
+//		}
 		return quota;
+		
 	}
 
 	public boolean refreshWalletManager() {
@@ -164,22 +170,15 @@ public class WalletManagerAuxiliary {
 						variance_matrix.setContent(i - 1, j - 1, 0);
 					else {
 						if (i > j) {
-							variance_matrix
-									.setContent(
+							variance_matrix.setContent(
 											i - 1,
 											j - 1,
-											statistical
-													.calculeVariance_15BetweenTwoStocks(
-															stockList
-																	.get(i - 1)
-																	.getCandleSticks(),
-															stockList
-																	.get(j - 1)
-																	.getCandleSticks(),
-															1 / stockList
-																	.size(),
-															1 / stockList
-																	.size())); // calcula
+											statistical.calculeVariance_15BetweenTwoStocks(
+													stockList.get(i - 1).getCandleSticks(),
+													stockList.get(j - 1).getCandleSticks(),
+															1 / stockList.size(),
+															1 / stockList.size()
+															)); // calcula
 							variance_matrix.setContent(j - 1, i - 1,
 									variance_matrix.getContent(i, j));
 						} else

@@ -20,8 +20,7 @@ public class ManagedStockDao {
 	public ManagedStockDao() {
 		this.setConnection(MongoConnection.getInstance());
 		this.setDb(this.getConnection().getDB());
-		this.setCollection_managedStock(getDb().getCollection(
-				"JADE_managedStock"));
+		this.setCollection_managedStock(getDb().getCollection("JADE_managedStock"));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -100,6 +99,7 @@ public class ManagedStockDao {
 		try {
 			candlesticks = new ArrayList<BasicDBObject>();
 			if (mStock.getBuyed() != null) {
+				
 				buylled = new BasicDBObject("date", mStock.getBuyed().getDate())
 						.append("open", mStock.getBuyed().getOpen())
 						.append("high", mStock.getBuyed().getHigh())
@@ -108,6 +108,7 @@ public class ManagedStockDao {
 						.append("volume", mStock.getBuyed().getVolume());
 			}
 			if (mStock.getSelled() != null) {
+				
 				selled = new BasicDBObject("date", mStock.getSelled().getDate())
 						.append("open", mStock.getSelled().getOpen())
 						.append("high", mStock.getSelled().getHigh())
@@ -115,6 +116,7 @@ public class ManagedStockDao {
 						.append("close", mStock.getSelled().getClose())
 						.append("volume", mStock.getSelled().getVolume());
 			}
+			
 			managedStock = new BasicDBObject("codeName", mStock.getCodeName())
 					.append("userIdentifier", mStock.getUserIdentifier())
 					.append("sector", mStock.getSector())
@@ -124,7 +126,7 @@ public class ManagedStockDao {
 					.append("buyed", buylled).append("selled", selled)
 					.append("qtdStocksBought", mStock.getQtdStocksBought());
 
-			this.getCollection_managedStock().insert(managedStock);
+			this.getCollection_managedStock().save(managedStock);
 		} catch (Exception e) {// TODO LOG
 			e.printStackTrace();
 			return false;
@@ -198,8 +200,7 @@ public class ManagedStockDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ManagedStock getManagedStock(String stockCodeName,
-			String userIdentifier) {
+	public ManagedStock getManagedStock(String stockCodeName,String userIdentifier) {
 		ManagedStock result = null;
 		BasicDBObject where = null;
 		BasicDBObject managedStockStored = null;
@@ -211,8 +212,7 @@ public class ManagedStockDao {
 		CandleStick selled = null;
 		ArrayList<CandleStick> candlesticks = null;
 		try {
-			where = new BasicDBObject("userIdentifier", userIdentifier).append(
-					"codeName", stockCodeName);
+			where = new BasicDBObject("userIdentifier", userIdentifier).append("codeName", stockCodeName);
 			cursor = this.getCollection_managedStock().find(where);
 			while (cursor.hasNext()) {
 				managedStockStored = (BasicDBObject) cursor.next();
@@ -268,7 +268,8 @@ public class ManagedStockDao {
 		}
 		return result;
 	}
-
+	
+	
 	@SuppressWarnings("unchecked")
 	public ArrayList<ManagedStock> getManagedStock(String userIdentifier) {
 		ManagedStock managedStock = null;
@@ -282,6 +283,8 @@ public class ManagedStockDao {
 		CandleStick buyed = null;
 		CandleStick selled = null;
 		ArrayList<CandleStick> candlesticks = null;
+		
+		
 		try {
 			where = new BasicDBObject("userIdentifier", userIdentifier);
 			result = new ArrayList<ManagedStock>();

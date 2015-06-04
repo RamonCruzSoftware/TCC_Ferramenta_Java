@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="rcs.suport.financial.partternsCandleStick.CandleStick"/>
 <fullyQualifiedTypeName name="java.io.BufferedWriter"/>
 <fullyQualifiedTypeName name="java.io.FileWriter"/>
@@ -9,7 +8,6 @@
 <fullyQualifiedTypeName name="java.io.FileReader"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="rcs.core.agents.Gestor"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="jade.util.leap.Map"/>
 <fullyQualifiedTypeName name="jade.core.Agent"/>
 <fullyQualifiedTypeName name="java.awt.Container"/>
@@ -21,10 +19,8 @@
 <fullyQualifiedTypeName name="jade.domain.FIPAAgentManagement.DFAgentDescription"/>
 <fullyQualifiedTypeName name="jade.domain.DFService"/>
 <fullyQualifiedTypeName name="rcs.suport.util.database.MongoConnection"/>
-<fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="com.mongodb.DBCollection"/>
 <fullyQualifiedTypeName name="com.mongodb.DBCursor"/>
-<fullyQualifiedTypeName name="com.mongodb.BasicDBObject"/>
 <fullyQualifiedTypeName name="rcs.suport.util.database.JadeConnectToMongoTest"/>
 <fullyQualifiedTypeName name="jade.core.behaviours.CyclicBehaviour"/>
 <fullyQualifiedTypeName name="rcs.core.agents.Manager.CyclicBehaviour"/>
@@ -32,4 +28,23 @@
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.lang.Double"/>
 <fullyQualifiedTypeName name="com.mongodb.DBObject"/>
+<fullyQualifiedTypeName name="java.awt.image.DataBufferByte"/>
+<fullyQualifiedTypeName name="com.mongodb.BasicDBObject"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="suport.util.Log"/>
+<fullyQualifiedTypeName name="java.util.Map.Entry"/>
+<fullyQualifiedTypeName name="jade.lang.acl.ACLMessage"/>
+<fullyQualifiedTypeName name="suport.util.database.mongoDB.pojo.ManagedStock"/>
+<fullyQualifiedTypeName name="suport.util.database.mongoDB.dao.StockDao"/>
+<fullyQualifiedTypeName name="jade.core.behaviours.Behaviour"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="suport.financial.wallet.Stock"/>
+<fullyQualifiedTypeName name="core.agents.behaviours.UserAuthorization"/>
+<fullyQualifiedTypeName name="core.agents.ConversationsID"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="core.agents.suport.WalletManagerAuxiliary"/>
+<fullyQualifiedTypeName name="suport.util.database.mongoDB.dao.WalletDao"/>
+<fullyQualifiedTypeName name="suport.financial.wallet.Wallet"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
 </qualifiedTypeNameHistroy>

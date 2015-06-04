@@ -13,7 +13,14 @@ public class Wallet implements Serializable {
 
 	public Wallet() {
 	}
-
+	public Wallet(String userID,double walletValue,double walletRisck,double wallterPercent)
+	{
+		this.userID=userID;
+		this.walletValue=walletValue;
+		this.walletRisck=walletRisck;
+		this.wallterPercent=wallterPercent;
+		
+	}
 	public String getUserID() {
 		return userID;
 	}
