@@ -4,8 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import core.agents.util.SimulationSetup;
 import core.agents.util.StocksInMemory;
@@ -235,6 +238,8 @@ public class MainClass {
 //			System.out.println("->"+s.getCodeName());
 //		}
 		
+		
+		//================Simulacao
 	
 	String code="RCSL4.SA";
 	SimulationDataDao dao= new SimulationDataDao();
@@ -274,9 +279,6 @@ public class MainClass {
 //																).getDate());
 //		
 //		
-		
-		
-		
 		
 	}
 	

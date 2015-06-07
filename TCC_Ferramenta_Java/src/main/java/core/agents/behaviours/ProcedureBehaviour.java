@@ -1,0 +1,11 @@
+package core.agents.behaviours;
+
+import jade.core.behaviours.Behaviour;
+
+public interface ProcedureBehaviour {
+	
+	public void start();
+	public Behaviour getBehaviour();
+	
+
+}

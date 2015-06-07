@@ -7,6 +7,7 @@ import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.lang.acl.ACLMessage;
+import jade.util.Logger;
 import jade.wrapper.AgentController;
 import jade.wrapper.PlatformController;
 
@@ -26,6 +27,7 @@ public class Creator extends Agent {
 	private String userLogged;
 	private Log log;
 	private Creator creator;
+	private Logger loggetJade;
 	protected void setup() 
 	{
 		
@@ -36,7 +38,6 @@ public class Creator extends Agent {
 			dfd.setName(getAID());
 			DFService.register(this, dfd);
 			
-		
      			log= new Log(this.getName()); 
 				log.info("Registro Paginas Amarelas");
 				log.info("Iniciando comportamento de escuta do Grails");

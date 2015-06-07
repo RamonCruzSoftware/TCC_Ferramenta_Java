@@ -1,0 +1,27 @@
+package core.agents.behaviours;
+
+import jade.core.Agent;
+import jade.core.behaviours.SequentialBehaviour;
+import jade.core.behaviours.SerialBehaviour;
+
+public class CriateExpertsAgents {
+	
+	/*
+	 * Recebe dados do cliente através de mensagem;
+		Cria uma Carteira no Banco de Dados;
+		Procura um Agente Hunter Local e Solicita Ações;
+		Cria Agentes experts e divide as ações entre os agentes;
+	 */
+	private SequentialBehaviour sequentialBehaviour;
+	private Agent agent;
+	public CriateExpertsAgents(Agent agent)
+	{
+		this.agent=agent;
+		this.sequentialBehaviour= new SequentialBehaviour(agent);
+		
+	}
+	private CriateExpertsAgents(){}
+
+	
+
+}

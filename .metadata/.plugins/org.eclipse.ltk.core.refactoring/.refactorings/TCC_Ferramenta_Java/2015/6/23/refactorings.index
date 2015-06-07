@@ -2,3 +2,7 @@
 1433333805482	Rename local variable 'manageWallet'
 1433333835818	Move compilation unit
 1433333897368	Delete element
+1433610363617	Infer generic type arguments
+1433611965773	Rename field 'conversationsId'
+1433612077618	Rename field 'conversationsINFO'
+1433618126833	Rename type 'CriateExpertsAgents'

@@ -36,7 +36,6 @@
 <fullyQualifiedTypeName name="jade.lang.acl.ACLMessage"/>
 <fullyQualifiedTypeName name="suport.util.database.mongoDB.pojo.ManagedStock"/>
 <fullyQualifiedTypeName name="suport.util.database.mongoDB.dao.StockDao"/>
-<fullyQualifiedTypeName name="jade.core.behaviours.Behaviour"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="suport.financial.wallet.Stock"/>
@@ -47,4 +46,7 @@
 <fullyQualifiedTypeName name="suport.util.database.mongoDB.dao.WalletDao"/>
 <fullyQualifiedTypeName name="suport.financial.wallet.Wallet"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="jade.util.Logger"/>
+<fullyQualifiedTypeName name="jade.core.behaviours.WrapperBehaviour"/>
+<fullyQualifiedTypeName name="jade.core.behaviours.Behaviour"/>
 </qualifiedTypeNameHistroy>

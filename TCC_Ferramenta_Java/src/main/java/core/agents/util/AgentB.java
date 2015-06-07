@@ -27,7 +27,7 @@ public class AgentB extends Agent {
 			DFService.register(this, agentDescriptor);
 			
 			System.out.println("agente "+this.getName());
-			addBehaviour(new TickerBehaviour(this,500)
+			addBehaviour(new TickerBehaviour(this,4000)
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -36,14 +36,24 @@ public class AgentB extends Agent {
 				{
 					try
 					{
-						ACLMessage mensagem = new ACLMessage(ACLMessage.CFP);
-						mensagem.addReceiver(new AID("simulator", AID.ISLOCALNAME));
-						mensagem.setConversationId(ConversationsID.SIMULATION_REQUEST);
-						mensagem.setContent("PETR4.SA");
+						ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
+						mensagem.addReceiver(new AID("agenteA", AID.ISLOCALNAME));
+						mensagem.setConversationId(ConversationsID.CREATE_EXPERTS);
+						mensagem.setContent("Create Experts");
 						
 						System.out.println("Pedido "+mensagem.getContent()+" Feito");
-						myAgent.send(mensagem);
+									
+						ACLMessage mensagem2 = new ACLMessage(ACLMessage.INFORM);
+						mensagem2.addReceiver(new AID("agenteA", AID.ISLOCALNAME));
+						mensagem2.setConversationId(ConversationsID.CREATE_MANAGER);
+						mensagem2.setContent("Create Managers");
 						
+						System.out.println("Pedido "+mensagem2.getContent()+" Feito");
+												
+						myAgent.send(mensagem);
+						myAgent.send(mensagem2);
+						
+					
 					}catch (Exception e)
 					{
 						// TODO: handle exception
@@ -52,46 +62,6 @@ public class AgentB extends Agent {
 				}
 			});
 
-			addBehaviour(new CyclicBehaviour(this) 
-			{
-				
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void action() {
-					ACLMessage reciver = myAgent.receive();
-					
-					if(reciver!=null)
-					{
-						if(
-								reciver.getPerformative()==ACLMessage.PROPOSE 
-								&&
-								reciver.getConversationId()==ConversationsID.SIMULATION_REQUEST
-								)
-						{
-							try {
-								
-								
-								CandleStick candle =(CandleStick)reciver.getContentObject();
-								String code = candle.getStockCode();
-								
-								System.out.println(code+" Valor recebido "+candle.getDate());
-							
-							} catch (UnreadableException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							
-						}
-					}else 
-						block();
-					
-					
-				}
-			});
 		} catch (FIPAException e) {
 
 			e.printStackTrace();

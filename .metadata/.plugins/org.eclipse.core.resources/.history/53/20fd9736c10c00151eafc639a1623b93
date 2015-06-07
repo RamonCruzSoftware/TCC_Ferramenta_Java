@@ -1,0 +1,5 @@
+package core.agents.behaviours;
+
+public interface ProcedureBehaviour {
+
+}
