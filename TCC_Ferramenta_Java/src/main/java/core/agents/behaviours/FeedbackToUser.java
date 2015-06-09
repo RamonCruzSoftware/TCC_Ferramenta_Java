@@ -1,5 +1,7 @@
 package core.agents.behaviours;
 
+import java.util.ArrayList;
+
 import jade.core.behaviours.Behaviour;
 
 public class FeedbackToUser implements ProcedureBehaviour{
@@ -20,6 +22,8 @@ public class FeedbackToUser implements ProcedureBehaviour{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 	
 
 }

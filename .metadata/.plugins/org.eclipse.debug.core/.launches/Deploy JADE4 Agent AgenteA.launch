@@ -45,7 +45,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jade.Boot"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-container -port 1099 -host localhost AgenteB:core.agents.util.AgentB;agenteA:core.agents.util.AgenteA"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-container -port 1099 -host localhost AgentB:core.agents.util.AgentB;AgenteA:core.agents.util.AgenteA"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="TCC_Ferramenta_Java"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dhttp.proxyHost= -Dhttp.proxyPort="/>

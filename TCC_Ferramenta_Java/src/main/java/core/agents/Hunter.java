@@ -223,15 +223,23 @@ public class Hunter extends Agent {
 			try {// TODO POR LOG EM TUDO
 				ACLMessage messages = myAgent.receive();
 				ACLMessage reply = null;
-				if (messages != null && !conversations) {
-					reply = messages.createReply();
-					reply.setPerformative(ACLMessage.REFUSE);
-					myAgent.send(reply);
-				}
+				
+//				if (messages != null ) {
+//					
+//					reply = messages.createReply();
+//					reply.setPerformative(ACLMessage.REFUSE);
+//					myAgent.send(reply);
+//				}
+				
+				System.out.println("HUNTER-> messages "+messages + " conversations "+conversations );
 				if (messages != null && conversations) {
+					System.out.println("HUNTER performative "+messages.getPerformative());
 					switch (messages.getPerformative()) {
 					case ACLMessage.CFP: {
+						
 						if (messages.getConversationId() == ConversationsID.STOCKS_HUNTER_SUGGESTIONS) {
+							
+							System.out.println("HUNTER->Pedido Recebido");
 							ArrayList<Stock> stocksuggestion = null;
 							ArrayList<Stock> stockSuggestions_aux = null;
 							int lowerLimit = 0;
@@ -297,7 +305,8 @@ public class Hunter extends Agent {
 							reply = messages.createReply();
 							reply.setPerformative(ACLMessage.PROPOSE);
 							reply.setContentObject(info);
-
+							
+							System.out.println("HUNTER RESPONDEU");
 							myAgent.send(reply);
 						}
 					}

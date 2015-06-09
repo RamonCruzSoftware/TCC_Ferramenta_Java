@@ -1,4 +1,8 @@
+core.agents.AgentB=AgentB
+core.agents.AgenteA=AgenteA
 core.agents.Creator=Creator
+core.agents.util.AgentB=AgenteB
+core.agents.util.AgenteA=agenteA
 eclipse.preferences.version=1
 rcs.core.agents.AgentHello=AgentHello
 rcs.core.agents.Manager=Manager

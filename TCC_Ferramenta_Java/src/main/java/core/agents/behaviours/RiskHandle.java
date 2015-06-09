@@ -1,5 +1,7 @@
 package core.agents.behaviours;
 
+import java.util.ArrayList;
+
 import jade.core.behaviours.Behaviour;
 
 public class RiskHandle implements ProcedureBehaviour{
@@ -17,5 +19,6 @@ public class RiskHandle implements ProcedureBehaviour{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
 }

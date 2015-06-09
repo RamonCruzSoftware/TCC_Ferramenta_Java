@@ -1,22 +1,16 @@
 package core.agents.util;
 
-import suport.financial.partternsCandleStick.CandleStick;
-import suport.util.database.mongoDB.pojo.OrdersCreate;
-import core.agents.ConversationsID;
-import core.agents.behaviours.CommunicationBehaviour;
-import core.agents.behaviours.CreateExpertsAgents;
-import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SimpleBehaviour;
-import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
-import jade.lang.acl.UnreadableException;
+import suport.util.database.mongoDB.pojo.OrdersCreate;
+import core.agents.ConversationsID;
+import core.agents.behaviours.CommunicationBehaviour;
+import core.agents.behaviours.CreateExpertsAgents;
 
 public class AgenteA extends Agent {
 
@@ -44,20 +38,9 @@ public class AgenteA extends Agent {
 			
 			System.out.println("agente "+this.getName());
 			behaviourCreateAgents=new CreateExpertsAgents(this, orderCreate);
-			behaviourTest= new OneShotBehaviour(this)
-			{
-				
-				@Override
-				public void action() {
-				
-					System.out.println("One Short Woking!");
-					
-				}
-			};
 		
 			communication = new CommunicationBehaviour(this);		
-			communication.addConversationIdToListen(ConversationsID.CREATE_MANAGER, behaviourTest, ACLMessage.INFORM);
-			communication.addConversationIdToListen(ConversationsID.CREATE_EXPERTS, behaviourCreateAgents.getBehaviour(), ACLMessage.INFORM);
+			communication.addConversationIdToListen(ConversationsID.CREATE_EXPERTS, behaviourCreateAgents, ACLMessage.INFORM);
 			communication.start();
 			
 			
@@ -70,7 +53,17 @@ public class AgenteA extends Agent {
 
 	public void takeDown() 
 	{
-
+		System.out.println(this.getLocalName() + " says: Bye");
+		try {
+			// Unregister the agent in plataform
+			DFAgentDescription dfd = new DFAgentDescription();
+			dfd.setName(getAID());
+			DFService.deregister(this, dfd);
+			// kill experts
+			
+		} catch (Exception e) {// TODO LOG
+			e.printStackTrace();
+		}
 	}
 
 }

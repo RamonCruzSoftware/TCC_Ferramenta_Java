@@ -6,8 +6,14 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+
+import core.agents.ConversationsID;
 
 
 public class CommunicationBehaviour
@@ -23,6 +29,8 @@ public class CommunicationBehaviour
 	private Map<String, Behaviour> conversationsACCEPT_PROPOSAL;
 
 	private Map<Integer,HashMap<String, Behaviour> >performatives;
+	private ArrayList<String> conversarioIDSubBehaviours;
+	
 	
 	
 	private CyclicBehaviour listenBehaviour;
@@ -47,50 +55,51 @@ public class CommunicationBehaviour
 		this.performatives.put(ACLMessage.REQUEST, (HashMap<String, Behaviour>) this.conversationsREQUEST);
 		this.performatives.put(ACLMessage.ACCEPT_PROPOSAL, (HashMap<String, Behaviour>) this.conversationsACCEPT_PROPOSAL);
 		
+		this.conversarioIDSubBehaviours= new ArrayList<String>();
 		
 	}
 	@SuppressWarnings("unused")
 	private CommunicationBehaviour(){}
 	
-	public void addConversationIdToListen(String conversationID,Behaviour behaviourToTake,int performative)
+	public void addConversationIdToListen(String conversationID,ProcedureBehaviour behaviourToTake,int performative)
 	{
 		switch (performative)
 		{
 		case ACLMessage.INFORM:
 		{
-			this.conversationsINFORM.put(conversationID, behaviourToTake);
+			this.conversationsINFORM.put(conversationID, behaviourToTake.getBehaviour());
 		}
 			
 			break;
 
 		case ACLMessage.AGREE:
 		{
-			this.conversationsAGREE.put(conversationID, behaviourToTake);
+			this.conversationsAGREE.put(conversationID, behaviourToTake.getBehaviour());
 		}
 			break;
 		case ACLMessage.CFP:
 		{
-			this.conversationsCFP.put(conversationID, behaviourToTake);
+			this.conversationsCFP.put(conversationID, behaviourToTake.getBehaviour());
 		}
 			break;
 		case ACLMessage.PROPOSE:
 		{
-			this.conversationsPROPOSE.put(conversationID, behaviourToTake);
+			this.conversationsPROPOSE.put(conversationID, behaviourToTake.getBehaviour());
 		}
 			break;
 		case ACLMessage.REFUSE:
 		{
-			this.conversationsREFUSE.put(conversationID, behaviourToTake);
+			this.conversationsREFUSE.put(conversationID, behaviourToTake.getBehaviour());
 		}
 			break;
 		case ACLMessage.REQUEST:
 		{
-			this.conversationsREQUEST.put(conversationID, behaviourToTake);
+			this.conversationsREQUEST.put(conversationID, behaviourToTake.getBehaviour());
 		}
 			break;
 		case ACLMessage.ACCEPT_PROPOSAL:
 		{
-			this.conversationsACCEPT_PROPOSAL.put(conversationID, behaviourToTake);
+			this.conversationsACCEPT_PROPOSAL.put(conversationID, behaviourToTake.getBehaviour());
 		}
 			break;
 			
@@ -162,7 +171,11 @@ public class CommunicationBehaviour
 					if(behaviour!=null)
 					{
 						myAgent.addBehaviour(behaviour);
-					}
+						
+						
+					}else 
+						myAgent.send(msg);
+					
 				}else block();
 			}catch(Exception e)
 			{

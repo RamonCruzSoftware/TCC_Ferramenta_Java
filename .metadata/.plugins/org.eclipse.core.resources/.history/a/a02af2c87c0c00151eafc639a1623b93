@@ -1,8 +1,0 @@
-package core.agents.behaviours;
-
-public class CriateExpertsAgents {
-	
-	private CriateExpertsAgents(){}
-	
-
-}

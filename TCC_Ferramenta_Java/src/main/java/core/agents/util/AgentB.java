@@ -1,16 +1,13 @@
 package core.agents.util;
 
-import suport.financial.partternsCandleStick.CandleStick;
-import core.agents.ConversationsID;
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.TickerBehaviour;
+import jade.core.behaviours.WakerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
+import core.agents.ConversationsID;
 
 public class AgentB extends Agent {
 
@@ -27,40 +24,39 @@ public class AgentB extends Agent {
 			DFService.register(this, agentDescriptor);
 			
 			System.out.println("agente "+this.getName());
-			addBehaviour(new TickerBehaviour(this,4000)
-			{
+			
+			addBehaviour(new WakerBehaviour(this,2000) {
 				private static final long serialVersionUID = 1L;
+				
 
 				@Override
-				protected void onTick()
+				public void onStart()
+				{
+				
+				}
+				@Override
+				public void onWake()
 				{
 					try
 					{
 						ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
 						mensagem.addReceiver(new AID("agenteA", AID.ISLOCALNAME));
 						mensagem.setConversationId(ConversationsID.CREATE_EXPERTS);
-						mensagem.setContent("Create Experts");
-						
-						System.out.println("Pedido "+mensagem.getContent()+" Feito");
-									
-						ACLMessage mensagem2 = new ACLMessage(ACLMessage.INFORM);
-						mensagem2.addReceiver(new AID("agenteA", AID.ISLOCALNAME));
-						mensagem2.setConversationId(ConversationsID.CREATE_MANAGER);
-						mensagem2.setContent("Create Managers");
-						
-						System.out.println("Pedido "+mensagem2.getContent()+" Feito");
-												
+
+						System.out.println("Pedido  Feito");
+																		
 						myAgent.send(mensagem);
-						myAgent.send(mensagem2);
-						
 					
 					}catch (Exception e)
 					{
 						// TODO: handle exception
 					}
-					
 				}
+				
 			});
+			
+			
+			
 
 		} catch (FIPAException e) {
 
@@ -70,7 +66,17 @@ public class AgentB extends Agent {
 
 	public void takeDown() 
 	{
-
+		System.out.println(this.getLocalName() + " says: Bye");
+		try {
+			// Unregister the agent in plataform
+			DFAgentDescription dfd = new DFAgentDescription();
+			dfd.setName(getAID());
+			DFService.deregister(this, dfd);
+			// kill experts
+			
+		} catch (Exception e) {// TODO LOG
+			e.printStackTrace();
+		}
 	}
 
 //		public Comportamento(Agent agent, int time) {
@@ -114,4 +120,6 @@ public class AgentB extends Agent {
 //			}
 //
 //		}
+	
+	
 }
