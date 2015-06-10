@@ -1,0 +1,34 @@
+package core.agents.behaviours;
+
+import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.SequentialBehaviour;
+import jade.core.behaviours.WakerBehaviour;
+import suport.util.InfoConversations;
+
+public class DownloadAndRequestStocks implements ProcedureBehaviour {
+	private SequentialBehaviour sequentialBehaviour;
+	private OneShotBehaviour downloadSocks;
+	private OneShotBehaviour calculeStatistics;
+	private WakerBehaviour pediodical;
+	
+	private InfoConversations info;
+	private Agent agent;
+	private DownloadAndRequestStocks(){}
+	
+	public DownloadAndRequestStocks(Agent agent)
+	{
+		this.agent =agent;
+	}
+	public void start() {
+		
+
+	}
+
+	public Behaviour getBehaviour() {
+		
+		return null;
+	}
+
+}

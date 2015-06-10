@@ -1,0 +1,18 @@
+package core.agents.behaviours;
+
+import jade.core.behaviours.Behaviour;
+
+public class DownloadAndRequestStocks implements ProcedureBehaviour {
+	
+
+	public void start() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Behaviour getBehaviour() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

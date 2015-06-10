@@ -1,0 +1,49 @@
+package core.agents.behaviours;
+
+import suport.statistical.Statistical;
+import suport.util.InfoConversations;
+import suport.util.database.mongoDB.dao.StockDao;
+import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.lang.acl.ACLMessage;
+
+public class FindBestStocksAgain implements ProcedureBehaviour {
+
+	private OneShotBehaviour findBestStocks;
+	private Agent agent;
+	private static final int CORAJOSO = 0;
+	private static final int MODERADO = 1;
+	private static final int CONSERVADOR = 2;
+	private InfoConversations info;
+	private StockDao stockDao = null;
+	
+	private  FindBestStocksAgain(){}
+	public FindBestStocksAgain(Agent agent)
+	{
+		this.agent=agent;
+		stockDao = new StockDao();
+		new Statistical();
+		
+	}
+	public void start() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void start(ACLMessage msg) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void start(Object object) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Behaviour getBehaviour() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

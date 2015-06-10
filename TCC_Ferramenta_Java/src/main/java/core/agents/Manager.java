@@ -367,11 +367,9 @@ protected void setup() {
 									System.out.println("user profile "
 											+ manager.info.getUserProfile());
 									System.out.println("=====================");
-									SequentialBehaviour suggestions = new SequentialBehaviour(
-											manager);
-									suggestions
-											.addSubBehaviour(new OneShotBehaviour(
-													manager) {
+									SequentialBehaviour suggestions = new SequentialBehaviour(manager);
+									suggestions.addSubBehaviour(new OneShotBehaviour(manager) 
+									{
 												private static final long serialVersionUID = 1L;
 
 												@Override

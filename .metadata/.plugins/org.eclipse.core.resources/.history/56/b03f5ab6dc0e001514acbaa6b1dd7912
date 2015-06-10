@@ -1,0 +1,38 @@
+package core.agents.behaviours;
+
+import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.lang.acl.ACLMessage;
+
+public class FindBestStocks implements ProcedureBehaviour {
+
+	private OneShotBehaviour findBestStocks;
+	private Agent agent;
+	
+	private FindBestStocks(){}
+	public FindBestStocks(Agent agent)
+	{
+		this.agent=agent;
+	}
+	public void start() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void start(ACLMessage msg) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void start(Object object) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Behaviour getBehaviour() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

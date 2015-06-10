@@ -68,7 +68,7 @@ public class CreateExpertsAgents implements ProcedureBehaviour{
 	@SuppressWarnings("unused")
 	private CreateExpertsAgents(){}
 
-	void buildBehaviour()
+	private void buildBehaviour()
 	{
 		this.createWallet= new OneShotBehaviour(this.agent)
 		{
@@ -241,6 +241,14 @@ public class CreateExpertsAgents implements ProcedureBehaviour{
 		this.sequentialBehaviour.addSubBehaviour(createExpertsAgents);
 		
 		return this.sequentialBehaviour;
+	}
+	public void start(ACLMessage msg) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void start(Object object) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

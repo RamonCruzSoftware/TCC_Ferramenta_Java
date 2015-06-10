@@ -1,0 +1,26 @@
+package core.agents.behaviours;
+
+import suport.util.InfoConversations;
+import suport.util.database.mongoDB.pojo.OrdersCreate;
+import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.SequentialBehaviour;
+import jade.core.behaviours.SimpleBehaviour;
+
+public class DownloadAndRequestStocks implements ProcedureBehaviour {
+	private SequentialBehaviour sequentialBehaviour;
+	
+	private OneShotBehaviour createWallet;
+	private InfoConversations info;
+
+	public void start() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Behaviour getBehaviour() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,148 @@
+package core.agents.behaviours;
+
+import java.io.File;
+
+import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.SequentialBehaviour;
+import jade.core.behaviours.WakerBehaviour;
+import jade.wrapper.AgentController;
+import jade.wrapper.PlatformController;
+import suport.util.InfoConversations;
+
+public class DownloadAndRequestStocks implements ProcedureBehaviour {
+	private SequentialBehaviour sequentialBehaviour;
+	private OneShotBehaviour downloadSocks;
+	private OneShotBehaviour calculeStatistics;
+	private WakerBehaviour pediodical;
+	
+	private InfoConversations info;
+	private Agent agent;
+	
+	private String dir_1 = "/Users/ramon/Desktop";
+	private String subDir_1 = "/TCC2";
+	private String subDir_2 = "/Ativos";
+	private String sectorsCsvFilePath = "/Users/ramon/Dropbox/UnB/TCC/workspace/java/Setores";
+	
+	private DownloadAndRequestStocks(){}
+	
+	public DownloadAndRequestStocks(Agent agent)
+	{
+		this.agent =agent;
+		
+		
+		this.sequentialBehaviour= new SequentialBehaviour(agent)
+		{
+			
+			private static final long serialVersionUID = 1L;
+
+			public int onEnd()
+			{
+				System.out.println("Comportamento sequencial Concluido");
+			
+				return 0;
+			}
+		};
+		
+		buildBehaviour();
+
+	}
+	public void start()
+	{
+		
+
+	}
+
+	public Behaviour getBehaviour() {
+		
+		return null;
+	}
+	private void buildBehaviour()
+	{
+		this.downloadSocks=new OneShotBehaviour(agent) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void action() {
+				try {
+					File file = new File(hunter.dir_1 + hunter.subDir_1+ hunter.subDir_2);
+					if (file.isDirectory()) 
+					{
+						if (file.listFiles().length > 2)//TODO
+					   {
+//							hunter.log.debug("Arquivos CSV ja foram baixados");
+							System.out.println("Arquivos CSV ja foram baixados");
+							hunter.loadDataBase();
+						}
+						else 
+						{
+							//hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1, hunter.subDir_2,hunter.sectorsCsvFilePath);
+						}
+						if (hunter.stockDao.getStocksPricesCount() == 0) 
+						{//TODO
+//							hunter.log.debug("Carregar dados no Banco");
+							System.out.println(hunter.getLocalName()+":Carregar dados no Banco");
+							hunter.loadDataBase();
+//							hunter.log.debug("Banco carregado com "+hunter.stockDao.getStocksPricesCount()+"cotacoes");
+							
+						} else 
+						{
+							//TODO
+							
+//							hunter.log.debug("Banco ja carregado com "+ hunter.stockDao.getStocksPricesCount()+ " Cotacoes");
+							System.out.println(hunter.getLocalName()+":Banco jah carregado com "+ hunter.stockDao.getStocksPricesCount()+ " Cotacoes");
+							
+							if(!isSimulation)hunter.stockList = hunter.stockDao.getAllStocksWithPrices();
+							else 
+							{
+								//hunter.stockList=hunter.stockDao.getAllStocksWithPricesBetweenInterval(hunter.simulationSetup.getStartDate(), hunter.simulationSetup.getStartDate());
+								
+								hunter.stockList=hunter.simulationsData.getStockList();
+							
+							}
+							
+//							hunter.log.debug("Iniciando procedimento de calculo de valores estatisticos");
+							
+							System.out.println(hunter.getLocalName()+":Iniciando procedimento de calculo de valores estatisticos");
+							if(!isSimulation)hunter.downloadCurrentCsvFiles(hunter.dir_1,hunter.subDir_1, hunter.subDir_2,hunter.sectorsCsvFilePath);
+							else
+								{
+									hunter.calculateStatistical();
+									
+									PlatformController container = getContainerController();
+									try {//TODO
+										//log.info("Criando Gertor:"+nameAgentManager);
+										// Xms128m
+										Object[] argument;
+										argument = new Object[1];
+										argument[0] = "Xms512m";
+
+										AgentController agentController = container.createNewAgent(
+												"Simulator", "core.agents.util.StockAgent", argument);
+										agentController.start();
+
+									} catch (Exception e) {
+										e.printStackTrace();//TODO
+										log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+									}
+								}
+							
+							
+						}
+					} else
+					{ //TODO
+					//	hunter.log.debug("Iniciando procedimento de downloand de csv com cotacoes");
+						hunter.conversations = false;
+						System.out.println(hunter.getLocalName()+":Baixar CSV");
+						hunter.downloadCsvFiles(hunter.dir_1,hunter.subDir_1, hunter.subDir_2,hunter.sectorsCsvFilePath);
+					}
+				} catch (Exception e) { //TODO
+					e.printStackTrace();
+//					log.error("Msg:"+e.getMessage()+"Causa:"+e.getCause());
+				}
+			}
+		};
+	}
+
+}
