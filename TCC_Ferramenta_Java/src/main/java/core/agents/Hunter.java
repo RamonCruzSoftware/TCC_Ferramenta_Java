@@ -28,7 +28,7 @@ import suport.util.requests.YahooFinance;
 import core.agents.util.StocksInMemory;
 
 public class Hunter extends Agent {
-
+ 
 	private static final int CORAJOSO = 0;
 	private static final int MODERADO = 1;
 	private static final int CONSERVADOR = 2;
@@ -49,7 +49,7 @@ public class Hunter extends Agent {
 
 	protected void setup() {
 		try {
-			
+			 
 			hunter = this;
 			conversations = true;
 			stockDao = new StockDao();
@@ -267,8 +267,10 @@ public class Hunter extends Agent {
 							}
 								break;
 							case MODERADO: {
-								lowerLimit = 5;
-								upperLimit = 10;
+								lowerLimit = 15;
+								upperLimit = 30;
+//								lowerLimit = 5;
+//								upperLimit = 15;
 								do {
 									stockSuggestions_aux = hunter.stockDao
 											.getStockOrderByStandardDeviation_30(

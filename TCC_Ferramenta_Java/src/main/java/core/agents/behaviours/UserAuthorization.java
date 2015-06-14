@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import suport.financial.wallet.Stock;
 import suport.util.database.mongoDB.dao.StockDao;
+import suport.util.database.mongoDB.dao.WalletDao;
 import core.agents.ConversationsID;
 import core.agents.suport.WalletManagerAuxiliary;
 
@@ -21,6 +22,7 @@ public class UserAuthorization extends Behaviour {
 	private static final long serialVersionUID = 1L;
 	
 	private StockDao stockDao;
+	private WalletDao walletDao;
 	private ArrayList<Stock> userAuthorizations;
 	
 	private String userName;
@@ -30,10 +32,13 @@ public class UserAuthorization extends Behaviour {
 	public UserAuthorization(String userName,Map<String, ArrayList<Stock>>infoExperts,WalletManagerAuxiliary walletManagerAuxiliary)
 	{
 		this.stockDao = new StockDao();
+		this.walletDao= new WalletDao();
+		
 		this.userName=userName;
 		this.infoExperts=infoExperts;
 		this.walletManagerAuxiliary=walletManagerAuxiliary;
 		this.walletManagerAuxiliary.putInfoExperts(this.infoExperts);
+		
 		
 //		JOptionPane.showMessageDialog(null, "<Comportamento> walletManagerAuxiliary="+this.walletManagerAuxiliary.getQuota()
 //				+"\n InfoExperts "+this.infoExperts+"-"+this.infoExperts.size());
@@ -74,11 +79,14 @@ public class UserAuthorization extends Behaviour {
 										msg.setContent(s.getCodeName() + "_" + value);
 										msg.addReceiver(new AID(expertName,AID.ISLOCALNAME));
 										// TODO LOG
+//										JOptionPane.showMessageDialog(null, "User Name "+userName+" risk "+s.getStandardDeviation_30());
+										walletDao.updateRiskWallet(userName,s.getStandardDeviation_30());
+										
 										System.out.println( "Manager : Ordem de compra autorizada para "+ expertName);
 										myAgent.send(msg);
 										stock.setSuggestion(0);
 										this.stockDao.updateStock(stock);
-										JOptionPane.showMessageDialog(null, "Compra aprovada msg enviada para :"+expertName);
+										//JOptionPane.showMessageDialog(null, "Compra aprovada msg enviada para :"+expertName);
 									}
 									break;
 								}
@@ -132,7 +140,7 @@ public class UserAuthorization extends Behaviour {
 									msg=null;
 									stock.setSuggestion(0);
 									this.stockDao.updateStock(stock);
-									JOptionPane.showMessageDialog(null, "Venda aprovada msg enviada para :"+expertName);
+								//	JOptionPane.showMessageDialog(null, "Venda aprovada msg enviada para :"+expertName);
 								}
 									break;
 							}

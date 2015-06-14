@@ -1,0 +1,14 @@
+package TCC;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class agapar {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

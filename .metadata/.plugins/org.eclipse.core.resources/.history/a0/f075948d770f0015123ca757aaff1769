@@ -1,0 +1,138 @@
+package suport.util.database.mongoDB.dao;
+
+import java.util.ArrayList;
+
+import suport.financial.wallet.Stock;
+import suport.financial.wallet.Wallet;
+import suport.util.database.mongoDB.MongoConnection;
+import suport.util.database.mongoDB.pojo.ManagedWallet;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+
+import jade.util.leap.Serializable;
+
+public class WalletDao implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	private DBCollection collection_wallet;
+	private MongoConnection connection;
+	private DB db;
+
+	public WalletDao() {
+		this.connection= MongoConnection.getInstance();
+		this.db=this.connection.getDB();
+		this.collection_wallet=(this.db.getCollection("wallet"));
+
+	}
+	public void updateRiskWallet(String userId,double risk)
+	{
+		boolean result = false;
+		try {
+			BasicDBObject where = new BasicDBObject("_id", stock.getCodeName());
+			// BasicDBObject whereValues= new
+			// BasicDBObject("stockCodeName",stock.getCodeName());
+			// DBObject stockValues=null;
+			DBObject stocks = null;
+
+			// ArrayList<BasicDBObject> candleSticksList=new
+			// ArrayList<BasicDBObject>();
+
+			DBCursor cursorStock = getCollection_stocks().find(where);
+			// DBCursor
+			// cursorStockPrices=getCollection_stock_prices().find(whereValues);
+
+			while (cursorStock.hasNext()) {
+				stocks = cursorStock.next();
+
+			}
+			// while(cursorStockPrices.hasNext())
+			// {
+			// stockValues=cursorStockPrices.next();
+			//
+			// }
+
+			// //Convertendo informacoes
+			// for(CandleStick c:stock.getCandleSticks())
+			// {
+			// candleSticksList.add(new
+			// BasicDBObject("date",stock.getCurrentCandleStick().getDate()).
+			// append("open",stock.getCurrentCandleStick().getOpen()).
+			// append("high",stock.getCurrentCandleStick().getHigh()).
+			// append("low", stock.getCurrentCandleStick().getLow()).
+			// append("close", stock.getCurrentCandleStick().getClose()).
+			// append("volume", stock.getCurrentCandleStick().getVolume()));
+			// }
+			//
+			// BasicDBObject updateStockPrices = new
+			// BasicDBObject("_id",stock.getCodeName()).
+			// append("values", candleSticksList);
+
+			BasicDBObject updateStock = new BasicDBObject("_id",
+					stock.getCodeName())
+					.append("sector", stock.getSector())
+					.append("avarangeReturn_15", stock.getAvarangeReturn_15())
+					.append("standardDeviation_15",
+							stock.getStandardDeviation_15())
+					.append("variance_15", stock.getVariance_15())
+					.append("varianceCoefficient_15",
+							stock.getVarianceCoefficient_15())
+					.append("avarangeReturn_30", stock.getAvarangeReturn_30())
+					.append("standardDeviation_30",
+							stock.getStandardDeviation_30())
+					.append("variance_30", stock.getVariance_30())
+					.append("varianceCoefficient_30",
+							stock.getVarianceCoefficient_30())
+					.append("suggestion", stock.getSuggestion())
+					// TODO Atencao nessa linha
+					.append("qtd", stock.getQtd())
+					.append("currentPrice", stock.getCurrentPrice());
+
+			getCollection_stocks().remove(stocks);
+
+			// getCollection_stock_prices().remove(stockValues);
+
+			getCollection_stocks().insert(updateStock);
+			// getCollection_stock_prices().insert(updateStockPrices);
+			result = true;
+
+			cursorStock.close();
+			// cursorStockPrices.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+
+		
+	}
+	public boolean insertWallet(Wallet walletInfo) {
+		
+		BasicDBObject wallet = null;
+		try {
+			
+			wallet = new BasicDBObject("userId", walletInfo.getUserID())
+					.append("walletValue",walletInfo.getWalletValue())
+					.append("walletRisck", walletInfo.getWalletRisck())
+					.append("walltetPercent", walletInfo.getWallterPercent());
+
+			this.collection_wallet.save(wallet);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+
+		}
+		return true;
+
+	}
+
+}

@@ -1,0 +1,37 @@
+package main;
+
+import org.junit.runner.RunWith;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+import suport.financial.indicatorsTest.MovingAvarangeTest;
+import suport.financial.partternsCandleStick.BearishEngulfingTest;
+import suport.financial.partternsCandleStick.CandlestickTest;
+import suport.financial.partternsCandleStick.DarkCloudTest;
+import suport.financial.strategy.MovingAvarangeExponentialStrategyTest;
+import suport.financial.strategy.MovingAvarangeSimpleStrategyTest;
+import suport.financial.wallet.Stock;
+import suport.financial.wallet.StockTest;
+import suport.financial.wallet.WalletTest;
+import suport.statistical.MatrixTest;
+import suport.statistical.Statistical;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses(
+	{
+	MovingAvarangeTest.class,
+	BearishEngulfingTest.class,
+	CandlestickTest.class,
+	DarkCloudTest.class,
+	MovingAvarangeExponentialStrategyTest.class,
+	MovingAvarangeSimpleStrategyTest.class,
+	StockTest.class,
+	WalletTest.class,
+	MatrixTest.class,
+	Statistical.class
+	}
+		)
+public class TestSuite extends TestSuite {
+
+}

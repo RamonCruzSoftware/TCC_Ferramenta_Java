@@ -7,6 +7,9 @@ public class MovingAvarangeExponentialStrategy implements Strategy {
 
 	private ArrayList<Double> mme13Values;
 	private ArrayList<Double> mme21Values;
+	private double purchasedValue;
+	private double value;
+	private double stopLoss;
 	suport.financial.indicators.MovingAvarange movingAvange13;
 	suport.financial.indicators.MovingAvarange movingAvarange21;
 
@@ -27,6 +30,8 @@ public class MovingAvarangeExponentialStrategy implements Strategy {
 		movingAvarange21 = new suport.financial.indicators.MovingAvarange(actualMME2, currentPrice, 21);
 		mme21Values.add(movingAvarange21.exponencialAvarange());
 		mme13Values.add(movingAvange13.exponencialAvarange());
+		
+		stopLoss=-0.05;
 
 	}
 
@@ -66,10 +71,14 @@ public class MovingAvarangeExponentialStrategy implements Strategy {
 				}
 				
 			}
+//			if(order=="Buy")purchasedValue=value;
+//			if(order=="nothing" && ((value-purchasedValue)/purchasedValue)>=stopLoss) order="Sell";
+//			if(order=="Sell" ) purchasedValue=0.0;
 		} catch (Exception e) {// TODO LOG
 			e.printStackTrace();
 			return "nothing";
 		}
+		
 		return order;
 	}
 
@@ -81,6 +90,7 @@ public class MovingAvarangeExponentialStrategy implements Strategy {
 		
 		movingAvarange21.setLastMMEandCurrentPrice(mme21Values.get(lastIndex),value);
 		mme21Values.add(movingAvarange21.exponencialAvarange());
+		this.value=value;
 	}
 
 	public ArrayList<Double> getMme3Values() {

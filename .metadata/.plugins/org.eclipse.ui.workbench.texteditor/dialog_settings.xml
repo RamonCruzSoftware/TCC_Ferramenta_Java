@@ -2,7 +2,7 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="265" key="DIALOG_WIDTH"/>
-		<item value="71" key="DIALOG_Y_ORIGIN"/>
+		<item value="198" key="DIALOG_Y_ORIGIN"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="106" key="DIALOG_X_ORIGIN"/>
 		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Down" key="selection"/>
+		<item value="Risk" key="selection"/>
 		<list key="findhistory">
-			<item value="down"/>
-			<item value="buy"/>
-			<item value="simula"/>
-			<item value="sell"/>
-			<item value="wallet"/>
-			<item value="JOptionPane"/>
-			<item value="AGREE"/>
-			<item value="infoExperts"/>
+			<item value="risk"/>
+			<item value="UserAuthorization"/>
+			<item value="ordersCre"/>
+			<item value="order"/>
+			<item value="managedWalletDao"/>
+			<item value="createExperts"/>
+			<item value="expert.userIdentifier"/>
+			<item value="userIdentifier"/>
 		</list>
 		<list key="replacehistory">
 		</list>

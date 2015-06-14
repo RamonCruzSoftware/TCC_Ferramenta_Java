@@ -1,0 +1,7 @@
+package main;
+
+import junit.framework.TestSuite;
+
+public class TestSuite extends TestSuite {
+
+}

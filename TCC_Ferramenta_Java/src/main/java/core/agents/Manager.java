@@ -13,6 +13,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
@@ -67,18 +68,42 @@ public class Manager extends Agent {
 	private static final int CORAJOSO = 0;
 	private static final int MODERADO = 1;
 	private static final int CONSERVADOR = 2;
-	
+	private MessageTemplate filter;
 	private UserAuthorization userAuthorizationBehaviour;
 	
 	private Wallet wallet;
 	private WalletDao walletDao;
 
-protected void setup() {
 	
+protected void setup() {
+	 
 		manager = this;
 		manager.stockDao = new StockDao();
 		stockListForUserApprove = new ArrayList<Stock>();
 		this.walletDao= new WalletDao();
+		MessageTemplate a,b,c,d,e,f,g;
+		MessageTemplate groupA,groupB,groupC,groupD;
+		MessageTemplate group1,group2;
+		
+		a=MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+		b=MessageTemplate.MatchPerformative(ACLMessage.AGREE);
+		c=MessageTemplate.MatchPerformative(ACLMessage.CFP);
+		d=MessageTemplate.MatchPerformative(ACLMessage.PROPOSE);
+		
+		e=MessageTemplate.MatchPerformative(ACLMessage.REFUSE);
+		f=MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
+		g=MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
+		
+		groupA=MessageTemplate.or(a, b);
+		groupB=MessageTemplate.or(c, d);
+		
+		groupC=MessageTemplate.or(e, f);
+		groupD=MessageTemplate.or(g, g);
+		
+		group1=MessageTemplate.or(groupA, groupB);
+		group2=MessageTemplate.or(groupC, groupD);
+		
+		filter=MessageTemplate.or(group1, group2);
 		
 		try {
 			// create the agent description of ifself
@@ -94,7 +119,8 @@ protected void setup() {
 
 				@Override
 				public void action() {
-					ACLMessage message = myAgent.receive();
+					
+					ACLMessage message = myAgent.receive(filter);
 					if (message != null) {
 						try {
 							switch (message.getPerformative()) {
@@ -107,8 +133,7 @@ protected void setup() {
 								{
 									// TODO LOG
 									System.out.println("Create the Experts ");
-									user = (OrdersCreate) message
-											.getContentObject();
+									user = (OrdersCreate) message.getContentObject();
 									userName = user.getUserIndetifier();
 									// TODO LOG
 									System.out.println("Manager Says: It's user's informations \n Name : "
@@ -161,6 +186,7 @@ protected void setup() {
 										{
 											for (Stock s : manager.stockListForUserApprove) 
 											{
+												s.setQtd((int)(500.0/s.getCurrentPrice()));
 												manager.stockDao.insertStocksSuggestion(s,manager.userName);
 											}
 											
@@ -384,7 +410,9 @@ protected void setup() {
 														manager.walletManagerAuxiliary = new WalletManagerAuxiliary(
 																manager.info.getStockList(),
 																manager.user.getUserValue(),
-																manager.info.getUserProfile());
+																manager.info.getUserProfile(),
+																manager.user.getUserIndetifier());
+														
 														
 														listTemp = manager.walletManagerAuxiliary
 																.analyzeStocksSuggestionsList();
@@ -436,8 +464,8 @@ protected void setup() {
 														}
 															break;
 														case MODERADO: {
-															if (listTemp_approved
-																	.size() >= manager.STOCK_QTD_MODERADO) {
+															JOptionPane.showMessageDialog(null,"Moderado Stocks "+manager.info.getStockList());
+															if (listTemp_approved.size() >= manager.STOCK_QTD_MODERADO) {
 																for (int i = 0; i < manager.STOCK_QTD_MODERADO; i++) {
 																	manager.stockListManaged
 																			.add(listTemp_approved
@@ -504,12 +532,9 @@ protected void setup() {
 														}// TODO LOG
 															// Criando os
 															// agentes experts
-														manager.createExperts(
-																manager.info
-																		.getUserProfile(),
-																manager.info
-																		.getUserName(),
-																manager.stockListManaged);
+														JOptionPane.showMessageDialog(null," Vou criar os Agentes--");
+														manager.createExperts(manager.info.getUserProfile(),manager.info.getUserName(),
+																								manager.stockListManaged);
 													} catch (Exception e) {// TODO
 																			// LOG
 														e.printStackTrace();
@@ -609,9 +634,11 @@ protected void setup() {
 															message.addReceiver(new AID(
 																	s.getKey(),
 																	AID.ISLOCALNAME));
-															message.setContentObject(manager.user);
+															//message.setContentObject(manager.user.getUserIndetifier());
+															message.setContent(manager.user.getUserIndetifier());
+															
 
-														} catch (IOException e) {// TODO
+														} catch (Exception e) {// TODO
 																					// LOG
 															e.printStackTrace();
 														}
@@ -656,8 +683,8 @@ protected void setup() {
 						block();
 				}
 			});
-		} catch (Exception e) {// TODO LOG
-			e.printStackTrace();
+		} catch (Exception e1) {// TODO LOG
+			e1.printStackTrace();
 		}// TODO LOG
 		addBehaviour(new RiskCalculationRoutine(manager, 1000 * 60 * 3));
 	}
@@ -694,7 +721,9 @@ protected void setup() {
 
 private void createExperts(int userProfile, String userIdentifier,
 			ArrayList<Stock> listStocks) {
-		
+	JOptionPane.showMessageDialog(null," Entrei Na funcao createExperts--User "+userIdentifier+" Perfil "+userIdentifier);
+	JOptionPane.showMessageDialog(null," StockList "+listStocks);
+	
 		PlatformController container = getContainerController();
 		AgentController agentController;
 		infoExperts = new HashMap<String, ArrayList<Stock>>();
@@ -702,7 +731,7 @@ private void createExperts(int userProfile, String userIdentifier,
 		ArrayList<Stock> stockSeleted = new ArrayList<Stock>();
 		
 		listStocks=manager.removeRepetitions(listStocks);
-		
+		JOptionPane.showMessageDialog(null," StockList Sem repeticao "+listStocks);
 		// Create the experts agents
 		if (userProfile == CORAJOSO) {
 			if (listStocks.size() >= 8) {
@@ -736,10 +765,8 @@ private void createExperts(int userProfile, String userIdentifier,
 
 			} else {
 				if (stockSeleted.size() == 1) {
-					infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",
-							stockSeleted);
-					strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",
-							ConversationsID.EXPERT_STRATEGY_MME_13_21);
+					infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",stockSeleted);
+					strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
 				}
 			}
 		}
@@ -770,13 +797,11 @@ private void createExperts(int userProfile, String userIdentifier,
 				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
 				infoExperts.put("Expert_"+userIdentifier + "[" + 3 + "]", listC);
 
+				JOptionPane.showMessageDialog(null, "InfoExpert : "+infoExperts);
 				// Mudar estrategia
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",
-						ConversationsID.EXPERT_STRATEGY_MME_13_21);
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",
-						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",
-						ConversationsID.EXPERT_STRATEGY_MME_13_21);
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
 
 			}
 		}
@@ -828,8 +853,7 @@ private void createExperts(int userProfile, String userIdentifier,
 				infoExperts.put("Expert_"+userIdentifier + "[" + 7 + "]", listG);
 
 				// Mudar estrategia
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",
-						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MMS_13_21);
 				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",
 						ConversationsID.EXPERT_STRATEGY_MMS_21_34);
 				strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",

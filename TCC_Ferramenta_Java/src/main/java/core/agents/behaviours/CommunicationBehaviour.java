@@ -27,7 +27,7 @@ public class CommunicationBehaviour
 	private Map<String, Behaviour> conversationsREFUSE;
 	private Map<String, Behaviour> conversationsREQUEST;
 	private Map<String, Behaviour> conversationsACCEPT_PROPOSAL;
-
+	
 	private Map<Integer,HashMap<String, Behaviour> >performatives;
 	private ArrayList<String> conversarioIDSubBehaviours;
 	
@@ -126,17 +126,18 @@ public class CommunicationBehaviour
 		private static final long serialVersionUID = 1L;
 		private Map<Integer,HashMap<String, Behaviour> > conversationsId; 
 		private Behaviour behaviour;
-		private MessageTemplate filter;
-		private MessageTemplate a,b,c,d,e,f,g;
-		private MessageTemplate groupA,groupB,groupC,groupD;
-		private MessageTemplate group1,group2;
-		
+	
+		private  MessageTemplate filter;
 		
 		public  ListenBehaviour(Agent agent,Map<Integer,HashMap<String, Behaviour> > conversationsIDToListen)
 		{
 			super(agent);
 			this.conversationsId=conversationsIDToListen;
 			
+			 MessageTemplate a,b,c,d,e,f,g;
+			 MessageTemplate groupA,groupB,groupC,groupD;
+			 MessageTemplate group1,group2;
+			 
 			a=MessageTemplate.MatchPerformative(ACLMessage.INFORM);
 			b=MessageTemplate.MatchPerformative(ACLMessage.AGREE);
 			c=MessageTemplate.MatchPerformative(ACLMessage.CFP);

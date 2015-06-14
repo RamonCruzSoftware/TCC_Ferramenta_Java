@@ -2,18 +2,20 @@ package suport.financial.partternsCandleStickTest;
 
 import java.util.ArrayList;
 
-import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
+import junit.framework.Assert;
 import suport.financial.partternsCandleStick.*;
 
 public class DarkCloudTest {
 	private DarkCloud darkCloud;
-
+	@Before
 	public void setUp() throws Exception {
 
 		darkCloud = null;
 	}
-
+	@Test
 	public void testFindCandleSticksPatterns() {
 		ArrayList<CandleStick> candleTestList = new ArrayList<CandleStick>();
 
@@ -28,7 +30,7 @@ public class DarkCloudTest {
 		Assert.assertEquals(candleTestList.get(4).getClose(), darkCloud
 				.findCandleSticksPatterns().get(0).getClose(), 0.0);
 	}
-
+	@Test
 	public void testDarkCloud() {
 		darkCloud = new DarkCloud();
 

@@ -2,8 +2,11 @@ package suport.util.database.mongoDB.daoTest;
 
 import java.util.ArrayList;
 import java.util.Date;
-import junit.framework.Assert;
 
+import org.junit.After;
+import org.junit.Before;
+
+import junit.framework.Assert;
 import suport.financial.partternsCandleStick.CandleStick;
 import suport.util.database.mongoDB.dao.ManagedStockDao;
 import suport.util.database.mongoDB.pojo.ManagedStock;
@@ -12,11 +15,12 @@ public class ManagedStockDaoTest {
 
 	private ManagedStockDao managedStockDao;
 
+	@Before
 	public void setUp() throws Exception {
 		managedStockDao = new ManagedStockDao();
 
 	}
-
+	@After
 	public void tearDown() {
 
 		ManagedStock managedStock = new ManagedStock();

@@ -1,6 +1,9 @@
 package suport.statistical;
 
 import java.util.ArrayList;
+
+import org.junit.Test;
+
 import suport.financial.partternsCandleStick.CandleStick;
 
 public class Statistical {
@@ -18,7 +21,7 @@ public class Statistical {
 
 		return avarange;
 	}
-
+	
 	public double calculeAvarange_30(ArrayList<CandleStick> candlesticks) {
 		double avarange = 0;
 
@@ -41,7 +44,7 @@ public class Statistical {
 
 		return avarange;
 	}
-
+	
 	public double calculeAvarange_15(ArrayList<CandleStick> candlesticks) {
 		double avarange = 0;
 		try {
@@ -63,7 +66,7 @@ public class Statistical {
 
 		return avarange;
 	}
-
+	
 	public double calculeCorrelationCoefficient(double[] x, double[] y) {
 		double correlationCoefficient = 0;
 		double avgX = calculeAvarange(x);
@@ -86,7 +89,7 @@ public class Statistical {
 
 		return correlationCoefficient;
 	}
-
+	
 	public double calculeCorrelationCoefficient_15(ArrayList<CandleStick> x,
 			ArrayList<CandleStick> y) {
 		double correlationCoefficient = 0;
@@ -120,7 +123,7 @@ public class Statistical {
 
 		return correlationCoefficient;
 	}
-
+	
 	public double calculeCorrelationCoefficient_30(ArrayList<CandleStick> x,
 			ArrayList<CandleStick> y) {
 		double correlationCoefficient = 0;
@@ -160,7 +163,7 @@ public class Statistical {
 
 		return correlationCoefficient;
 	}
-
+	
 	public double calculeVariance(double[] values) {
 		double variance = 0.0;
 		double avarange = calculeAvarange(values);
@@ -172,7 +175,7 @@ public class Statistical {
 		return variance / (values.length);
 
 	}
-
+	
 	public double calculeVariance_30(ArrayList<CandleStick> candlesticks) {
 		double variance = 0;
 		double avarange = calculeAvarange_30(candlesticks);
@@ -192,7 +195,7 @@ public class Statistical {
 
 		return variance;
 	}
-
+	
 	public double calculeVariance_15(ArrayList<CandleStick> candleSticks) {
 		double variance = 0.0f;
 		double avarange = calculeAvarange_15(candleSticks);
@@ -214,7 +217,7 @@ public class Statistical {
 
 		return variance;
 	}
-
+	
 	public double calculeVariance_15BetweenTwoStocks(
 			ArrayList<CandleStick> listA, ArrayList<CandleStick> listB,
 			double percentA, double percentB) {
@@ -241,24 +244,24 @@ public class Statistical {
 
 		return variance;
 	}
-
+	
 	public double calculeStandardDeviation(double[] values) {
 		return Math.sqrt(calculeVariance(values));
 
 	}
-
+	
 	public double calculeStandardDeviation_30(
 			ArrayList<CandleStick> candlesticks) {
 
 		return Math.sqrt(calculeVariance_30(candlesticks));
 	}
-
+	
 	public double calculeStandardDeviation_15(
 			ArrayList<CandleStick> candlesticks) {
 
 		return Math.sqrt(calculeVariance_15(candlesticks));
 	}
-
+	
 	public double averangeReturn(double[] values) {
 
 		double averangeReturn = 0;
@@ -270,7 +273,7 @@ public class Statistical {
 
 		return averangeReturn;
 	}
-
+	
 	public double averangeReturn_30(ArrayList<CandleStick> candlesticks) {
 		double avarangeReturn = 0;
 
@@ -289,7 +292,7 @@ public class Statistical {
 
 		return avarangeReturn;
 	}
-
+	
 	public double averangeReturn_15(ArrayList<CandleStick> candlesticks) {
 		double avarangeReturn = 0;
 
@@ -308,17 +311,17 @@ public class Statistical {
 
 		return avarangeReturn;
 	}
-
+	
 	public double varianceCoefficient(double[] values) {
 		return calculeStandardDeviation(values) / calculeAvarange(values);
 	}
-
+	
 	public double varianceCoefficient_30(ArrayList<CandleStick> candlesticks) {
 
 		return calculeStandardDeviation_30(candlesticks)
 				/ calculeAvarange_30(candlesticks);
 	}
-
+	
 	public double varianceCoefficient_15(ArrayList<CandleStick> candlesticks) {
 
 		return calculeStandardDeviation_15(candlesticks)

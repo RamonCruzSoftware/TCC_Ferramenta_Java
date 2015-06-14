@@ -3,6 +3,10 @@ package suport.util.database.mongoDB.daoTest;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import junit.framework.Assert;
 import suport.financial.partternsCandleStick.CandleStick;
 import suport.financial.wallet.Stock;
@@ -11,13 +15,13 @@ import suport.util.database.mongoDB.dao.StockDao;
 public class StockDaoTest {
 
 	private StockDao stockDao;
-
+@Before
 	public void setUp() throws Exception {
 
 		stockDao = new StockDao();
 
 	}
-
+@After
 	public void tearDown() throws Exception {
 
 		Stock stock = new Stock("test", "test");
@@ -30,7 +34,7 @@ public class StockDaoTest {
 		stockDao.dropStock(stock2);
 
 	}
-
+@Test
 	public void testStockDao() {
 
 		Assert.assertEquals(StockDao.class, stockDao.getClass());
@@ -39,7 +43,7 @@ public class StockDaoTest {
 		Assert.assertNotNull(stockDao.getCollection_userStockSugestions());
 
 	}
-
+@Test
 	public void testInsertStocksSuggestion() {
 		Stock suggestion = new Stock("test", "test");
 		suggestion.setAvarangeReturn_15(1);
@@ -74,7 +78,8 @@ public class StockDaoTest {
 
 	}
 
-	@SuppressWarnings("deprecation")
+	
+	@Test
 	public void testUpdateStock() {
 
 		Stock stock = new Stock("test", "test");
@@ -119,7 +124,8 @@ public class StockDaoTest {
 
 	}
 
-	@SuppressWarnings("deprecation")
+	@Test
+	
 	public void testInsertCurrentStock() {
 
 		Stock stock = new Stock("test", "test");
@@ -158,8 +164,8 @@ public class StockDaoTest {
 		Assert.assertNotNull(stockRecurvered);
 
 	}
-
-	@SuppressWarnings("deprecation")
+	@Test
+	
 	public void testStoreHistoricalStockValue() {
 
 		Stock stock = new Stock("test", "test");
@@ -178,8 +184,8 @@ public class StockDaoTest {
 		Assert.assertFalse(stockDao.storeHistoricalStockValue(stock));
 
 	}
-
-	@SuppressWarnings("deprecation")
+	@Test
+	
 	public void testGetAllStocks() {
 
 		Stock stock = new Stock("test", "test");
@@ -219,8 +225,8 @@ public class StockDaoTest {
 		Assert.assertEquals(1, stockRecurvered.size());
 
 	}
-
-	@SuppressWarnings("deprecation")
+	@Test
+	
 	public void testGetAllStocksPrices() {
 
 		Stock stock = new Stock("test", "test");
@@ -258,7 +264,7 @@ public class StockDaoTest {
 		Assert.assertEquals(2, stockRecurvered.get(0).getCandleSticks().size(),
 				0.0);
 	}
-
+	@Test
 	@SuppressWarnings("deprecation")
 	public void testGetStockPrices_last10() {
 
@@ -344,8 +350,8 @@ public class StockDaoTest {
 		Assert.assertEquals(10, last10.size());
 
 	}
-
-	@SuppressWarnings("deprecation")
+	@Test
+	
 	public void testGetStockPrices_last30() {
 
 		Stock stock = new Stock("test", "test");
@@ -617,8 +623,8 @@ public class StockDaoTest {
 		Assert.assertEquals(17, last30.size());
 
 	}
-
-	@SuppressWarnings("deprecation")
+	@Test
+	
 	public void testGetStockPrices_last40() {
 
 		Stock stock = new Stock("test", "test");
@@ -939,8 +945,8 @@ public class StockDaoTest {
 		Assert.assertEquals(17, last40.size());
 
 	}
-
-	@SuppressWarnings("deprecation")
+	@Test
+	
 	public void testGetStockOrderByStandardDeviation_30() {
 
 		Stock stock = new Stock("test", "test");
@@ -985,8 +991,8 @@ public class StockDaoTest {
 		Assert.assertEquals(1, stockRecurvered.size());
 
 	}
-
-	@SuppressWarnings("deprecation")
+	@Test
+	
 	public void testGetStockOrderByStandardDeviation_15() {
 
 		Stock stock = new Stock("test", "test");

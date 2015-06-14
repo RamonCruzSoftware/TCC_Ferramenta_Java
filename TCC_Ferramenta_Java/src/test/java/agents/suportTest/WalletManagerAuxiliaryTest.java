@@ -51,7 +51,7 @@ public class WalletManagerAuxiliaryTest {
 		this.infoExperts.put("Expert_c", list_c);
 		this.infoExperts.put("Expert_d", list_d);
 
-		auxiliary = new WalletManagerAuxiliary(this.stockList, 1000.0, 0);
+		auxiliary = new WalletManagerAuxiliary(this.stockList, 1000.0, 0, null);
 
 	}
 

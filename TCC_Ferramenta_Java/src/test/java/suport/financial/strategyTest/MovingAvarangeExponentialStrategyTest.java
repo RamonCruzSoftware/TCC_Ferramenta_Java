@@ -1,5 +1,8 @@
 package suport.financial.strategyTest;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import junit.framework.Assert;
 import suport.financial.strategy.MovingAvarangeExponentialStrategy;
 import suport.financial.strategy.Strategy;
@@ -7,20 +10,20 @@ import suport.financial.strategy.Strategy;
 public class MovingAvarangeExponentialStrategyTest {
 
 	private Strategy movingAvarangeStrategy;
-
+	@Before
 	public void setUp() {
 
 		movingAvarangeStrategy = null;
 
 	}
-
+	@Test
 	public void testMovingAvarangeStrategy() {
 		movingAvarangeStrategy = new MovingAvarangeExponentialStrategy(0.00,
 				0.0, 0.0);
 		Assert.assertEquals(MovingAvarangeExponentialStrategy.class,
 				movingAvarangeStrategy.getClass());
 	}
-
+	@Test
 	public void testMakeOrder() {
 		movingAvarangeStrategy = new MovingAvarangeExponentialStrategy(0.00,
 				0.0, 0.0);
@@ -60,7 +63,7 @@ public class MovingAvarangeExponentialStrategyTest {
 		Assert.assertEquals("Buy", movingAvarangeStrategy.makeOrder());
 
 	}
-
+	@Test
 	public void testAddValue() {
 
 	}

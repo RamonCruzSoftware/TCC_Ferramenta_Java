@@ -80,6 +80,8 @@ public class Expert extends Agent {
 			ordersLocker = false;
 			isSimulation=true;
 			
+			expert.userIdentifier=cutName(this);
+			
 			if(isSimulation)
 				{
 					expert.simulationStart("simulator", 3000);
@@ -143,8 +145,7 @@ public class Expert extends Agent {
 									}
 								}
 								if (msg.getConversationId() == ConversationsID.EXPERT_USER_NAME) {
-									expert.userIdentifier = (String) msg
-											.getContentObject();
+									//expert.userIdentifier = (String) msg.getContent();
 								}
 								if (msg.getConversationId() == ConversationsID.EXPERT_STRATEGY_MME_13_21) { // TODO
 																											// log
@@ -377,10 +378,10 @@ public class Expert extends Agent {
 
 											if (qtd > 0)
 											{
-												expert.stockManager.orderBuy(s,qtd);
+																								expert.stockManager.orderBuy(s,qtd);
 												managedStock = new ManagedStock();
 												managedStock.setCodeName(s.getCodeName());
-												managedStock.setUserIdentifier(expert.userIdentifier);
+												managedStock.setUserIdentifier((expert.userIdentifier==null)?cutName(expert):expert.userIdentifier);
 												expert.managedStockDao.insertManagedStock(managedStock);
 												//JOptionPane.showMessageDialog(null, expert.getLocalName()+":Compra autorizada "+s.getCodeName());
 											}
@@ -481,7 +482,8 @@ public class Expert extends Agent {
 											{
 												// TODO log
 												System.out.println(expert.getLocalName()+":[SIMULACAO] Existem acoes para vender ou comprar ");
-												expert.ordersToBuyOrSell();
+												//expert.ordersToBuyOrSell(); Comentado para simulacao de estategia
+											//	expert.ordersLocker = true;//POG
 												
 											}
 										
@@ -777,13 +779,13 @@ private CandleStick requestStocksPrices(Stock stock)
 		if (expert.ordensToBuyOrSell.size() > 0) {
 			for (Entry<Stock, String> e : expert.ordensToBuyOrSell.entrySet())
 			{
-				managedStock = expert.managedStockDao.getManagedStock(e.getKey().getCodeName(), expert.userIdentifier);
+				managedStock = expert.managedStockDao.getManagedStock(e.getKey().getCodeName(), (expert.userIdentifier==null)?cutName(expert):expert.userIdentifier);
 				try {
 					if (managedStock == null) {
 						if (e.getValue().equalsIgnoreCase("Buy")) 
 						{// TODO Log
-																	// Autorizacao
-																	// de compra
+							// Autorizacao
+							// de compra
 							Stock stockTemp = e.getKey();
 							stockTemp.setSuggestion(ConversationsID.BUY_REQUEST);
 							expert.orderToApproveBuy.add(stockTemp);
@@ -806,7 +808,7 @@ private CandleStick requestStocksPrices(Stock stock)
 							{
 								expert.orderToApproveSell.add(stockTemp); //Para vender algo deve ter em carteira primeiro
 								expert.ordensToBuyOrSell.remove(e.getKey()); 
-								//JOptionPane.showMessageDialog(null, "managedStock:"+managedStock+"\n Sell:"+stockTemp.getCodeName());
+							//	JOptionPane.showMessageDialog(null, "managedStock:"+managedStock+"\n Sell:"+stockTemp.getCodeName());
 							}else
 							{
 								expert.ordensToBuyOrSell.remove(e.getKey()); //sinal Falso
@@ -815,21 +817,19 @@ private CandleStick requestStocksPrices(Stock stock)
 						}
 					} else 
 					{
-						if (managedStock != null
-								&& e.getValue().equalsIgnoreCase("Buy")) 
+						if (managedStock != null && e.getValue().equalsIgnoreCase("Buy")) 
 						{
 							expert.ordensToBuyOrSell.remove(e.getKey());
 						//	JOptionPane.showMessageDialog(null, "managedStock:"+managedStock+"\n Buy:"+e.getKey().getCodeName());
 						}
-						if (managedStock != null
-								&& e.getValue().equalsIgnoreCase("Sell"))
+						if (managedStock != null && e.getValue().equalsIgnoreCase("Sell"))
 						{
 							
 							Stock stockTemp = e.getKey();
 							stockTemp.setSuggestion(ConversationsID.SELL_REQUEST);
 							expert.orderToApproveSell.add(stockTemp);
 							expert.ordensToBuyOrSell.remove(e.getKey());
-							//JOptionPane.showMessageDialog(null, "managedStock:"+managedStock+"\n Sell REQUEST:"+e.getKey().getCodeName());
+						//	JOptionPane.showMessageDialog(null, "managedStock:"+managedStock+"\n Sell REQUEST:"+e.getKey().getCodeName());
 						}
 					}
 				} catch (Exception error) {
@@ -1015,5 +1015,11 @@ private CandleStick requestStocksPrices(Stock stock)
 			return this.listManagedStock.get(stock.getCodeName())
 					.getProfitPercent();
 		}
+		
+	}
+	private String cutName(Agent agent)
+	{
+		String str=agent.getLocalName();
+		return str.substring(7, (str.length()-3));
 	}
 }

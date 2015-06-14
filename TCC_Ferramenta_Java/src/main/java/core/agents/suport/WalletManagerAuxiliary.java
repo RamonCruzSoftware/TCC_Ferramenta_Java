@@ -45,7 +45,7 @@ public class WalletManagerAuxiliary {
 	}
 
 	public WalletManagerAuxiliary(ArrayList<Stock> stockList, double userValue,
-			int userProfile) {
+			int userProfile,String userName) {
 		this.managedWallet = new ManagedWallet();
 		this.stockDao = new StockDao();
 		this.managedWalletDao = new ManagedWalletDao();

@@ -2,6 +2,9 @@ package suport.financial.partternsCandleStickTest;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import junit.framework.Assert;
 import suport.financial.partternsCandleStick.*;
 
@@ -9,10 +12,12 @@ public class BearishEngulfingTest {
 
 	private BearishEngulfing bearishEngulfing;
 
+	@Before
 	public void setUp() throws Exception {
 		bearishEngulfing = new BearishEngulfing();
 	}
 
+	@Test
 	public void findCandleStickPatternsTest() {
 		ArrayList<CandleStick> candleTestList = new ArrayList<CandleStick>();
 		// CandleStick(open, high, low, close, volume, date)
@@ -22,6 +27,7 @@ public class BearishEngulfingTest {
 		candleTestList.add(new CandleStick(9, 12, 8, 11, 0, null));
 		candleTestList.add(new CandleStick(12.5, 13, 9, 8, 0, null));
 
+		
 		Assert.assertNotNull(bearishEngulfing);
 
 		bearishEngulfing.setList(candleTestList);

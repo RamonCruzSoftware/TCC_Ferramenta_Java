@@ -14,13 +14,13 @@ public class SimulationSetup {
 	public SimulationSetup()
 	{
 		// 113 = 2013 -1900
-		this.startDate=new Date(112, 1, 1);
+		this.startDate=new Date(112, 3, 1);
 		this.finishDate=new Date(115, 3, 1);
 		
 		this.startDateCalendar=Calendar.getInstance();
 		this.startDateCalendar.set(2012, 2, 1);
 		
-		
+	
 //		// 113 = 2013 -1900
 //				this.startDate=new Date(114, 1, 1);
 //				this.finishDate=new Date(115, 3, 1);

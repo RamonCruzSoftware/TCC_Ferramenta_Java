@@ -1,12 +1,14 @@
 package suport.statisticalTest;
 
+import org.junit.Test;
+
 import suport.statistical.Matrix;
 import junit.framework.Assert;
 
 public class MatrixTest {
 
 	private Matrix matrix;
-
+	@Test
 	public void testMatrix() {
 
 		matrix = new Matrix(1, 1);
@@ -16,20 +18,20 @@ public class MatrixTest {
 		Assert.assertEquals(Matrix.class, matrix.getClass());
 
 	}
-
+	@Test
 	public void testGetContent() {
 
 		matrix = new Matrix(1, 1);
 		matrix.setContent(0, 0, 10);
 		Assert.assertEquals(10, matrix.getContent(0, 0), 0.0);
 	}
-
+	@Test
 	public void testSetContent() {
 		matrix = new Matrix(1, 1);
 		matrix.setContent(0, 0, 10);
 		Assert.assertEquals(10, matrix.getContent(0, 0), 0.0);
 	}
-
+	@Test
 	public void testProduct() {
 
 		Matrix matrixA = new Matrix(1, 2);
@@ -48,7 +50,7 @@ public class MatrixTest {
 		Assert.assertNull(Matrix.product(matrixA, matrixC));
 
 	}
-
+	@Test
 	public void testTransposed() {
 		matrix = new Matrix(3, 1);
 

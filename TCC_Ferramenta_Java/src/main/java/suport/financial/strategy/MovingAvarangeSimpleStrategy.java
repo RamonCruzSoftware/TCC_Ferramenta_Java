@@ -10,13 +10,16 @@ public class MovingAvarangeSimpleStrategy implements Strategy {
 	private MovingAvarange movingAvangeB;
 	private ArrayList<Double> mmsAValues;
 	private ArrayList<Double> mmsBValues;
+	private double purchasedValue;
+	private double value;
+	private double stopLoss;
 
 	public MovingAvarangeSimpleStrategy(int periodA, int periodB) {
 		this.setMovingAvangeA(new MovingAvarange(periodA));
 		this.setMovingAvangeB(new MovingAvarange(periodB));
 		this.setMmsAValues(new ArrayList<Double>());
 		this.setMmsBValues(new ArrayList<Double>());
-
+		//this.stopLoss=-0.05;
 	}
 
 	public String makeOrder() {
@@ -47,10 +50,17 @@ public class MovingAvarangeSimpleStrategy implements Strategy {
 				}
 			} else
 				order = "nothing";
+			
+//			if(order=="Buy")purchasedValue=value;
+//			if(order=="nothing" && ((value-purchasedValue)/purchasedValue)>=stopLoss) order="Sell";
+//			if(order=="Sell" ) purchasedValue=0.0;
+			
 		} catch (Exception e) {// TODO LOG
 			e.printStackTrace();
 			return "nothing";
 		}
+		
+		
 		return order;
 	}
 
@@ -59,6 +69,7 @@ public class MovingAvarangeSimpleStrategy implements Strategy {
 		this.movingAvangeB.addValue(value);
 		this.mmsAValues.add(this.movingAvangeA.simpleAvarange());
 		this.mmsBValues.add(this.movingAvangeB.simpleAvarange());
+		this.value=value;
 	}
 
 	public MovingAvarange getMovingAvangeA() {

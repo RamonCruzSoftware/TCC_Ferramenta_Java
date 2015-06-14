@@ -2,8 +2,10 @@ package suport.financial.indicatorsTest;
 
 import java.util.ArrayList;
 
-import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
+import junit.framework.Assert;
 import suport.financial.indicators.MovingAvarange;
 
 public class MovingAvarangeTest {
@@ -12,19 +14,20 @@ public class MovingAvarangeTest {
 	MovingAvarange movingAvarangeExp;
 	ArrayList<Double> values;
 
+	@Before
 	public void setUp() throws Exception {
 		values = new ArrayList<Double>();
 		movingAvarange = new MovingAvarange(5);
 		movingAvarangeExp = new MovingAvarange(0, 10.25, 3);
 
 	}
-
+	@Test
 	public void testMovingAvarange() {
 
 		Assert.assertTrue(movingAvarange.getClass().isInstance(movingAvarange));
 		;
 	}
-
+	@Test
 	public void testSimpleAvarange() {
 
 		movingAvarange = new MovingAvarange(5);
@@ -37,13 +40,13 @@ public class MovingAvarangeTest {
 		Assert.assertEquals(10.35, movingAvarange.simpleAvarange(), 0.3);
 
 	}
-
+	@Test
 	public void testExponencialAvarange() {
 
 		Assert.assertEquals(5.125, movingAvarangeExp.exponencialAvarange(), 0.3);
 
 	}
-
+	@Test
 	public void testSetLastMMEandCurrentPrice() {
 		ArrayList<Double> MME3 = new ArrayList<Double>();
 		MovingAvarange movingAvarangeExp = new MovingAvarange(0, 10.25, 3);

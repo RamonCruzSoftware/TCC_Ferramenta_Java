@@ -136,11 +136,12 @@ public class YahooFinance implements Runnable {
 						TableLine[3], TableLine[4], TableLine[5], date));
 
 			}
+			
 			// Fechamos o buffer
 			StrR.close();
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} catch (ParseException e) {

@@ -1,18 +1,20 @@
 package suport.financial.strategyTest;
 
+import org.junit.Test;
+
 import junit.framework.Assert;
 import suport.financial.strategy.MovingAvarangeSimpleStrategy;
 
 public class MovingAvarangeSimpleStrategyTest {
 
 	private MovingAvarangeSimpleStrategy movingAvarangeSimpleStrategy;
-
+	@Test
 	public void testMovingAvarangeSimpleStrategy() {
 		movingAvarangeSimpleStrategy = new MovingAvarangeSimpleStrategy(13, 21);
 		Assert.assertEquals(MovingAvarangeSimpleStrategy.class,
 				movingAvarangeSimpleStrategy.getClass());
 	}
-
+	@Test
 	public void testMakeOrder() {
 		movingAvarangeSimpleStrategy = new MovingAvarangeSimpleStrategy(13, 21);
 		movingAvarangeSimpleStrategy.addValue(10.79);
