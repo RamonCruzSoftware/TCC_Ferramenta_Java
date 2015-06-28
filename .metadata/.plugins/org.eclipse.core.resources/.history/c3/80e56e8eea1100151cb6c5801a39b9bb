@@ -1,7 +1,0 @@
-package TCC;
-
-import junit.framework.TestCase;
-
-public class TestApagar extends TestCase {
-
-}

@@ -1,5 +1,0 @@
-package core.agents.behaviours;
-
-public class FeedbackToUser {
-
-}

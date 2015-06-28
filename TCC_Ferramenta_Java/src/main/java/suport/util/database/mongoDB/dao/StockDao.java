@@ -863,8 +863,8 @@ public ArrayList<CandleStick> getStockPrices_last10(String codeName) {
 		return mongo_candleList;
 	}
 
-	public ArrayList<Stock> getStockOrderByStandardDeviation_30(
-			double lowerLimit, double upperLimit) {
+	public ArrayList<Stock> getStockOrderByStandardDeviation_30(double lowerLimit, double upperLimit)
+	{
 		BasicDBObject sort = new BasicDBObject("standardDeviation_30", 1);
 		BasicDBObject find_1 = new BasicDBObject("$gt", lowerLimit).append(
 				"$lt", upperLimit);

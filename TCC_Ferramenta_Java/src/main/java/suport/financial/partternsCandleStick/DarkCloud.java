@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import suport.financial.partternsCandleStick.CandleStick;
 
-public class DarkCloud extends Pattern {
+public class DarkCloud implements Pattern {
 	private ArrayList<CandleStick> list;
 	private int limitPeriod;
 	public DarkCloud(ArrayList<CandleStick> list) {

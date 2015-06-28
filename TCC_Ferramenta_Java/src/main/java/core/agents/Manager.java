@@ -380,7 +380,8 @@ protected void setup() {
 							case ACLMessage.PROPOSE:
 							{// TODO LOG
 								System.out.println("Propose Recived");
-								if (message.getConversationId() == ConversationsID.STOCKS_HUNTER_SUGGESTIONS) {
+								if (message.getConversationId() == ConversationsID.STOCKS_HUNTER_SUGGESTIONS) 
+								{
 									manager.info = (InfoConversations) message
 											.getContentObject();
 									manager.stockListManaged = new ArrayList<Stock>();
@@ -464,7 +465,7 @@ protected void setup() {
 														}
 															break;
 														case MODERADO: {
-															JOptionPane.showMessageDialog(null,"Moderado Stocks "+manager.info.getStockList());
+														//	JOptionPane.showMessageDialog(null,"Moderado Stocks "+manager.info.getStockList());
 															if (listTemp_approved.size() >= manager.STOCK_QTD_MODERADO) {
 																for (int i = 0; i < manager.STOCK_QTD_MODERADO; i++) {
 																	manager.stockListManaged
@@ -532,7 +533,7 @@ protected void setup() {
 														}// TODO LOG
 															// Criando os
 															// agentes experts
-														JOptionPane.showMessageDialog(null," Vou criar os Agentes--");
+													//	JOptionPane.showMessageDialog(null," Vou criar os Agentes--");
 														manager.createExperts(manager.info.getUserProfile(),manager.info.getUserName(),
 																								manager.stockListManaged);
 													} catch (Exception e) {// TODO
@@ -653,7 +654,6 @@ protected void setup() {
 										|| message.getConversationId() == ConversationsID.EXPERT_ORDER_SELL) 
 								{
 									System.out.println("Manager : Solicitacao de autorizacao de ordem.");
-									
 								//	JOptionPane.showMessageDialog(null, manager.getLocalName()+" Pedido de "+message.getConversationId()+": para-"+message.getSender().getLocalName()+" Recebido");
 									
 									@SuppressWarnings("unchecked")
@@ -721,8 +721,12 @@ protected void setup() {
 
 private void createExperts(int userProfile, String userIdentifier,
 			ArrayList<Stock> listStocks) {
-	JOptionPane.showMessageDialog(null," Entrei Na funcao createExperts--User "+userIdentifier+" Perfil "+userIdentifier);
-	JOptionPane.showMessageDialog(null," StockList "+listStocks);
+	//JOptionPane.showMessageDialog(null," Entrei Na funcao createExperts--User "+userIdentifier+" Perfil "+userProfile);
+	
+	StringBuilder build= new StringBuilder();
+	for(Stock s:listStocks)
+	build.append(s.getCodeName()+"\n");
+	//JOptionPane.showMessageDialog(null," StockList "+listStocks.size()+ "\n"+build);
 	
 		PlatformController container = getContainerController();
 		AgentController agentController;
@@ -731,9 +735,16 @@ private void createExperts(int userProfile, String userIdentifier,
 		ArrayList<Stock> stockSeleted = new ArrayList<Stock>();
 		
 		listStocks=manager.removeRepetitions(listStocks);
-		JOptionPane.showMessageDialog(null," StockList Sem repeticao "+listStocks);
+		 build= new StringBuilder();
+		for(Stock s:listStocks)
+		build.append(s.getCodeName()+"\n");
+	//	JOptionPane.showMessageDialog(null," StockList Sem repeticao "+listStocks.size()+ "\n"+build);
+		
 		// Create the experts agents
-		if (userProfile == CORAJOSO) {
+		
+		switch ((int)userProfile) {
+		case CORAJOSO:
+		{
 			if (listStocks.size() >= 8) {
 				for (int i = 0; i < 8; i++) {
 					stockSeleted.add(listStocks.get(i));
@@ -769,8 +780,134 @@ private void createExperts(int userProfile, String userIdentifier,
 					strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
 				}
 			}
+		}break;
+		case MODERADO:
+		{
+			//JOptionPane.showMessageDialog(null, "Entrei no Moderado\nInfoExpert : "+infoExperts);
+			if (listStocks.size() >= 13) 
+			{
+				//JOptionPane.showMessageDialog(null, "listStocks.size() >=13 ");
+				for (int i = 0; i < 13; i++)
+				{
+					stockSeleted.add(listStocks.get(i));
+				}
+			} else if (listStocks.size() < 14)
+			{
+				
+				 build= new StringBuilder();
+				for(Stock s:listStocks)
+				build.append(s.getCodeName()+"\n");
+				
+			//	JOptionPane.showMessageDialog(null, "listStocks.size() <14\n "+listStocks.size()+build);
+				stockSeleted = listStocks;
+			}
+			if (stockSeleted.size() >= 5) {
+				JOptionPane.showMessageDialog(null, "stockSelected.size() >=5 ");
+				
+				ArrayList<Stock> listA = new ArrayList<Stock>();
+				ArrayList<Stock> listB = new ArrayList<Stock>();
+				ArrayList<Stock> listC = new ArrayList<Stock>();
+
+				double listSize = stockSeleted.size();
+				JOptionPane.showMessageDialog(null, "listSize  "+listSize);
+				for (int i = 0; i < (int) (listSize / 3); i++) {
+					listA.add(stockSeleted.get(i));
+				}
+				for (int i = (int) (listSize / 3); i < (int) ((listSize / 3) * 2); i++) 
+				{
+					listB.add(stockSeleted.get(i));
+				}
+				for (int i = (int) ((listSize / 3) * 2); i < (int) listSize; i++) {
+					listC.add(stockSeleted.get(i));
+				}
+				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
+				infoExperts.put("Expert_"+userIdentifier + "[" + 3 + "]", listC);
+
+				//JOptionPane.showMessageDialog(null, "InfoExpert : "+infoExperts);
+				// Mudar estrategia
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
+
+			}else
+			{
+				
+				ArrayList<Stock> listA = listStocks;
+				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
+				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
+				
+			}
+		}break;
+		case CONSERVADOR:
+		{	if (listStocks.size() > 30) {
+			for (int i = 0; i < 30; i++) {
+				stockSeleted.add(listStocks.get(i));
+			}
+		} else if (listStocks.size() <= 30) {
+			stockSeleted = listStocks;
 		}
-		if (userProfile == MODERADO) {
+		if (stockSeleted.size() >= 15) {
+			ArrayList<Stock> listA = new ArrayList<Stock>();
+			ArrayList<Stock> listB = new ArrayList<Stock>();
+			ArrayList<Stock> listC = new ArrayList<Stock>();
+			ArrayList<Stock> listD = new ArrayList<Stock>();
+			ArrayList<Stock> listE = new ArrayList<Stock>();
+			ArrayList<Stock> listF = new ArrayList<Stock>();
+			ArrayList<Stock> listG = new ArrayList<Stock>();
+
+			double listSize = stockSeleted.size();
+			for (int i = 0; i < (int) (listSize / 7); i++) {
+				listA.add(stockSeleted.get(i));
+			}
+			for (int i = (int) (listSize / 7); i < (int) ((listSize / 7) * 2); i++) {
+				listB.add(stockSeleted.get(i));
+			}
+			for (int i = (int) ((listSize / 7) * 2); i < (int) ((listSize / 7) * 3); i++) {
+				listC.add(stockSeleted.get(i));
+			}
+			for (int i = (int) ((listSize / 7) * 3); i < (int) ((listSize / 7) * 4); i++) {
+				listD.add(stockSeleted.get(i));
+			}
+			for (int i = (int) ((listSize / 7) * 4); i < (int) ((listSize / 7) * 5); i++) {
+				listE.add(stockSeleted.get(i));
+			}
+			for (int i = (int) ((listSize / 7) * 5); i < (int) ((listSize / 7) * 6); i++) {
+				listF.add(stockSeleted.get(i));
+			}
+			for (int i = (int) ((listSize / 7) * 6); i < (int) (listSize); i++) {
+				listG.add(stockSeleted.get(i));
+			}
+			infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
+			infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
+			infoExperts.put("Expert_"+userIdentifier + "[" + 3 + "]", listC);
+			infoExperts.put("Expert_"+userIdentifier + "[" + 4 + "]", listD);
+			infoExperts.put("Expert_"+userIdentifier + "[" + 5 + "]", listE);
+			infoExperts.put("Expert_"+userIdentifier + "[" + 6 + "]", listF);
+			infoExperts.put("Expert_"+userIdentifier + "[" + 7 + "]", listG);
+
+			// Mudar estrategia
+			strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+			strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",
+					ConversationsID.EXPERT_STRATEGY_MMS_21_34);
+			strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",
+					ConversationsID.EXPERT_STRATEGY_MME_21_34);
+
+			strategyExperts.put("Expert_"+userIdentifier + "[" + 4 + "]",
+					ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+			strategyExperts.put("Expert_"+userIdentifier + "[" + 5 + "]",
+					ConversationsID.EXPERT_STRATEGY_MMS_21_34);
+			strategyExperts.put("Expert_"+userIdentifier + "[" + 6 + "]",
+					ConversationsID.EXPERT_STRATEGY_MME_21_34);
+
+			strategyExperts.put("Expert_"+userIdentifier + "[" + 7 + "]",
+					ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+
+			// MMS (13/21) MMS(21/34) MME (21/34)
+		}}break;
+
+		default:
+		{
 			if (listStocks.size() >= 13) {
 				for (int i = 0; i < 13; i++) {
 					stockSeleted.add(listStocks.get(i));
@@ -797,7 +934,7 @@ private void createExperts(int userProfile, String userIdentifier,
 				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
 				infoExperts.put("Expert_"+userIdentifier + "[" + 3 + "]", listC);
 
-				JOptionPane.showMessageDialog(null, "InfoExpert : "+infoExperts);
+			//	JOptionPane.showMessageDialog(null, "InfoExpert : "+infoExperts);
 				// Mudar estrategia
 				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
 				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_MMS_13_21);
@@ -805,73 +942,147 @@ private void createExperts(int userProfile, String userIdentifier,
 
 			}
 		}
-		if (userProfile == CONSERVADOR) {
-			if (listStocks.size() > 30) {
-				for (int i = 0; i < 30; i++) {
-					stockSeleted.add(listStocks.get(i));
-				}
-			} else if (listStocks.size() <= 30) {
-				stockSeleted = listStocks;
-			}
-			if (stockSeleted.size() >= 15) {
-				ArrayList<Stock> listA = new ArrayList<Stock>();
-				ArrayList<Stock> listB = new ArrayList<Stock>();
-				ArrayList<Stock> listC = new ArrayList<Stock>();
-				ArrayList<Stock> listD = new ArrayList<Stock>();
-				ArrayList<Stock> listE = new ArrayList<Stock>();
-				ArrayList<Stock> listF = new ArrayList<Stock>();
-				ArrayList<Stock> listG = new ArrayList<Stock>();
-
-				double listSize = stockSeleted.size();
-				for (int i = 0; i < (int) (listSize / 7); i++) {
-					listA.add(stockSeleted.get(i));
-				}
-				for (int i = (int) (listSize / 7); i < (int) ((listSize / 7) * 2); i++) {
-					listB.add(stockSeleted.get(i));
-				}
-				for (int i = (int) ((listSize / 7) * 2); i < (int) ((listSize / 7) * 3); i++) {
-					listC.add(stockSeleted.get(i));
-				}
-				for (int i = (int) ((listSize / 7) * 3); i < (int) ((listSize / 7) * 4); i++) {
-					listD.add(stockSeleted.get(i));
-				}
-				for (int i = (int) ((listSize / 7) * 4); i < (int) ((listSize / 7) * 5); i++) {
-					listE.add(stockSeleted.get(i));
-				}
-				for (int i = (int) ((listSize / 7) * 5); i < (int) ((listSize / 7) * 6); i++) {
-					listF.add(stockSeleted.get(i));
-				}
-				for (int i = (int) ((listSize / 7) * 6); i < (int) (listSize); i++) {
-					listG.add(stockSeleted.get(i));
-				}
-				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
-				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
-				infoExperts.put("Expert_"+userIdentifier + "[" + 3 + "]", listC);
-				infoExperts.put("Expert_"+userIdentifier + "[" + 4 + "]", listD);
-				infoExperts.put("Expert_"+userIdentifier + "[" + 5 + "]", listE);
-				infoExperts.put("Expert_"+userIdentifier + "[" + 6 + "]", listF);
-				infoExperts.put("Expert_"+userIdentifier + "[" + 7 + "]", listG);
-
-				// Mudar estrategia
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MMS_13_21);
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",
-						ConversationsID.EXPERT_STRATEGY_MMS_21_34);
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",
-						ConversationsID.EXPERT_STRATEGY_MME_21_34);
-
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 4 + "]",
-						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 5 + "]",
-						ConversationsID.EXPERT_STRATEGY_MMS_21_34);
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 6 + "]",
-						ConversationsID.EXPERT_STRATEGY_MME_21_34);
-
-				strategyExperts.put("Expert_"+userIdentifier + "[" + 7 + "]",
-						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
-
-				// MMS (13/21) MMS(21/34) MME (21/34)
-			}
+			break;
 		}
+//		if (userProfile == CORAJOSO) {
+//			if (listStocks.size() >= 8) {
+//				for (int i = 0; i < 8; i++) {
+//					stockSeleted.add(listStocks.get(i));
+//				}
+//			} else if (listStocks.size() < 9) {
+//				stockSeleted = listStocks;
+//			}
+//			if (stockSeleted.size() >= 2) {
+//				ArrayList<Stock> listA = new ArrayList<Stock>();
+//				ArrayList<Stock> listB = new ArrayList<Stock>();
+//				for (int i = 0; i < stockSeleted.size() / 2; i++) {
+//					listA.add(stockSeleted.get(i));
+//				}
+//				for (int i = stockSeleted.size() / 2; i < stockSeleted.size(); i++) {
+//					listB.add(stockSeleted.get(i));
+//				}
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
+//
+//				strategyExperts.put("Expert_"+userIdentifier+"["+1+"]", ConversationsID.EXPERT_STRATEGY_MME_13_21);
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
+//				//strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_DARK_CLOUD_BULLISH_ENGULF);
+//				//TODO apagar print
+//				System.out.println(manager.getLocalName()+": agente 1 lista ");
+//				for(Stock s:listA) System.out.println("->[1] "+s.getCodeName());
+//     			System.out.println(manager.getLocalName()+": agente 1 lista ");
+//				for(Stock s:listB) System.out.println("->[2] "+s.getCodeName());
+//				
+//
+//			} else {
+//				if (stockSeleted.size() == 1) {
+//					infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",stockSeleted);
+//					strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
+//				}
+//			}
+//		}
+//		if (userProfile == MODERADO) {
+//			if (listStocks.size() >= 13) {
+//				for (int i = 0; i < 13; i++) {
+//					stockSeleted.add(listStocks.get(i));
+//				}
+//			} else if (listStocks.size() < 14) {
+//				stockSeleted = listStocks;
+//			}
+//			if (stockSeleted.size() >= 5) {
+//				ArrayList<Stock> listA = new ArrayList<Stock>();
+//				ArrayList<Stock> listB = new ArrayList<Stock>();
+//				ArrayList<Stock> listC = new ArrayList<Stock>();
+//
+//				double listSize = stockSeleted.size();
+//				for (int i = 0; i < (int) (listSize / 3); i++) {
+//					listA.add(stockSeleted.get(i));
+//				}
+//				for (int i = (int) (listSize / 3); i < (int) ((listSize / 3) * 2); i++) {
+//					listB.add(stockSeleted.get(i));
+//				}
+//				for (int i = (int) ((listSize / 3) * 2); i < (int) listSize; i++) {
+//					listC.add(stockSeleted.get(i));
+//				}
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 3 + "]", listC);
+//
+//				JOptionPane.showMessageDialog(null, "InfoExpert : "+infoExperts);
+//				// Mudar estrategia
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",ConversationsID.EXPERT_STRATEGY_MME_13_21);
+//
+//			}
+//		}
+//		if (userProfile == CONSERVADOR) {
+//			if (listStocks.size() > 30) {
+//				for (int i = 0; i < 30; i++) {
+//					stockSeleted.add(listStocks.get(i));
+//				}
+//			} else if (listStocks.size() <= 30) {
+//				stockSeleted = listStocks;
+//			}
+//			if (stockSeleted.size() >= 15) {
+//				ArrayList<Stock> listA = new ArrayList<Stock>();
+//				ArrayList<Stock> listB = new ArrayList<Stock>();
+//				ArrayList<Stock> listC = new ArrayList<Stock>();
+//				ArrayList<Stock> listD = new ArrayList<Stock>();
+//				ArrayList<Stock> listE = new ArrayList<Stock>();
+//				ArrayList<Stock> listF = new ArrayList<Stock>();
+//				ArrayList<Stock> listG = new ArrayList<Stock>();
+//
+//				double listSize = stockSeleted.size();
+//				for (int i = 0; i < (int) (listSize / 7); i++) {
+//					listA.add(stockSeleted.get(i));
+//				}
+//				for (int i = (int) (listSize / 7); i < (int) ((listSize / 7) * 2); i++) {
+//					listB.add(stockSeleted.get(i));
+//				}
+//				for (int i = (int) ((listSize / 7) * 2); i < (int) ((listSize / 7) * 3); i++) {
+//					listC.add(stockSeleted.get(i));
+//				}
+//				for (int i = (int) ((listSize / 7) * 3); i < (int) ((listSize / 7) * 4); i++) {
+//					listD.add(stockSeleted.get(i));
+//				}
+//				for (int i = (int) ((listSize / 7) * 4); i < (int) ((listSize / 7) * 5); i++) {
+//					listE.add(stockSeleted.get(i));
+//				}
+//				for (int i = (int) ((listSize / 7) * 5); i < (int) ((listSize / 7) * 6); i++) {
+//					listF.add(stockSeleted.get(i));
+//				}
+//				for (int i = (int) ((listSize / 7) * 6); i < (int) (listSize); i++) {
+//					listG.add(stockSeleted.get(i));
+//				}
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 1 + "]", listA);
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 2 + "]", listB);
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 3 + "]", listC);
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 4 + "]", listD);
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 5 + "]", listE);
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 6 + "]", listF);
+//				infoExperts.put("Expert_"+userIdentifier + "[" + 7 + "]", listG);
+//
+//				// Mudar estrategia
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 1 + "]",ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 2 + "]",
+//						ConversationsID.EXPERT_STRATEGY_MMS_21_34);
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 3 + "]",
+//						ConversationsID.EXPERT_STRATEGY_MME_21_34);
+//
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 4 + "]",
+//						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 5 + "]",
+//						ConversationsID.EXPERT_STRATEGY_MMS_21_34);
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 6 + "]",
+//						ConversationsID.EXPERT_STRATEGY_MME_21_34);
+//
+//				strategyExperts.put("Expert_"+userIdentifier + "[" + 7 + "]",
+//						ConversationsID.EXPERT_STRATEGY_MMS_13_21);
+//
+//				// MMS (13/21) MMS(21/34) MME (21/34)
+//			}
+//		}
 		for (Entry<String, ArrayList<Stock>> s : infoExperts.entrySet()) {
 			try {
 				agentController = container.createNewAgent(s.getKey(),

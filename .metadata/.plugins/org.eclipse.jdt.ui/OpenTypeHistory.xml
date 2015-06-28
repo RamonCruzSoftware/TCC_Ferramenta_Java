@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
 <typeInfo handle="=TCC_Ferramenta_Java/src\/main\/java&lt;core.agents.behaviours{ProcedureBehaviour.java[ProcedureBehaviour" modifiers="513" timestamp="1433900843000"/>
+<typeInfo handle="=TCC_Ferramenta_Java/\/Users\/Ramon\/.m2\/repository\/junit\/junit\/3.8.1\/junit-3.8.1.jar&lt;junit.framework(TestSuite.class[TestSuite" modifiers="33" timestamp="1430395086000"/>
+<typeInfo handle="=TCC_Ferramenta_Java/src\/test\/java&lt;main{TestSuite.java[TestSuite" modifiers="1" timestamp="1434216402000"/>
+<typeInfo handle="=TCC_Ferramenta_Java/src\/test\/java&lt;suport.financial.partternsCandleStickTest{BearishEngulfingTest.java[BearishEngulfingTest" modifiers="1" timestamp="1434215916000"/>
 </typeInfoHistroy>

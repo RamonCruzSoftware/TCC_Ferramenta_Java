@@ -2,7 +2,7 @@ package suport.financial.partternsCandleStick;
 
 import java.util.ArrayList;
 
-public class BullishEngulfing extends Pattern {
+public class BullishEngulfing implements Pattern {
 	private ArrayList<CandleStick> list;
 	private int limitPeriod;
 	public BullishEngulfing(ArrayList<CandleStick> list) {
@@ -14,7 +14,7 @@ public class BullishEngulfing extends Pattern {
 		this.limitPeriod=10;
 	}
 
-	@Override
+	
 	public ArrayList<CandleStick> findCandleSticksPatterns() {
 		ArrayList<CandleStick> listResult = new ArrayList<CandleStick>();
 		ArrayList<CandleStick>toAnalize= new ArrayList<CandleStick>();

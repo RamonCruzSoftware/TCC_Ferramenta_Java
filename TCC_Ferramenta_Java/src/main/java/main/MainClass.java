@@ -1,6 +1,7 @@
 package main;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class MainClass {
 
 	
 	@SuppressWarnings("deprecation")
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		/*
 		 * //Persisitencia StockDao stockDao=new StockDao(); YahooFinance ya=new
@@ -241,7 +242,7 @@ public class MainClass {
 		
 		//================Simulacao
 	
-	String code="RCSL4.SA";
+	String code="MMXM3.SA";
 	SimulationDataDao dao= new SimulationDataDao();
 	System.out.println("=>"+dao.findDataOfSimulation(code).size());
 	

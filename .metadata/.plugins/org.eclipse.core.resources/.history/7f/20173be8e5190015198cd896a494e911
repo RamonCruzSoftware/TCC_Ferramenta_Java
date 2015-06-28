@@ -1,0 +1,19 @@
+package main;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+public class CVSSimulations {
+
+	
+	public void gravaArquivo() throws IOException
+	{
+		FileWriter arq = new FileWriter("/Users/ramon/Desktop/tabuada.txt");
+		PrintWriter gravarArq = new PrintWriter(arq);
+
+		
+			
+	}
+	
+}

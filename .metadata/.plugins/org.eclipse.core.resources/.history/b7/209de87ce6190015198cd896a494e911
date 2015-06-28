@@ -1,0 +1,49 @@
+package main;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import suport.util.database.mongoDB.dao.SimulationDataDao;
+import suport.util.database.mongoDB.pojo.SimulationData;
+
+public class CVSSimulations {
+
+	
+	public void gravaArquivo() throws IOException
+	{
+		int i=0;
+		int n=3;
+		FileWriter arq = new FileWriter("/Users/ramon/Desktop/tabuada.txt");
+		PrintWriter gravarArq = new PrintWriter(arq);
+		gravarArq.printf("+--Resultado--+%n");
+		for (i=1; i<=10; i++) 
+		{
+			gravarArq.printf("| %2d X %d = %2d |%n", i, n, (i*n)); 
+		} 
+		gravarArq.printf("+-------------+%n");
+			
+			arq.close();
+
+			
+	}
+	public void geraCSVSimulacao(String codeName)
+	{
+		
+		SimulationDataDao dao= new SimulationDataDao();
+		System.out.println("=>"+dao.findDataOfSimulation(codeName).size());
+		
+		StringBuilder dados=new StringBuilder();
+		ArrayList<SimulationData> teste= dao.findDataOfSimulation(codeName);
+		for(int i=0; i<teste.size();i++)
+		{
+			dados.append("\""+teste.get(i).getCodeName()+"\","
+					+ ""+"\""+teste.get(i).getDate().getDay()+"/"+teste.get(i).getDate().getMonth()+"/"+(teste.get(i).getDate().getYear()+1900)+"\","
+					+"\""+teste.get(i).getOrder()+"\","+teste.get(i).getValue())
+			
+		}
+
+	}
+	
+}

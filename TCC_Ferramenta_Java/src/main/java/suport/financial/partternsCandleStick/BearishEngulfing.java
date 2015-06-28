@@ -3,7 +3,7 @@ package suport.financial.partternsCandleStick;
 import java.util.ArrayList;
 import suport.financial.partternsCandleStick.CandleStick;
 
-public class BearishEngulfing extends Pattern {
+public class BearishEngulfing implements Pattern {
 	private ArrayList<CandleStick> list;
 	private int limitPeriod;
 	public BearishEngulfing(ArrayList<CandleStick> list) {

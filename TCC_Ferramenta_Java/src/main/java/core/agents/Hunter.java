@@ -94,7 +94,7 @@ public class Hunter extends Agent {
 		}
 	}
 
-	private class InitWork extends SequentialBehaviour {
+private class InitWork extends SequentialBehaviour {
 		private static final long serialVersionUID = 1L;
 		private final Date date;
 		private final long dailyInterval;
@@ -253,9 +253,8 @@ public class Hunter extends Agent {
 								lowerLimit = 15;
 								upperLimit = 30;
 								do {
-									stockSuggestions_aux = hunter.stockDao
-											.getStockOrderByStandardDeviation_30(
-													lowerLimit, upperLimit);
+									stockSuggestions_aux = hunter.stockDao.getStockOrderByStandardDeviation_30(((double)lowerLimit/100), ((double)upperLimit/100));
+								
 									if (lowerLimit > 0)
 										lowerLimit--;
 									upperLimit++;
@@ -267,14 +266,15 @@ public class Hunter extends Agent {
 							}
 								break;
 							case MODERADO: {
-								lowerLimit = 15;
-								upperLimit = 30;
-//								lowerLimit = 5;
-//								upperLimit = 15;
+								
+								lowerLimit = 5;
+								upperLimit = 15;
 								do {
-									stockSuggestions_aux = hunter.stockDao
-											.getStockOrderByStandardDeviation_30(
-													lowerLimit, upperLimit);
+//									stockSuggestions_aux = hunter.stockDao
+//											.getStockOrderByStandardDeviation_30(
+//													lowerLimit, upperLimit);
+									
+									stockSuggestions_aux =hunter.stockDao.getStockOrderByStandardDeviation_30(((double)lowerLimit/100), ((double)upperLimit/100));
 									if (lowerLimit > 0)
 										lowerLimit--;
 									upperLimit++;
@@ -290,9 +290,10 @@ public class Hunter extends Agent {
 									lowerLimit--;
 								upperLimit = 6;
 								do {
-									stockSuggestions_aux = hunter.stockDao
-											.getStockOrderByStandardDeviation_30(
-													lowerLimit, upperLimit);
+//									stockSuggestions_aux = hunter.stockDao
+//											.getStockOrderByStandardDeviation_30(
+//													lowerLimit, upperLimit);
+									stockSuggestions_aux =hunter.stockDao.getStockOrderByStandardDeviation_30(((double)lowerLimit/100), ((double)upperLimit/100));
 									upperLimit++;
 									info.setLowerPercent(lowerLimit);
 									info.setUpperPercent(upperLimit);
