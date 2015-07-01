@@ -152,8 +152,7 @@ public class WalletManagerAuxiliary {
 		return this.stkChooser.analyzeStockList();
 	}
 
-	public boolean analyzeStock(Stock stock) 
-	{
+	public boolean analyzeStock(Stock stock) {
 		return this.stkChooser.analyzeStock(stock);
 	}
 
@@ -166,8 +165,7 @@ public class WalletManagerAuxiliary {
 			Statistical statistical = new Statistical();
 			// Montando matriz de variancias
 			for (int i = 1; i <= nLin; i++) {
-				for (int j = 1; j <= nCol; j++) 
-				{
+				for (int j = 1; j <= nCol; j++) {
 					if (i == j)
 						variance_matrix.setContent(i - 1, j - 1, 0);
 					else {
@@ -182,13 +180,12 @@ public class WalletManagerAuxiliary {
 															1 / stockList.size()
 															)); // calcula
 							variance_matrix.setContent(j - 1, i - 1,
-									variance_matrix.getContent(i-1, j-1));
+									variance_matrix.getContent(i, j));
 						} else
 							continue;
 					}
 				}
 			}
-			
 			// Montando matriz coluna de percentual de participacao
 			Matrix percentual_matrix = new Matrix(nLin, 1);
 			for (int i = 1; i <= nLin; i++)
@@ -198,8 +195,9 @@ public class WalletManagerAuxiliary {
 			for (int i = 1; i <= nLin; i++)
 				avarangeReturn_matrix.setContent(i - 1, 1, stockList.get(i - 1)
 						.getAvarangeReturn_15());
-			
-			result = Matrix.product(Matrix.product(Matrix.transposed(percentual_matrix),variance_matrix), avarangeReturn_matrix)
+			result = Matrix.product(
+					Matrix.product(Matrix.transposed(percentual_matrix),
+							variance_matrix), avarangeReturn_matrix)
 					.getContent(0, 0);
 		} catch (Exception e) {// TODO LOG
 			e.printStackTrace();
