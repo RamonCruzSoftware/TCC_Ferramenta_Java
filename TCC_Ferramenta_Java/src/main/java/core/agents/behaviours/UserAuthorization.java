@@ -80,7 +80,7 @@ public class UserAuthorization extends Behaviour {
 										msg.addReceiver(new AID(expertName,AID.ISLOCALNAME));
 										// TODO LOG
 //										JOptionPane.showMessageDialog(null, "User Name "+userName+" risk "+s.getStandardDeviation_30());
-										walletDao.updateRiskWallet(userName,s.getStandardDeviation_30());
+										walletDao.updateRiskWallet(userName,s.getVariance_30(),s.getCodeName());
 										
 										System.out.println( "Manager : Ordem de compra autorizada para "+ expertName);
 										myAgent.send(msg);
